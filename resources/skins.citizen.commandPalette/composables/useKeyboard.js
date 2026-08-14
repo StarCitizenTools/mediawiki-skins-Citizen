@@ -327,6 +327,23 @@ const coreBindings = [
 	},
 
 	// --- INPUT ZONE: Enter ---
+	// Three disjoint cases, most specific first. The fulltext row and an
+	// ordinary result activate identically; the split exists so the footer can
+	// name which meaning Enter currently carries.
+	{
+		id: 'input-enter-select-search',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		when: ( state ) => state.highlightedIndex >= 0 &&
+			Boolean( state.highlightedItem ) &&
+			state.highlightedItem.source === 'queryAction:fulltext-search',
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onSelect( state.items[ state.highlightedIndex ] );
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵', order: 10 }
+	},
 	{
 		id: 'input-enter-select',
 		zone: 'input',
@@ -339,17 +356,18 @@ const coreBindings = [
 		},
 		hint: { msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', order: 10 }
 	},
+	// Nothing highlighted yet because the group that will own the highlight is
+	// still fetching. Hold the keystroke rather than dropping it.
 	{
-		id: 'input-enter-search',
+		id: 'input-enter-queue',
 		zone: 'input',
 		keys: [ 'Enter' ],
-		when: ( state ) => state.highlightedIndex < 0,
+		when: ( state ) => state.highlightedIndex < 0 && state.canQueueActivation,
 		handle: ( state, event ) => {
-			// Today's behavior: Enter with no highlight prevents default but
-			// fires no callback; the "Search" hint is shown for affordance.
 			event.preventDefault();
+			state.onQueueActivation();
 		},
-		hint: { msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵', order: 10 }
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', order: 10 }
 	},
 
 	// --- INPUT ZONE: ArrowRight to actions ---
@@ -598,7 +616,9 @@ function actionCount( state ) {
  *
  * @param {Object} options
  * @param {Object} options.core Required. inputRef, itemRefs, items,
- *   query, requestHeaderCopy, onSelect, onClose, onClearQuery.
+ *   query, requestHeaderCopy, onSelect, onClose, onClearQuery, plus optional
+ *   canQueueActivation/onQueueActivation for surfaces that can hold an Enter
+ *   until their lead result group settles.
  * @param {Object} options.navigation Required. listNav, gridNav,
  *   isGalleryLayout, actionNav.
  * @param {Object} options.mode Required. activeMode, findModeByTrigger,
@@ -768,6 +788,10 @@ function useKeyboard( options ) {
 			),
 			helpVisible: help.helpVisible ? help.helpVisible.value : false,
 			actionsFocused: actionNav.isActive.value,
+			canQueueActivation: Boolean(
+				core.canQueueActivation && core.canQueueActivation.value
+			),
+			onQueueActivation: core.onQueueActivation,
 			onClose: core.onClose,
 			onClearQuery: core.onClearQuery,
 			onExitMode: mode.onExitMode,

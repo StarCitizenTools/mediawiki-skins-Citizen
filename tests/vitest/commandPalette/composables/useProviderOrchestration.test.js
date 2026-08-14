@@ -36,12 +36,19 @@ describe( 'useProviderOrchestration', () => {
 			keepStaleResults: false
 		};
 
+		// Mirrors createAppendQueryActions: production always attaches the
+		// lead/trail split, so a bare function here would exercise a shape the
+		// shipped code never sees.
 		mockDecorator = vi.fn( ( items, query ) => {
 			if ( query ) {
 				return items.concat( [ { id: 'action', label: query, type: 'action' } ] );
 			}
 			return items;
 		} );
+		mockDecorator.leadActions = vi.fn( ( query ) => ( query ?
+			[ { id: 'action', label: query, type: 'action', source: 'queryAction:fulltext-search' } ] :
+			[] ) );
+		mockDecorator.trailActions = vi.fn( () => [] );
 	} );
 
 	afterEach( () => {
@@ -188,12 +195,15 @@ describe( 'useProviderOrchestration', () => {
 			expect( mockProviders[ 0 ].canProvide ).toHaveBeenCalledWith( 'test' );
 		} );
 
-		it( 'enterMode clears displayed items', () => {
+		it( 'enterMode clears displayed items and withholds the highlight while loading', () => {
 			const mode = { id: 'ns', getResults: vi.fn().mockResolvedValue( [] ) };
 
 			orch.enterMode( mode );
 
 			expect( orch.displayedItems.value ).toEqual( [] );
+			expect( orch.isLoading.value ).toBe( true );
+			expect( orch.isLeadReady.value ).toBe( false );
+			expect( orch.defaultHighlightIndex.value ).toBe( -1 );
 		} );
 
 		it( 'exitMode resets to presults', async () => {
@@ -590,6 +600,196 @@ describe( 'useProviderOrchestration', () => {
 			expect( orch.displayedItems.value ).toEqual( [
 				{ heading: 'citizen-command-palette-heading-recent', items: recentItems }
 			] );
+		} );
+	} );
+
+	describe( 'presult slots', () => {
+		const recentItems = [ { id: 'r1', url: '/R', label: 'R', source: 'recent' } ];
+		const relatedItems = [ { id: 'a1', url: '/A', label: 'A', source: 'related' } ];
+
+		const build = ( relatedResolver ) => useProviderOrchestration( [], mockDecorator, {
+			recentItemsProvider: { getResults: () => ( { items: recentItems } ) },
+			relatedArticlesProvider: { getResults: relatedResolver }
+		} );
+
+		it( 'declares related above recents before related has resolved', async () => {
+			let resolveRelated;
+			const orch = build( () => new Promise( ( resolve ) => {
+				resolveRelated = resolve;
+			} ) );
+
+			await orch.clearSearch;
+			orch.clearSearch();
+
+			// Related has not resolved, so it draws nothing yet — but it is
+			// reported as loading and holds its declared position for later.
+			expect( orch.isLoading.value ).toBe( true );
+			expect( orch.displayedItems.value.map( ( s ) => s.heading ) ).toEqual( [
+				'citizen-command-palette-heading-recent'
+			] );
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r1' ] );
+
+			resolveRelated( { items: relatedItems } );
+		} );
+
+		it( 'does not reorder the list when related resolves late', async () => {
+			const orch = build( () => Promise.resolve( { items: relatedItems } ) );
+
+			await orch.clearSearch();
+
+			// Related is declared above recents, so it lands above them
+			// however late it resolves.
+			expect( orch.displayedItems.value.map( ( s ) => s.heading ) ).toEqual( [
+				'citizen-command-palette-heading-related',
+				'citizen-command-palette-heading-recent'
+			] );
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'a1', 'r1' ] );
+		} );
+
+		it( 'withholds the default highlight on presults even once settled', async () => {
+			const orch = build( () => Promise.resolve( { items: relatedItems } ) );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value ).toHaveLength( 2 );
+			expect( orch.defaultHighlightIndex.value ).toBe( -1 );
+		} );
+
+		it( 'retires presult slots once the user types', async () => {
+			const orch = build( () => Promise.resolve( { items: relatedItems } ) );
+			await orch.clearSearch();
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'a1', 'r1' ] );
+
+			orch.updateQuery( 'anything' );
+
+			// Recents and related belong to the empty-query surface only; a
+			// query must not leave them rendering under its results.
+			const sources = orch.flatItems.value.map( ( i ) => i.source );
+			expect( sources ).not.toContain( 'recent' );
+			expect( sources ).not.toContain( 'related' );
+			expect( orch.displayedItems.value.map( ( sec ) => sec.heading ) )
+				.not.toContain( 'citizen-command-palette-heading-recent' );
+		} );
+
+		it( 'restores presult slots when the query is cleared again', async () => {
+			const orch = build( () => Promise.resolve( { items: relatedItems } ) );
+			await orch.clearSearch();
+			orch.updateQuery( 'anything' );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'a1', 'r1' ] );
+		} );
+
+		it( 'drops a related result that lands after the user typed', async () => {
+			let resolveRelated;
+			const orch = build( () => new Promise( ( resolve ) => {
+				resolveRelated = resolve;
+			} ) );
+
+			const pending = orch.clearSearch();
+			orch.query.value = 'moved on';
+			resolveRelated( { items: relatedItems } );
+			await pending;
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).not.toContain( 'a1' );
+		} );
+	} );
+
+	describe( 'surface isolation', () => {
+		it( 'does not leave the help catalog behind when help closes over a query', async () => {
+			const provider = {
+				id: 'search',
+				canProvide: ( q ) => !!q,
+				getResults: () => ( { items: [ { id: 's1', label: 'Real', source: 'search' } ] } ),
+				onResultSelect: vi.fn(),
+				debounceMs: 0,
+				keepStaleResults: false
+			};
+			const orch = useProviderOrchestration( [ provider ], mockDecorator, {
+				getHelpCatalogItems: () => [ { id: 'cmd-x', source: 'command:x' } ]
+			} );
+
+			orch.openHelp();
+			orch.updateQuery( 'hello' );
+			orch.closeHelp();
+			await vi.runAllTimersAsync();
+
+			expect( orch.flatItems.value.map( ( i ) => i.source ) )
+				.not.toContain( 'command:x' );
+		} );
+
+		it( 'drops a mode result that lands after the mode context changed', async () => {
+			// One resolver per call: the drilled level's request is the one
+			// that must be ignored, and it is not the most recent.
+			const resolvers = [];
+			const mode = {
+				id: 'cat',
+				getResults: vi.fn( () => new Promise( ( resolve ) => {
+					resolvers.push( resolve );
+				} ) )
+			};
+			const orch = useProviderOrchestration( [], mockDecorator, {} );
+
+			orch.enterMode( mode );
+			orch.pushModeContext( 'Animals' );
+			// Back out before the drilled level's unabortable fetch resolves.
+			orch.popModeContext();
+			// Resolve ONLY the drilled level's request. Leaving the others
+			// pending means nothing can overwrite its landing, so the
+			// assertion tests the staleness gate rather than write order.
+			resolvers[ 1 ]( [ { id: 'abandoned', label: 'Abandoned member' } ] );
+			await vi.runAllTimersAsync();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) )
+				.not.toContain( 'abandoned' );
+		} );
+	} );
+
+	describe( 'query action placement', () => {
+		const searchProvider = {
+			id: 'search',
+			canProvide: ( q ) => !!q && !q.startsWith( '#' ),
+			getResults: () => ( { items: [ { id: 'p1', label: 'Page', source: 'search' } ] } ),
+			onResultSelect: vi.fn(),
+			debounceMs: 0,
+			keepStaleResults: false
+		};
+		const commandProvider = {
+			id: 'command',
+			canProvide: ( q ) => q.startsWith( '#' ),
+			getResults: () => ( { items: [ { id: 'c1', label: 'Cat', source: 'command:cat' } ] } ),
+			onResultSelect: vi.fn(),
+			debounceMs: 0,
+			keepStaleResults: false
+		};
+
+		it( 'pins the fulltext action first when the search provider matched', async () => {
+			const orch = useProviderOrchestration(
+				[ commandProvider, searchProvider ], mockDecorator, {}
+			);
+
+			orch.updateQuery( 'sunset' );
+			await vi.runAllTimersAsync();
+
+			expect( orch.flatItems.value[ 0 ].source )
+				.toBe( 'queryAction:fulltext-search' );
+			expect( orch.defaultHighlightIndex.value ).toBe( 0 );
+		} );
+
+		it( 'leaves a trigger-prefixed query its own results in the lead', async () => {
+			const orch = useProviderOrchestration(
+				[ commandProvider, searchProvider ], mockDecorator, {}
+			);
+
+			orch.updateQuery( '#cat' );
+			await vi.runAllTimersAsync();
+
+			// Enter must not search for the literal "#cat"; the command
+			// results lead, and the action drops to the trailing set.
+			expect( orch.flatItems.value[ 0 ].source ).toBe( 'command:cat' );
+			expect( orch.flatItems.value.map( ( i ) => i.source ) )
+				.toContain( 'queryAction:fulltext-search' );
 		} );
 	} );
 

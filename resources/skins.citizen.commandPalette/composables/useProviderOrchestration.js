@@ -60,14 +60,131 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	deps = deps || {};
 
 	const query = ref( '' );
-	const displayedItems = ref( [] );
 	const isPending = ref( false );
 	const showPending = ref( false );
 	const activeMode = shallowRef( null );
 	const activeModeContext = ref( [] );
 	const helpVisible = ref( false );
-	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
+
+	// Identifies the surface a request belongs to. Every staleness decision
+	// keys off this one value, so a surface change cannot be half-honoured.
+	const surfaceKey = computed( () => JSON.stringify( [
+		query.value,
+		activeMode.value ? activeMode.value.id : null,
+		activeModeContext.value,
+		helpVisible.value
+	] ) );
+
+	// Every surface has at most one asynchronous group. `forSurface` is the
+	// staleness test: items are stale until a landing stamps them with the
+	// surface that is current when they arrive.
+	const content = ref( { items: [], forSurface: null, providerId: null } );
+	const related = ref( { items: [], settled: false } );
+	const recents = ref( [] );
+	const helpItems = ref( [] );
+
+	const isPresultsSurface = computed(
+		() => !query.value && !activeMode.value && !helpVisible.value
+	);
+	const isContentCurrent = computed(
+		() => content.value.forSurface === surfaceKey.value
+	);
+
+	// The lead action restates the typed query as a search, so it only leads
+	// when the query IS a search. A trigger-prefixed query (`#cat`) means
+	// something else, and its own results keep the lead. An empty query here
+	// is how modes, help and presults opt out of query actions entirely.
+	const queryActionQuery = computed(
+		() => ( activeMode.value || helpVisible.value ) ? '' : query.value
+	);
+	const leadActions = computed( () => content.value.providerId === 'search' ?
+		resultDecorator.leadActions( queryActionQuery.value ) :
+		[] );
+	const trailActions = computed( () => content.value.providerId === 'search' ?
+		resultDecorator.trailActions( queryActionQuery.value ) :
+		resultDecorator.leadActions( queryActionQuery.value )
+			.concat( resultDecorator.trailActions( queryActionQuery.value ) ) );
+
+	/**
+	 * @param {?string} heading
+	 * @param {Array} items
+	 * @return {?Object} Section, or null when there is nothing to render.
+	 */
+	function section( heading, items ) {
+		return items.length > 0 ? { heading: heading, items: items } : null;
+	}
+
+	// Each surface names its own groups, in render order. A group therefore
+	// cannot survive into a surface that does not mention it.
+	const displayedItems = computed( () => {
+		if ( helpVisible.value ) {
+			return activeMode.value ? [] : [ section(
+				'citizen-command-palette-help-section-modes', helpItems.value
+			) ].filter( Boolean );
+		}
+
+		if ( isPresultsSurface.value ) {
+			const relatedUrls = new Set(
+				related.value.items.map( ( item ) => item.url ).filter( Boolean )
+			);
+			return [
+				section(
+					'citizen-command-palette-heading-related', related.value.items
+				),
+				section(
+					'citizen-command-palette-heading-recent',
+					recents.value.filter(
+						( item ) => !item.url || !relatedUrls.has( item.url )
+					)
+				)
+			].filter( Boolean );
+		}
+
+		return [
+			section( null, leadActions.value ),
+			section( null, content.value.items ),
+			section( null, trailActions.value )
+		].filter( Boolean );
+	} );
+
+	const flatItems = computed(
+		() => displayedItems.value.flatMap( ( s ) => s.items )
+	);
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
+
+	// The lead group owns the default highlight: the synchronous fulltext row
+	// when there is one, otherwise the async content group.
+	const isLeadReady = computed( () => {
+		if ( helpVisible.value ) {
+			return true;
+		}
+		if ( isPresultsSurface.value ) {
+			return related.value.settled;
+		}
+		return leadActions.value.length > 0 || isContentCurrent.value;
+	} );
+
+	const isLoading = computed( () => {
+		if ( helpVisible.value ) {
+			return false;
+		}
+		if ( isPresultsSurface.value ) {
+			return !related.value.settled;
+		}
+		return !isContentCurrent.value;
+	} );
+
+	const defaultHighlightIndex = computed( () => {
+		// Presults are the only list shown without being asked for, so they
+		// get no default highlight and Enter does nothing. The help catalog
+		// and a mode's root listing also render at an empty query, but the
+		// user elicited those, so they keep theirs.
+		if ( isPresultsSurface.value ) {
+			return -1;
+		}
+		return ( isLeadReady.value && flatItems.value.length > 0 ) ? 0 : -1;
+	} );
+
 	const stateConfig = computed( () => {
 		const mode = activeMode.value;
 		if ( !mode ) {
@@ -100,15 +217,34 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const resetDetailState = detailLifecycle.reset;
 
 	/**
-	 * Applies the result decorator and updates displayedItems.
+	 * Lands provider output on the content group, but only if the surface it
+	 * was dispatched for is still the current one. This is the single
+	 * staleness gate — it replaces the per-call combinations of query, mode
+	 * and mode-context checks that each covered a different subset.
 	 *
-	 * @param {Array} contentItems Items from the content provider.
+	 * @param {Array} items Items from the content provider.
+	 * @param {string} dispatchSurface surfaceKey captured when the request was issued.
+	 * @param {string} [providerId] Id of the provider that produced the items.
 	 */
-	function setResults( contentItems ) {
-		const items = Array.isArray( contentItems ) ? contentItems : [];
-		const decorated = resultDecorator( items, query.value );
-		displayedItems.value = decorated.length > 0 ?
-			[ { heading: null, items: decorated } ] : [];
+	function applyContent( items, dispatchSurface, providerId ) {
+		if ( surfaceKey.value !== dispatchSurface ) {
+			return;
+		}
+		content.value = {
+			items: Array.isArray( items ) ? items : [],
+			forSurface: dispatchSurface,
+			providerId: providerId !== undefined ?
+				providerId :
+				content.value.providerId
+		};
+	}
+
+	/**
+	 * Empties the content group. Used where a new level genuinely replaces the
+	 * old one (mode entry, drilling in or out) rather than refining it.
+	 */
+	function resetContent() {
+		content.value = { items: [], forSurface: null, providerId: null };
 	}
 
 	/**
@@ -116,21 +252,19 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 *
 	 * @param {Object} provider The provider.
 	 * @param {string} currentQuery The query at dispatch time.
+	 * @param {string} dispatchSurface surfaceKey at dispatch time.
 	 */
-	async function handleSyncProvider( provider, currentQuery ) {
+	async function handleSyncProvider( provider, currentQuery, dispatchSurface ) {
 		try {
 			const result = await provider.getResults( currentQuery, undefined );
-			const items = normalizeProviderResult( result );
-			if ( query.value === currentQuery ) {
-				setResults( items );
-			}
+			applyContent(
+				normalizeProviderResult( result ), dispatchSurface, provider.id
+			);
 		} catch ( error ) {
 			mw.log.error(
 				'[commandPalette] Sync provider "' + provider.id + '" failed:', error
 			);
-			if ( query.value === currentQuery ) {
-				setResults( [] );
-			}
+			applyContent( [], dispatchSurface, provider.id );
 		}
 	}
 
@@ -139,125 +273,95 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 *
 	 * @param {Object} provider The provider.
 	 * @param {string} currentQuery The query at dispatch time.
+	 * @param {string} dispatchSurface surfaceKey at dispatch time.
 	 */
-	function handleAsyncProvider( provider, currentQuery ) {
-		const isStale = () => query.value !== currentQuery;
+	function handleAsyncProvider( provider, currentQuery, dispatchSurface ) {
+		const isStale = () => surfaceKey.value !== dispatchSurface;
 		lifecycle.runDebouncedAbortable( {
 			debounceMs: provider.debounceMs || DEFAULT_DEBOUNCE_MS,
 			isStale,
 			run: ( signal ) => provider.getResults( currentQuery, signal ),
-			onResult: ( result ) => setResults( normalizeProviderResult( result ) ),
+			onResult: ( result ) => applyContent(
+				normalizeProviderResult( result ), dispatchSurface, provider.id
+			),
 			onError: ( error ) => {
 				mw.log.error(
 					'[commandPalette] Async provider "' + provider.id + '" failed:', error
 				);
-				if ( !isStale() ) {
-					setResults( [] );
-				}
+				applyContent( [], dispatchSurface, provider.id );
 			}
 		} );
 	}
 
 	/**
-	 * Builds presult sections from related and recent items.
-	 * Deduplicates recent items that already appear in related results.
-	 *
-	 * @param {Array} relatedItems Related article items.
-	 * @param {Array} recentItems Recent items.
-	 * @return {Array} Sections array for displayedItems.
-	 */
-	function buildPresultSections( relatedItems, recentItems ) {
-		const relatedUrls = new Set(
-			relatedItems.map( ( item ) => item.url ).filter( Boolean )
-		);
-		const filteredRecent = recentItems.filter(
-			( item ) => !item.url || !relatedUrls.has( item.url )
-		);
-
-		const sections = [];
-		if ( relatedItems.length > 0 ) {
-			sections.push( {
-				heading: 'citizen-command-palette-heading-related',
-				items: relatedItems
-			} );
-		}
-		if ( filteredRecent.length > 0 ) {
-			sections.push( {
-				heading: 'citizen-command-palette-heading-recent',
-				items: filteredRecent
-			} );
-		}
-		return sections;
-	}
-
-	/**
 	 * Clears the search and populates presults.
+	 *
+	 * Related outranks recents because navigation intent is higher. That
+	 * ranking is structural — it is the order the two appear in the presults
+	 * branch of `displayedItems` — so however late related arrives it lands
+	 * above recents. This surface has no default highlight, and an explicit
+	 * selection is restored by item id, so the list settling underneath the
+	 * user cannot redirect them.
 	 */
 	async function clearSearch() {
 		query.value = '';
 		resetOperationState();
 		resetDetailState();
+		resetContent();
 
 		let recentItems = [];
 		if ( deps.recentItemsProvider ) {
 			try {
-				const recentResult = deps.recentItemsProvider.getResults( '' );
-				recentItems = normalizeProviderResult( recentResult );
+				recentItems = normalizeProviderResult(
+					deps.recentItemsProvider.getResults( '' )
+				);
 			} catch ( e ) {
 				mw.log.error( '[commandPalette] Failed to get recent items:', e );
 			}
 		}
+		recents.value = recentItems;
+		related.value = { items: [], settled: !deps.relatedArticlesProvider };
 
-		// Show recent section immediately while related loads
-		displayedItems.value = recentItems.length > 0 ?
-			[ { heading: 'citizen-command-palette-heading-recent', items: recentItems } ] :
-			[];
-
-		if ( deps.relatedArticlesProvider ) {
-			try {
-				const relatedResult =
-					await deps.relatedArticlesProvider.getResults( '' );
-				const relatedItems = normalizeProviderResult( relatedResult );
-
-				if ( query.value === '' ) {
-					displayedItems.value =
-						buildPresultSections( relatedItems, recentItems );
-				}
-			} catch ( e ) {
-				mw.log.error(
-					'[commandPalette] Failed to get related articles:', e
-				);
-			}
+		if ( !deps.relatedArticlesProvider ) {
+			return;
 		}
-	}
 
-	/**
-	 * Renders mode-getResults output into a single section. Both the
-	 * empty-query and debounced branches funnel through this so the
-	 * staleness check stays consistent.
-	 *
-	 * @param {Object} mode
-	 * @param {string} currentQuery
-	 * @param {Array} items
-	 */
-	function applyModeResults( mode, currentQuery, items ) {
-		if ( query.value === currentQuery && activeMode.value === mode ) {
-			displayedItems.value = items.length > 0 ?
-				[ { heading: null, items: items } ] : [];
+		const dispatchSurface = surfaceKey.value;
+		let relatedItems = [];
+		try {
+			relatedItems = normalizeProviderResult(
+				await deps.relatedArticlesProvider.getResults( '' )
+			);
+		} catch ( e ) {
+			mw.log.error( '[commandPalette] Failed to get related articles:', e );
 		}
+
+		// The provider takes no AbortSignal, so this is the only gate standing
+		// between a slow related fetch and a surface that has moved on.
+		if ( surfaceKey.value !== dispatchSurface ) {
+			return;
+		}
+		related.value = { items: relatedItems, settled: true };
 	}
 
 	/**
 	 * Handles a query routed through the active mode's getResults.
+	 *
+	 * Previous results stay on screen while a refinement runs — they are
+	 * stamped with the surface that produced them, so they render but cannot
+	 * be the default Enter target.
 	 *
 	 * @param {Object} mode The active mode object.
 	 * @param {string} currentQuery The query string.
 	 */
 	function handleModeQuery( mode, currentQuery ) {
 		const tokens = deps.tokens ? deps.tokens.value : [];
+		const dispatchSurface = surfaceKey.value;
 
 		// Empty query: fire immediately. No debounce, no abort — modes
 		// load their root state on entry and the user expects no delay.
+		// Uncancellable, so `dispatchSurface` is the only thing stopping a
+		// late landing from overwriting a level the user has left.
 		if ( !currentQuery ) {
 			isPending.value = true;
 			( async () => {
@@ -265,13 +369,16 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 					const result = await mode.getResults(
 						'', undefined, tokens, activeModeContext.value
 					);
-					applyModeResults( mode, currentQuery, normalizeProviderResult( result ) );
+					applyContent(
+						normalizeProviderResult( result ), dispatchSurface
+					);
 				} catch ( error ) {
 					mw.log.error(
 						'[commandPalette] Mode "' + mode.id + '" failed:', error
 					);
+					applyContent( [], dispatchSurface );
 				} finally {
-					if ( query.value === currentQuery && activeMode.value === mode ) {
+					if ( surfaceKey.value === dispatchSurface ) {
 						isPending.value = false;
 					}
 				}
@@ -279,19 +386,19 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			return;
 		}
 
-		const isStale = () => query.value !== currentQuery || activeMode.value !== mode;
+		const isStale = () => surfaceKey.value !== dispatchSurface;
 		lifecycle.runDebouncedAbortable( {
 			debounceMs: mode.debounceMs ?? DEFAULT_DEBOUNCE_MS,
 			isStale,
 			run: ( signal ) => mode.getResults( currentQuery, signal, tokens, activeModeContext.value ),
-			onResult: ( result ) => applyModeResults( mode, currentQuery, normalizeProviderResult( result ) ),
+			onResult: ( result ) => applyContent(
+				normalizeProviderResult( result ), dispatchSurface
+			),
 			onError: ( error ) => {
 				mw.log.error(
 					'[commandPalette] Mode "' + mode.id + '" failed:', error
 				);
-				if ( !isStale() ) {
-					displayedItems.value = [];
-				}
+				applyContent( [], dispatchSurface );
 			}
 		} );
 	}
@@ -307,7 +414,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		activeMode.value = mode;
 		activeModeContext.value = [];
 		query.value = '';
-		displayedItems.value = [];
+		resetContent();
 		handleModeQuery( mode, '' );
 	}
 
@@ -342,7 +449,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		resetOperationState();
 		resetDetailState();
 		query.value = '';
-		displayedItems.value = [];
+		resetContent();
 		handleModeQuery( activeMode.value, '' );
 	}
 
@@ -360,7 +467,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		resetOperationState();
 		resetDetailState();
 		query.value = '';
-		displayedItems.value = [];
+		resetContent();
 		handleModeQuery( activeMode.value, '' );
 	}
 
@@ -394,29 +501,33 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		const contentProvider = providers.find(
 			( p ) => p.canProvide( newQuery )
 		);
+		const dispatchSurface = surfaceKey.value;
 
 		if ( !contentProvider ) {
-			setResults( [] );
+			applyContent( [], dispatchSurface, null );
 			return;
 		}
 
-		// Show stale results while loading if configured
-		if ( contentProvider.keepStaleResults && flatItems.value.length > 0 ) {
-			const staleItems = flatItems.value.filter(
-				( item ) => item.source && (
-					item.source.startsWith( contentProvider.id + ':' ) ||
-					item.source === contentProvider.id
-				)
-			);
-			setResults( staleItems );
-		} else {
-			setResults( [] );
-		}
+		// Keep the previous fetch's rows on screen while the new one runs, when
+		// the provider opts in. They keep the surface stamp they were produced
+		// for, so they render without becoming a valid activation target.
+		content.value = {
+			items: contentProvider.keepStaleResults ?
+				content.value.items.filter(
+					( item ) => item.source && (
+						item.source.startsWith( contentProvider.id + ':' ) ||
+						item.source === contentProvider.id
+					)
+				) :
+				[],
+			forSurface: content.value.forSurface,
+			providerId: contentProvider.id
+		};
 
 		if ( contentProvider.debounceMs > 0 ) {
-			handleAsyncProvider( contentProvider, newQuery );
+			handleAsyncProvider( contentProvider, newQuery, dispatchSurface );
 		} else {
-			handleSyncProvider( contentProvider, newQuery );
+			handleSyncProvider( contentProvider, newQuery, dispatchSurface );
 		}
 	}
 
@@ -555,12 +666,9 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		if ( !deps.getHelpCatalogItems ) {
 			return;
 		}
-		const items = deps.getHelpCatalogItems() || [];
 		resetOperationState();
 		resetDetailState();
-		displayedItems.value = items.length > 0 ?
-			[ { heading: 'citizen-command-palette-help-section-modes', items: items } ] :
-			[];
+		helpItems.value = deps.getHelpCatalogItems() || [];
 	}
 
 	/**
@@ -582,7 +690,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		if ( activeMode.value ) {
 			resetOperationState();
 			resetDetailState();
-			displayedItems.value = [];
+			helpItems.value = [];
 		} else {
 			loadHelpCatalog();
 		}
@@ -598,17 +706,16 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			return;
 		}
 		helpVisible.value = false;
+		helpItems.value = [];
 		if ( activeMode.value ) {
 			handleModeQuery( activeMode.value, query.value );
-		} else if ( !query.value ) {
+		} else if ( query.value ) {
+			// updateQuery records a query typed while help is up but skips
+			// dispatch, so the surface underneath is rebuilt on the way out.
+			updateQuery( query.value );
+		} else {
 			clearSearch();
 		}
-		// else: at root with a non-empty query is unreachable — `?` only
-		// opens help at empty input, and selecting `/help` triggers a
-		// tokenInput.clear() whose watcher empties query.value (the
-		// updateQuery guard prevents displayedItems mutation). Callers that
-		// follow up with enterMode (e.g. exitWithQuery) handle the next
-		// state themselves; closing here would race with their setup.
 	}
 
 	/**
@@ -646,6 +753,10 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		isPending,
 		showPending,
 		hasDisplayedItems,
+		isLoading,
+		surfaceKey,
+		isLeadReady,
+		defaultHighlightIndex,
 		stateConfig,
 		activeMode,
 		activeModeContext,
