@@ -83,7 +83,11 @@ module.exports = exports = defineComponent( {
 		function getGlobalIndex( sectionIndex, localIndex ) {
 			let offset = 0;
 			for ( let i = 0; i < sectionIndex; i++ ) {
-				offset += props.sections[ i ].items.length;
+				// Vue runs a row's `ref` callback during teardown against an
+				// already-shortened section list, so a preceding section can
+				// be gone while this index still refers to it.
+				const preceding = props.sections[ i ];
+				offset += preceding ? preceding.items.length : 0;
 			}
 			return offset + localIndex;
 		}

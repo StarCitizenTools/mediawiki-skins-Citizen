@@ -60,7 +60,7 @@
 			></cdx-text-input>
 		</div>
 		<div
-			v-if="isPending && showPending"
+			v-if="showPending || activationQueued"
 			class="citizen-command-palette-header__progress-indicator citizen-loading"
 		></div>
 	</div>
@@ -93,11 +93,13 @@ module.exports = exports = defineComponent( {
 			type: Number,
 			default: -1
 		},
-		isPending: {
+		showPending: {
 			type: Boolean,
 			default: false
 		},
-		showPending: {
+		// A held Enter waiting on results. Separate from showPending, which is
+		// delayed by design and never rises at all on the undebounced path.
+		activationQueued: {
 			type: Boolean,
 			default: false
 		},

@@ -24,8 +24,8 @@
 				:tokens="tokenInput.tokens.value"
 				:free-text="tokenInput.freeText.value"
 				:selected-token-index="tokenInput.selectedIndex.value"
-				:is-pending="isPending"
 				:show-pending="showPending"
+				:activation-queued="activationQueued"
 				:active-mode="activeMode"
 				:active-mode-context="activeModeContext"
 				:help-visible="helpVisible"
@@ -63,7 +63,7 @@
 					<template v-else>
 						<div class="citizen-command-palette__results">
 							<command-palette-empty-state
-								v-if="!isPending && flatItems.length === 0"
+								v-if="!isLoading && flatItems.length === 0"
 								:title="emptyStateContent.title"
 								:description="emptyStateContent.description"
 								:icon="emptyStateContent.icon"
@@ -115,6 +115,7 @@ const useGalleryColumnCount = require( '../composables/useGalleryColumnCount.js'
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
+const usePendingActivation = require( '../composables/usePendingActivation.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
 const useResultRouter = require( '../composables/useResultRouter.js' );
 const useTokenizedInput = require( '../composables/useTokenizedInput.js' );
@@ -321,10 +322,15 @@ module.exports = exports = defineComponent( {
 			itemRefs
 		} );
 
+		// Bound below: close() must exist before useResultRouter, which must
+		// exist before usePendingActivation can take its selectResult.
+		let cancelPendingActivation = () => {};
+
 		const close = () => {
 			if ( !isOpen.value ) {
 				return;
 			}
+			cancelPendingActivation();
 			isOpen.value = false;
 			if ( typeof paletteExternalClose === 'function' ) {
 				paletteExternalClose();
@@ -342,6 +348,21 @@ module.exports = exports = defineComponent( {
 			control: { focusInput, close, paletteRoot },
 			preview: previewService
 		} );
+
+		const pendingActivation = usePendingActivation( {
+			surfaceKey: orch.surfaceKey,
+			isLeadReady: orch.isLeadReady,
+			items: orch.flatItems,
+			defaultHighlightIndex: orch.defaultHighlightIndex,
+			onActivate: ( item ) => selectResult( item )
+		} );
+		cancelPendingActivation = pendingActivation.cancel;
+
+		// Only a surface the user drove with input may hold an Enter.
+		const canQueueActivation = computed(
+			() => !orch.isLeadReady.value &&
+				Boolean( orch.query.value || orch.activeMode.value )
+		);
 
 		const handleRemoveToken = ( index ) => {
 			const token = tokenInput.tokens.value[ index ];
@@ -371,9 +392,12 @@ module.exports = exports = defineComponent( {
 				items: orch.flatItems,
 				query: orch.query,
 				requestHeaderCopy,
+				canQueueActivation,
+				onQueueActivation: pendingActivation.arm,
 				onSelect: selectResult,
 				onClose: close,
 				onClearQuery: () => {
+					pendingActivation.cancel();
 					tokenInput.clear();
 					orch.updateQuery( '' );
 				}
@@ -457,15 +481,36 @@ module.exports = exports = defineComponent( {
 			orch.updateQuery( newQuery );
 		} );
 
-		// Watch for changes in displayed items to adjust highlighting
-		watch( orch.flatItems, ( newItems ) => {
+		// A surface change drops any selection the user made and returns the
+		// highlight to the default. A refresh within the same surface keeps
+		// their selection by item id, so a late-arriving group cannot re-point
+		// it at whatever inherits its index.
+		let appliedSurface = null;
+
+		watch( orch.flatItems, ( newItems, oldItems ) => {
 			itemRefs.value.clear();
 			actionNav.deactivate();
-			if ( newItems.length === 0 ) {
-				listNav.highlightedIndex.value = -1;
-			} else if ( listNav.highlightedIndex.value < 0 || listNav.highlightedIndex.value >= newItems.length ) {
-				listNav.highlightedIndex.value = 0;
+
+			const sameSurface = orch.surfaceKey.value === appliedSurface;
+			appliedSurface = orch.surfaceKey.value;
+
+			const previousIndex = listNav.highlightedIndex.value;
+			const previousItem = sameSurface && oldItems && previousIndex >= 0 ?
+				oldItems[ previousIndex ] :
+				null;
+
+			let nextIndex = orch.defaultHighlightIndex.value;
+			if ( previousItem ) {
+				// Match on id, not object identity: providers rebuild their
+				// item objects on every fetch.
+				const restored = newItems.findIndex(
+					( candidate ) => candidate.id === previousItem.id
+				);
+				if ( restored >= 0 ) {
+					nextIndex = restored;
+				}
 			}
+			listNav.highlightedIndex.value = nextIndex;
 
 			// Notify the preview handler (if any) so it can scan the
 			// freshly-rendered list for previewable anchors and attach
@@ -521,7 +566,9 @@ module.exports = exports = defineComponent( {
 			query: orch.query,
 			displayedItems: orch.displayedItems,
 			flatItems,
-			isPending: orch.isPending,
+			isLoading: orch.isLoading,
+			// Exposed at the top level so Vue unwraps the ref for the template.
+			activationQueued: pendingActivation.isActivationQueued,
 			showPending: orch.showPending,
 			helpVisible: orch.helpVisible,
 			orchCloseHelp: orch.closeHelp,

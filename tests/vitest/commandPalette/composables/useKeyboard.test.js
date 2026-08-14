@@ -30,6 +30,8 @@ function toGrouped( deps ) {
 			items: deps.items,
 			query: deps.query,
 			requestHeaderCopy: deps.requestHeaderCopy,
+			canQueueActivation: deps.canQueueActivation,
+			onQueueActivation: deps.onQueueActivation,
 			onSelect: deps.onSelect,
 			onClose: deps.onClose,
 			onClearQuery: deps.onClearQuery
@@ -127,6 +129,8 @@ describe( 'useKeyboard', () => {
 			actionNav: actionNav,
 			onSelect: vi.fn(),
 			onClose: vi.fn(),
+			canQueueActivation: ref( false ),
+			onQueueActivation: vi.fn(),
 			query: ref( '' ),
 			activeMode: ref( null ),
 			onClearQuery: vi.fn(),
@@ -638,16 +642,46 @@ describe( 'useKeyboard', () => {
 	} );
 
 	describe( 'keyboardHints', () => {
-		it( 'should return Enter/Search and Exit when no items and nothing highlighted', () => {
+		it( 'should offer no Enter hint when nothing is highlighted and nothing can be queued', () => {
 			deps.items.value = [];
 			listNav.highlightedIndex.value = -1;
 
 			const hints = keyboard.keyboardHints.value;
 
+			// Enter has nothing to act on here, so advertising it would promise
+			// a keystroke that does nothing.
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵' },
 				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
+		} );
+
+		it( 'should offer the Enter hint when an activation can be queued', () => {
+			deps.items.value = [];
+			listNav.highlightedIndex.value = -1;
+			deps.canQueueActivation.value = true;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toContainEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
+			);
+		} );
+
+		it( 'should name Enter as Search when the pinned fulltext row is highlighted', () => {
+			deps.items.value = [
+				{ id: 1, type: 'action', source: 'queryAction:fulltext-search' },
+				{ id: 2, type: 'page' }
+			];
+			listNav.highlightedIndex.value = 0;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toContainEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵' }
+			);
+			expect( hints ).not.toContainEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
+			);
 		} );
 
 		it( 'should return Enter/Select, Navigate, and Exit when item is highlighted with no actions', () => {

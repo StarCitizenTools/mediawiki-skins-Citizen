@@ -1,0 +1,75 @@
+const { ref, watch } = require( 'vue' );
+
+// Past the 120ms debounce plus a normal round trip, but short enough that a
+// hung request releases the key rather than firing a navigation the user has
+// stopped expecting.
+const PENDING_ACTIVATION_TIMEOUT_MS = 2000;
+
+/**
+ * Holds an Enter press until the lead result group settles for the surface it
+ * was pressed on, for surfaces where that group is asynchronous and there is
+ * therefore no highlight yet when the key lands.
+ *
+ * The wait is bound to the whole surface, not just the query: entering a mode,
+ * drilling in or out, and opening help all leave the query at `''`, so a
+ * query-only binding would let an activation armed on one level fire against
+ * another.
+ *
+ * @param {Object} options
+ * @param {import('vue').Ref<string>} options.surfaceKey Identity of the current surface.
+ * @param {import('vue').Ref<boolean>} options.isLeadReady Whether the lead group has settled.
+ * @param {import('vue').Ref<Array>} options.items Flat item list.
+ * @param {import('vue').Ref<number>} options.defaultHighlightIndex Index the highlight defaults to.
+ * @param {Function} options.onActivate Called with the item to activate.
+ * @return {{ arm: Function, cancel: Function, isActivationQueued: import('vue').Ref<boolean> }}
+ */
+function usePendingActivation( options ) {
+	// Owned solely here. The fetch lifecycle's flags know nothing about a held
+	// keystroke and would lower them on an unrelated schedule.
+	const isActivationQueued = ref( false );
+	let armedSurface = null;
+	let timeoutId = null;
+
+	function cancel() {
+		if ( !isActivationQueued.value ) {
+			return;
+		}
+		isActivationQueued.value = false;
+		armedSurface = null;
+		clearTimeout( timeoutId );
+		timeoutId = null;
+	}
+
+	function arm() {
+		armedSurface = options.surfaceKey.value;
+		isActivationQueued.value = true;
+		clearTimeout( timeoutId );
+		timeoutId = setTimeout( cancel, PENDING_ACTIVATION_TIMEOUT_MS );
+	}
+
+	watch( options.surfaceKey, () => {
+		cancel();
+	} );
+
+	watch( options.isLeadReady, ( ready ) => {
+		if ( !ready || !isActivationQueued.value ) {
+			return;
+		}
+		if ( options.surfaceKey.value !== armedSurface ) {
+			cancel();
+			return;
+		}
+		const index = options.defaultHighlightIndex.value;
+		const item = index >= 0 ? options.items.value[ index ] : null;
+		cancel();
+		// A group that settled empty has no activation to perform.
+		if ( item ) {
+			options.onActivate( item );
+		}
+	} );
+
+	return { arm, cancel, isActivationQueued };
+}
+
+module.exports = usePendingActivation;
+module.exports.PENDING_ACTIVATION_TIMEOUT_MS = PENDING_ACTIVATION_TIMEOUT_MS;
