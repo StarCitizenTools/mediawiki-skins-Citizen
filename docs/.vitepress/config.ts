@@ -4,8 +4,8 @@ import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-i
 import llmstxt, { copyOrDownloadAsMarkdownButtons } from "vitepress-plugin-llms";
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
 
-const BASE_URL = process.env.BASE_URL ?? "/";
-const SITE_ORIGIN = process.env.SITE_ORIGIN ?? "https://mwcitizen.skin";
+const BASE_URL = process.env.BASE_URL ?? "/",
+	SITE_ORIGIN = process.env.SITE_ORIGIN ?? "https://mwcitizen.skin";
 
 function withBase(path: string): string {
 	return `${BASE_URL}${path}`.replaceAll(/\/+/g, "/");

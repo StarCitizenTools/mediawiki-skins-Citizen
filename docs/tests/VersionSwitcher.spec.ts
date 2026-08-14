@@ -3,9 +3,9 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { ref } from "vue";
 import VersionSwitcher from "../.vitepress/theme/components/VersionSwitcher.vue";
 
-const route = { path: "/customization/share" };
-const site = ref({ base: "/" });
-const theme = ref({ docsVersion: "main" });
+const route = { path: "/customization/share" },
+	site = ref({ base: "/" }),
+	theme = ref({ docsVersion: "main" });
 
 vi.mock("vitepress", () => ({
 	useData: () => ({ theme, site }),
@@ -79,8 +79,8 @@ describe("VersionSwitcher rendering", () => {
 	it("lists main + manifest entries in the dropdown", async () => {
 		stubFetch(200);
 
-		const wrapper = await openSwitcher();
-		const items = wrapper.findAll(".VersionSwitcher__item");
+		const wrapper = await openSwitcher(),
+			items = wrapper.findAll(".VersionSwitcher__item");
 
 		expect(items).toHaveLength(3);
 		expect(items[0].text()).toContain("main");
@@ -105,9 +105,8 @@ describe("VersionSwitcher rendering", () => {
 
 describe("VersionSwitcher navigation (root deploy)", () => {
 	it("navigates path-preserving when target page exists", async () => {
-		const fetchSpy = stubFetch(200);
-
-		const wrapper = await openSwitcher();
+		const fetchSpy = stubFetch(200),
+			wrapper = await openSwitcher();
 		await wrapper.findAll(".VersionSwitcher__item")[1].trigger("click");
 		await flushPromises();
 
@@ -174,9 +173,8 @@ describe("VersionSwitcher manifest fetch (project subpath deploy)", () => {
 describe("VersionSwitcher navigation (project subpath deploy)", () => {
 	it("navigates path-preserving with the project prefix from main", async () => {
 		setProjectMain();
-		const fetchSpy = stubFetch(200);
-
-		const wrapper = await openSwitcher();
+		const fetchSpy = stubFetch(200),
+			wrapper = await openSwitcher();
 		await wrapper.findAll(".VersionSwitcher__item")[1].trigger("click");
 		await flushPromises();
 
