@@ -248,37 +248,21 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
-	 * Handles a synchronous provider.
+	 * Dispatches a provider with debouncing, abort and pending state.
+	 *
+	 * A provider declaring `debounceMs: 0` still comes through here: it skips
+	 * the wait, not the cancellation. Resolving that 0 with `||` would silently
+	 * promote it to the default and was why a no-debounce provider previously
+	 * had to bypass abort and pending state altogether.
 	 *
 	 * @param {Object} provider The provider.
 	 * @param {string} currentQuery The query at dispatch time.
 	 * @param {string} dispatchSurface surfaceKey at dispatch time.
 	 */
-	async function handleSyncProvider( provider, currentQuery, dispatchSurface ) {
-		try {
-			const result = await provider.getResults( currentQuery, undefined );
-			applyContent(
-				normalizeProviderResult( result ), dispatchSurface, provider.id
-			);
-		} catch ( error ) {
-			mw.log.error(
-				'[commandPalette] Sync provider "' + provider.id + '" failed:', error
-			);
-			applyContent( [], dispatchSurface, provider.id );
-		}
-	}
-
-	/**
-	 * Handles an asynchronous provider with debouncing and abort.
-	 *
-	 * @param {Object} provider The provider.
-	 * @param {string} currentQuery The query at dispatch time.
-	 * @param {string} dispatchSurface surfaceKey at dispatch time.
-	 */
-	function handleAsyncProvider( provider, currentQuery, dispatchSurface ) {
+	function dispatchProvider( provider, currentQuery, dispatchSurface ) {
 		const isStale = () => surfaceKey.value !== dispatchSurface;
 		lifecycle.runDebouncedAbortable( {
-			debounceMs: provider.debounceMs || DEFAULT_DEBOUNCE_MS,
+			debounceMs: provider.debounceMs ?? DEFAULT_DEBOUNCE_MS,
 			isStale,
 			run: ( signal ) => provider.getResults( currentQuery, signal ),
 			onResult: ( result ) => applyContent(
@@ -524,11 +508,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			providerId: contentProvider.id
 		};
 
-		if ( contentProvider.debounceMs > 0 ) {
-			handleAsyncProvider( contentProvider, newQuery, dispatchSurface );
-		} else {
-			handleSyncProvider( contentProvider, newQuery, dispatchSurface );
-		}
+		dispatchProvider( contentProvider, newQuery, dispatchSurface );
 	}
 
 	/**
