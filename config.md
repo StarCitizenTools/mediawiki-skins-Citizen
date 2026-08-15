@@ -239,7 +239,7 @@ $wgCitizenEnableManifest = true;
 
 ### `$wgCitizenManifestOptions`
 
-Customizes the web app manifest settings, such as the app name, colors, and icons.
+Customizes the web app manifest settings, such as the app name, colors, icons, and shortcuts.
 
 ::: details View default configuration
 
@@ -248,9 +248,43 @@ $wgCitizenManifestOptions = [
     'background_color' => '#0d0e12',
     'description' => '',
     'short_name' => '',
-    'theme_color' => "#0d0e12",
+    'theme_color' => '#0d0e12',
     'icons' => [],
 ];
 ```
 
 :::
+
+#### `icons`
+
+The icons the installed app is represented by, as defined by the [manifest `icons` member](https://www.w3.org/TR/appmanifest/#icons-member). Each entry may set `src`, `sizes`, `type`, and `purpose`; any other key is dropped.
+
+```php [LocalSettings.php]
+$wgCitizenManifestOptions['icons'] = [
+    [ 'src' => '/images/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png' ],
+    [ 'src' => '/images/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml', 'purpose' => 'any maskable' ],
+];
+```
+
+Leave the list empty to derive the icons from [`$wgLogos`](https://www.mediawiki.org/wiki/Manual:$wgLogos) instead — Citizen reads each logo's dimensions and MIME type off the file itself, and skips any it cannot measure.
+
+#### `shortcuts`
+
+The shortcuts a long press or right click on the installed app offers, as defined by the [manifest `shortcuts` member](https://www.w3.org/TR/appmanifest/#shortcuts-member). Each entry may set `name`, `short_name`, `description`, `url`, and `icons`; any other key is dropped. `name` and `url` are both required — the spec says so, and Citizen drops entries missing either rather than shipping them incomplete.
+
+```php [LocalSettings.php]
+$wgCitizenManifestOptions['shortcuts'] = [
+    [ 'name' => 'Search', 'url' => '/wiki/Special:Search' ],
+    [
+        'name' => 'Guides',
+        'short_name' => 'Guides',
+        'description' => 'Community guides',
+        'url' => '/wiki/Project:Guides',
+        'icons' => [
+            [ 'src' => '/images/guides.png', 'sizes' => '96x96' ],
+        ],
+    ],
+];
+```
+
+Leave the option unset to get Citizen's defaults — Search, Random, and Recent changes, each resolved against your wiki's own article path. Set it to `[]` to ship no shortcuts at all.

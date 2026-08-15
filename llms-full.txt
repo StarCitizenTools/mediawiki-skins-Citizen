@@ -530,7 +530,7 @@ $wgCitizenEnableManifest = true;
 
 ### `$wgCitizenManifestOptions`
 
-Customizes the web app manifest settings, such as the app name, colors, and icons.
+Customizes the web app manifest settings, such as the app name, colors, icons, and shortcuts.
 
 ::: details View default configuration
 
@@ -539,12 +539,46 @@ $wgCitizenManifestOptions = [
     'background_color' => '#0d0e12',
     'description' => '',
     'short_name' => '',
-    'theme_color' => "#0d0e12",
+    'theme_color' => '#0d0e12',
     'icons' => [],
 ];
 ```
 
 :::
+
+#### `icons`
+
+The icons the installed app is represented by, as defined by the [manifest `icons` member](https://www.w3.org/TR/appmanifest/#icons-member). Each entry may set `src`, `sizes`, `type`, and `purpose`; any other key is dropped.
+
+```php [LocalSettings.php]
+$wgCitizenManifestOptions['icons'] = [
+    [ 'src' => '/images/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png' ],
+    [ 'src' => '/images/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml', 'purpose' => 'any maskable' ],
+];
+```
+
+Leave the list empty to derive the icons from [`$wgLogos`](https://www.mediawiki.org/wiki/Manual:$wgLogos) instead — Citizen reads each logo's dimensions and MIME type off the file itself, and skips any it cannot measure.
+
+#### `shortcuts`
+
+The shortcuts a long press or right click on the installed app offers, as defined by the [manifest `shortcuts` member](https://www.w3.org/TR/appmanifest/#shortcuts-member). Each entry may set `name`, `short_name`, `description`, `url`, and `icons`; any other key is dropped. `name` and `url` are both required — the spec says so, and Citizen drops entries missing either rather than shipping them incomplete.
+
+```php [LocalSettings.php]
+$wgCitizenManifestOptions['shortcuts'] = [
+    [ 'name' => 'Search', 'url' => '/wiki/Special:Search' ],
+    [
+        'name' => 'Guides',
+        'short_name' => 'Guides',
+        'description' => 'Community guides',
+        'url' => '/wiki/Project:Guides',
+        'icons' => [
+            [ 'src' => '/images/guides.png', 'sizes' => '96x96' ],
+        ],
+    ],
+];
+```
+
+Leave the option unset to get Citizen's defaults — Search, Random, and Recent changes, each resolved against your wiki's own article path. Set it to `[]` to ship no shortcuts at all.
 
 ---
 
@@ -2568,245 +2602,35 @@ description: Changelog of the latest version of Citizen.
 ---
 
 ---
-url: /changelogs/v1.14.0.md
----
-
-
----
-
----
-url: /changelogs/v2.17.2.md
----
-
-
----
-
----
-url: /changelogs/v1.14.1.md
----
-
-
----
-
----
-url: /changelogs/v1.15.0.md
----
-
-
----
-
----
-url: /changelogs/v1.16.0.md
----
-
-
----
-
----
-url: /changelogs/v2.18.0.md
----
-
-
----
-
----
-url: /changelogs/v2.23.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.0.md
----
-
-
----
-
----
-url: /changelogs/v1.16.1.md
----
-
-
----
-
----
-url: /changelogs/v2.18.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.2.md
----
-
-
----
-
----
-url: /changelogs/v1.17.3.md
----
-
-
----
-
----
-url: /changelogs/v2.19.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.4.md
----
-
-
----
-
----
-url: /changelogs/v1.17.5.md
----
-
-
----
-
----
-url: /changelogs/v1.17.6.md
----
-
-
----
-
----
-url: /changelogs/v2.2.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.7.md
----
-
-
----
-
----
-url: /changelogs/v1.17.8.md
----
-
-
----
-
----
-url: /changelogs/v1.17.9.md
----
-
-
----
-
----
-url: /changelogs/v2.20.0.md
----
-
-
----
-
----
-url: /changelogs/v1.9.4.md
----
-
-
----
-
----
-url: /changelogs/v1.9.5.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-alpha.1.md
----
-
-
----
-
----
-url: /changelogs/v2.21.0.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-alpha.2.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.0.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.1.md
----
-
-
----
-
----
-url: /changelogs/v2.22.0.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.2.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.3.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.4.md
----
-
-
----
-
----
-url: /changelogs/v2.22.1.md
----
-
-
----
-
----
 url: /changelogs/v2.0.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.10.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.13.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.33.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.0.md
 ---
 
 
@@ -2827,70 +2651,7 @@ url: /changelogs/v2.1.0.md
 ---
 
 ---
-url: /changelogs/v2.39.0.md
----
-
-
----
-
----
 url: /changelogs/v2.10.0.md
----
-
-
----
-
----
-url: /changelogs/v2.10.1.md
----
-
-
----
-
----
-url: /changelogs/v2.11.0.md
----
-
-
----
-
----
-url: /changelogs/v2.24.0.md
----
-
-
----
-
----
-url: /changelogs/v2.11.1.md
----
-
-
----
-
----
-url: /changelogs/v2.12.0.md
----
-
-
----
-
----
-url: /changelogs/v2.13.0.md
----
-
-
----
-
----
-url: /changelogs/v2.25.0.md
----
-
-
----
-
----
-url: /changelogs/v2.13.1.md
 ---
 
 
@@ -2904,6 +2665,13 @@ url: /changelogs/v2.13.2.md
 ---
 
 ---
+url: /changelogs/v2.10.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.13.3.md
 ---
 
@@ -2911,7 +2679,7 @@ url: /changelogs/v2.13.3.md
 ---
 
 ---
-url: /changelogs/v2.26.0.md
+url: /changelogs/v2.11.0.md
 ---
 
 
@@ -2925,7 +2693,21 @@ url: /changelogs/v2.13.4.md
 ---
 
 ---
+url: /changelogs/v2.11.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.13.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.12.0.md
 ---
 
 
@@ -2939,7 +2721,7 @@ url: /changelogs/v2.14.0.md
 ---
 
 ---
-url: /changelogs/v2.27.0.md
+url: /changelogs/v2.13.0.md
 ---
 
 
@@ -2947,6 +2729,13 @@ url: /changelogs/v2.27.0.md
 
 ---
 url: /changelogs/v2.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.1.md
 ---
 
 
@@ -2967,7 +2756,7 @@ url: /changelogs/v2.15.1.md
 ---
 
 ---
-url: /changelogs/v2.28.0.md
+url: /changelogs/v2.17.0.md
 ---
 
 
@@ -2981,6 +2770,20 @@ url: /changelogs/v2.16.0.md
 ---
 
 ---
+url: /changelogs/v2.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.17.2.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.16.1.md
 ---
 
@@ -2988,7 +2791,98 @@ url: /changelogs/v2.16.1.md
 ---
 
 ---
-url: /changelogs/v2.17.0.md
+url: /changelogs/v2.18.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.18.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.19.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.2.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.20.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.21.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.22.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.22.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.24.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.23.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.25.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.26.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.28.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.27.0.md
 ---
 
 
@@ -3002,28 +2896,7 @@ url: /changelogs/v2.29.0.md
 ---
 
 ---
-url: /changelogs/v2.17.1.md
----
-
-
----
-
----
 url: /changelogs/v2.3.0.md
----
-
-
----
-
----
-url: /changelogs/v2.3.1.md
----
-
-
----
-
----
-url: /changelogs/v2.40.0.md
 ---
 
 
@@ -3037,21 +2910,14 @@ url: /changelogs/v2.3.2.md
 ---
 
 ---
+url: /changelogs/v2.3.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.3.3.md
----
-
-
----
-
----
-url: /changelogs/v2.3.4.md
----
-
-
----
-
----
-url: /changelogs/v2.40.1.md
 ---
 
 
@@ -3079,7 +2945,7 @@ url: /changelogs/v2.31.0.md
 ---
 
 ---
-url: /changelogs/v2.40.2.md
+url: /changelogs/v2.3.4.md
 ---
 
 
@@ -3100,14 +2966,7 @@ url: /changelogs/v2.32.0.md
 ---
 
 ---
-url: /changelogs/v2.33.0.md
----
-
-
----
-
----
-url: /changelogs/v2.5.0.md
+url: /changelogs/v1.17.7.md
 ---
 
 
@@ -3121,42 +2980,14 @@ url: /changelogs/v2.34.0.md
 ---
 
 ---
+url: /changelogs/v1.15.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.35.0.md
----
-
-
----
-
----
-url: /changelogs/v2.37.0.md
----
-
-
----
-
----
-url: /changelogs/v2.5.1.md
----
-
-
----
-
----
-url: /changelogs/v2.36.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.1.md
 ---
 
 
@@ -3170,392 +3001,21 @@ url: /changelogs/v2.5.2.md
 ---
 
 ---
-url: /changelogs/v2.38.2.md
+url: /changelogs/v1.16.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.38.3.md
+url: /changelogs/v2.0.0-beta.1.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v1.10.0.md
----
-
-
----
-
----
-url: /changelogs/v2.6.0.md
----
-
-
----
-
----
-url: /changelogs/v2.8.0.md
----
-
-
----
-
----
-url: /changelogs/v2.39.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.2.md
----
-
-
----
-
----
-url: /changelogs/v2.39.3.md
----
-
-
----
-
----
-url: /changelogs/v2.39.4.md
----
-
-
----
-
----
-url: /changelogs/v2.4.0.md
----
-
-
----
-
----
-url: /changelogs/v2.4.1.md
----
-
-
----
-
----
-url: /changelogs/v2.4.2.md
----
-
-
----
-
----
-url: /changelogs/v2.4.3.md
----
-
-
----
-
----
-url: /changelogs/v2.4.4.md
----
-
-
----
-
----
-url: /changelogs/v2.6.1.md
----
-
-
----
-
----
-url: /changelogs/v2.6.2.md
----
-
-
----
-
----
-url: /changelogs/v2.6.3.md
----
-
-
----
-
----
-url: /changelogs/v2.6.4.md
----
-
-
----
-
----
-url: /changelogs/v2.6.5.md
----
-
-
----
-
----
-url: /changelogs/v2.6.6.md
----
-
-
----
-
----
-url: /changelogs/v2.7.0.md
----
-
-
----
-
----
-url: /changelogs/v2.7.1.md
----
-
-
----
-
----
-url: /changelogs/v2.7.10.md
----
-
-
----
-
----
-url: /changelogs/v2.7.11.md
----
-
-
----
-
----
-url: /changelogs/v2.8.1.md
----
-
-
----
-
----
-url: /changelogs/v2.7.2.md
----
-
-
----
-
----
-url: /changelogs/v2.8.2.md
----
-
-
----
-
----
-url: /changelogs/v2.7.3.md
----
-
-
----
-
----
-url: /changelogs/v2.8.3.md
----
-
-
----
-
----
-url: /changelogs/v2.7.4.md
----
-
-
----
-
----
-url: /changelogs/v2.8.4.md
----
-
-
----
-
----
-url: /changelogs/v2.7.5.md
----
-
-
----
-
----
-url: /changelogs/v2.8.5.md
----
-
-
----
-
----
-url: /changelogs/v2.7.6.md
----
-
-
----
-
----
-url: /changelogs/v2.9.0.md
----
-
-
----
-
----
-url: /changelogs/v2.7.7.md
----
-
-
----
-
----
-url: /changelogs/v2.9.1.md
----
-
-
----
-
----
-url: /changelogs/v2.7.8.md
----
-
-
----
-
----
-url: /changelogs/v3.0.0.md
----
-
-
----
-
----
-url: /changelogs/v1.13.0.md
----
-
-
----
-
----
-url: /changelogs/v3.7.0.md
----
-
-
----
-
----
-url: /changelogs/v3.1.0.md
----
-
-
----
-
----
-url: /changelogs/v3.6.0.md
----
-
-
----
-
----
-url: /changelogs/v3.8.0.md
----
-
-
----
-
----
-url: /changelogs/v3.9.0.md
----
-
-
----
-
----
-url: /changelogs/v3.10.0.md
----
-
-
----
-
----
-url: /changelogs/v3.11.0.md
----
-
-
----
-
----
-url: /changelogs/v3.12.0.md
----
-
-
----
-
----
-url: /changelogs/v3.13.0.md
----
-
-
----
-
----
-url: /changelogs/v3.14.0.md
----
-
-
----
-
----
-url: /changelogs/v3.15.0.md
----
-
-
----
-
----
-url: /changelogs/v3.15.1.md
----
-
-
----
-
----
-url: /changelogs/v3.16.0.md
----
-
-
----
-
----
-url: /changelogs/v3.16.1.md
----
-
-
----
-
----
-url: /changelogs/v3.17.0.md
----
-
-
----
-
----
-url: /changelogs/v3.17.1.md
+url: /changelogs/v2.36.0.md
 ---
 
 
@@ -3569,14 +3029,56 @@ url: /changelogs/v3.19.0.md
 ---
 
 ---
-url: /changelogs/v3.18.0.md
----
-
-
----
-
----
 url: /changelogs/v3.2.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.37.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.12.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.1.md
 ---
 
 
@@ -3590,7 +3092,77 @@ url: /changelogs/v3.20.0.md
 ---
 
 ---
+url: /changelogs/v1.17.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.13.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.3.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.38.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.14.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.5.md
 ---
 
 
@@ -3604,7 +3176,77 @@ url: /changelogs/v3.3.1.md
 ---
 
 ---
+url: /changelogs/v2.38.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.6.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.3.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.38.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.15.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-alpha.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.38.3.md
 ---
 
 
@@ -3618,6 +3260,27 @@ url: /changelogs/v3.4.0.md
 ---
 
 ---
+url: /changelogs/v1.17.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.15.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.5.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.5.0.md
 ---
 
@@ -3625,6 +3288,377 @@ url: /changelogs/v3.5.0.md
 ---
 
 ---
+url: /changelogs/v1.17.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.16.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.9.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.9.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.6.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.7.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-alpha.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.9.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.10.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.11.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.18.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.7.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.7.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.9.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.0.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.1.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.11.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.10.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.9.1.md
 ---
 
