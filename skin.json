@@ -508,6 +508,7 @@
 				"action-edit",
 				"citizen-command-palette-action-view",
 				"citizen-command-palette-back",
+				"citizen-command-palette-dismiss",
 				"citizen-command-palette-label",
 				"citizen-command-palette-results",
 				"citizen-command-palette-command-action-description",
