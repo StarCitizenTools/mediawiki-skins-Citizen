@@ -79,11 +79,19 @@ $wgCitizenShowPageTools = true;
 
 ### `$wgCitizenGlobalToolsPortlet`
 
-The ID of the menu where global tools (like user preferences) should appear. Leave this empty to use the default location.
+Chooses which sidebar menu Citizen moves the "Upload file" link into. Leave it empty and Citizen uses the first menu in [`MediaWiki:Sidebar`](https://www.mediawiki.org/wiki/Manual:Interface/Sidebar) that isn't `SEARCH`, `TOOLBOX` or `LANGUAGES` — Navigation on a stock wiki.
 
 ```php [LocalSettings.php]
 $wgCitizenGlobalToolsPortlet = '';
 ```
+
+**Values**: A menu name from `MediaWiki:Sidebar`, such as `'navigation'`. A leading `p-` is optional, so `'p-navigation'` works the same way.
+
+The upload link is the one MediaWiki builds, so it only appears for people who are allowed to upload — see [point the upload link somewhere else](../customization/recipes.md#point-the-upload-link-somewhere-else). On MediaWiki 1.43 the "Special pages" link moves along with it.
+
+::: warning
+A name that doesn't match a menu in `MediaWiki:Sidebar` isn't an error — Citizen creates a new menu with that name, so a typo gets you a stray menu rather than a warning.
+:::
 
 ### `$wgCitizenEnableDrawerSiteStats`
 
