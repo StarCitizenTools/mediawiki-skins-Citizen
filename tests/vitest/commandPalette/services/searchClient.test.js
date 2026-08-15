@@ -170,6 +170,70 @@ describe( 'createRestSearchClient', () => {
 			expect( item.metadata[ 0 ].highlightQuery ).toBe( true );
 		} );
 
+		it( 'omits a redirect that only adds an affix to the title', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 4,
+					key: 'Nutrition_Bar',
+					title: 'Nutrition Bar (Grilled Steak)',
+					matched_title: "'One Meal' Nutrition Bar (Grilled Steak)",
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'one meal', 10 );
+
+			expect( result.results[ 0 ].metadata ).toBeUndefined();
+		} );
+
+		it( 'omits a redirect the title already contains', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 5,
+					key: 'Nutrition_Bar',
+					title: 'Nutrition Bar (Grilled Steak)',
+					matched_title: 'Nutrition Bar',
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'nutrition', 10 );
+
+			expect( result.results[ 0 ].metadata ).toBeUndefined();
+		} );
+
+		it( 'treats spacing and dashes as the same title', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 6,
+					key: 'New_York_City',
+					title: 'New York City',
+					matched_title: 'New-York City',
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'new york', 10 );
+
+			expect( result.results[ 0 ].metadata ).toBeUndefined();
+		} );
+
+		it( 'still links to the redirect when its label is omitted', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 7,
+					key: 'Nutrition_Bar',
+					title: 'Nutrition Bar (Grilled Steak)',
+					matched_title: "'One Meal' Nutrition Bar (Grilled Steak)",
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'one meal', 10 );
+
+			expect( result.results[ 0 ].url ).toBe( "/wiki/'One Meal' Nutrition Bar (Grilled Steak)" );
+		} );
+
 		it( 'includes edit action with navigate type', async () => {
 			stubFetch( makeResponse( [
 				{

@@ -56,6 +56,32 @@ function processQuery( query ) {
 }
 
 /**
+ * Whether showing the redirect a result was matched through tells the reader
+ * anything the page title has not already told them.
+ *
+ * A redirect is usually one of two shapes: an alias that looks nothing like its
+ * target ("NYC" for "New York City"), or a longer variant of it ("'One Meal'
+ * Nutrition Bar (Grilled Steak)"). Only the first is worth the row's space —
+ * the second restates the title with an affix and pushes the title itself out
+ * of a narrow row.
+ *
+ * Spaces and dashes are stripped before comparing so that punctuation variants
+ * of the same title count as a restatement.
+ *
+ * @param {string} title The page the result leads to
+ * @param {string} matchedTitle The redirect the query matched
+ * @return {boolean}
+ */
+function isRedirectUseful( title, matchedTitle ) {
+	const cleanup = ( text ) => text.toLowerCase().replace( /-|\s/g, '' );
+	const cleanTitle = cleanup( title );
+	const cleanMatchedTitle = cleanup( matchedTitle );
+
+	return !( cleanTitle.includes( cleanMatchedTitle ) ||
+		cleanMatchedTitle.includes( cleanTitle ) );
+}
+
+/**
  * Create a REST search client bound to the given script path.
  *
  * @param {string} scriptPath Value of wgScriptPath (e.g. "" or "/w")
@@ -78,6 +104,8 @@ function createRestSearchClient( scriptPath ) {
 			query,
 			results: response.pages.map( ( page ) => {
 				const thumbnail = page.thumbnail;
+				const showRedirect = !!page.matched_title &&
+					isRedirectUseful( page.title, page.matched_title );
 				return {
 					id: `citizen-command-palette-item-page-${ page.key }`,
 					type: 'page',
@@ -90,7 +118,7 @@ function createRestSearchClient( scriptPath ) {
 						height: thumbnail.height ?? undefined
 					} : undefined,
 					thumbnailIcon: cdxIconArticle,
-					metadata: page.matched_title ? [
+					metadata: showRedirect ? [
 						{
 							icon: cdxIconArticleRedirect,
 							label: page.matched_title,
