@@ -124,6 +124,7 @@
 
 	"citizen-command-palette-action-view": "View",
 	"citizen-command-palette-back": "Back",
+	"citizen-command-palette-dismiss": "Remove from recent items",
 	"citizen-command-palette-label": "Command palette",
 	"citizen-command-palette-results": "Results",
 	"citizen-command-palette-heading-recent": "Recent",
