@@ -41,329 +41,240 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	private function callGetIcons( array $iconsConfig ): array {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [
-				'icons' => $iconsConfig,
-				'theme_color' => '',
-				'background_color' => '',
-				'short_name' => '',
-				'description' => '',
-			],
-		] );
+	/**
+	 * Invoke one of the private members that turn $wgCitizenManifestOptions
+	 * into a manifest list.
+	 */
+	private function callFilter( string $method, array $manifestOptions ): array {
+		$api = $this->createApiWithConfig(
+			new HashConfig( [ 'CitizenManifestOptions' => $manifestOptions ] )
+		);
 
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getIcons' );
-		return $method->invoke( $api );
-	}
-
-	private function callGetShortcuts( array $shortcutsConfig ): array {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'shortcuts' => $shortcutsConfig ],
-		] );
-
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getShortcuts' );
-		return $method->invoke( $api );
-	}
-
-	private function callGetScreenshots( array $screenshotsConfig ): array {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'screenshots' => $screenshotsConfig ],
-		] );
-
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getScreenshots' );
-		return $method->invoke( $api );
-	}
-
-	public function testGetIconsWithValidConfig(): void {
-		$icons = $this->callGetIcons( [
-			[ 'src' => '/icon.png', 'sizes' => '192x192', 'type' => 'image/png' ],
-			[ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml', 'purpose' => 'any maskable' ],
-		] );
-
-		$this->assertCount( 2, $icons );
-		$this->assertSame( '/icon.png', $icons[0]['src'] );
-		$this->assertSame( 'any maskable', $icons[1]['purpose'] );
-	}
-
-	public function testGetIconsFiltersUnknownKeys(): void {
-		$icons = $this->callGetIcons( [
-			[ 'src' => '/icon.png', 'sizes' => '192x192', 'unknown_key' => 'bad' ],
-		] );
-
-		$this->assertCount( 1, $icons );
-		$this->assertArrayNotHasKey( 'unknown_key', $icons[0] );
-		$this->assertSame( '/icon.png', $icons[0]['src'] );
-	}
-
-	public function testGetIconsSkipsNonArrayEntries(): void {
-		$icons = $this->callGetIcons( [
-			'not-an-array',
-			42,
-			[ 'src' => '/valid.png' ],
-		] );
-
-		$this->assertCount( 1, $icons );
-		$this->assertSame( '/valid.png', $icons[0]['src'] );
-	}
-
-	public function testGetIconsSkipsEntriesWithNoValidKeys(): void {
-		$icons = $this->callGetIcons( [
-			[ 'invalid_key' => 'value' ],
-			[ 'also_bad' => 'value' ],
-			[ 'src' => '/valid.png' ],
-		] );
-
-		$this->assertCount( 1, $icons );
-	}
-
-	public function testGetIconsEmptyConfigFallsToLogos(): void {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [
-				'icons' => [],
-				'theme_color' => '',
-				'background_color' => '',
-				'short_name' => '',
-				'description' => '',
-			],
-			'Logos' => false,
-		] );
-
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getIcons' );
-		$icons = $method->invoke( $api );
-
-		$this->assertSame( [], $icons );
+		$reflectionMethod = new ReflectionMethod( $api, $method );
+		return $reflectionMethod->invoke( $api );
 	}
 
 	/**
-	 * A $wgCitizenManifestOptions that replaces the whole array can leave the
-	 * key out, which must fall back rather than warn.
+	 * @return iterable<string, array{array, array}>
 	 */
-	public function testGetIconsMissingConfigFallsToLogos(): void {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'theme_color' => '' ],
-			'Logos' => false,
-		] );
+	public static function provideIcons(): iterable {
+		yield 'passes through the fields the spec defines' => [
+			[ 'icons' => [
+				[ 'src' => '/icon.png', 'sizes' => '192x192', 'type' => 'image/png' ],
+				[ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml', 'purpose' => 'any maskable' ],
+			] ],
+			[
+				[ 'src' => '/icon.png', 'sizes' => '192x192', 'type' => 'image/png' ],
+				[ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml', 'purpose' => 'any maskable' ],
+			],
+		];
 
-		$api = $this->createApiWithConfig( $config );
+		yield 'drops unknown keys' => [
+			[ 'icons' => [ [ 'src' => '/icon.png', 'sizes' => '192x192', 'unknown_key' => 'bad' ] ] ],
+			[ [ 'src' => '/icon.png', 'sizes' => '192x192' ] ],
+		];
 
-		$method = new ReflectionMethod( $api, 'getIcons' );
-		$icons = $method->invoke( $api );
+		yield 'skips non-array entries' => [
+			[ 'icons' => [ 'not-an-array', 42, [ 'src' => '/valid.png' ] ] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 
-		$this->assertSame( [], $icons );
+		yield 'skips entries with no valid keys' => [
+			[ 'icons' => [ [ 'invalid_key' => 'value' ], [ 'also_bad' => 'value' ], [ 'src' => '/valid.png' ] ] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 	}
 
-	public function testGetShortcutsPassesThroughConfiguredEntries(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			[
+	/**
+	 * @dataProvider provideIcons
+	 */
+	public function testGetIcons( array $manifestOptions, array $expected ): void {
+		$icons = $this->callFilter( 'getIcons', $manifestOptions );
+
+		$this->assertSame( $expected, $icons );
+	}
+
+	/**
+	 * @return iterable<string, array{array, array}>
+	 */
+	public static function provideShortcuts(): iterable {
+		yield 'passes through the fields the spec defines' => [
+			[ 'shortcuts' => [ [
 				'name' => 'Guides',
 				'short_name' => 'Guides',
 				'description' => 'Community guides',
 				'url' => '/wiki/Project:Guides',
-			],
-		] );
+			] ] ],
+			[ [
+				'name' => 'Guides',
+				'short_name' => 'Guides',
+				'description' => 'Community guides',
+				'url' => '/wiki/Project:Guides',
+			] ],
+		];
 
-		$this->assertSame(
+		yield 'empty list ships none' => [ [ 'shortcuts' => [] ], [] ];
+
+		yield 'non-array config ships none' => [ [ 'shortcuts' => 'Search' ], [] ];
+
+		yield 'drops entries missing name or url' => [
+			[ 'shortcuts' => [
+				[ 'name' => 'No URL' ],
+				[ 'url' => '/wiki/No_name' ],
+				[ 'name' => '', 'url' => '/wiki/Empty_name' ],
+				[ 'name' => 'Valid', 'url' => '/wiki/Valid' ],
+			] ],
+			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
+		];
+
+		yield 'skips non-array entries' => [
+			[ 'shortcuts' => [ 'Search', 42, [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ] ],
+			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
+		];
+
+		yield 'drops unknown keys' => [
+			[ 'shortcuts' => [ [ 'name' => 'Valid', 'url' => '/wiki/Valid', 'unknown_key' => 'bad' ] ] ],
+			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
+		];
+
+		yield 'drops non-string field values' => [
+			[ 'shortcuts' => [
+				[ 'name' => 'Valid', 'url' => '/wiki/Valid', 'description' => [ 'nested' ] ],
+				[ 'name' => 'Bad URL', 'url' => 42 ],
+			] ],
+			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
+		];
+
+		yield 'filters shortcut icons and drops the key when none survive' => [
+			[ 'shortcuts' => [
+				[
+					'name' => 'With icons',
+					'url' => '/wiki/With_icons',
+					'icons' => [
+						[ 'src' => '/search.png', 'sizes' => '96x96', 'unknown_key' => 'bad' ],
+						'not-an-array',
+						[ 'invalid_key' => 'value' ],
+					],
+				],
+				[
+					'name' => 'No usable icons',
+					'url' => '/wiki/No_usable_icons',
+					'icons' => [ [ 'invalid_key' => 'value' ] ],
+				],
+			] ],
 			[
 				[
-					'name' => 'Guides',
-					'short_name' => 'Guides',
-					'description' => 'Community guides',
-					'url' => '/wiki/Project:Guides',
+					'name' => 'With icons',
+					'url' => '/wiki/With_icons',
+					'icons' => [ [ 'src' => '/search.png', 'sizes' => '96x96' ] ],
 				],
+				[ 'name' => 'No usable icons', 'url' => '/wiki/No_usable_icons' ],
 			],
-			$shortcuts
-		);
+		];
 	}
 
-	public function testGetShortcutsEmptyConfigShipsNone(): void {
-		$shortcuts = $this->callGetShortcuts( [] );
+	/**
+	 * @dataProvider provideShortcuts
+	 */
+	public function testGetShortcuts( array $manifestOptions, array $expected ): void {
+		$shortcuts = $this->callFilter( 'getShortcuts', $manifestOptions );
 
-		$this->assertSame( [], $shortcuts );
+		$this->assertSame( $expected, $shortcuts );
 	}
 
-	public function testGetShortcutsIgnoresNonArrayConfig(): void {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'shortcuts' => 'Search' ],
-		] );
-
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getShortcuts' );
-
-		$this->assertSame( [], $method->invoke( $api ) );
-	}
-
-	public function testGetShortcutsDropsEntriesMissingNameOrUrl(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			[ 'name' => 'No URL' ],
-			[ 'url' => '/wiki/No_name' ],
-			[ 'name' => '', 'url' => '/wiki/Empty_name' ],
-			[ 'name' => 'Valid', 'url' => '/wiki/Valid' ],
-		] );
-
-		$this->assertSame( [ 'Valid' ], array_column( $shortcuts, 'name' ) );
-	}
-
-	public function testGetShortcutsSkipsNonArrayEntries(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			'Search',
-			42,
-			[ 'name' => 'Valid', 'url' => '/wiki/Valid' ],
-		] );
-
-		$this->assertSame( [ 'Valid' ], array_column( $shortcuts, 'name' ) );
-	}
-
-	public function testGetShortcutsFiltersUnknownKeys(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			[ 'name' => 'Valid', 'url' => '/wiki/Valid', 'unknown_key' => 'bad' ],
-		] );
-
-		$this->assertArrayNotHasKey( 'unknown_key', $shortcuts[0] );
-	}
-
-	public function testGetShortcutsDropsNonStringFieldValues(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			[ 'name' => 'Valid', 'url' => '/wiki/Valid', 'description' => [ 'nested' ] ],
-			[ 'name' => 'Bad URL', 'url' => 42 ],
-		] );
-
-		$this->assertSame(
-			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
-			$shortcuts
-		);
-	}
-
-	public function testGetShortcutsFiltersShortcutIcons(): void {
-		$shortcuts = $this->callGetShortcuts( [
-			[
-				'name' => 'With icons',
-				'url' => '/wiki/With_icons',
-				'icons' => [
-					[ 'src' => '/search.png', 'sizes' => '96x96', 'unknown_key' => 'bad' ],
-					'not-an-array',
-					[ 'invalid_key' => 'value' ],
-				],
-			],
-			[
-				'name' => 'No usable icons',
-				'url' => '/wiki/No_usable_icons',
-				'icons' => [ [ 'invalid_key' => 'value' ] ],
-			],
-		] );
-
-		$this->assertSame(
-			[ [ 'src' => '/search.png', 'sizes' => '96x96' ] ],
-			$shortcuts[0]['icons']
-		);
-		$this->assertArrayNotHasKey( 'icons', $shortcuts[1] );
-	}
-
-	public function testGetScreenshotsPassesThroughConfiguredEntries(): void {
-		$screenshots = $this->callGetScreenshots( [
-			[
+	/**
+	 * @return iterable<string, array{array, array}>
+	 */
+	public static function provideScreenshots(): iterable {
+		yield 'passes through the fields the spec defines' => [
+			[ 'screenshots' => [ [
 				'src' => '/screenshot-desktop.png',
 				'sizes' => '1920x1080',
 				'type' => 'image/png',
 				'form_factor' => 'wide',
 				'label' => 'Article on desktop',
 				'platform' => 'windows',
-			],
-		] );
+			] ] ],
+			[ [
+				'src' => '/screenshot-desktop.png',
+				'sizes' => '1920x1080',
+				'type' => 'image/png',
+				'form_factor' => 'wide',
+				'label' => 'Article on desktop',
+				'platform' => 'windows',
+			] ],
+		];
 
-		$this->assertSame(
-			[
-				[
-					'src' => '/screenshot-desktop.png',
-					'sizes' => '1920x1080',
-					'type' => 'image/png',
-					'form_factor' => 'wide',
-					'label' => 'Article on desktop',
-					'platform' => 'windows',
-				],
-			],
-			$screenshots
-		);
-	}
+		yield 'empty list ships none' => [ [ 'screenshots' => [] ], [] ];
 
-	public function testGetScreenshotsEmptyConfigShipsNone(): void {
-		$this->assertSame( [], $this->callGetScreenshots( [] ) );
-	}
+		// Unlike shortcuts, an absent key cannot fall back to anything — the
+		// images would have to be of the wiki itself.
+		yield 'absent key ships none' => [ [ 'icons' => [] ], [] ];
 
-	/**
-	 * Unlike shortcuts, an absent key cannot fall back to anything — the images
-	 * would have to be of the wiki itself.
-	 */
-	public function testGetScreenshotsMissingConfigShipsNone(): void {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'icons' => [] ],
-		] );
+		yield 'non-array config ships none' => [ [ 'screenshots' => '/screenshot.png' ], [] ];
 
-		$api = $this->createApiWithConfig( $config );
+		yield 'skips non-array entries' => [
+			[ 'screenshots' => [ '/screenshot.png', 42, [ 'src' => '/valid.png' ] ] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 
-		$method = new ReflectionMethod( $api, 'getScreenshots' );
+		yield 'drops entries missing src' => [
+			[ 'screenshots' => [
+				[ 'sizes' => '1920x1080', 'type' => 'image/png' ],
+				[ 'src' => '', 'sizes' => '1920x1080' ],
+				[ 'src' => '/valid.png' ],
+			] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 
-		$this->assertSame( [], $method->invoke( $api ) );
-	}
+		// purpose belongs to icons, not screenshots, so it must not survive —
+		// which is what fails here if the icon filter gets reused.
+		yield 'drops unknown keys, including the icon-only purpose' => [
+			[ 'screenshots' => [ [ 'src' => '/valid.png', 'purpose' => 'maskable', 'unknown_key' => 'bad' ] ] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 
-	public function testGetScreenshotsIgnoresNonArrayConfig(): void {
-		$config = new HashConfig( [
-			'CitizenManifestOptions' => [ 'screenshots' => '/screenshot.png' ],
-		] );
-
-		$api = $this->createApiWithConfig( $config );
-
-		$method = new ReflectionMethod( $api, 'getScreenshots' );
-
-		$this->assertSame( [], $method->invoke( $api ) );
-	}
-
-	public function testGetScreenshotsSkipsNonArrayEntries(): void {
-		$screenshots = $this->callGetScreenshots( [
-			'/screenshot.png',
-			42,
-			[ 'src' => '/valid.png' ],
-		] );
-
-		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
-	}
-
-	public function testGetScreenshotsDropsEntriesMissingSrc(): void {
-		$screenshots = $this->callGetScreenshots( [
-			[ 'sizes' => '1920x1080', 'type' => 'image/png' ],
-			[ 'src' => '', 'sizes' => '1920x1080' ],
-			[ 'src' => '/valid.png' ],
-		] );
-
-		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+		yield 'drops non-string field values' => [
+			[ 'screenshots' => [
+				[ 'src' => '/valid.png', 'sizes' => [ 'nested' ] ],
+				[ 'src' => 42, 'sizes' => '1920x1080' ],
+			] ],
+			[ [ 'src' => '/valid.png' ] ],
+		];
 	}
 
 	/**
-	 * purpose belongs to icons, not screenshots, so it must not survive — which
-	 * is what fails here if the icon filter gets reused for screenshots.
+	 * @dataProvider provideScreenshots
 	 */
-	public function testGetScreenshotsFiltersUnknownKeys(): void {
-		$screenshots = $this->callGetScreenshots( [
-			[ 'src' => '/valid.png', 'purpose' => 'maskable', 'unknown_key' => 'bad' ],
-		] );
+	public function testGetScreenshots( array $manifestOptions, array $expected ): void {
+		$screenshots = $this->callFilter( 'getScreenshots', $manifestOptions );
 
-		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+		$this->assertSame( $expected, $screenshots );
 	}
 
-	public function testGetScreenshotsDropsNonStringFieldValues(): void {
-		$screenshots = $this->callGetScreenshots( [
-			[ 'src' => '/valid.png', 'sizes' => [ 'nested' ] ],
-			[ 'src' => 42, 'sizes' => '1920x1080' ],
-		] );
+	/**
+	 * @return iterable<string, array{array}>
+	 */
+	public static function provideIconConfigsThatFallBackToLogos(): iterable {
+		yield 'empty list' => [ [ 'icons' => [] ] ];
+		// A $wgCitizenManifestOptions that replaces the whole array can leave
+		// the key out, which must fall back rather than warn.
+		yield 'absent key' => [ [ 'theme_color' => '' ] ];
+	}
 
-		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+	/**
+	 * @dataProvider provideIconConfigsThatFallBackToLogos
+	 */
+	public function testGetIconsFallsBackToLogos( array $manifestOptions ): void {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => $manifestOptions,
+			'Logos' => false,
+		] );
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getIcons' );
+		$icons = $method->invoke( $api );
+
+		$this->assertSame( [], $icons );
 	}
 }
