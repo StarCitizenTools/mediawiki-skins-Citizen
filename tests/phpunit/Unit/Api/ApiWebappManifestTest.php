@@ -13,7 +13,9 @@ use MediaWiki\Language\Language;
 use MediaWiki\Skins\Citizen\Api\ApiWebappManifest;
 use MediaWiki\Utils\UrlUtils;
 use MediaWikiUnitTestCase;
+use MWHttpRequest;
 use ReflectionMethod;
+use StatusValue;
 
 /**
  * The default shortcuts resolve special page titles through the service
@@ -250,6 +252,92 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		$screenshots = $this->callFilter( 'getScreenshots', $manifestOptions );
 
 		$this->assertSame( $expected, $screenshots );
+	}
+
+	/**
+	 * Build an API whose only icon source is $wgLogos, fetched through the
+	 * given factory.
+	 */
+	private function createApiWithLogos( array $logos, HttpRequestFactory $httpRequestFactory ): ApiWebappManifest {
+		$contextMock = $this->createMock( IContextSource::class );
+		$contextMock->method( 'getConfig' )->willReturn( new HashConfig( [
+			'CitizenManifestOptions' => [ 'icons' => [] ],
+			'Logos' => $logos,
+		] ) );
+
+		$mainMock = $this->createMock( ApiMain::class );
+		$mainMock->method( 'getContext' )->willReturn( $contextMock );
+
+		$urlUtils = $this->createMock( UrlUtils::class );
+		$urlUtils->method( 'expand' )->willReturnArgument( 0 );
+
+		return new ApiWebappManifest(
+			$mainMock,
+			'appmanifest',
+			$this->createMock( Language::class ),
+			$httpRequestFactory,
+			$urlUtils,
+		);
+	}
+
+	private function createLogoRequest( bool $succeeded, string $content = '' ): MWHttpRequest {
+		$request = $this->createMock( MWHttpRequest::class );
+		$request->method( 'execute' )->willReturn(
+			$succeeded ? StatusValue::newGood() : StatusValue::newFatal( 'http-timed-out' )
+		);
+		$request->method( 'getStatus' )->willReturn( $succeeded ? 200 : 0 );
+		$request->method( 'getContent' )->willReturn( $content );
+
+		return $request;
+	}
+
+	/**
+	 * Without a bound, each logo request inherits $wgHTTPTimeout, so a server
+	 * that cannot reach its own URL holds the worker for minutes.
+	 */
+	public function testGetIconsFromLogosBoundsEachRequest(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->with(
+				'/logo.png',
+				$this->callback( static fn ( array $options ): bool => ( $options['timeout'] ?? 0 ) > 0
+					&& ( $options['connectTimeout'] ?? 0 ) > 0 ),
+				$this->anything()
+			)
+			->willReturn( $this->createLogoRequest( true ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+		$method->invoke( $api );
+	}
+
+	public function testGetIconsFromLogosDropsALogoItCannotFetch(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->method( 'create' )->willReturn( $this->createLogoRequest( false ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	/**
+	 * An SVG needs no measuring, so it survives a fetch the server could not
+	 * make — the browser fetches it on its own account, and a server that
+	 * cannot reach its own URL is not evidence the browser cannot either.
+	 */
+	public function testGetIconsFromLogosKeepsAnSvgItCannotFetch(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->method( 'create' )->willReturn( $this->createLogoRequest( false ) );
+		$api = $this->createApiWithLogos( [ 'svg' => '/logo.svg' ], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame(
+			[ [ 'src' => '/logo.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ] ],
+			$method->invoke( $api )
+		);
 	}
 
 	/**
