@@ -8,9 +8,10 @@ const MAX_COMMAND_RESULTS = 10;
  * @param {Object} paletteRegistry The palette registry service.
  * @param {Object} match The matched command { handler, trigger, id }.
  * @param {string} query The full query string.
+ * @param {AbortSignal} [signal] Cancels the handler's own request.
  * @return {Promise<Object>} Provider result with items.
  */
-async function getMatchedCommandResults( paletteRegistry, match, query ) {
+async function getMatchedCommandResults( paletteRegistry, match, query, signal ) {
 	const { handler, trigger, id } = match;
 	if ( typeof handler.getResults !== 'function' ) {
 		const listItems = paletteRegistry.getCommandListItems();
@@ -25,7 +26,7 @@ async function getMatchedCommandResults( paletteRegistry, match, query ) {
 		subQuery.slice( 1 ).trim() : subQuery;
 
 	try {
-		const results = await handler.getResults( actualSubQuery );
+		const results = await handler.getResults( actualSubQuery, signal );
 		const processedResults = ( Array.isArray( results ) ? results : [] )
 			.map( ( item ) => {
 				if ( item.highlightQuery ) {
@@ -37,6 +38,12 @@ async function getMatchedCommandResults( paletteRegistry, match, query ) {
 			.slice( 0, MAX_COMMAND_RESULTS );
 		return { items: processedResults };
 	} catch ( err ) {
+		// A cancelled request is not a failure. Rethrowing lets the
+		// orchestration's lifecycle swallow it, so an aborted keystroke
+		// neither logs an error nor renders an empty list.
+		if ( err && err.name === 'AbortError' ) {
+			throw err;
+		}
 		mw.log.error(
 			'[commandPalette] Command handler "' + id + '" failed:', err
 		);
@@ -59,7 +66,7 @@ function createPaletteCommandProvider( paletteRegistry ) {
 			return paletteRegistry.hasMatchingTrigger( query );
 		},
 
-		async getResults( query ) {
+		async getResults( query, signal ) {
 			// Case 1: Root "/" — show all commands
 			if ( query === '/' ) {
 				return {
@@ -71,7 +78,9 @@ function createPaletteCommandProvider( paletteRegistry ) {
 			// Case 2: Specific command trigger matched
 			const match = paletteRegistry.findMatchingCommand( query );
 			if ( match ) {
-				return getMatchedCommandResults( paletteRegistry, match, query );
+				return getMatchedCommandResults(
+					paletteRegistry, match, query, signal
+				);
 			}
 
 			// Case 3: Prefix search for "/"
