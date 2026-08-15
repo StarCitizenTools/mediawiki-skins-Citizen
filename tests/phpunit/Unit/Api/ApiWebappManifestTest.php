@@ -69,6 +69,17 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		return $method->invoke( $api );
 	}
 
+	private function callGetScreenshots( array $screenshotsConfig ): array {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'screenshots' => $screenshotsConfig ],
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getScreenshots' );
+		return $method->invoke( $api );
+	}
+
 	public function testGetIconsWithValidConfig(): void {
 		$icons = $this->callGetIcons( [
 			[ 'src' => '/icon.png', 'sizes' => '192x192', 'type' => 'image/png' ],
@@ -254,5 +265,105 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 			$shortcuts[0]['icons']
 		);
 		$this->assertArrayNotHasKey( 'icons', $shortcuts[1] );
+	}
+
+	public function testGetScreenshotsPassesThroughConfiguredEntries(): void {
+		$screenshots = $this->callGetScreenshots( [
+			[
+				'src' => '/screenshot-desktop.png',
+				'sizes' => '1920x1080',
+				'type' => 'image/png',
+				'form_factor' => 'wide',
+				'label' => 'Article on desktop',
+				'platform' => 'windows',
+			],
+		] );
+
+		$this->assertSame(
+			[
+				[
+					'src' => '/screenshot-desktop.png',
+					'sizes' => '1920x1080',
+					'type' => 'image/png',
+					'form_factor' => 'wide',
+					'label' => 'Article on desktop',
+					'platform' => 'windows',
+				],
+			],
+			$screenshots
+		);
+	}
+
+	public function testGetScreenshotsEmptyConfigShipsNone(): void {
+		$this->assertSame( [], $this->callGetScreenshots( [] ) );
+	}
+
+	/**
+	 * Unlike shortcuts, an absent key cannot fall back to anything — the images
+	 * would have to be of the wiki itself.
+	 */
+	public function testGetScreenshotsMissingConfigShipsNone(): void {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'icons' => [] ],
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getScreenshots' );
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	public function testGetScreenshotsIgnoresNonArrayConfig(): void {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'screenshots' => '/screenshot.png' ],
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getScreenshots' );
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	public function testGetScreenshotsSkipsNonArrayEntries(): void {
+		$screenshots = $this->callGetScreenshots( [
+			'/screenshot.png',
+			42,
+			[ 'src' => '/valid.png' ],
+		] );
+
+		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+	}
+
+	public function testGetScreenshotsDropsEntriesMissingSrc(): void {
+		$screenshots = $this->callGetScreenshots( [
+			[ 'sizes' => '1920x1080', 'type' => 'image/png' ],
+			[ 'src' => '', 'sizes' => '1920x1080' ],
+			[ 'src' => '/valid.png' ],
+		] );
+
+		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+	}
+
+	/**
+	 * purpose belongs to icons, not screenshots, so it must not survive — which
+	 * is what fails here if the icon filter gets reused for screenshots.
+	 */
+	public function testGetScreenshotsFiltersUnknownKeys(): void {
+		$screenshots = $this->callGetScreenshots( [
+			[ 'src' => '/valid.png', 'purpose' => 'maskable', 'unknown_key' => 'bad' ],
+		] );
+
+		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
+	}
+
+	public function testGetScreenshotsDropsNonStringFieldValues(): void {
+		$screenshots = $this->callGetScreenshots( [
+			[ 'src' => '/valid.png', 'sizes' => [ 'nested' ] ],
+			[ 'src' => 42, 'sizes' => '1920x1080' ],
+		] );
+
+		$this->assertSame( [ [ 'src' => '/valid.png' ] ], $screenshots );
 	}
 }

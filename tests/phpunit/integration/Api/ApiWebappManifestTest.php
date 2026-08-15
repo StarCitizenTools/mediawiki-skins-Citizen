@@ -91,18 +91,12 @@ class ApiWebappManifestTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( [], $this->callGetShortcuts( [ 'shortcuts' => [] ] ) );
 	}
 
-	/**
-	 * A $wgCitizenManifestOptions that replaces the whole array can leave any
-	 * key out. Every one of them is optional in the manifest spec, so the
-	 * member is omitted rather than emitted empty — and reading it must not
-	 * raise a warning, which is what fails this test if the guard goes away.
-	 */
-	public function testManifestOmitsMembersTheConfigDoesNotCarry(): void {
+	private function executeManifest( array $manifestOptions ): array {
 		$result = new ApiResult( 1024 * 1024 );
 
 		$contextMock = $this->createMock( IContextSource::class );
 		$contextMock->method( 'getConfig' )->willReturn( new HashConfig( [
-			'CitizenManifestOptions' => [],
+			'CitizenManifestOptions' => $manifestOptions,
 			MainConfigNames::LanguageCode => 'en',
 			MainConfigNames::Sitename => 'Test wiki',
 			MainConfigNames::Server => 'http://localhost',
@@ -123,12 +117,59 @@ class ApiWebappManifestTest extends MediaWikiIntegrationTestCase {
 		);
 
 		$api->execute();
-		$manifest = $result->getResultData();
+
+		return $result->getResultData();
+	}
+
+	/**
+	 * A $wgCitizenManifestOptions that replaces the whole array can leave any
+	 * key out. Every one of them is optional in the manifest spec, so the
+	 * member is omitted rather than emitted empty — and reading it must not
+	 * raise a warning, which is what fails this test if the guard goes away.
+	 */
+	public function testManifestOmitsMembersTheConfigDoesNotCarry(): void {
+		$manifest = $this->executeManifest( [] );
 
 		$this->assertArrayNotHasKey( 'theme_color', $manifest );
 		$this->assertArrayNotHasKey( 'background_color', $manifest );
 		$this->assertArrayNotHasKey( 'short_name', $manifest );
 		$this->assertArrayNotHasKey( 'description', $manifest );
+		$this->assertArrayNotHasKey( 'screenshots', $manifest );
 		$this->assertSame( 'Test wiki', $manifest['name'] );
+	}
+
+	/**
+	 * An explicitly empty list has no member to carry, so it must be left out
+	 * rather than emitted as [] — which is what execute() decides, not the
+	 * filter the unit test covers.
+	 */
+	public function testManifestOmitsAnEmptyScreenshotList(): void {
+		$manifest = $this->executeManifest( [ 'screenshots' => [] ] );
+
+		$this->assertArrayNotHasKey( 'screenshots', $manifest );
+	}
+
+	public function testManifestCarriesConfiguredScreenshots(): void {
+		$manifest = $this->executeManifest( [
+			'screenshots' => [
+				[
+					'src' => '/screenshot-desktop.png',
+					'sizes' => '1920x1080',
+					'type' => 'image/png',
+					'form_factor' => 'wide',
+				],
+				[
+					'src' => '/screenshot-mobile.png',
+					'sizes' => '750x1334',
+					'type' => 'image/png',
+					'form_factor' => 'narrow',
+				],
+			],
+		] );
+
+		$this->assertSame(
+			[ 'wide', 'narrow' ],
+			array_column( $manifest['screenshots'], 'form_factor' )
+		);
 	}
 }
