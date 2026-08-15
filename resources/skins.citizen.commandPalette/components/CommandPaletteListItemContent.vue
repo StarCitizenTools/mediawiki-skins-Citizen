@@ -265,11 +265,25 @@ module.exports = exports = defineComponent( {
 
 	&__metadata {
 		display: flex;
+		// The text column is the only sibling with a flex-basis of 0, so without
+		// a floor here it absorbs every pixel of overflow and the title can
+		// reach zero width. Badge labels are unbounded — a history section name
+		// is an arbitrary slice of an edit summary — so the badges give way
+		// first. At 40% a 359px row splits roughly 17 characters of title to 13
+		// of badge, which keeps the title the longer of the two.
 		gap: var( --space-xxs );
+		min-width: 0;
+		max-width: 40%;
+		// Beyond that width the trailing badges are clipped rather than
+		// squeezed. Each badge carries ~18px of padding and border that cannot
+		// shrink, so sharing the remaining width between several of them leaves
+		// every label at zero and paints a row of blank pills.
+		overflow: hidden;
 		color: var( --color-subtle );
 
 		&__item {
 			display: flex;
+			flex-shrink: 0;
 			column-gap: var( --space-xxs );
 			align-items: center;
 			padding: 2px var( --space-xs );
@@ -277,6 +291,22 @@ module.exports = exports = defineComponent( {
 			background: var( --color-surface-2 );
 			border: var( --border-subtle );
 			border-radius: var( --border-radius-base );
+
+			// The last badge has nothing after it to clip, so let that one
+			// absorb the squeeze and truncate. A row carrying a single badge —
+			// a redirect, the one label that can be arbitrarily long — is the
+			// common case of this, and ends up truncated rather than cut.
+			&:last-child {
+				flex-shrink: 1;
+				min-width: 0;
+			}
+
+			&__label {
+				min-width: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 
 			.cdx-icon {
 				color: var( --color-subtle );

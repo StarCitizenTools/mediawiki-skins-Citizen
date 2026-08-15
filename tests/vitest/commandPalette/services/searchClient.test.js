@@ -202,6 +202,22 @@ describe( 'createRestSearchClient', () => {
 			expect( result.results[ 0 ].metadata ).toBeUndefined();
 		} );
 
+		it( 'ignores case when comparing the two titles', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 8,
+					key: 'Nutrition_Bar',
+					title: 'Nutrition Bar (Grilled Steak)',
+					matched_title: 'NUTRITION BAR (GRILLED STEAK)',
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'nutrition', 10 );
+
+			expect( result.results[ 0 ].metadata ).toBeUndefined();
+		} );
+
 		it( 'treats spacing and dashes as the same title', async () => {
 			stubFetch( makeResponse( [
 				{
