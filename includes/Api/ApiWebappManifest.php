@@ -177,7 +177,7 @@ class ApiWebappManifest extends ApiBase {
 	 * Get shortcuts for manifest
 	 */
 	private function getShortcuts(): array {
-		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
+		$specialPages = [ 'Search', 'Randompage', 'Recentchanges' ];
 
 		return array_map( static function ( $specialPage ) {
 			$title = SpecialPage::getSafeTitleFor( $specialPage );
