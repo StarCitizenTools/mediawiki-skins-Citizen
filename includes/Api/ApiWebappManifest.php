@@ -10,6 +10,7 @@ use MediaWiki\Api\ApiMain;
 use MediaWiki\Config\Config;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Language\Language;
+use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MainConfigNames;
 use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
@@ -26,6 +27,17 @@ class ApiWebappManifest extends ApiBase {
 
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
+
+	/**
+	 * Bounds on fetching the wiki's own logo files, in seconds.
+	 *
+	 * Without them each request inherits $wgHTTPTimeout, so a server that
+	 * cannot reach its own URL holds the worker for minutes across the logo
+	 * list. These are requests to the same server for static files, so seconds
+	 * are already generous.
+	 */
+	private const LOGO_FETCH_TIMEOUT = 3;
+	private const LOGO_FETCH_CONNECT_TIMEOUT = 1;
 
 	/** Icon fields taken from config, per the manifest spec. */
 	private const ICON_KEYS = [ 'src', 'sizes', 'type', 'purpose' ];
@@ -145,6 +157,7 @@ class ApiWebappManifest extends ApiBase {
 	private function getIconsFromLogos(): array {
 		$urlUtils = $this->urlUtils;
 		$httpRequestFactory = $this->httpRequestFactory;
+		$logger = LoggerFactory::getInstance( 'Citizen' );
 
 		$icons = [];
 		$logos = $this->config->get( MainConfigNames::Logos );
@@ -169,14 +182,32 @@ class ApiWebappManifest extends ApiBase {
 
 			$logoPath = (string)$logos[$logoKey];
 
+			$logoUrl = '';
 			try {
 				$logoUrl = $urlUtils->expand( $logoPath, PROTO_CURRENT ) ?? '';
-				$request = $httpRequestFactory->create( $logoUrl, [], __METHOD__ );
-				$request->execute();
-				$logoContent = $request->getContent();
-			} catch ( Exception ) {
-				// Log the exception or handle it accordingly
+				$request = $httpRequestFactory->create( $logoUrl, [
+					'timeout' => self::LOGO_FETCH_TIMEOUT,
+					'connectTimeout' => self::LOGO_FETCH_CONNECT_TIMEOUT,
+				], __METHOD__ );
+				$status = $request->execute();
+				if ( $status->isOK() ) {
+					$logoContent = $request->getContent();
+				} else {
+					$logoContent = '';
+					// The manifest is cached for a week, so a logo the server
+					// could not reach is missing from it for a week with
+					// nothing else to show for it.
+					$logger->warning(
+						'Could not fetch logo {logo} for the webapp manifest, HTTP {code}',
+						[ 'logo' => $logoUrl, 'code' => $request->getStatus() ]
+					);
+				}
+			} catch ( Exception $e ) {
 				$logoContent = '';
+				$logger->warning(
+					'Could not fetch logo {logo} for the webapp manifest: {exception}',
+					[ 'logo' => $logoUrl, 'exception' => $e->getMessage() ]
+				);
 			}
 
 			if ( $logoContent !== '' ) {
