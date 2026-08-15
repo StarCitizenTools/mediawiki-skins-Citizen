@@ -89,12 +89,6 @@
 					{{ item.label }}
 				</span>
 			</div>
-			<div
-				v-if="type"
-				class="citizen-command-palette-list-item__metadata__item citizen-command-palette-list-item__metadata__item--type"
-			>
-				{{ typeLabel }}
-			</div>
 		</div>
 	</component>
 </template>
@@ -135,14 +129,6 @@ module.exports = exports = defineComponent( {
 		metadata: {
 			type: Array,
 			default: () => []
-		},
-		type: {
-			type: String,
-			required: true
-		},
-		typeLabel: {
-			type: String,
-			required: true
 		},
 		searchQuery: {
 			type: String,

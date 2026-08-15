@@ -45,8 +45,7 @@
 					ref="bodyViewport"
 					class="citizen-command-palette__body-viewport"
 					:class="{
-						'citizen-command-palette__body-viewport--has-detail': viewportHasDetail,
-						'citizen-command-palette__body-viewport--uniform-type': uniformItemType
+						'citizen-command-palette__body-viewport--has-detail': viewportHasDetail
 					}"
 				>
 					<command-palette-help-view
@@ -296,24 +295,6 @@ module.exports = exports = defineComponent( {
 				return !orch.activeMode.value && highlightedHelpMode.value !== null;
 			}
 			return highlightedItemDetail.value !== null;
-		} );
-
-		// When every visible item shares the same type, the per-row type
-		// badge is redundant. We surface this as a class on the viewport so
-		// CSS can hide the badge — the underlying item data (including its
-		// `type` field, which the click path reads via props) stays intact.
-		// Mixed-type listings (default search, drilled category mode,
-		// recents+related) keep the badge to disambiguate.
-		const uniformItemType = computed( () => {
-			const items = orch.flatItems.value;
-			if ( items.length === 0 ) {
-				return false;
-			}
-			const firstType = items[ 0 ] && items[ 0 ].type;
-			if ( !firstType ) {
-				return false;
-			}
-			return items.every( ( it ) => it.type === firstType );
 		} );
 
 		const actionNav = useActionNavigation( {
@@ -584,7 +565,6 @@ module.exports = exports = defineComponent( {
 			activeDescendantId: keyboard.activeDescendantId,
 			highlightedHelpMode,
 			viewportHasDetail,
-			uniformItemType,
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state
@@ -690,12 +670,6 @@ module.exports = exports = defineComponent( {
 			&--has-detail {
 				display: flex;
 			}
-		}
-
-		// Uniform-type lists (e.g. the help catalog, /user: results) would
-		// repeat the same type label on every row, so hide it.
-		&--uniform-type .citizen-command-palette-list-item__metadata__item--type {
-			display: none;
 		}
 	}
 

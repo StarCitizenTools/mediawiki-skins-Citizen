@@ -578,17 +578,6 @@
 				"citizen-command-palette-mode-user-placeholder",
 				"citizen-command-palette-queryaction-fulltext-search-description",
 				"citizen-command-palette-queryaction-page-edit-description",
-				"citizen-command-palette-type-action",
-				"citizen-command-palette-type-category",
-				"citizen-command-palette-type-command",
-				"citizen-command-palette-type-file",
-				"citizen-command-palette-type-menu-item",
-				"citizen-command-palette-type-namespace",
-				"citizen-command-palette-type-page",
-				"citizen-command-palette-type-revision",
-				"citizen-command-palette-type-smw",
-				"citizen-command-palette-type-special-page",
-				"citizen-command-palette-type-user",
 				"citizen-search-empty-desc",
 				"citizen-search-noresults-title",
 				"contributions",
@@ -647,13 +636,7 @@
 				"citizen-command-palette-mode-smw-noresults-title",
 				"citizen-command-palette-mode-smw-novalues-description",
 				"citizen-command-palette-mode-smw-novalues-title",
-				"citizen-command-palette-mode-smw-placeholder",
-				"citizen-command-palette-type-smw",
-				"citizen-command-palette-type-smw-category",
-				"citizen-command-palette-type-smw-namespace",
-				"citizen-command-palette-type-smw-printout",
-				"citizen-command-palette-type-smw-property",
-				"citizen-command-palette-type-smw-value"
+				"citizen-command-palette-mode-smw-placeholder"
 			]
 		},
 		"skins.citizen.notifications": {

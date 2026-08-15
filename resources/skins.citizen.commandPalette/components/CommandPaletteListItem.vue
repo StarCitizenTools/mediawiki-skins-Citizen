@@ -20,8 +20,6 @@ Partially based on the MenuItem component from Codex.
 			:thumbnail="thumbnail"
 			:thumbnail-icon="thumbnailIcon"
 			:metadata="metadata"
-			:type="type"
-			:type-label="typeLabel"
 			:search-query="searchQuery"
 			:url="url"
 			:highlight-query="highlightQuery"
@@ -187,11 +185,6 @@ module.exports = exports = defineComponent( {
 			'citizen-command-palette-list-item--highlighted': props.highlighted
 		} ) );
 
-		// Messages that can be used here:
-		// * citizen-command-palette-type-page
-		// eslint-disable-next-line mediawiki/msg-doc
-		const typeLabel = computed( () => mw.message( `citizen-command-palette-type-${ props.type }` ).text() );
-
 		// --- Expose Methods ---
 		expose( {
 			focusFirstButton: () => actionsRef.value?.focusFirstButton(),
@@ -208,8 +201,7 @@ module.exports = exports = defineComponent( {
 			onClick,
 			onAction,
 			// Computed
-			rootClasses,
-			typeLabel
+			rootClasses
 		};
 	}
 } );
