@@ -1047,7 +1047,7 @@
 		},
 		"GlobalToolsPortlet": {
 			"value": "",
-			"description": "ID of the portlet to attach the global tools",
+			"description": "Name of the sidebar menu to move the site tools into",
 			"descriptionmsg": "citizen-config-globaltoolsportlet",
 			"public": true
 		},

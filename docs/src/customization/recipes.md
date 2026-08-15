@@ -116,10 +116,12 @@ Users who picked a different theme before you applied this change have it stored
 
 ## Point the upload link somewhere else
 
-The "Upload file" link in the site tools menu is the one MediaWiki builds, so [`$wgUploadNavigationUrl`](https://www.mediawiki.org/wiki/Manual:$wgUploadNavigationUrl) decides where it goes. Use it to send people to UploadWizard, a shared repository like Commons, or your own upload guide:
+The "Upload file" link Citizen shows in the sidebar is the one MediaWiki builds, so [`$wgUploadNavigationUrl`](https://www.mediawiki.org/wiki/Manual:$wgUploadNavigationUrl) decides where it goes. Use it to send people to UploadWizard, a shared repository like Commons, or your own upload guide:
 
 ```php [LocalSettings.php]
 $wgUploadNavigationUrl = '/wiki/Special:UploadWizard';
 ```
 
 Leave it unset and the link points at `Special:Upload`, and only appears for people who are actually allowed to upload. Setting it shows the link to everyone, since MediaWiki can't know what permissions the destination needs.
+
+Which sidebar menu the link sits in is up to [`$wgCitizenGlobalToolsPortlet`](../config/index.md#wgcitizenglobaltoolsportlet).
