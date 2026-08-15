@@ -31,8 +31,6 @@ const BASE_PROPS = {
 	thumbnail: null,
 	thumbnailIcon: 'icon-name',
 	metadata: [],
-	type: 'page',
-	typeLabel: 'Page',
 	searchQuery: '',
 	highlightQuery: false,
 	compact: false
@@ -135,8 +133,28 @@ describe( 'CommandPaletteListItemContent', () => {
 			} );
 
 			const items = wrapper.findAll( '.citizen-command-palette-list-item__metadata__item' );
-			// One for the metadata entry, one for the type label
-			expect( items.length ).toBeGreaterThanOrEqual( 2 );
+
+			expect( items.length ).toBe( 1 );
+		} );
+	} );
+
+	describe( 'metadata', () => {
+		it( 'renders one badge per metadata entry and nothing else', () => {
+			const wrapper = mountContent( {
+				metadata: [ { label: 'first' }, { label: 'second' } ]
+			} );
+
+			const labels = wrapper.findAll( '.citizen-command-palette-list-item__metadata__item__label' );
+
+			expect( labels.map( ( el ) => el.text() ) ).toEqual( [ 'first', 'second' ] );
+		} );
+
+		it( 'renders no badges when metadata is empty', () => {
+			const wrapper = mountContent();
+
+			const items = wrapper.findAll( '.citizen-command-palette-list-item__metadata__item' );
+
+			expect( items.length ).toBe( 0 );
 		} );
 	} );
 

@@ -79,7 +79,7 @@
  *
  * @typedef {Object} CommandPaletteItem
  * @property {string} id Unique identifier for the item (used as :key and element id).
- * @property {string} type Type identifier (e.g., 'page', 'command', 'namespace', 'recent-item'). Used for styling and type labels via mw.message( `citizen-command-palette-type-${type}` ).
+ * @property {string} type Type identifier (e.g., 'page', 'command', 'namespace', 'recent-item'). Used for styling and to route the item on selection.
  * @property {string} label The primary display label (e.g., page title, command name).
  * @property {string} [url] The primary URL to navigate to when the item is selected. May not apply to all types (e.g., commands that trigger other actions).
  * @property {string} [description] Optional secondary description text.
