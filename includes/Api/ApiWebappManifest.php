@@ -63,7 +63,6 @@ class ApiWebappManifest extends ApiBase {
 		$config = $this->config;
 		$resultObj = $this->getResult();
 		$main = $this->main;
-		$options = $this->options;
 
 		$resultObj->addValue( null, 'dir', $this->contentLanguage->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( MainConfigNames::LanguageCode ) );
@@ -75,20 +74,29 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'display', 'standalone' );
 		$resultObj->addValue( null, 'orientation', 'natural' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
-		$resultObj->addValue( null, 'theme_color', $options['theme_color'] );
-		$resultObj->addValue( null, 'background_color', $options['background_color'] );
+		$this->addConfiguredValue( 'theme_color' );
+		$this->addConfiguredValue( 'background_color' );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
-
-		if ( $options['short_name'] !== '' ) {
-			$resultObj->addValue( null, 'short_name', $options['short_name'] );
-		}
-
-		if ( $options['description'] !== '' ) {
-			$resultObj->addValue( null, 'description', $options['description'] );
-		}
+		$this->addConfiguredValue( 'short_name' );
+		$this->addConfiguredValue( 'description' );
 
 		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
 		$main->setCacheMode( 'public' );
+	}
+
+	/**
+	 * Add a manifest member the config carries verbatim, when it has one
+	 *
+	 * All of these are optional in the manifest spec, so a config that says
+	 * nothing about one — including a $wgCitizenManifestOptions that replaces
+	 * the whole array and leaves the key out — omits the member rather than
+	 * shipping it empty.
+	 */
+	private function addConfiguredValue( string $key ): void {
+		$value = $this->options[$key] ?? null;
+		if ( is_string( $value ) && $value !== '' ) {
+			$this->getResult()->addValue( null, $key, $value );
+		}
 	}
 
 	/**

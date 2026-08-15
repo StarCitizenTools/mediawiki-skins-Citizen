@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Tests\Integration\Api;
 
 use MediaWiki\Api\ApiMain;
+use MediaWiki\Api\ApiResult;
 use MediaWiki\Config\Config;
 use MediaWiki\Config\HashConfig;
 use MediaWiki\Context\IContextSource;
@@ -88,5 +89,46 @@ class ApiWebappManifestTest extends MediaWikiIntegrationTestCase {
 
 	public function testGetShortcutsEmptyConfigShipsNone(): void {
 		$this->assertSame( [], $this->callGetShortcuts( [ 'shortcuts' => [] ] ) );
+	}
+
+	/**
+	 * A $wgCitizenManifestOptions that replaces the whole array can leave any
+	 * key out. Every one of them is optional in the manifest spec, so the
+	 * member is omitted rather than emitted empty — and reading it must not
+	 * raise a warning, which is what fails this test if the guard goes away.
+	 */
+	public function testManifestOmitsMembersTheConfigDoesNotCarry(): void {
+		$result = new ApiResult( 1024 * 1024 );
+
+		$contextMock = $this->createMock( IContextSource::class );
+		$contextMock->method( 'getConfig' )->willReturn( new HashConfig( [
+			'CitizenManifestOptions' => [],
+			MainConfigNames::LanguageCode => 'en',
+			MainConfigNames::Sitename => 'Test wiki',
+			MainConfigNames::Server => 'http://localhost',
+			MainConfigNames::Logos => false,
+		] ) );
+
+		$mainMock = $this->createMock( ApiMain::class );
+		$mainMock->method( 'getContext' )->willReturn( $contextMock );
+		$mainMock->method( 'getResult' )->willReturn( $result );
+
+		$services = $this->getServiceContainer();
+		$api = new ApiWebappManifest(
+			$mainMock,
+			'appmanifest',
+			$services->getContentLanguage(),
+			$services->getHttpRequestFactory(),
+			$services->getUrlUtils(),
+		);
+
+		$api->execute();
+		$manifest = $result->getResultData();
+
+		$this->assertArrayNotHasKey( 'theme_color', $manifest );
+		$this->assertArrayNotHasKey( 'background_color', $manifest );
+		$this->assertArrayNotHasKey( 'short_name', $manifest );
+		$this->assertArrayNotHasKey( 'description', $manifest );
+		$this->assertSame( 'Test wiki', $manifest['name'] );
 	}
 }
