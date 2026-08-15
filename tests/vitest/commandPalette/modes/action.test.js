@@ -203,6 +203,36 @@ describe( 'action mode', () => {
 			);
 		} );
 
+		it( 'should carry the portlet heading as the item metadata', async () => {
+			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
+			const portlet = makePortlet( 'p-views', 'Views', [
+				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
+			] );
+			documentRef.getElementById = vi.fn( ( id ) => ( id === 'p-views' ? portlet : null ) );
+			mode = createActionCommand( documentRef, function () {
+				this.get = mockGet;
+			} );
+
+			const results = await mode.getResults( '' );
+
+			expect( results[ 0 ].metadata ).toEqual( [ { label: 'Views' } ] );
+		} );
+
+		it( 'should omit metadata when the portlet has no heading', async () => {
+			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
+			const portlet = makePortlet( 'p-views', undefined, [
+				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
+			] );
+			documentRef.getElementById = vi.fn( ( id ) => ( id === 'p-views' ? portlet : null ) );
+			mode = createActionCommand( documentRef, function () {
+				this.get = mockGet;
+			} );
+
+			const results = await mode.getResults( '' );
+
+			expect( results[ 0 ].metadata ).toBeUndefined();
+		} );
+
 		it( 'should deduplicate menu items by URL', async () => {
 			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
 

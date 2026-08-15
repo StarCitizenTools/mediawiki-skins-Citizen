@@ -98,7 +98,7 @@ function createActionCommand( documentRef, ApiConstructor ) {
 					thumbnailIcon: cdxIconPlay,
 					value: '/action:' + label,
 					highlightQuery: true,
-					metadata: [ { label: menuLabel } ]
+					metadata: menuLabel ? [ { label: menuLabel } ] : undefined
 				} );
 				seenUrls.add( url );
 			} );
