@@ -687,8 +687,8 @@ module.exports = exports = defineComponent( {
 
 				// In two-pane mode the right pane carries the rich content,
 				// so the catalog rows on the left stay compact — drop the
-				// alias/type badges and inline description that would
-				// otherwise crowd the row.
+				// badges and inline description that would otherwise crowd
+				// the row.
 				.citizen-command-palette-list-item__metadata,
 				.citizen-command-palette-list-item__text__description,
 				.citizen-command-palette-list-item__text-inline__description {
