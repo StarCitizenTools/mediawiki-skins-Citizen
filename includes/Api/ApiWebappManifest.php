@@ -33,6 +33,9 @@ class ApiWebappManifest extends ApiBase {
 	/** Shortcut fields taken from config, per the manifest spec. */
 	private const SHORTCUT_KEYS = [ 'name', 'short_name', 'description', 'url' ];
 
+	/** Screenshot fields taken from config, per the manifest spec. */
+	private const SCREENSHOT_KEYS = [ 'src', 'sizes', 'type', 'form_factor', 'label', 'platform' ];
+
 	/**
 	 * Shortcuts used when the config declares none at all. They live here
 	 * rather than in skin.json because their URLs depend on the wiki's article
@@ -77,6 +80,10 @@ class ApiWebappManifest extends ApiBase {
 		$this->addConfiguredValue( 'theme_color' );
 		$this->addConfiguredValue( 'background_color' );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
+		$screenshots = $this->getScreenshots();
+		if ( $screenshots !== [] ) {
+			$resultObj->addValue( null, 'screenshots', $screenshots );
+		}
 		$this->addConfiguredValue( 'short_name' );
 		$this->addConfiguredValue( 'description' );
 
@@ -253,14 +260,7 @@ class ApiWebappManifest extends ApiBase {
 	 * dropped rather than shipped incomplete.
 	 */
 	private function buildShortcut( array $shortcutConfig ): ?array {
-		$shortcut = [];
-
-		foreach ( self::SHORTCUT_KEYS as $key ) {
-			$value = $shortcutConfig[$key] ?? null;
-			if ( is_string( $value ) && $value !== '' ) {
-				$shortcut[$key] = $value;
-			}
-		}
+		$shortcut = $this->filterStringFields( $shortcutConfig, self::SHORTCUT_KEYS );
 
 		if ( !isset( $shortcut['name'] ) || !isset( $shortcut['url'] ) ) {
 			return null;
@@ -272,6 +272,47 @@ class ApiWebappManifest extends ApiBase {
 		}
 
 		return $shortcut;
+	}
+
+	/**
+	 * Get screenshots for manifest
+	 *
+	 * Screenshots are images of the wiki itself, so Citizen has no default to
+	 * offer — a wiki that declares none ships the member empty, and execute()
+	 * leaves it out entirely.
+	 */
+	private function getScreenshots(): array {
+		$screenshotsConfig = $this->options['screenshots'] ?? null;
+		if ( !is_array( $screenshotsConfig ) ) {
+			return [];
+		}
+		$screenshots = [];
+		foreach ( $screenshotsConfig as $screenshotConfig ) {
+			if ( !is_array( $screenshotConfig ) ) {
+				continue;
+			}
+			$screenshot = $this->filterStringFields( $screenshotConfig, self::SCREENSHOT_KEYS );
+			// src is the one field the spec requires of an image resource
+			if ( isset( $screenshot['src'] ) ) {
+				$screenshots[] = $screenshot;
+			}
+		}
+		return $screenshots;
+	}
+
+	/**
+	 * Reduce a config entry to the given fields, keeping only the ones carrying
+	 * a non-empty string.
+	 */
+	private function filterStringFields( array $config, array $keys ): array {
+		$fields = [];
+		foreach ( $keys as $key ) {
+			$value = $config[$key] ?? null;
+			if ( is_string( $value ) && $value !== '' ) {
+				$fields[$key] = $value;
+			}
+		}
+		return $fields;
 	}
 
 	/**
