@@ -16,6 +16,10 @@ use MediaWikiUnitTestCase;
 use ReflectionMethod;
 
 /**
+ * The default shortcuts resolve special page titles through the service
+ * container, so they are covered by the integration test of the same name
+ * rather than here.
+ *
  * @group Citizen
  * @covers \MediaWiki\Skins\Citizen\Api\ApiWebappManifest
  */
@@ -51,6 +55,17 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		$api = $this->createApiWithConfig( $config );
 
 		$method = new ReflectionMethod( $api, 'getIcons' );
+		return $method->invoke( $api );
+	}
+
+	private function callGetShortcuts( array $shortcutsConfig ): array {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'shortcuts' => $shortcutsConfig ],
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getShortcuts' );
 		return $method->invoke( $api );
 	}
 
@@ -114,5 +129,130 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		$icons = $method->invoke( $api );
 
 		$this->assertSame( [], $icons );
+	}
+
+	/**
+	 * A $wgCitizenManifestOptions that replaces the whole array can leave the
+	 * key out, which must fall back rather than warn.
+	 */
+	public function testGetIconsMissingConfigFallsToLogos(): void {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'theme_color' => '' ],
+			'Logos' => false,
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getIcons' );
+		$icons = $method->invoke( $api );
+
+		$this->assertSame( [], $icons );
+	}
+
+	public function testGetShortcutsPassesThroughConfiguredEntries(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			[
+				'name' => 'Guides',
+				'short_name' => 'Guides',
+				'description' => 'Community guides',
+				'url' => '/wiki/Project:Guides',
+			],
+		] );
+
+		$this->assertSame(
+			[
+				[
+					'name' => 'Guides',
+					'short_name' => 'Guides',
+					'description' => 'Community guides',
+					'url' => '/wiki/Project:Guides',
+				],
+			],
+			$shortcuts
+		);
+	}
+
+	public function testGetShortcutsEmptyConfigShipsNone(): void {
+		$shortcuts = $this->callGetShortcuts( [] );
+
+		$this->assertSame( [], $shortcuts );
+	}
+
+	public function testGetShortcutsIgnoresNonArrayConfig(): void {
+		$config = new HashConfig( [
+			'CitizenManifestOptions' => [ 'shortcuts' => 'Search' ],
+		] );
+
+		$api = $this->createApiWithConfig( $config );
+
+		$method = new ReflectionMethod( $api, 'getShortcuts' );
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	public function testGetShortcutsDropsEntriesMissingNameOrUrl(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			[ 'name' => 'No URL' ],
+			[ 'url' => '/wiki/No_name' ],
+			[ 'name' => '', 'url' => '/wiki/Empty_name' ],
+			[ 'name' => 'Valid', 'url' => '/wiki/Valid' ],
+		] );
+
+		$this->assertSame( [ 'Valid' ], array_column( $shortcuts, 'name' ) );
+	}
+
+	public function testGetShortcutsSkipsNonArrayEntries(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			'Search',
+			42,
+			[ 'name' => 'Valid', 'url' => '/wiki/Valid' ],
+		] );
+
+		$this->assertSame( [ 'Valid' ], array_column( $shortcuts, 'name' ) );
+	}
+
+	public function testGetShortcutsFiltersUnknownKeys(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			[ 'name' => 'Valid', 'url' => '/wiki/Valid', 'unknown_key' => 'bad' ],
+		] );
+
+		$this->assertArrayNotHasKey( 'unknown_key', $shortcuts[0] );
+	}
+
+	public function testGetShortcutsDropsNonStringFieldValues(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			[ 'name' => 'Valid', 'url' => '/wiki/Valid', 'description' => [ 'nested' ] ],
+			[ 'name' => 'Bad URL', 'url' => 42 ],
+		] );
+
+		$this->assertSame(
+			[ [ 'name' => 'Valid', 'url' => '/wiki/Valid' ] ],
+			$shortcuts
+		);
+	}
+
+	public function testGetShortcutsFiltersShortcutIcons(): void {
+		$shortcuts = $this->callGetShortcuts( [
+			[
+				'name' => 'With icons',
+				'url' => '/wiki/With_icons',
+				'icons' => [
+					[ 'src' => '/search.png', 'sizes' => '96x96', 'unknown_key' => 'bad' ],
+					'not-an-array',
+					[ 'invalid_key' => 'value' ],
+				],
+			],
+			[
+				'name' => 'No usable icons',
+				'url' => '/wiki/No_usable_icons',
+				'icons' => [ [ 'invalid_key' => 'value' ] ],
+			],
+		] );
+
+		$this->assertSame(
+			[ [ 'src' => '/search.png', 'sizes' => '96x96' ] ],
+			$shortcuts[0]['icons']
+		);
+		$this->assertArrayNotHasKey( 'icons', $shortcuts[1] );
 	}
 }
