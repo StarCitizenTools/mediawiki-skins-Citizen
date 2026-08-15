@@ -64,7 +64,40 @@ describe( 'createPaletteCommandProvider', () => {
 			await provider.getResults( '/ns:Talk' );
 
 			const nsHandler = registry.getHandler( 'namespace' );
-			expect( nsHandler.getResults ).toHaveBeenCalledWith( 'Talk' );
+			expect( nsHandler.getResults ).toHaveBeenCalledWith( 'Talk', undefined );
+		} );
+
+		it( 'should forward the abort signal to the handler', async () => {
+			const controller = new AbortController();
+
+			await provider.getResults( '/ns:Talk', controller.signal );
+
+			const nsHandler = registry.getHandler( 'namespace' );
+			expect( nsHandler.getResults ).toHaveBeenCalledWith(
+				'Talk', controller.signal
+			);
+		} );
+
+		it( 'should rethrow an abort rather than logging it as a failure', async () => {
+			const abort = Object.assign( new Error( 'aborted' ), { name: 'AbortError' } );
+			registry.getHandler( 'namespace' ).getResults =
+				vi.fn().mockRejectedValue( abort );
+
+			await expect( provider.getResults( '/ns:Talk' ) ).rejects.toThrow( 'aborted' );
+			// A cancelled keystroke is not a failure: logging it would fill the
+			// console on every keystroke, and returning [] would render an
+			// empty list over results that are still valid.
+			expect( mw.log.error ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should still log and swallow a genuine handler failure', async () => {
+			registry.getHandler( 'namespace' ).getResults =
+				vi.fn().mockRejectedValue( new Error( 'boom' ) );
+
+			const result = await provider.getResults( '/ns:Talk' );
+
+			expect( result.items ).toEqual( [] );
+			expect( mw.log.error ).toHaveBeenCalled();
 		} );
 
 		it( 'should tag results with command source', async () => {
