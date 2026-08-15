@@ -156,6 +156,20 @@ describe( 'CommandPaletteListItemContent', () => {
 
 			expect( items.length ).toBe( 0 );
 		} );
+
+		it( 'rerenders correctly when two badges share a label', async () => {
+			const wrapper = mountContent( {
+				metadata: [ { label: 'Reverted' }, { label: 'Reverted' }, { label: 'm' } ]
+			} );
+
+			await wrapper.setProps( {
+				metadata: [ { label: 'm' }, { label: 'Reverted' }, { label: 'Reverted' } ]
+			} );
+
+			const labels = wrapper.findAll( '.citizen-command-palette-list-item__metadata__item__label' );
+
+			expect( labels.map( ( el ) => el.text() ) ).toEqual( [ 'm', 'Reverted', 'Reverted' ] );
+		} );
 	} );
 
 	describe( 'previewable flag', () => {

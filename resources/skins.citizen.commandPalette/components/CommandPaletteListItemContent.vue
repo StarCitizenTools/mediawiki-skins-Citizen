@@ -65,8 +65,8 @@
 		</div>
 		<div class="citizen-command-palette-list-item__metadata">
 			<div
-				v-for="item in metadata"
-				:key="item.label"
+				v-for="( item, index ) in metadata"
+				:key="index"
 				class="citizen-command-palette-list-item__metadata__item"
 				:class="item.status && `citizen-command-palette-list-item__metadata__item--status-${ item.status }`"
 			>
