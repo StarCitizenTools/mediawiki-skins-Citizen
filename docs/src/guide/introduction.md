@@ -30,7 +30,7 @@ Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
     <LinkCard title="Collapsible sections" href="../config/#wgcitizenenablecollapsiblesections">
         Article sections on the wiki can be collapsed and expanded.
     </LinkCard>
-    <LinkCard title="Progressive web app">
+    <LinkCard title="Progressive web app" href="../features/progressive-web-app">
         Users can add a wiki using Citizen to their home screen, giving a more app-like experience.
     </LinkCard>
 </LinkGrid>

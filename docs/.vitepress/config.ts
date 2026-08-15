@@ -115,6 +115,10 @@ export default defineConfig({
 						link: "/features/preferences",
 					},
 					{
+						text: "Progressive web app",
+						link: "/features/progressive-web-app",
+					},
+					{
 						text: "Share",
 						link: "/features/share",
 					},
