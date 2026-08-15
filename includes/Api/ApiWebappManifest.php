@@ -27,6 +27,19 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
+	/** Icon fields taken from config, per the manifest spec. */
+	private const ICON_KEYS = [ 'src', 'sizes', 'type', 'purpose' ];
+
+	/** Shortcut fields taken from config, per the manifest spec. */
+	private const SHORTCUT_KEYS = [ 'name', 'short_name', 'description', 'url' ];
+
+	/**
+	 * Shortcuts used when the config declares none at all. They live here
+	 * rather than in skin.json because their URLs depend on the wiki's article
+	 * path, which only resolves at runtime.
+	 */
+	private const DEFAULT_SHORTCUT_PAGES = [ 'Search', 'Randompage', 'Recentchanges' ];
+
 	private readonly Config $config;
 
 	private readonly array $options;
@@ -82,17 +95,27 @@ class ApiWebappManifest extends ApiBase {
 	 * Get icons for manifest
 	 */
 	private function getIcons(): array {
-		$iconsConfig = $this->options['icons'];
+		$iconsConfig = $this->options['icons'] ?? [];
 		if ( !is_array( $iconsConfig ) || count( $iconsConfig ) === 0 ) {
 			return $this->getIconsFromLogos();
 		}
+		return $this->filterIcons( $iconsConfig );
+	}
+
+	/**
+	 * Reduce an icon list from config to the fields the manifest spec defines,
+	 * dropping entries that carry none of them.
+	 */
+	private function filterIcons( mixed $iconsConfig ): array {
+		if ( !is_array( $iconsConfig ) ) {
+			return [];
+		}
 		$icons = [];
-		$allowedKeys = [ 'src', 'sizes', 'type', 'purpose' ];
 		foreach ( $iconsConfig as $iconConfig ) {
 			if ( !is_array( $iconConfig ) ) {
 				continue;
 			}
-			$icon = array_intersect_key( $iconConfig, array_flip( $allowedKeys ) );
+			$icon = array_intersect_key( $iconConfig, array_flip( self::ICON_KEYS ) );
 			if ( count( $icon ) === 0 ) {
 				continue;
 			}
@@ -175,17 +198,72 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get shortcuts for manifest
+	 *
+	 * A config that declares no shortcuts at all gets Citizen's defaults, so
+	 * that a $wgCitizenManifestOptions written before the option existed keeps
+	 * the shortcuts it used to get. An empty list ships none.
 	 */
 	private function getShortcuts(): array {
-		$specialPages = [ 'Search', 'Randompage', 'Recentchanges' ];
+		$shortcutsConfig = $this->options['shortcuts'] ?? null;
+		if ( $shortcutsConfig === null ) {
+			return $this->getDefaultShortcuts();
+		}
+		if ( !is_array( $shortcutsConfig ) ) {
+			return [];
+		}
+		$shortcuts = [];
+		foreach ( $shortcutsConfig as $shortcutConfig ) {
+			if ( !is_array( $shortcutConfig ) ) {
+				continue;
+			}
+			$shortcut = $this->buildShortcut( $shortcutConfig );
+			if ( $shortcut !== null ) {
+				$shortcuts[] = $shortcut;
+			}
+		}
+		return $shortcuts;
+	}
 
+	/**
+	 * Citizen's own shortcuts, resolved against this wiki's article path
+	 */
+	private function getDefaultShortcuts(): array {
 		return array_map( static function ( $specialPage ) {
 			$title = SpecialPage::getSafeTitleFor( $specialPage );
 			return [
 				'name' => $title->getBaseText(),
 				'url' => $title->getLocalURL()
 			];
-		}, $specialPages );
+		}, self::DEFAULT_SHORTCUT_PAGES );
+	}
+
+	/**
+	 * Build one manifest shortcut from its config entry, or return null when
+	 * the entry cannot produce one.
+	 *
+	 * The manifest spec requires name and url, so an entry missing either is
+	 * dropped rather than shipped incomplete.
+	 */
+	private function buildShortcut( array $shortcutConfig ): ?array {
+		$shortcut = [];
+
+		foreach ( self::SHORTCUT_KEYS as $key ) {
+			$value = $shortcutConfig[$key] ?? null;
+			if ( is_string( $value ) && $value !== '' ) {
+				$shortcut[$key] = $value;
+			}
+		}
+
+		if ( !isset( $shortcut['name'] ) || !isset( $shortcut['url'] ) ) {
+			return null;
+		}
+
+		$icons = $this->filterIcons( $shortcutConfig['icons'] ?? [] );
+		if ( $icons !== [] ) {
+			$shortcut['icons'] = $icons;
+		}
+
+		return $shortcut;
 	}
 
 	/**
