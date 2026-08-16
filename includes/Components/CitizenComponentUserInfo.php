@@ -11,6 +11,8 @@ use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
 use MediaWiki\User\UserGroupMembership;
 use MessageLocalizer;
+use Wikimedia\Parsoid\DOM\Element;
+use Wikimedia\Parsoid\DOM\Text;
 use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Parsoid\Utils\DOMUtils;
 
@@ -131,8 +133,10 @@ class CitizenComponentUserInfo implements CitizenComponent {
 
 		$htmlItems = $userPageData['html-items'];
 		$realname = $user->getRealName();
-		if ( $realname !== '' ) {
-			$username = $user->getName();
+		$username = $user->getName();
+		// Showing both is only useful when they differ; when they match it would
+		// print the same word twice.
+		if ( $realname !== '' && $realname !== $username ) {
 			$htmlItems = $this->replaceUsernameWithRealName( $htmlItems, $username, $realname );
 		}
 
@@ -155,25 +159,63 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		$body = DOMCompat::getBody( $doc );
 
 		foreach ( DOMCompat::querySelectorAll( $body, 'a' ) as $anchor ) {
-			foreach ( $anchor->childNodes as $child ) {
-				if ( $child->nodeType === XML_TEXT_NODE && $child->textContent === $username ) {
-					$realnameSpan = $doc->createElement( 'span' );
-					$realnameSpan->setAttribute( 'id', 'pt-userpage-realname' );
-					$realnameSpan->appendChild( $doc->createTextNode( $realname ) );
+			// The username is not a direct child of the anchor: core wraps portlet
+			// link text in a span, and the keyboard hint adds a further sibling.
+			// Search descendants and replace the text node where it actually sits,
+			// which also puts both spans inside the wrapper that
+			// `#pt-userpage-2 > a > span` lays out.
+			$textNode = $this->findTextNode( $anchor, $username );
 
-					$usernameSpan = $doc->createElement( 'span' );
-					$usernameSpan->setAttribute( 'id', 'pt-userpage-username' );
-					$usernameSpan->appendChild( $doc->createTextNode( $username ) );
+			if ( !$textNode ) {
+				continue;
+			}
 
-					$anchor->replaceChild( $usernameSpan, $child );
-					$anchor->insertBefore( $realnameSpan, $usernameSpan );
-					$anchor->insertBefore( $doc->createTextNode( ' ' ), $usernameSpan );
-					break 2;
+			$realnameSpan = $doc->createElement( 'span' );
+			$realnameSpan->setAttribute( 'id', 'pt-userpage-realname' );
+			$realnameSpan->appendChild( $doc->createTextNode( $realname ) );
+
+			$usernameSpan = $doc->createElement( 'span' );
+			$usernameSpan->setAttribute( 'id', 'pt-userpage-username' );
+			$usernameSpan->appendChild( $doc->createTextNode( $username ) );
+
+			$parent = $textNode->parentNode;
+			$parent->replaceChild( $usernameSpan, $textNode );
+			$parent->insertBefore( $realnameSpan, $usernameSpan );
+			// Kept for contexts where the flex gap does not apply; a whitespace-only
+			// text node is not rendered as a flex item where it does.
+			$parent->insertBefore( $doc->createTextNode( ' ' ), $usernameSpan );
+			break;
+		}
+
+		return DOMCompat::getInnerHTML( $body );
+	}
+
+	/**
+	 * Find the first descendant text node whose content is exactly $text.
+	 *
+	 * Typed on Parsoid's DOM namespace rather than \DOMNode: PHP 8.4 introduced a
+	 * separate Dom\* hierarchy, and MediaWiki 1.46+ returns those from
+	 * parseHTML(), so a \DOMNode hint is a TypeError there.
+	 */
+	private function findTextNode( Element $node, string $text ): ?Text {
+		foreach ( $node->childNodes as $child ) {
+			if ( $child instanceof Text ) {
+				if ( $child->textContent === $text ) {
+					return $child;
+				}
+				continue;
+			}
+
+			// Only elements can hold further children worth descending into.
+			if ( $child instanceof Element ) {
+				$found = $this->findTextNode( $child, $text );
+				if ( $found ) {
+					return $found;
 				}
 			}
 		}
 
-		return DOMCompat::getInnerHTML( $body );
+		return null;
 	}
 
 	public function getTemplateData(): array {
