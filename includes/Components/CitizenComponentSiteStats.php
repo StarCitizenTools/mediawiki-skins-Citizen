@@ -112,15 +112,24 @@ class CitizenComponentSiteStats implements CitizenComponent {
 		$items = [];
 
 		foreach ( self::SITESTATS_ICON_MAP as $key => $icon ) {
+			$value = $this->getSiteStatValue( $key );
+
+			// A zero stat formats to an empty string. Emitting the item anyway leaves a bare icon
+			// with no number beside it, and a label that screen readers announce without a count.
+			if ( $value === '' ) {
+				continue;
+			}
+
 			$items[] = [
 				'id' => $key,
 				'icon' => $icon,
-				'value' => $this->getSiteStatValue( $key ),
+				'value' => $value,
 				'label' => $this->localizer->msg( "citizen-sitestats-$key-label" )->text(),
 			];
 		}
 
 		return [
+			'msg-statistics' => $this->localizer->msg( 'statistics' )->text(),
 			'array-sitestats-items' => $items
 		];
 	}

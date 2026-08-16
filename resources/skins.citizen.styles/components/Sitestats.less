@@ -1,14 +1,23 @@
+// The list reset below is keyed on the class rather than `ul`, so it stays inert against HTML
+// cached before this block became a list.
 .citizen-siteStats {
 	--size-icon: 0.875rem;
 	display: flex;
 	gap: var( --space-md );
-	.mixin-citizen-font-styles( 'overline' );
+	padding: 0;
+	margin: 0;
 	white-space: nowrap;
+	list-style: none;
+	.mixin-citizen-font-styles( 'overline' );
 
 	&__item {
 		display: flex;
 		gap: var( --space-xs );
 		align-items: center;
+	}
+
+	&__label {
+		.mixin-citizen-screen-reader-only;
 	}
 
 	.citizen-ui-icon {
