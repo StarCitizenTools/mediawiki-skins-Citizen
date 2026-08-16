@@ -283,7 +283,6 @@ class SkinCitizen extends SkinMustache {
 				$this->userGroupManager,
 				$lang,
 				$localizer,
-				$title,
 				$user,
 				$this->tempUserConfig,
 				$parentData['data-portlets']['data-user-page']
