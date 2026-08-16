@@ -6,11 +6,10 @@ namespace MediaWiki\Skins\Citizen\Components;
 
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
-use MediaWiki\Title\MalformedTitleException;
-use MediaWiki\Title\Title;
 use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
+use MediaWiki\User\UserGroupMembership;
 use MessageLocalizer;
 use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Parsoid\Utils\DOMUtils;
@@ -24,7 +23,6 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		private readonly UserGroupManager $userGroupManager,
 		private readonly Language $lang,
 		private readonly MessageLocalizer $localizer,
-		private readonly Title $title,
 		private readonly User $user,
 		private readonly TempUserConfig $tempUserConfig,
 		private readonly array $userPageData,
@@ -76,6 +74,16 @@ class CitizenComponentUserInfo implements CitizenComponent {
 
 	/**
 	 * Build the template data for the user groups
+	 *
+	 * Follows UserGroupMembership::getLinkHTML(), as used by Special:Preferences:
+	 * the label is the group member name in the user's interface language (with
+	 * GENDER), while the target comes from grouppage-<group> in the content
+	 * language. Groups without that message render as plain text, since there is
+	 * no page to point at.
+	 *
+	 * One deliberate difference: the label is capitalised. Core leaves it lower
+	 * case because it reads inside a sentence there ("member of: administrator"),
+	 * whereas here each name stands on its own.
 	 */
 	private function getUserGroups(): ?array {
 		$groups = $this->userGroupManager->getUserGroups( $this->user );
@@ -85,27 +93,26 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		}
 
 		$listItems = [];
-		$msgKey = 'group-%s-member';
 		foreach ( $groups as $group ) {
-			$id = sprintf( $msgKey, $group );
-			$text = $this->localizer->msg( $id )->text();
-			$title = null;
-			try {
-				$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
-			} catch ( MalformedTitleException ) {
-				// ignore
-			}
+			$text = $this->lang->ucfirst(
+				$this->lang->getGroupMemberName( $group, $this->user )
+			);
 
-			if ( !$text || !$title ) {
+			if ( $text === '' ) {
 				continue;
 			}
 
-			$link = new CitizenComponentLink(
-				$title->getLinkURL(),
-				ucfirst( $text )
-			);
+			$title = UserGroupMembership::getGroupPage( $group );
+			$link = $title
+				? new CitizenComponentLink( $title->getLinkURL(), $text )
+				: null;
 
-			$listItem = new CitizenComponentMenuListItem( $link, 'citizen-userInfo-usergroup', $id );
+			$listItem = new CitizenComponentMenuListItem(
+				$link,
+				'citizen-userInfo-usergroup',
+				sprintf( 'group-%s-member', $group ),
+				$link ? '' : $text
+			);
 
 			$listItems[] = $listItem->getTemplateData();
 		}

@@ -44,14 +44,46 @@
 	}
 
 	&-usergroups {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0 var( --space-xs );
+		// Runs as text rather than as a row of boxes. Group names vary too much
+		// in length to pack as fixed items — in a panel this narrow each long
+		// name claims a row of its own and leaves the rest empty — whereas
+		// inline content reflows to fill each line.
+		//
+		// Capped at the dropdown's own min-width less this panel's padding, so
+		// an account in many groups wraps instead of stretching the card: the
+		// menu is sized by its content, and without this an eight-group account
+		// widens the whole thing by 200px.
+		max-width: ~'calc( 16rem - var( --space-md ) * 2 )';
 		margin: 0;
+		color: var( --color-subtle );
 		list-style: none;
 
+		> li {
+			display: inline;
+			overflow-wrap: break-word;
+		}
+
+		> li + li::before {
+			margin-inline: var( --space-xxs );
+			// Alt text is empty so the separator is not announced; the list
+			// markup already conveys the boundary to assistive technology.
+			content: '·' / '';
+		}
+
 		a {
-			color: var( --color-subtle );
+			// Grows the hit area without disturbing line layout, since vertical
+			// padding on an inline box does not affect line height.
+			padding-block: var( --space-xxs );
+			// Codex link colours are wrapped in :where(), which zeroes their
+			// specificity, so this rule wins at rest, on hover and when visited.
+			// Hover has to be restated here or the link never responds at all.
+			color: var( --color-progressive );
+			text-decoration: none;
+
+			&:hover {
+				color: var( --color-progressive--hover );
+				text-decoration: underline;
+			}
 		}
 	}
 

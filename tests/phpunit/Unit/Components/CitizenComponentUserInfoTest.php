@@ -6,7 +6,6 @@ namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 
 use MediaWiki\Language\Language;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
-use MediaWiki\Title\Title;
 use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
@@ -80,7 +79,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 
 		$lang = $this->createMock( Language::class );
 		$localizer = $this->createMockLocalizer();
-		$title = $this->createMock( Title::class );
 
 		// Simulate MediaWiki's HTML output where O'Brien becomes O&#039;Brien
 		$encodedUsername = htmlspecialchars( $username, ENT_QUOTES );
@@ -95,7 +93,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$userGroupManager,
 			$lang,
 			$localizer,
-			$title,
 			$user,
 			$this->createMockTempUserConfig( false ),
 			$userPageData
@@ -123,7 +120,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 
 		$lang = $this->createMock( Language::class );
 		$localizer = $this->createMockLocalizer();
-		$title = $this->createMock( Title::class );
 
 		$encodedUsername = htmlspecialchars( $username, ENT_QUOTES );
 		$htmlItems = '<li id="pt-userpage"><a href="/wiki/User:'
@@ -137,7 +133,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$userGroupManager,
 			$lang,
 			$localizer,
-			$title,
 			$user,
 			$this->createMockTempUserConfig( false ),
 			$userPageData
@@ -164,7 +159,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$this->createMock( UserGroupManager::class ),
 			$this->createMock( Language::class ),
 			$this->createKeyEchoLocalizer(),
-			$this->createMock( Title::class ),
 			$user,
 			$this->createMockTempUserConfig( false ),
 			[]
@@ -186,7 +180,6 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$this->createMock( UserGroupManager::class ),
 			$this->createMock( Language::class ),
 			$this->createKeyEchoLocalizer(),
-			$this->createMock( Title::class ),
 			$user,
 			$this->createMockTempUserConfig( true ),
 			[]
