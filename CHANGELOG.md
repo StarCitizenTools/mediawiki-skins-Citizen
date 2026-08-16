@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.20.0...v3.21.0) (2026-08-16)
+
+
+### Features
+
+* **core:** ✨ add upload file page styles ([#1784](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1784)) ([c6819c4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6819c465b7bb7ed7211742f420bd003282fe58a))
+* **pwa:** ✨ allow configuring the app manifest screenshots ([f050ab6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f050ab684ae575bae7ada98de54066b689196e35))
+* **pwa:** ✨ allow configuring the app manifest shortcuts ([25afdca](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/25afdca14984dad355a02a771eb1f2034e003c93)), closes [#1274](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1274)
+
+
+### Bug Fixes
+
+* **ArticleFeedbackv5:** 🐛 make the whole Yes/No button clickable ([38d54f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/38d54f941e25db0885e3d3514649b31e89fef05c)), closes [#1777](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1777)
+* **ArticleFeedbackv5:** 🐛 show hover and focus states on the back button ([d4ce79e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d4ce79ebf1355ea4ac597ac02e0861724790449b))
+* **commandPalette:** 🐛 abort in-flight requests from zero-debounce providers ([4e3fa7f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e3fa7fa14a50c5fd82e1ad0cee3d68f58595d48))
+* **commandPalette:** 🐛 add the missing label for the dismiss button ([bb911c1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bb911c196155076487abd2c015f58ccc950a813a))
+* **commandPalette:** 🐛 cancel command handler requests on a new keystroke ([bf8b5e2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf8b5e20ef4be982f11e0e59a25c7c0180d2c498))
+* **commandPalette:** 🐛 hide redirect labels that repeat the page title ([8aee2d5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8aee2d5cb318f75abca2edcd497161c2e90bf7e6)), closes [#1715](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1715)
+* **commandPalette:** 🐛 only activate results that match the typed query ([523ce45](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/523ce4557304657007ca0c9bd9831c9098593e28)), closes [#1196](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1196)
+* **commandPalette:** 🐛 stop badges duplicating when two share a label ([a742586](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a742586013037bb7605dbc71dfef4e28fdf16b34))
+* **commandPalette:** 🐛 stop result badges from squeezing out the title ([81b479c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/81b479c9086a5dacd9e12cb5fe9d94fc2c28aeca))
+* **DiscussionTools:** 🐛 show the subscribe button beside the edit links ([a4824e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a4824e6afae4f517a5c4c25b90de714b5bcfcede))
+* **docs:** 🐛 📚️ add file extensions to relative imports ([fd0b08c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fd0b08cbc11233475240ff2d38c7443b84cfa015))
+* **docs:** 🐛 📚️ restore the copy button hover state ([c492db4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c492db48a8b12e11e7b04fd9f20f5fa9b7f52668))
+* **menu:** 🐛 respect $wgUploadNavigationUrl and upload permissions ([c314574](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c31457490cd9d07847e99f32b9c3131b544d2159))
+* **pwa:** 🐛 bound the logo requests the app manifest makes ([5c622c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5c622c5eb3e6c3fa1e47ea772bc14bb08f892f36))
+* **pwa:** 🐛 leave out manifest fields the wiki has not set ([a75a130](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a75a1306baa9d1dd5628fc7e47b850253d990bd7))
+* **pwa:** 🐛 stop the recent changes shortcut warning on every request ([307bbc7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/307bbc7cdbc0a6707b07476e262bebe851958b2a))
+* **siteStats:** 🐛 tell screen readers what each statistic counts ([27cf0ac](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/27cf0ac7ab6bab7ed8281cad712b1e1f1b88886b))
+
 ## [3.20.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.19.0...v3.20.0) (2026-08-08)
 
 
