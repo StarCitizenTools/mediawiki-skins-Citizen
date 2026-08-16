@@ -21,9 +21,11 @@
 		> a > span {
 			display: flex;
 			flex-grow: 1;
-			flex-wrap: wrap;
-			gap: var( --space-xs );
-			align-items: baseline;
+			// Stacked, so the real name reads as the heading and the username as
+			// its qualifier. Only ever holds those two spans, or a single text
+			// node when no real name is set.
+			flex-direction: column;
+			align-items: flex-start;
 		}
 
 		.citizen-keyboard-hint-key {
@@ -36,7 +38,9 @@
 	}
 
 	#pt-userpage-username {
+		font-weight: var( --font-weight-normal );
 		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'small' );
 	}
 
 	&-text {
