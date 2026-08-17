@@ -44,8 +44,5 @@
 	"citizen-command-palette-heading-recent": "Nedavno",
 	"citizen-command-palette-keyhint-exit": "Izlaz",
 	"citizen-command-palette-keyhint-actions": "Radnje",
-	"citizen-command-palette-keyhint-return": "Nazad",
-	"citizen-command-palette-type-page": "Stranica",
-	"citizen-command-palette-type-namespace": "Imenski prostor",
-	"citizen-command-palette-type-command": "Komanda"
+	"citizen-command-palette-keyhint-return": "Nazad"
 }

@@ -40,8 +40,6 @@
 	"citizen-command-palette-keyhint-back": "Takaisin",
 	"citizen-command-palette-keyhint-edit-token": "Muokkaa tunnistetta",
 	"citizen-command-palette-keyhint-select-token": "Valitse tunniste",
-	"citizen-command-palette-type-category": "Luokka",
-	"citizen-command-palette-type-smw-namespace": "SMW-nimiavaruus",
 	"citizen-command-palette-command-action-label": "Toiminnot",
 	"citizen-command-palette-command-category-description": "Etsi ja selaa luokkia",
 	"citizen-command-palette-command-category-label": "Luokat",

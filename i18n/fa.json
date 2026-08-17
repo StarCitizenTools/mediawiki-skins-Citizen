@@ -74,12 +74,6 @@
 	"citizen-command-palette-keyhint-exit": "خروج",
 	"citizen-command-palette-keyhint-actions": "کنش‌ها",
 	"citizen-command-palette-keyhint-return": "بازگشت",
-	"citizen-command-palette-type-page": "صفحه",
-	"citizen-command-palette-type-action": "کنش",
-	"citizen-command-palette-type-namespace": "فضای نام",
-	"citizen-command-palette-type-command": "دستور",
-	"citizen-command-palette-type-special-page": "صفحهٔ ویژه",
-	"citizen-command-palette-type-user": "کاربر",
 	"citizen-command-palette-command-user-description": "جست‌و‌جوی کاربر",
 	"citizen-command-palette-queryaction-page-edit-description": "ایجاد یا ویرایش صفحه"
 }

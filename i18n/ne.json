@@ -53,12 +53,6 @@
 	"citizen-command-palette-keyhint-exit": "बाहिर निस्कनुहोस्",
 	"citizen-command-palette-keyhint-actions": "कार्यहरू",
 	"citizen-command-palette-keyhint-return": "फर्कनुहोस्",
-	"citizen-command-palette-type-page": "पृष्ठ",
-	"citizen-command-palette-type-action": "कार्यहरू",
-	"citizen-command-palette-type-namespace": "नामपद",
-	"citizen-command-palette-type-command": "आदेश",
-	"citizen-command-palette-type-special-page": "विशेष पृष्ठ",
-	"citizen-command-palette-type-user": "प्रयोगकर्ता",
 	"citizen-command-palette-command-user-description": "प्रयोगकर्ता खोज्नुहोस्",
 	"citizen-command-palette-queryaction-page-edit-description": "पृष्ठ सिर्जना वा सम्पादन गर्नुहोस्"
 }
