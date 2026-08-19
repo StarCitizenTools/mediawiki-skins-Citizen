@@ -95,6 +95,73 @@ describe( 'createSections', () => {
 		} );
 	} );
 
+	describe( 'sections with a body wrapper', () => {
+		const WRAPPED = `
+			<div class="mw-parser-output">
+				<section id="citizen-section-0" class="citizen-section"><p>Lead</p></section>
+				<section id="citizen-section-1" class="citizen-section">
+					<div class="mw-heading citizen-section-heading"><h2 id="Foo">Foo</h2></div>
+					<div class="citizen-section-body">
+						<p>Bar</p>
+						<section id="citizen-section-2" class="citizen-section">
+							<h3 class="citizen-section-heading" id="Sub">Sub</h3>
+							<div class="citizen-section-body"><p>Nested</p></div>
+						</section>
+					</div>
+				</section>
+			</div>
+		`;
+
+		it( 'should hide the body wrapper and nothing else', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( '#citizen-section-1' );
+			const heading = section.querySelector( ':scope > .mw-heading' );
+			const body = section.querySelector( ':scope > .citizen-section-body' );
+
+			click( heading );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( body.hidden ).toBeTruthy();
+			expect( heading.hidden ).toBeFalsy();
+			// The content itself is untouched, which is the whole point: only a
+			// skin-owned box carries the attribute, so no wiki styling leaks out.
+			expect( body.querySelector( 'p' ).hidden ).toBeFalsy();
+
+			click( heading );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( body.hidden ).toBeFalsy();
+		} );
+
+		it( 'should toggle a subsection independently of its parent', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const nested = bodyContent.querySelector( '#citizen-section-2' );
+			const nestedBody = nested.querySelector( ':scope > .citizen-section-body' );
+			const parentBody = bodyContent.querySelector( '#citizen-section-1 > .citizen-section-body' );
+
+			click( nested.querySelector( ':scope > h3' ) );
+
+			expect( nested.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( nestedBody.hidden ).toBeTruthy();
+			expect( parentBody.hidden ).toBeFalsy();
+		} );
+
+		it( 'should expand the whole chain on a find-in-page match', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const parent = bodyContent.querySelector( '#citizen-section-1' );
+			const nested = bodyContent.querySelector( '#citizen-section-2' );
+
+			click( parent.querySelector( ':scope > .mw-heading' ) );
+			click( nested.querySelector( ':scope > h3' ) );
+			nested.querySelector( 'p' ).dispatchEvent( new Event( 'beforematch', { bubbles: true } ) );
+
+			expect( parent.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( nested.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( parent.querySelector( ':scope > .citizen-section-body' ).hidden ).toBeFalsy();
+			expect( nested.querySelector( ':scope > .citizen-section-body' ).hidden ).toBeFalsy();
+		} );
+	} );
+
 	describe( 'parsoid sections (native markup)', () => {
 		const PARSOID = `
 			<div class="mw-parser-output">

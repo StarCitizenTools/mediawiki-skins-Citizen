@@ -1,0 +1,28 @@
+@import ( reference ) '../variables.less';
+@import ( reference ) '../mixins.less';
+
+@media screen {
+	// The marker lists the slices that existed when the page was rendered, so
+	// older HTML lacks this token — or the attribute entirely, this being the
+	// first slice.
+	html:not( [ data-mw-citizen-html~='3.22' ] ) {
+		// Section content moved into `.citizen-section-body` (PR #1809). Older
+		// HTML sets `hidden` on wiki content, where containment empties the box
+		// of its contents and nothing else — a specified size, margin, padding,
+		// border, outline and shadow all survive as a hollow strip under the
+		// heading. Gated because this matches the new wrapper too, which has to
+		// keep collapsing its first child's margin out through itself, and
+		// `margin: 0` would disturb that. `&` because `.client-js` is on the
+		// same element as the marker.
+		&.client-js .citizen-sections-enabled section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > [ hidden='until-found' ] {
+			block-size: 0;
+			min-block-size: 0;
+			padding: 0;
+			margin: 0;
+			outline: 0;
+			background: none;
+			border: 0;
+			box-shadow: none;
+		}
+	}
+}
