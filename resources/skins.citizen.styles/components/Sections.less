@@ -17,14 +17,12 @@ section[ data-mw-section-id ] > .mw-heading,
 
 // The chevron. Drawn on the heading's ::before so first paint carries the
 // affordance with no layout shift and noscript clients never see it, then
-// handed to the injected toggle button once sections.js has run. Both take
-// the same box in the same flex slot, so the handover moves nothing.
-// Trade-off: the pre-JS form claims the heading's single ::before slot, so
-// any extension or gadget styling these headings' ::before will conflict.
+// handed to the injected button once sections.js runs. Each form sets its own
+// box; they must match or the handover shifts the row.
+// Trade-off: this claims the heading's single ::before slot, so any extension
+// or gadget styling these headings' ::before will conflict.
 .mixin-citizen-section-chevron() {
 	display: block;
-	width: var( --size-icon );
-	height: var( --size-icon );
 	content: '';
 	background-color: currentcolor;
 	-webkit-mask-image: url( assets/images/cdxIconCollapse.svg );
@@ -33,8 +31,6 @@ section[ data-mw-section-id ] > .mw-heading,
 	mask-repeat: no-repeat;
 	-webkit-mask-position: center;
 	mask-position: center;
-	-webkit-mask-size: contain;
-	mask-size: contain;
 	transition: var( --transition-hover );
 	transition-property: transform;
 }
@@ -48,10 +44,14 @@ section[ data-mw-section-id ] > .mw-heading,
 		-webkit-user-select: none;
 		user-select: none;
 
+		// The flex item itself, so it carries the button's whole footprint.
 		&::before {
 			flex-shrink: 0;
-			order: -2;
-			margin-inline-end: var( --space-sm );
+			order: 3;
+			width: @min-size-interactive-pointer;
+			height: @min-size-interactive-pointer;
+			-webkit-mask-size: var( --size-icon );
+			mask-size: var( --size-icon );
 			.mixin-citizen-section-chevron();
 		}
 
@@ -80,38 +80,20 @@ section[ data-mw-section-id ] > .mw-heading,
 		}
 	}
 
+	// The Codex classes come from sections.js, so the box, colours and focus
+	// ring track the edit links rather than being restated. Order 3 keeps it
+	// outboard of them and of DiscussionTools' subscribe control, which
+	// skinStyles/extensions/DiscussionTools holds at 2.
 	.citizen-section-toggle {
-		display: flex;
 		flex-shrink: 0;
-		align-items: center;
-		justify-content: center;
-		order: -2;
-		padding: 0;
-		margin-inline-end: var( --space-sm );
-		color: inherit;
-		appearance: none;
-		cursor: pointer;
-		background: transparent;
-		border: 0;
-		border-radius: var( --border-radius-base );
+		order: 3;
 
 		&::before {
+			width: var( --size-icon );
+			height: var( --size-icon );
+			-webkit-mask-size: contain;
+			mask-size: contain;
 			.mixin-citizen-section-chevron();
-		}
-
-		&:focus-visible {
-			outline: var( --border-width-thick ) solid var( --color-progressive );
-			outline-offset: var( --space-xxs );
-		}
-
-		@media ( hover: hover ) {
-			&:hover {
-				opacity: var( --opacity-icon-base--hover );
-			}
-
-			&:active {
-				opacity: var( --opacity-icon-base--selected );
-			}
 		}
 	}
 

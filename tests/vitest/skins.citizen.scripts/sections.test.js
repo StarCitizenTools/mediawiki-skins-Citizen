@@ -327,6 +327,20 @@ describe( 'createSections', () => {
 			</div>
 		`;
 
+		it( 'should leave the markup alone when collapsible sections are off', () => {
+			// Without the body class the feature is disabled, so the server's
+			// markup has to survive untouched — no button, and no interactive
+			// class for the styles to hand the chevron over on.
+			const bodyContent = document.createElement( 'div' );
+			bodyContent.innerHTML = WRAPPED;
+			document.body.appendChild( bodyContent );
+
+			createSections( { document, bodyContent } ).init();
+
+			expect( bodyContent.querySelector( '.citizen-section-toggle' ) ).toBeNull();
+			expect( document.body.classList.contains( 'citizen-sections-interactive' ) ).toBe( false );
+		} );
+
 		it( 'should give every collapsible heading a button', () => {
 			const bodyContent = createBodyContent( WRAPPED );
 
@@ -345,18 +359,69 @@ describe( 'createSections', () => {
 			expect( toggle.getAttribute( 'aria-labelledby' ) ).toBe( 'Foo' );
 		} );
 
-		it( 'should place the button after the heading tag when markup wraps it', () => {
+		it( 'should place the button after the edit links when markup wraps the heading', () => {
 			const bodyContent = createBodyContent( WRAPPED );
 			const h2 = bodyContent.querySelector( 'h2' );
+			const editSection = bodyContent.querySelector( '.mw-editsection' );
 
 			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
 
 			// Outside the h2, so the heading keeps a clean accessible name
 			expect( toggle.closest( 'h2' ) ).toBeNull();
 			expect( h2.hasAttribute( 'aria-labelledby' ) ).toBe( false );
-			// After it, so jumping between headings and reading on reaches
-			// the control. The styles order it first visually.
+			// Outboard of the controls that act on the section's content, and in
+			// the order the styles render it, so reading order matches
+			expect( editSection.nextElementSibling ).toBe( toggle );
+		} );
+
+		it( 'should place the button after the heading tag when there are no edit links', () => {
+			const bodyContent = createBodyContent( PARSOID_NESTED );
+			const h2 = bodyContent.querySelector( 'h2' );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
 			expect( h2.nextElementSibling ).toBe( toggle );
+		} );
+
+		it( 'should carry the same Codex button classes as the edit links', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.classList.contains( 'cdx-button' ) ).toBe( true );
+			expect( toggle.classList.contains( 'cdx-button--weight-quiet' ) ).toBe( true );
+			expect( toggle.classList.contains( 'cdx-button--icon-only' ) ).toBe( true );
+		} );
+
+		it( 'should not mistake a subscribe control for the edit links', () => {
+			// DiscussionTools inserts .mw-editsection-like as the heading's first
+			// child, so placing after it would land the button ahead of the title.
+			const bodyContent = createBodyContent( `
+				<div class="mw-parser-output">
+					<section data-mw-section-id="1">
+						<div class="mw-heading mw-heading2">
+							<span class="mw-editsection-like">subscribe</span>
+							<h2 id="Foo">Foo</h2>
+						</div>
+						<p>Bar</p>
+					</section>
+				</div>
+			` );
+			const h2 = bodyContent.querySelector( 'h2' );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( h2.nextElementSibling ).toBe( toggle );
+		} );
+
+		it( 'should stay a sibling of the edit links, not a descendant', () => {
+			// The delegated click handler returns early inside .mw-editsection,
+			// so a nested toggle would never fire.
+			const bodyContent = createBodyContent( WRAPPED );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.closest( '.mw-editsection' ) ).toBeNull();
 		} );
 
 		it( 'should pin the heading name when the button lands inside the heading tag', () => {
@@ -367,8 +432,8 @@ describe( 'createSections', () => {
 
 			expect( toggle.closest( 'h2' ) ).toBe( heading );
 			expect( heading.getAttribute( 'aria-labelledby' ) ).toBe( 'Foo' );
-			// First child, so it precedes the title the heading announces
-			expect( heading.firstElementChild ).toBe( toggle );
+			// Last, after the edit links it renders outboard of
+			expect( heading.lastElementChild ).toBe( toggle );
 		} );
 
 		it( 'should give every heading on the page its own button', () => {

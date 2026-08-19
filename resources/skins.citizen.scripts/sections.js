@@ -2,6 +2,10 @@ const COLLAPSED_CLASS = 'citizen-section--collapsed';
 const HEADING_SELECTOR = '.mw-heading, .citizen-section-heading';
 const HEADING_TAGS = 'h1, h2, h3, h4, h5, h6';
 const TOGGLE_CLASS = 'citizen-section-toggle';
+// The same Codex classes templates/IconButtonLink.mustache gives the edit
+// links, so the two stay in step as Codex moves.
+const TOGGLE_CLASSES =
+	`${ TOGGLE_CLASS } cdx-button cdx-button--weight-quiet cdx-button--icon-only`;
 const INTERACTIVE_CLASS = 'citizen-sections-interactive';
 const COLLAPSED_SECTION_SELECTOR =
 	`section[data-mw-section-id].${ COLLAPSED_CLASS }, section.citizen-section.${ COLLAPSED_CLASS }`;
@@ -83,7 +87,9 @@ function createSections( { document, bodyContent } ) {
 	 * the delegated click handler, but a bare heading is unreachable by
 	 * keyboard and announces neither that it is a control nor what state it
 	 * is in. A native button fixes both and needs no listener of its own:
-	 * Enter and Space fire a click that bubbles to the same handler.
+	 * Enter and Space fire a click that bubbles to the same handler — which
+	 * stops at `.mw-editsection`, so the button must stay a sibling of the edit
+	 * links rather than move inside them.
 	 *
 	 * @param {HTMLElement} heading
 	 * @return {void}
@@ -103,30 +109,33 @@ function createSections( { document, bodyContent } ) {
 
 		const toggle = document.createElement( 'button' );
 		toggle.type = 'button';
-		toggle.className = TOGGLE_CLASS;
+		toggle.className = TOGGLE_CLASSES;
 		toggle.setAttribute( 'aria-expanded', 'true' );
 		// Naming the control after its section is the disclosure convention:
 		// "Foo, button, collapsed" beats a generic label, and it keeps the
 		// wording out of i18n.
 		toggle.setAttribute( 'aria-labelledby', label.id );
 
-		if ( headingTag && headingTag !== heading ) {
-			// Newer markup wraps the heading tag in a container, so the
-			// button sits beside it and the heading keeps a clean accessible
-			// name. Placing it *after* the heading tag means jumping between
-			// headings and reading on reaches the control; the styles order
-			// it first, so nothing moves.
+		// After the edit links, matching where the styles render it, so reading
+		// order and rendered order agree. `.mw-editsection-like` is deliberately
+		// not matched: DiscussionTools' subscribe control is the heading's first
+		// child, so inserting after it would land the button ahead of the title.
+		const editSection = heading.querySelector( ':scope > .mw-editsection' );
+		if ( editSection ) {
+			editSection.after( toggle );
+		} else if ( headingTag && headingTag !== heading ) {
+			// Newer markup wraps the heading tag in a container, so the button
+			// sits beside it and the heading keeps a clean accessible name.
 			headingTag.after( toggle );
 		} else {
-			// Legacy markup has no wrapper, so the button goes inside the
-			// heading tag — which heading navigation lands on, so first child
-			// reads in the right order. It would otherwise be folded into the
-			// heading's accessible name, so pin that to the title text. Both
-			// can go when the legacy heading DOM does.
-			heading.insertBefore( toggle, heading.firstChild );
-			if ( headingTag && label !== heading ) {
-				heading.setAttribute( 'aria-labelledby', label.id );
-			}
+			heading.append( toggle );
+		}
+
+		if ( headingTag === heading && label !== heading ) {
+			// Legacy markup has no wrapper, so the button lands inside the
+			// heading tag and would be folded into its accessible name. Goes
+			// when the legacy heading DOM does.
+			heading.setAttribute( 'aria-labelledby', label.id );
 		}
 	}
 
