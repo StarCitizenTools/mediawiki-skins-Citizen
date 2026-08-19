@@ -19,30 +19,38 @@ hr {
 }
 
 /* Structural Elements */
+// Two heading markups are live on the same wiki — a bare `hN`, and MediaWiki's
+// `<div class="mw-heading mw-headingN">` wrapper (T13555) — so every gap is
+// spelled twice below and only the measure differs. A bare heading uses `em`,
+// safe because the skin pins its font-size, so a deliberate override still
+// scales its spacing to match. The wrapper is a plain div inheriting body text
+// size, so it names its heading's font token instead.
+.mixin-citizen-heading-space( @ratio, @font-size ) {
+	margin-block: calc( @ratio * @font-size ) calc( var( --heading-space-end ) * @font-size );
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	// It seems that many wikis have the expectation that headers have a bottom margin
-	margin-block-end: 0.25em;
 	color: var( --color-emphasized );
 }
 
 h1,
 h2 {
-	margin-block-start: 2em;
+	.mixin-citizen-heading-space( var( --heading-space-h1-h2 ), 1em );
 }
 
 h3,
 h4 {
-	margin-block-start: 1.5em;
+	.mixin-citizen-heading-space( var( --heading-space-h3-h4 ), 1em );
 }
 
 h5,
 h6 {
-	margin-block-start: 1.25em;
+	.mixin-citizen-heading-space( var( --heading-space-h5-h6 ), 1em );
 	font-size: var( --font-size-medium );
 	font-weight: var( --font-weight-semi-bold );
 }
@@ -61,6 +69,36 @@ h3 {
 
 h4 {
 	.mixin-citizen-font-styles( 'heading-4' );
+}
+
+// Only hand-written wikitext omits the level class, and nothing here can tell
+// which heading the wrapper holds, so it takes the smallest step. The levelled
+// rules share this specificity and must follow it.
+.mw-heading {
+	.mixin-citizen-heading-space( var( --heading-space-h5-h6 ), var( --font-size-medium ) );
+}
+
+.mw-heading1 {
+	.mixin-citizen-heading-space( var( --heading-space-h1-h2 ), var( --font-size-xxx-large ) );
+}
+
+.mw-heading2 {
+	.mixin-citizen-heading-space( var( --heading-space-h1-h2 ), var( --font-size-xx-large ) );
+}
+
+.mw-heading3 {
+	.mixin-citizen-heading-space( var( --heading-space-h3-h4 ), var( --font-size-x-large ) );
+}
+
+.mw-heading4 {
+	.mixin-citizen-heading-space( var( --heading-space-h3-h4 ), var( --font-size-large ) );
+}
+
+// The wrapper owns the spacing in every medium, so the heading inside it is
+// fully reset; that also neutralises any `hN` margin an extension or on-wiki
+// stylesheet lands inside the wrapper.
+.mw-heading :is( h1, h2, h3, h4, h5, h6 ) {
+	margin: 0;
 }
 
 p {

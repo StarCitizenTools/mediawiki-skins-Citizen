@@ -83,6 +83,14 @@
 	--space-xxl: calc( 2 * var( --space-unit ) );
 	.mixin-citizen-content-space( var( --space-md ) );
 
+	// Multiples of the heading's own font size. Both heading markups read these,
+	// so they cannot drift apart.
+	--heading-space-h1-h2: 2;
+	--heading-space-h3-h4: 1.5;
+	--heading-space-h5-h6: 1.25;
+	// Many wikis expect headings to carry a bottom margin.
+	--heading-space-end: 0.25;
+
 	// Transition
 	--transition-timing-function-ease: cubic-bezier( 0.2, 0, 0, 1 );
 	--transition-timing-function-ease-in: cubic-bezier( 0.3, 0, 0.8, 0.15 );
