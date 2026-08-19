@@ -59,22 +59,11 @@
 
 // Heading HTML changes
 // See https://phabricator.wikimedia.org/T13555
-// TODO: Clean up heading spacing someday
-// TODO: This should go into one of the skinning files, revisit when we move to 1.43
+// Spacing lives beside the bare-heading ladder in skinning/elements.less; only
+// layout is left here.
 .mw-heading {
 	display: flex;
 	align-items: center;
-	margin-top: var( --space-md );
-
-	&1,
-	&2 {
-		margin-top: 3rem;
-	}
-
-	&3,
-	&4 {
-		margin-top: 2rem;
-	}
 
 	h1,
 	h2,
@@ -83,6 +72,5 @@
 	h5,
 	h6 {
 		flex-grow: 1;
-		margin: 0;
 	}
 }
