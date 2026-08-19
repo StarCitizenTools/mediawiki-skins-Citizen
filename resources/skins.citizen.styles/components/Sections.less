@@ -116,6 +116,13 @@ section[ data-mw-section-id ] > .mw-heading,
 	}
 
 	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > :is( .mw-heading, .citizen-section-heading ) {
+		// Nothing is left for this margin to separate the heading from, and it
+		// can no longer collapse away: hiding the body applies
+		// `content-visibility: hidden`, whose implied layout containment makes
+		// the body a formatting context, so whatever follows adds to this
+		// margin instead of merging with it.
+		margin-block-end: 0;
+
 		&::before,
 		> .citizen-section-toggle::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
