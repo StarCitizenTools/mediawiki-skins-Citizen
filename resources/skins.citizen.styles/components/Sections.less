@@ -148,8 +148,27 @@ section[ data-mw-section-id ] > .mw-heading,
 	// canonically cased by the time these rules can match.
 	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > [ hidden='until-found' ] {
 		display: block;
-		// A size-contained box is zero-height but keeps its margins, which
-		// would stack the whole section's dead space under the heading.
-		margin-block: 0;
+		// Both specs that define this state say the box carrying it must be
+		// empty — containment skips the contents and nothing else, so a
+		// specified size still reserves space and the margin, padding,
+		// border, outline and shadow still draw. That holds when the
+		// attribute goes on a wrapper the author owns. Here it lands on
+		// whatever wiki content the section happens to start with, and a
+		// child styled as a card — hatnote, navbox, table — outlives the
+		// collapse as a hollow strip under the heading. So the box is
+		// flattened by force: every property that reserves space, then every
+		// one that paints. Author `!important` and inline sizes still win;
+		// closing that needs the attribute to move onto a section body
+		// wrapper the skin owns, rather than onto wiki content.
+		// `all: revert` is not the tidy shortcut for this — it reverts the
+		// UA's own `content-visibility` and unhides the whole section.
+		block-size: 0;
+		min-block-size: 0;
+		padding: 0;
+		margin: 0;
+		outline: 0;
+		background: none;
+		border: 0;
+		box-shadow: none;
 	}
 }
