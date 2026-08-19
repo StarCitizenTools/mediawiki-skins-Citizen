@@ -7,6 +7,17 @@
  * TODO: Remove HSL fallback when OKLCH is supported in all browsers.
  * TODO: Use CSS relative color syntax when supported in all browsers.
  */
+
+// Spacing for wiki content, scaled to the reading text rather than the root.
+// Emitted at the root too: the consumers are bare element selectors that also
+// match chrome, where an undefined custom property would drop the declaration.
+// Not `em` — wikitext templates nest their own font-size percentages, which
+// would compound.
+.mixin-citizen-content-space( @unit ) {
+	--space-content-unit: @unit;
+	--space-content-half: calc( 0.5 * var( --space-content-unit ) );
+}
+
 :root {
 	// Border
 	--border-radius-medium: calc( var( --border-radius-base ) * 2 );
@@ -70,6 +81,7 @@
 	--space-lg: calc( 1.25 * var( --space-unit ) );
 	--space-xl: calc( 1.5 * var( --space-unit ) );
 	--space-xxl: calc( 2 * var( --space-unit ) );
+	.mixin-citizen-content-space( var( --space-md ) );
 
 	// Transition
 	--transition-timing-function-ease: cubic-bezier( 0.2, 0, 0, 1 );
@@ -256,6 +268,13 @@
 	--box-shadow-drop-small: var( --box-shadow-small );
 	--box-shadow-drop-medium: var( --box-shadow-medium );
 	--box-shadow-drop-xx-large: var( --box-shadow-large );
+}
+
+.citizen-body {
+	// The reader's font-size preference is declared on this element, and a
+	// `var()` substitutes where it is declared — deriving this at the root
+	// instead would freeze it at the default size.
+	.mixin-citizen-content-space( var( --font-size-medium ) );
 }
 
 // TODO: Update with implementation on T376559 when it is finalized

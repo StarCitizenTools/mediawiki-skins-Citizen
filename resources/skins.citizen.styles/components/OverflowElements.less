@@ -26,7 +26,7 @@
 			// the `max-width` a bare `.wikitable` carries. Anything else
 			// opted in by hand is a plain block and stays full width.
 			max-width: max-content;
-			margin-block: var( --space-md );
+			margin-block: var( --space-content-unit );
 			margin-inline: var( --border-width-base ); // Fix clipping border
 			border-radius: var( --border-radius-medium );
 			box-shadow: var( --box-shadow-border );
@@ -42,7 +42,7 @@
 		// `.wikitable` is not in the list: the card rule above already gives
 		// the wrapper this margin.
 		&:has( .citizen-overflow-content > :is( ul, ol, dl, blockquote ) ) {
-			margin-block: var( --space-md );
+			margin-block: var( --space-content-unit );
 
 			// hacks.less zeroes the margins of a `floatleft`/`floatright`
 			// element, and that class migrates to the wrapper — so the zero
@@ -61,7 +61,7 @@
 		// below it, drops by that much the moment the script runs. Keep the
 		// element list in step with typography.less.
 		p:not( .mw-empty-elt ) + &:has( .citizen-overflow-content > :is( ul, ol, table, dl, blockquote ) ) {
-			margin-top: calc( var( --space-xs ) * -1 );
+			margin-top: calc( var( --space-content-half ) * -1 );
 		}
 
 		// Both spellings of a floated wrapper: `--float*` when the float was
