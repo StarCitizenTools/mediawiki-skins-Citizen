@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.21.0...v3.22.0) (2026-08-20)
+
+
+### Features
+
+* **sections:** ✨ move the collapse control to the end of the heading ([3716455](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37164553286af031df01c44c658ff992a1293659))
+
+
+### Bug Fixes
+
+* **CiteThisPage:** 🐛 correct the heading class in the citation box selector ([9614275](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/96142751118ce415a216daaae7c3df29d39455cb))
+* **commandPalette:** 🐛 open a result in a new tab with Ctrl+Enter ([c57cd3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c57cd3ce1db8cac91e59bc925aa39f05c8ea6f5d))
+* **commandPalette:** 🐛 stop recent results remembering how they were opened ([32149c9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32149c9b7f2baca41d5fee19cf667964fd8ae6c8))
+* **core:** 🐛 lift bordered content boxes one step off the page ([fd0481c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fd0481c2526bd6ce93e33ef672d7aab394f3e8ce))
+* **sections:** 🐛 collapse hatnotes and cards fully ([97a3616](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/97a361623ed654d80fc7a9b3004d3fc70a5edd52))
+* **sections:** 🐛 keep heading spacing steady when a section collapses ([5386cc5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5386cc537a8cbf78d9ae627b81e5137d82b33ec5))
+* **spacing:** 🐛 scale content spacing to the reading text size ([3e4663e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3e4663e1c4726dc99db211bfe5fe8ec2beb5245b))
+* **typography:** 🐛 scale heading spacing to the reading text size ([a4ca6c8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a4ca6c8663261b0828bcf548d8f631edd83fe2ba))
+* **userMenu:** 🐛 label the registration date as membership ([e73fd8b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e73fd8b81a1f158e725514c00a6b102be0c1b496))
+* **userMenu:** 🐛 link user groups to their group page ([d1ed0ab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d1ed0abf530ba3d10f4fd28117a1acfad5344b99))
+* **userMenu:** 🐛 show real name alongside username ([80ecc8c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/80ecc8c7088b774b7428cf084febdb4c370ae6eb))
+
 ## [3.21.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.20.0...v3.21.0) (2026-08-16)
 
 
