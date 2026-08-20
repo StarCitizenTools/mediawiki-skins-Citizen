@@ -56,6 +56,22 @@ describe( 'createRecentItems', () => {
 			expect( stored[ 2 ].id ).toBe( 'item-b' );
 		} );
 
+		it( 'does not remember how the item was activated', () => {
+			// A row saved from a click would otherwise replay that activation
+			// for good, navigating nowhere at all on every later plain Enter.
+			const item = {
+				id: 'item-1',
+				label: 'Test Page',
+				isMouseClick: true,
+				modifierClick: true
+			};
+
+			service.saveRecentItem( item );
+
+			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
+			expect( stored[ 0 ] ).toEqual( { id: 'item-1', label: 'Test Page' } );
+		} );
+
 		it( 'enforces maximum of 5 items', () => {
 			for ( let i = 1; i <= 7; i++ ) {
 				service.saveRecentItem( { id: `item-${ i }`, label: `Page ${ i }` } );
@@ -87,6 +103,17 @@ describe( 'createRecentItems', () => {
 				expect( dismissAction ).toBeDefined();
 				expect( dismissAction.label ).toBe( 'citizen-command-palette-dismiss' );
 			}
+		} );
+
+		it( 'drops activation flags left behind by an earlier version', () => {
+			mw.storage.setObject( 'skin-citizen-command-palette-recent-items', [
+				{ id: 'item-1', label: 'Page 1', isMouseClick: true, modifierClick: false }
+			] );
+
+			const result = service.getRecentItems();
+
+			expect( result[ 0 ].isMouseClick ).toBeUndefined();
+			expect( result[ 0 ].modifierClick ).toBeUndefined();
 		} );
 
 		it( 'does not duplicate dismiss action if already present', () => {
