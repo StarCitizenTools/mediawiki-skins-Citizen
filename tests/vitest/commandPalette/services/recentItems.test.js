@@ -57,13 +57,15 @@ describe( 'createRecentItems', () => {
 		} );
 
 		it( 'does not remember how the item was activated', () => {
-			// A row saved from a click would otherwise replay that activation
-			// for good, navigating nowhere at all on every later plain Enter.
+			// A row saved from a Ctrl+click would otherwise replay that
+			// activation for good -- opening a new tab, or navigating
+			// nowhere at all, on every later plain Enter.
 			const item = {
 				id: 'item-1',
 				label: 'Test Page',
 				isMouseClick: true,
-				modifierClick: true
+				modifierClick: true,
+				newTab: true
 			};
 
 			service.saveRecentItem( item );

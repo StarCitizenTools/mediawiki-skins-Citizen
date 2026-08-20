@@ -113,6 +113,82 @@ describe( 'useResultRouter — selectResult', () => {
 		} );
 	} );
 
+	describe( 'navigate in a new tab', () => {
+		let setLocation;
+
+		beforeEach( () => {
+			setLocation = vi.fn();
+			Object.defineProperty( window, 'location', {
+				configurable: true,
+				value: { set href( v ) { setLocation( v ); } }
+			} );
+		} );
+
+		afterEach( () => {
+			vi.restoreAllMocks();
+		} );
+
+		/**
+		 * @param {Object} overrides
+		 * @return {Object}
+		 */
+		function navigatingDeps( overrides = {} ) {
+			return makeDeps( Object.assign( {
+				orchestrator: {
+					handleSelection: vi.fn().mockResolvedValue( { action: 'navigate', payload: '/wiki/Foo' } )
+				}
+			}, overrides ) );
+		}
+
+		it( 'opens a new browsing context and leaves this one alone', async () => {
+			const opened = {};
+			const open = vi.spyOn( window, 'open' ).mockReturnValue( opened );
+			const deps = navigatingDeps();
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( { id: 'foo', newTab: true, modifierClick: true } );
+
+			expect( open ).toHaveBeenCalledWith( '/wiki/Foo', '_blank' );
+			expect( opened.opener ).toBeNull();
+			expect( setLocation ).not.toHaveBeenCalled();
+			expect( deps.control.close ).toHaveBeenCalled();
+		} );
+
+		it( 'falls back to this tab when the new one is blocked', async () => {
+			vi.spyOn( window, 'open' ).mockReturnValue( null );
+			const deps = navigatingDeps();
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( { id: 'foo', newTab: true, modifierClick: true } );
+
+			expect( setLocation ).toHaveBeenCalledWith( '/wiki/Foo' );
+		} );
+
+		it( 'leaves a mouse click to the browser, which already read the modifier', async () => {
+			const open = vi.spyOn( window, 'open' ).mockReturnValue( {} );
+			const deps = navigatingDeps();
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( { id: 'foo', isMouseClick: true, modifierClick: true } );
+
+			expect( open ).not.toHaveBeenCalled();
+			expect( setLocation ).not.toHaveBeenCalled();
+		} );
+
+		it( 'opens the new tab past a preview gadget rather than previewing in place', async () => {
+			const open = vi.spyOn( window, 'open' ).mockReturnValue( {} );
+			const deps = navigatingDeps( {
+				preview: { isAvailable: vi.fn().mockReturnValue( true ), triggerForAnchor: vi.fn() }
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( { previewable: true, newTab: true, modifierClick: true } );
+
+			expect( deps.preview.triggerForAnchor ).not.toHaveBeenCalled();
+			expect( open ).toHaveBeenCalledWith( '/wiki/Foo', '_blank' );
+		} );
+	} );
+
 	describe( 'navigate with preview', () => {
 		it( 'triggers the preview anchor for keyboard activation when available + previewable + non-modifier', async () => {
 			const root = document.createElement( 'div' );

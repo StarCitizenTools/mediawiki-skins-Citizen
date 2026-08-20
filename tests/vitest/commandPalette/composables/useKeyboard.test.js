@@ -180,6 +180,61 @@ describe( 'useKeyboard', () => {
 
 			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
 		} );
+
+		it( 'should ask for a new tab on Ctrl+Enter, as Ctrl+click does', () => {
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( {
+				id: '1',
+				actions: [ { id: 'edit' } ],
+				modifierClick: true,
+				newTab: true
+			} );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'should leave the list item itself unflagged', () => {
+			// The row lives in the reactive result list; flagging it in place
+			// would make every later activation of that row open a new tab.
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.items.value[ 0 ] ).toEqual( { id: '1', actions: [ { id: 'edit' } ] } );
+		} );
+
+		it( 'should read Ctrl+Shift+Enter as the same new-tab request', () => {
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.ctrlKey = true;
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith(
+				expect.objectContaining( { newTab: true } )
+			);
+		} );
+
+		it( 'should carry the new-tab request into a held activation', () => {
+			listNav.highlightedIndex.value = -1;
+			deps.canQueueActivation.value = true;
+			const event = createKeyEvent( 'Enter' );
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onQueueActivation ).toHaveBeenCalledWith( {
+				modifierClick: true,
+				newTab: true
+			} );
+		} );
 	} );
 
 	describe( 'input zone — Escape', () => {

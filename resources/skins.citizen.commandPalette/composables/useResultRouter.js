@@ -1,6 +1,26 @@
 const { nextTick } = require( 'vue' );
 
 /**
+ * Open a URL in a new browsing context, severing the opener.
+ *
+ * The opener is cleared by hand rather than through the `noopener` feature,
+ * which makes `window.open` return null even on success and so would cost the
+ * caller its only signal that the context never opened.
+ *
+ * @param {string} url
+ * @return {boolean} False when the context could not be opened, so the caller
+ *   can fall back rather than swallow the activation.
+ */
+function openInNewTab( url ) {
+	const opened = window.open( url, '_blank' );
+	if ( !opened ) {
+		return false;
+	}
+	opened.opener = null;
+	return true;
+}
+
+/**
  * Composable that owns the palette's result-action dispatch.
  *
  * Two functions are returned: `selectResult` for row activations, and
@@ -66,10 +86,10 @@ function useResultRouter( {
 					// preview and pick another row. Plain mouse clicks are
 					// intercepted by the handler; keyboard activation
 					// synthesizes a click on the highlighted row's anchor
-					// so the handler can take over. Modifier or non-primary
-					// clicks (Ctrl, Cmd, Alt, Shift, middle) fall through
-					// to the navigate+close path so users keep their
-					// browser-level escape hatches.
+					// so the handler can take over. A modified activation --
+					// a non-primary or modifier click, or Ctrl/Cmd+Enter --
+					// falls through to the navigate+close path so users keep
+					// their browser-level escape hatches.
 					if (
 						result.previewable &&
 						preview.isAvailable() &&
@@ -89,7 +109,11 @@ function useResultRouter( {
 					// <a> tags are handled by the browser on mouse click,
 					// so we don't need to navigate.
 					if ( !result.isMouseClick ) {
-						window.location.href = action.payload;
+						// A blocked popup falls back to this tab rather than
+						// leaving the activation to do nothing at all.
+						if ( !result.newTab || !openInNewTab( action.payload ) ) {
+							window.location.href = action.payload;
+						}
 					}
 					close();
 				}
