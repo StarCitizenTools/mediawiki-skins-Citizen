@@ -95,6 +95,7 @@
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
  * @property {boolean} [previewable] Whether the item's URL is suitable for in-place preview by an external preview gadget (e.g. Instant Diffs).
  * @property {boolean} [modifierClick] True if the click had a modifier key held (Ctrl, Cmd, Alt, Shift) or was non-primary (middle-click). Signals "I want different behavior than the row's default" — open in new tab, navigate fully past a preview, etc.
+ * @property {boolean} [newTab] True if the activation asked for a new browsing context and nothing else will open it. Set for keyboard activation only — a mouse click reaches the row's <a>, where the browser reads the modifier itself.
  */
 
 /**

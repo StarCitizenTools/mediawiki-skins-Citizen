@@ -20,7 +20,8 @@ const PENDING_ACTIVATION_TIMEOUT_MS = 2000;
  * @param {import('vue').Ref<boolean>} options.isLeadReady Whether the lead group has settled.
  * @param {import('vue').Ref<Array>} options.items Flat item list.
  * @param {import('vue').Ref<number>} options.defaultHighlightIndex Index the highlight defaults to.
- * @param {Function} options.onActivate Called with the item to activate.
+ * @param {Function} options.onActivate Called with the item to activate,
+ *   carrying whatever the hold was armed with.
  * @return {{ arm: Function, cancel: Function, isActivationQueued: import('vue').Ref<boolean> }}
  */
 function usePendingActivation( options ) {
@@ -28,6 +29,7 @@ function usePendingActivation( options ) {
 	// keystroke and would lower them on an unrelated schedule.
 	const isActivationQueued = ref( false );
 	let armedSurface = null;
+	let armedIntent = null;
 	let timeoutId = null;
 
 	function cancel() {
@@ -36,12 +38,18 @@ function usePendingActivation( options ) {
 		}
 		isActivationQueued.value = false;
 		armedSurface = null;
+		armedIntent = null;
 		clearTimeout( timeoutId );
 		timeoutId = null;
 	}
 
-	function arm() {
+	/**
+	 * @param {Object} [intent] Flags merged onto the item once it arrives. A
+	 *   modified Enter means the same thing whether or not results had landed.
+	 */
+	function arm( intent ) {
 		armedSurface = options.surfaceKey.value;
+		armedIntent = intent || null;
 		isActivationQueued.value = true;
 		clearTimeout( timeoutId );
 		timeoutId = setTimeout( cancel, PENDING_ACTIVATION_TIMEOUT_MS );
@@ -60,7 +68,10 @@ function usePendingActivation( options ) {
 			return;
 		}
 		const index = options.defaultHighlightIndex.value;
-		const item = index >= 0 ? options.items.value[ index ] : null;
+		// Decorate before cancel(), which drops the armed intent.
+		const item = index >= 0 ?
+			Object.assign( {}, options.items.value[ index ], armedIntent ) :
+			null;
 		cancel();
 		// A group that settled empty has no activation to perform.
 		if ( item ) {

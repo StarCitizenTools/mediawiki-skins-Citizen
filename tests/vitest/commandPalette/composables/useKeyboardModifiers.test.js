@@ -31,7 +31,8 @@ const MODIFIER_SETS = {
 	meta: { metaKey: true },
 	// Windows delivers AltGr as Ctrl+Alt; several layouts type `@`, `~` and `#`
 	// — all mode triggers — that way.
-	altgr: { ctrlKey: true, altKey: true }
+	altgr: { ctrlKey: true, altKey: true },
+	ctrlShift: { ctrlKey: true, shiftKey: true }
 };
 
 describe( 'dispatcher modifier policy', () => {
@@ -154,11 +155,15 @@ describe( 'dispatcher modifier policy', () => {
 		[ 'Tab', 'none', 'input', 'onClose (claimed)' ],
 		[ ' ', 'none', 'action', 'clickFocused (claimed)' ],
 
-		// A command modifier suppresses them.
-		[ 'Enter', 'ctrl', 'input', 'ignored' ],
+		// A command modifier suppresses them, unless a binding claims it.
 		[ 'ArrowDown', 'ctrl', 'input', 'ignored' ],
 		[ 'ArrowDown', 'meta', 'input', 'ignored' ],
 		[ 'Escape', 'alt', 'input', 'ignored' ],
+
+		// Ctrl+Enter is the anchor convention for "open in a new tab", so the
+		// Enter binding claims the accelerator, with or without Shift.
+		[ 'Enter', 'ctrl', 'input', 'onSelect (claimed)' ],
+		[ 'Enter', 'ctrlShift', 'input', 'onSelect (claimed)' ],
 
 		// Shift is allowed only for printable characters, plus Tab by exception.
 		[ 'ArrowDown', 'shift', 'input', 'ignored' ],

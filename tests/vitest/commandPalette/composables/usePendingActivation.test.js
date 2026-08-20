@@ -55,6 +55,41 @@ describe( 'usePendingActivation', () => {
 		expect( state.onActivate ).toHaveBeenCalledWith( { id: 'sunset', label: 'Sunset' } );
 	} );
 
+	it( 'carries the intent it was armed with onto the item', async () => {
+		const { state, pending } = setup();
+
+		pending.arm( { newTab: true } );
+		await settle( state, [ { id: 'sunset' } ] );
+
+		expect( state.onActivate ).toHaveBeenCalledWith( { id: 'sunset', newTab: true } );
+	} );
+
+	it( 'leaves the settled item itself unflagged', async () => {
+		// The item comes out of the live result list, so decorating it in
+		// place would make every later activation of that row inherit it.
+		const items = [ { id: 'sunset' } ];
+		const { state, pending } = setup();
+
+		pending.arm( { newTab: true } );
+		await settle( state, items );
+
+		expect( items[ 0 ] ).toEqual( { id: 'sunset' } );
+	} );
+
+	it( 'drops the intent with the hold, so the next plain Enter is plain', async () => {
+		const { state, pending } = setup();
+
+		pending.arm( { newTab: true } );
+		await settle( state, [ { id: 'sunset' } ] );
+		state.isLeadReady.value = false;
+		await nextTick();
+		pending.arm();
+		state.onActivate.mockClear();
+		await settle( state, [ { id: 'sunrise' } ] );
+
+		expect( state.onActivate ).toHaveBeenCalledWith( { id: 'sunrise' } );
+	} );
+
 	it( 'raises its own queued flag immediately', () => {
 		const { pending } = setup();
 

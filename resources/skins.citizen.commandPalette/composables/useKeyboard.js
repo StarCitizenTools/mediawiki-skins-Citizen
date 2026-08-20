@@ -14,6 +14,15 @@ const {
 const IS_MAC = isMacPlatform( typeof navigator !== 'undefined' ? navigator : null );
 const COPY_KBD = IS_MAC ? '⌘C' : 'Ctrl+C';
 
+// `modifierClick` is the router's existing "not the row's default action"
+// signal; `newTab` is what makes it open the context itself.
+const NEW_TAB_ACTIVATION = { modifierClick: true, newTab: true };
+
+// Shared by the plain-Enter bindings and their accelerator twins, so the pairs
+// cannot drift apart.
+const hasHighlight = ( state ) => state.highlightedIndex >= 0;
+const canQueue = ( state ) => state.highlightedIndex < 0 && state.canQueueActivation;
+
 // Arrow keys are physical; the bindings below are logical (previous/next, and
 // input → action row). CSSJanus mirrors the inline axis for RTL interface
 // languages, so on an RTL wiki the two horizontal arrows have to be swapped
@@ -348,7 +357,7 @@ const coreBindings = [
 		id: 'input-enter-select',
 		zone: 'input',
 		keys: [ 'Enter' ],
-		when: ( state ) => state.highlightedIndex >= 0,
+		when: hasHighlight,
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
 			event.preventDefault();
@@ -362,12 +371,43 @@ const coreBindings = [
 		id: 'input-enter-queue',
 		zone: 'input',
 		keys: [ 'Enter' ],
-		when: ( state ) => state.highlightedIndex < 0 && state.canQueueActivation,
+		when: canQueue,
 		handle: ( state, event ) => {
 			event.preventDefault();
 			state.onQueueActivation();
 		},
 		hint: { msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', order: 10 }
+	},
+	// Ctrl+Enter opens the row in a new tab, as Ctrl+click on the same anchor
+	// already does. Ctrl+Shift+Enter is folded in: it differs only in whether
+	// the new tab takes focus, which no script can choose. No footer hint -- a
+	// chip on every highlighted row would crowd the ones that change per row.
+	{
+		id: 'input-enter-select-new-tab',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		modifiers: [ 'accel', 'accel+shift' ],
+		when: hasHighlight,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onSelect( Object.assign(
+				{}, state.items[ state.highlightedIndex ], NEW_TAB_ACTIVATION
+			) );
+		},
+		hint: null
+	},
+	{
+		id: 'input-enter-queue-new-tab',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		modifiers: [ 'accel', 'accel+shift' ],
+		when: canQueue,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onQueueActivation( NEW_TAB_ACTIVATION );
+		},
+		hint: null
 	},
 
 	// --- INPUT ZONE: ArrowRight to actions ---

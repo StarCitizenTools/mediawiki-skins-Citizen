@@ -6,7 +6,7 @@ const MAX_RECENT_ITEMS = 5;
 // saved row replay that activation for good: `isMouseClick` tells the router
 // the browser already followed the row's <a>, so a row still carrying it
 // navigates nowhere on a later keyboard Enter.
-const ACTIVATION_FLAGS = [ 'isMouseClick', 'modifierClick' ];
+const ACTIVATION_FLAGS = [ 'isMouseClick', 'modifierClick', 'newTab' ];
 
 /**
  * Strip the activation flags from an item.

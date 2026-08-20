@@ -335,7 +335,7 @@ module.exports = exports = defineComponent( {
 			isLeadReady: orch.isLeadReady,
 			items: orch.flatItems,
 			defaultHighlightIndex: orch.defaultHighlightIndex,
-			onActivate: ( item ) => selectResult( item )
+			onActivate: selectResult
 		} );
 		cancelPendingActivation = pendingActivation.cancel;
 
