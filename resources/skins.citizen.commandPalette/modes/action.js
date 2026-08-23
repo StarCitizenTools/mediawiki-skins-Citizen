@@ -7,7 +7,7 @@ const { defineMode } = require( '../services/defineMode.js' );
  * Creates the action command handler.
  *
  * @param {Document} documentRef The document object for DOM queries.
- * @param {Function} ApiConstructor The mw.Api constructor.
+ * @param {typeof mw.Api} ApiConstructor The mw.Api constructor.
  * @return {Object} The command handler.
  */
 function createActionCommand( documentRef, ApiConstructor ) {

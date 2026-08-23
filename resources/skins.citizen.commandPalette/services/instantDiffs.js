@@ -23,7 +23,7 @@ function isAvailable() {
  * Ask the gadget to scan a container for unprocessed diff/revision links
  * and attach its click handlers. No-op when the gadget is unavailable.
  *
- * @param {HTMLElement|jQuery} container DOM element or jQuery collection.
+ * @param {HTMLElement|JQuery} container DOM element or jQuery collection.
  */
 function processContext( container ) {
 	if ( !isAvailable() ) {
@@ -31,7 +31,7 @@ function processContext( container ) {
 	}
 	// The gadget's process hook calls $container.find() internally, so the
 	// payload must be a jQuery object. Wrap raw DOM elements before firing.
-	const $container = container && container.jquery ? container : $( container );
+	const $container = container && 'jquery' in container ? container : $( container );
 	mw.hook( 'instantDiffs.process' ).fire( $container );
 }
 
@@ -59,7 +59,7 @@ function triggerForAnchor( anchor ) {
  * the late-load case where the gadget initializes after a consumer has
  * already rendered its anchors. No-op-on-call if the hook never fires.
  *
- * @param {Function} callback
+ * @param {( ...args: any[] ) => any} callback
  */
 function onReady( callback ) {
 	mw.hook( 'instantDiffs.ready' ).add( callback );

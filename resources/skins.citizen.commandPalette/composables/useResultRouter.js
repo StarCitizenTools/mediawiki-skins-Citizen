@@ -49,8 +49,8 @@ function openInNewTab( url ) {
  * @param {Object} options.navigation
  * @param {Function} options.navigation.findModeByQuery
  * @param {Object} options.control
- * @param {Function} options.control.focusInput
- * @param {Function} options.control.close
+ * @param {() => void} options.control.focusInput
+ * @param {() => void} options.control.close
  * @param {import('vue').Ref<HTMLElement|null>} options.control.paletteRoot
  * @param {Object} options.preview
  * @param {Function} options.preview.isAvailable

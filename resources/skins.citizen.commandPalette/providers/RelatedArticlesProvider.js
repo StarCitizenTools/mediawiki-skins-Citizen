@@ -36,9 +36,9 @@ function createRelatedArticlesProvider( loader ) {
 
 			cachedArticleId = currentArticleId;
 			fetchPromise = new Promise( ( resolve ) => {
-				const onSuccess = async ( require ) => {
+				const onSuccess = async ( req ) => {
 					try {
-						const gateway = require( 'ext.relatedArticles.readMore' ).test.relatedPages;
+						const gateway = req( 'ext.relatedArticles.readMore' ).test.relatedPages;
 						const relatedPages = await gateway.getForCurrentPage( 3 );
 
 						if ( relatedPages.length === 0 ) {

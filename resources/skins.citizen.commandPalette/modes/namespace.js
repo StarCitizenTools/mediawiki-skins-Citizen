@@ -93,7 +93,7 @@ function adaptNamespaceResult( nsResult ) {
 		value: `${ nsResult.label }:`,
 		metadata: [
 			{
-				label: nsResult.value
+				label: String( nsResult.value )
 			}
 		],
 		highlightQuery: true

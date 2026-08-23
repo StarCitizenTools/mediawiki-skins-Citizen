@@ -52,5 +52,4 @@ function createProvider( id, handler, config ) {
 	} );
 }
 
-module.exports = createProvider;
-module.exports.DEFAULT_DEBOUNCE_MS = DEFAULT_DEBOUNCE_MS;
+module.exports = Object.assign( createProvider, { DEFAULT_DEBOUNCE_MS } );

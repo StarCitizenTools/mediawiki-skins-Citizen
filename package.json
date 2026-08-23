@@ -2,13 +2,14 @@
 	"name": "Citizen",
 	"private": true,
 	"scripts": {
-		"lint": "npm -s run lint:js && npm -s run lint:styles && npm -s run lint:i18n && npm -s run lint:md && npm -s run lint:compat",
+		"lint": "npm -s run lint:js && npm -s run lint:types && npm -s run lint:styles && npm -s run lint:i18n && npm -s run lint:md && npm -s run lint:compat",
 		"lint:compat": "node scripts/compat-lint.mjs",
 		"lint:fix:js": "npm -s run lint:js -- --fix",
 		"lint:fix:md": "npm -s run lint:md -- --fix",
 		"lint:fix:styles": "npm -s run lint:styles -- --fix",
 		"lint:js": "eslint --cache .",
 		"lint:md": "markdownlint \"*.md\"",
+		"lint:types": "tsc -p tsconfig.json",
 		"lint:styles": "stylelint \"**/*.{less,css,vue}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"docs:install": "cd docs && npm install",
@@ -44,6 +45,7 @@
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.4.5",
 		"types-mediawiki": "2.1.0",
+		"typescript": "5.9.3",
 		"vitest": "^4.1.10",
 		"vue": "3.4.27"
 	},

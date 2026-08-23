@@ -50,8 +50,10 @@ jobs:
               - .github/workflows/ci.yml
             script:
               - resources/**/*.js
+              - resources/**/*.d.ts
               - tests/vitest/**
               - vitest.config.js
+              - tsconfig.json
               - package.json
               - package-lock.json
               - .eslintrc.json
@@ -90,6 +92,7 @@ jobs:
       lint-styles: ${{ needs.changes.outputs.stylesheet == 'true' || github.event_name == 'schedule' }}
       lint-i18n: ${{ needs.changes.outputs.i18n == 'true' || github.event_name == 'schedule' }}
       lint-md: ${{ needs.changes.outputs.markdown == 'true' || github.event_name == 'schedule' }}
+      lint-types: ${{ needs.changes.outputs.script == 'true' || github.event_name == 'schedule' }}
       runner: ubuntu-24.04-arm
 
   # Deliberately not gated on `changes`: a compat slice expires when skin.json's
