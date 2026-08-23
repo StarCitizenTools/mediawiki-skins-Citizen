@@ -26,7 +26,7 @@
 
 <script>
 const { defineComponent } = require( 'vue' );
-const { CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxIcon } = require( '../../../codex.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {

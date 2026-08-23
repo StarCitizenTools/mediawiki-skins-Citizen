@@ -3,10 +3,11 @@
 const { mount, shallowMount, flushPromises } = require( '@vue/test-utils' );
 const { reactive } = require( 'vue' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
 // Stub Codex components before loading App.vue
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxField: {
 		name: 'CdxField',
 		template: '<fieldset :id="id" class="cdx-field citizen-preferences-group"><div class="cdx-label"><slot name="label" /></div><div class="cdx-label__description"><slot name="description" /></div><slot /></fieldset>',
@@ -30,7 +31,7 @@ mw.loader.require = vi.fn( () => ( {
 		props: [ 'id', 'modelValue' ],
 		emits: [ 'update:modelValue' ]
 	}
-} ) );
+} );
 
 // Mock getComputedStyle to return fake CSS custom property values and a
 // resolved color-scheme (which useVisibility's dark-theme condition reads).

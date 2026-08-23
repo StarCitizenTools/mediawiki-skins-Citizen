@@ -2,10 +2,11 @@
 
 const { mount, flushPromises } = require( '@vue/test-utils' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
 // Stub Codex components used by App.vue
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxButton: {
 		name: 'CdxButton',
 		template: '<button :aria-label="ariaLabel" :disabled="disabled" @click="$emit(\'click\', $event)"><slot /></button>',
@@ -21,7 +22,7 @@ mw.loader.require = vi.fn( () => ( {
 		template: '<input :value.attr="modelValue" />',
 		props: [ 'modelValue', 'readonly' ]
 	}
-} ) );
+} );
 
 const PAGE_URL_ATTR = 'https://wiki.example/wiki/Page';
 const SHORT_URL = 'https://w.example/s/3';

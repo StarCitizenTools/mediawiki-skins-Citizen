@@ -128,7 +128,7 @@
 
 <script>
 const { defineComponent, inject, ref, computed, onMounted, onBeforeUnmount, nextTick } = require( 'vue' );
-const { CdxButton, CdxIcon, CdxTextInput } = mw.loader.require( 'skins.citizen.share.codex' );
+const { CdxButton, CdxIcon, CdxTextInput } = require( '../../codex.js' );
 const { cdxIconArrowPrevious, cdxIconCheck, cdxIconCopy, cdxIconLink, cdxIconQrCode } = require( './icons.json' );
 const { useUrlShortener } = require( './composables/useUrlShortener.js' );
 const { useDialogResizeAnimation } = require( './composables/useDialogResizeAnimation.js' );

@@ -2,16 +2,17 @@
 
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxRadio: {
 		name: 'CdxRadio',
 		template: '<div class="cdx-radio"><input type="radio" /><slot /></div>',
 		props: [ 'modelValue', 'inputValue', 'name' ],
 		emits: [ 'update:modelValue' ]
 	}
-} ) );
+} );
 
 // Knob values served to the baseline measurement (themePreviewBaseline.js).
 // The module caches its one getComputedStyle read at module level, so the

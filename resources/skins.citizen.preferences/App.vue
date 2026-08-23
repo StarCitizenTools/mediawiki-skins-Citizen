@@ -79,7 +79,7 @@
 <script>
 const { defineComponent, computed, inject, reactive, ref, watch } = require( 'vue' );
 const { NormalizedPreferencesConfig } = require( './types.js' );
-const { CdxField, CdxSelect, CdxToggleSwitch } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { CdxField, CdxSelect, CdxToggleSwitch } = require( '../../codex.js' );
 const RadioGroup = require( './RadioGroup.vue' );
 const ThemePicker = require( './ThemePicker.vue' );
 const useVisibility = require( './useVisibility.js' );

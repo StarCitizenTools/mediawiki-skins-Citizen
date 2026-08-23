@@ -68,7 +68,7 @@
 
 <script>
 const { defineComponent, ref, computed } = require( 'vue' );
-const { CdxButton, CdxInfoChip, CdxTextInput, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxButton, CdxInfoChip, CdxTextInput, CdxIcon } = require( '../../../codex.js' );
 const { cdxIconArrowPrevious, cdxIconHelp, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component

@@ -88,5 +88,12 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 			return path.resolve( __dirname, 'mocks/AppStub.js' );
 		}
 	}
+	// ResourceLoader synthesises `codex.js` inside a CodexModule from its
+	// `codexComponents` list; it has no on-disk counterpart for Node to find.
+	if ( parent && parent.filename &&
+		parent.filename.includes( 'resources/skins.citizen.' ) &&
+		request.endsWith( '/codex.js' ) ) {
+		return path.resolve( __dirname, 'mocks/codex.js' );
+	}
 	return originalResolveFilename.call( this, request, parent, ...rest );
 };

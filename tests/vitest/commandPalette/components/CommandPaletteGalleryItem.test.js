@@ -2,18 +2,19 @@
 
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../../mocks/mw.js' );
+const { setCodexStubs } = require( '../../mocks/codex.js' );
 globalThis.mw = mw;
 
-// CommandPaletteImage (the gallery tile's child) imports CdxIcon via
-// `mw.loader.require` at module load — stub it so the component tree
-// renders without a real Codex bundle.
-mw.loader.require = vi.fn( () => ( {
+// CommandPaletteImage (the gallery tile's child) destructures CdxIcon from
+// the module's generated codex.js at module load — stub it so the component
+// tree renders without a real Codex bundle.
+setCodexStubs( {
 	CdxIcon: {
 		name: 'CdxIcon',
 		template: '<span class="cdx-icon-stub"></span>',
 		props: [ 'icon' ]
 	}
-} ) );
+} );
 
 let CommandPaletteGalleryItem;
 
