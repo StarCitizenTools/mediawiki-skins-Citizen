@@ -2,10 +2,11 @@
 
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
 // Mock Codex components before loading the component
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxIcon: {
 		name: 'CdxIcon',
 		template: '<span class="cdx-icon"></span>',
@@ -17,7 +18,7 @@ mw.loader.require = vi.fn( () => ( {
 		props: [ 'modelValue', 'inputValue', 'name' ],
 		emits: [ 'update:modelValue' ]
 	}
-} ) );
+} );
 
 // .vue files are processed by Vite as ESM; use dynamic import() in beforeAll
 // rather than require(), and access the component via mod.default.

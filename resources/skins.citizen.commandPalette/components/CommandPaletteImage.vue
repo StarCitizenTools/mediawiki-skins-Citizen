@@ -30,7 +30,7 @@
 
 <script>
 const { defineComponent, computed, ref, watch } = require( 'vue' );
-const { CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxIcon } = require( '../../../codex.js' );
 
 // Mirrors the validators in @wikimedia/codex's CdxImage so this component
 // can be swapped for CdxImage with a search-and-replace once MW LTS bundles

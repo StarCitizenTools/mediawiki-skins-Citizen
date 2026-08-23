@@ -52,7 +52,7 @@
 
 <script>
 const { defineComponent, computed, reactive, watch } = require( 'vue' );
-const { CdxIcon } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { CdxIcon } = require( '../../../codex.js' );
 const NotificationList = require( './NotificationList.vue' );
 const icons = require( '../icons.json' );
 const formatRelativeTime = require( '../relativeTime.js' );

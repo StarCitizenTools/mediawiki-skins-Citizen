@@ -2,15 +2,16 @@
 
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../../mocks/mw.js' );
+const { setCodexStubs } = require( '../../mocks/codex.js' );
 globalThis.mw = mw;
 
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxThumbnail: {
 		name: 'CdxThumbnail',
 		template: '<div class="cdx-thumbnail-stub"></div>',
 		props: [ 'thumbnail', 'placeholderIcon' ]
 	}
-} ) );
+} );
 
 let CommandPaletteGallery;
 

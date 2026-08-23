@@ -36,7 +36,7 @@
 
 <script>
 const { defineComponent, computed } = require( 'vue' );
-const { CdxButton, CdxIcon } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { CdxButton, CdxIcon } = require( '../../../codex.js' );
 const icons = require( '../icons.json' );
 
 // Links styled as normal-weight cdx buttons need the fake-button variants;

@@ -5,10 +5,11 @@ const { mount, flushPromises } = require( '@vue/test-utils' );
 // Vue instance — otherwise @vue/test-utils' mount throws `app.onUnmount`.
 require( 'vue' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
-// Stub the Codex components the panel pulls via mw.loader.require.
-mw.loader.require = vi.fn( () => ( {
+// Stub the Codex components the panel pulls from the module's codex.js.
+setCodexStubs( {
 	CdxButton: {
 		name: 'CdxButton',
 		template: '<button class="cdx-button" :disabled="disabled" @click="$emit( \'click\', $event )"><slot /></button>',
@@ -31,7 +32,7 @@ mw.loader.require = vi.fn( () => ( {
 		template: '<div class="cdx-tab" :data-tab="name"><slot /></div>',
 		props: [ 'name', 'label' ]
 	},
-} ) );
+} );
 
 let App;
 

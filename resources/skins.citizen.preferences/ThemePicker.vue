@@ -36,7 +36,7 @@
 
 <script>
 const { defineComponent, ref, computed, watch, onMounted } = require( 'vue' );
-const { CdxRadio } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { CdxRadio } = require( '../../codex.js' );
 const { measureIdentityBaseline } = require( './themePreviewBaseline.js' );
 
 // @vue/component

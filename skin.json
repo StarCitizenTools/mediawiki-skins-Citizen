@@ -262,7 +262,7 @@
 				"mediawiki.util"
 			]
 		},
-		"skins.citizen.preferences.codex": {
+		"skins.citizen.preferences": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
 				"CdxField",
@@ -270,9 +270,7 @@
 				"CdxRadio",
 				"CdxSelect",
 				"CdxToggleSwitch"
-			]
-		},
-		"skins.citizen.preferences": {
+			],
 			"packageFiles": [
 				"resources/skins.citizen.preferences/init.js",
 				"resources/skins.citizen.preferences/App.vue",
@@ -340,7 +338,6 @@
 				"preferences"
 			],
 			"dependencies": [
-				"skins.citizen.preferences.codex",
 				"mediawiki.storage",
 				"mediawiki.util",
 				"vue"
@@ -349,15 +346,13 @@
 				"resources/skins.citizen.preferences/themePreview.less"
 			]
 		},
-		"skins.citizen.share.codex": {
+		"skins.citizen.share": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
 				"CdxButton",
 				"CdxIcon",
 				"CdxTextInput"
-			]
-		},
-		"skins.citizen.share": {
+			],
 			"packageFiles": [
 				"resources/skins.citizen.share/init.js",
 				"resources/skins.citizen.share/composables/useUrlShortener.js",
@@ -395,7 +390,6 @@
 				"citizen-share-back"
 			],
 			"dependencies": [
-				"skins.citizen.share.codex",
 				"mediawiki.util",
 				"vue"
 			]
@@ -407,6 +401,14 @@
 		},
 		"skins.citizen.commandPalette": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxButton",
+				"CdxIcon",
+				"CdxInfoChip",
+				"CdxSearchResultTitle",
+				"CdxTextInput",
+				"CdxThumbnail"
+			],
 			"dependencies": [
 				"mediawiki.api",
 				"mediawiki.jqueryMsg",
@@ -414,7 +416,6 @@
 				"mediawiki.page.ready",
 				"mediawiki.storage",
 				"mediawiki.util",
-				"skins.citizen.commandPalette.codex",
 				"vue"
 			],
 			"packageFiles": [
@@ -589,17 +590,6 @@
 				"talk"
 			]
 		},
-		"skins.citizen.commandPalette.codex": {
-			"class": "MediaWiki\\ResourceLoader\\CodexModule",
-			"codexComponents": [
-				"CdxButton",
-				"CdxIcon",
-				"CdxInfoChip",
-				"CdxSearchResultTitle",
-				"CdxTextInput",
-				"CdxThumbnail"
-			]
-		},
 		"skins.citizen.commandPalette.smw": {
 			"packageFiles": [
 				"resources/skins.citizen.commandPalette.smw/init.js",
@@ -643,11 +633,16 @@
 		},
 		"skins.citizen.notifications": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxButton",
+				"CdxIcon",
+				"CdxTab",
+				"CdxTabs"
+			],
 			"dependencies": [
 				"mediawiki.api",
 				"mediawiki.ForeignApi",
 				"mediawiki.util",
-				"skins.citizen.notifications.codex",
 				"vue"
 			],
 			"packageFiles": [
@@ -686,15 +681,6 @@
 				"citizen-notifications-retry",
 				"citizen-notifications-see-all",
 				"citizen-notifications-preferences"
-			]
-		},
-		"skins.citizen.notifications.codex": {
-			"class": "MediaWiki\\ResourceLoader\\CodexModule",
-			"codexComponents": [
-				"CdxButton",
-				"CdxIcon",
-				"CdxTab",
-				"CdxTabs"
 			]
 		},
 		"skins.citizen.icons": {

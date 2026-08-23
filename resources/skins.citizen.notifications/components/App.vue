@@ -118,7 +118,7 @@
 
 <script>
 const { defineComponent, ref, computed, inject, onMounted } = require( 'vue' );
-const { CdxButton, CdxTab, CdxTabs } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { CdxButton, CdxTab, CdxTabs } = require( '../../../codex.js' );
 const NotificationList = require( './NotificationList.vue' );
 const WikiList = require( './WikiList.vue' );
 const PanelFooter = require( './PanelFooter.vue' );

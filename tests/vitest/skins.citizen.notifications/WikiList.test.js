@@ -5,15 +5,16 @@ const { mount, flushPromises } = require( '@vue/test-utils' );
 // Vue instance — otherwise @vue/test-utils' mount throws `app.onUnmount`.
 require( 'vue' );
 const mw = require( '../mocks/mw.js' );
+const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxIcon: {
 		name: 'CdxIcon',
 		template: '<span class="cdx-icon"></span>',
 		props: [ 'icon' ]
 	}
-} ) );
+} );
 
 let WikiList;
 

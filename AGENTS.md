@@ -86,6 +86,7 @@ To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`n
 
 - Use the Codex version bundled with MediaWiki — do not assume a specific version. The minimum is v1.14.0 (bundled with MW 1.43), but newer MW versions may provide a newer Codex.
 - Codex components requiring JS must be listed in `skin.json` under the appropriate `CodexModule`
+- A module's `codex.js` is generated at request time and has no on-disk counterpart, so Vitest resolves the components' `require( '…/codex.js' )` to `tests/vitest/mocks/codex.js`. Register stubs with `setCodexStubs()` **before** importing the component — it destructures at module-evaluation time.
 
 ### skin.json
 

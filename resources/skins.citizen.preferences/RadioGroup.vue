@@ -28,7 +28,7 @@
 
 <script>
 const { defineComponent } = require( 'vue' );
-const { CdxIcon, CdxRadio } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { CdxIcon, CdxRadio } = require( '../../codex.js' );
 const { cdxIconAlignRight } = require( './icons.json' );
 
 // @vue/component

@@ -75,7 +75,7 @@
 
 <script>
 const { defineComponent, ref, computed, watch, onBeforeUnmount } = require( 'vue' );
-const { CdxButton, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxButton, CdxIcon } = require( '../../../codex.js' );
 const { cdxIconCopy, cdxIconCheck } = require( '../icons.json' );
 const CommandPaletteImage = require( './CommandPaletteImage.vue' );
 

@@ -2,12 +2,13 @@
 
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../../mocks/mw.js' );
+const { setCodexStubs } = require( '../../mocks/codex.js' );
 globalThis.mw = mw;
 
 // CdxTextInput sets `inheritAttrs: false` so that ARIA attributes land on the
 // real <input> rather than the wrapper. The stub has to do the same, or these
 // tests would pass against markup a screen reader never sees.
-mw.loader.require = vi.fn( () => ( {
+setCodexStubs( {
 	CdxButton: {
 		name: 'CdxButton',
 		template: '<button><slot></slot></button>'
@@ -27,7 +28,7 @@ mw.loader.require = vi.fn( () => ( {
 		props: [ 'modelValue', 'inputType', 'clearable', 'placeholder' ],
 		template: '<div class="cdx-text-input-stub"><input v-bind="$attrs"></div>'
 	}
-} ) );
+} );
 
 let CommandPaletteHeader;
 
