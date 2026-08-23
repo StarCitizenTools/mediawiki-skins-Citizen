@@ -10,6 +10,11 @@
 	"globals": {
 		"exports": true
 	},
+	"settings": {
+		"jsdoc": {
+			"mode": "typescript"
+		}
+	},
 	"rules": {
 		"no-implicit-globals": "warn",
 		"es-x/no-object-fromentries": "warn",
@@ -24,7 +29,16 @@
 		"es-x/no-array-prototype-flat": "off",
 		"compat/compat": "warn",
 		"mediawiki/class-doc": "off",
-		"mediawiki/no-nodelist-unsupported-methods": "off"
+		"mediawiki/no-nodelist-unsupported-methods": "off",
+		"jsdoc/no-undefined-types": [
+			"warn",
+			{
+				"definedTypes": [
+					"JQuery",
+					"RequestInit"
+				]
+			}
+		]
 	},
 	"parserOptions": {
 		"ecmaVersion": 11,

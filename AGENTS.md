@@ -11,12 +11,16 @@ Run only what's relevant to the files you changed.
 | Files changed | Command |
 | --- | --- |
 | `*.php` | `composer preflight` (lint, style, Phan, and PHPUnit) |
-| `*.js`, `*.vue` | `npm run lint:js` then `npm test` |
+| `*.js`, `*.vue` | `npm run lint:js`, `npm run lint:types`, then `npm test` |
 | `*.less`, `*.css`, `*.vue` | `npm run lint:styles` |
 | `i18n/` | `npm run lint:i18n` |
 | `*.md` | `npm run lint:md` |
 
 Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles), `npm run lint:fix:md` (markdown).
+
+**Type checking**: `npm run lint:types` runs `tsc --checkJs` over the JSDoc annotations; CI runs it via the shared lint workflow's `lint-types` input. Note that workflow invokes each `lint:*` script individually and never `npm run lint`, so adding a new lint script to the `lint` chain does not put it in CI — it needs an input on the shared workflow as well.
+
+`tsconfig.json`'s `include` names every checked path explicitly rather than relying on imports to pull files in, so coverage does not shrink silently when an import is removed. Vue SFC script bodies are not covered — those need `vue-tsc`. `strict` is off for this first pass, so `strictNullChecks` in particular is not enforced; tightening it is a deliberate follow-up, not an oversight.
 
 **Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. Run `composer preflight` from within a MediaWiki installation to execute all PHP lints, style checks, Phan static analysis, and PHPUnit tests.
 
@@ -93,6 +97,7 @@ To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`n
 `skin.json` is the source of truth for how the skin is wired — ResourceLoader modules, hooks, config variables, and extension skin styles are all declared here.
 
 - When adding or removing files under `resources/`, update the corresponding `packageFiles` or `styles` list in `skin.json`
+- ResourceLoader replaces `config.json` and `icons.json` per request, so the checked-in copies are dev stubs and the real shape lives in the `.json.d.ts` beside each. Changing a `callbackParam` icon list or a config callback means updating that declaration too — nothing checks it for you.
 - When a new i18n message key is read by JS via `mw.message()`, also add it to the relevant ResourceLoader module's `messages` array in `skin.json` — adding the key only to `i18n/en.json` and `i18n/qqq.json` is not enough; messages not listed in the module render as `⧼key⧽` in the UI
 - When adding support for a new extension, add a LESS file under `skinStyles/` and register it in `skin.json` under `ResourceModuleSkinStyles`
 - Config variables are declared under `config` in `skin.json` (prefixed `wgCitizen`). In PHP they are accessed via `$this->getConfig()->get( 'CitizenFoo' )`, and can be injected into JS via `ResourceLoaderHooks`

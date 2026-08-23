@@ -133,13 +133,13 @@
  * @property {boolean} [compactResults=false] Render results in a denser layout — small icon instead of thumbnail, description inline. Use for command-style modes whose items lack real thumbnails. Ignored in gallery layout.
  * @property {KeyBinding[]} [keybindings] Optional mode-contributed keyboard bindings. Prepended onto the core binding list at dispatch time, so mode bindings win on key collisions within their own zone.
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
- * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
+ * @property {( query: string, tokens?: Array ) => StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
  * @property {PaletteHelp} [help] Optional content surfaced by the help overlay when this mode is active.
- * @property {function(string, AbortSignal?, Array?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state). The signal is honoured by mw.Api on MediaWiki 1.44+ and ignored on 1.43.
- * @property {function(CommandPaletteItem, AbortSignal?): Promise<Object>} [getItemDetail] Lazy detail-pane data for the highlighted item, resolving to `{ description, pairs }` — each field is merged into the item's `detail` when present. Use when the data is too heavy to compute for every item upfront. Same signal caveat as `getResults`.
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
- * @property {function(Array): string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
+ * @property {( query: string, signal?: AbortSignal, tokens?: Array, modeContext?: Array ) => Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state). The signal is honoured by mw.Api on MediaWiki 1.44+ and ignored on 1.43.
+ * @property {( item: CommandPaletteItem, signal?: AbortSignal ) => Promise<Object>} [getItemDetail] Lazy detail-pane data for the highlighted item, resolving to `{ description, pairs }` — each field is merged into the item's `detail` when present. Use when the data is too heavy to compute for every item upfront. Same signal caveat as `getResults`.
+ * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
+ * @property {( modeContext: Array ) => string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
  */
 
 /**
@@ -149,9 +149,16 @@
  * @property {string} modeId Which mode produced this pattern.
  * @property {'prefix'|'any'} position Where the token must appear in the query.
  * @property {'root'|string} activeIn Controls when pattern is eligible: 'root' = only when no mode active, a mode id string = only when that mode is active.
- * @property {function(string): {label: string, raw: string}|null} match Tests text and returns token data or null.
- * @property {function(string): {label: string, raw: string}|null} [eagerMatch] Optional lenient matcher used after the standard pass matched at least one token (e.g. paste). Allows end-of-string as a valid terminator.
+ * @property {( text: string ) => {label: string, raw: string}|null} match Tests text and returns token data or null.
+ * @property {( text: string ) => {label: string, raw: string}|null} [eagerMatch] Optional lenient matcher used after the standard pass matched at least one token (e.g. paste). Allows end-of-string as a valid terminator.
  * @property {string} [variant] Optional visual variant for the chip (e.g. 'outlined').
+ */
+
+/**
+ * Either kind of registry entry. Both carry `id` and `triggers`; only a mode
+ * produces results, and only a command handles selection.
+ *
+ * @typedef {PaletteMode|PaletteCommand} PaletteHandler
  */
 
 /**
@@ -163,7 +170,7 @@
  * @property {string} [label] Display label for this command in the command list.
  * @property {string} [description] Short explanation shown in the command list.
  * @property {PaletteHelp} [help] Optional content surfaced by the help overlay.
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
+ * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
  */
 
 /**
@@ -189,8 +196,8 @@
  * @property {'input'|'action'} zone Which focus zone the binding applies to.
  * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only. Declare 'ArrowLeft'/'ArrowRight' logically (previous/next): the palette mirrors the physical arrow on RTL interface languages before resolving.
  * @property {string|string[]} [modifiers='none'] Which modifier state the binding claims, from 'none', 'shift', 'accel' (Ctrl, or Command on a Mac), 'accel+shift', or 'any'. An array accepts several. A character composed with AltGr, and a capital typed with Shift, count as 'none' — they are typed text, not chords. Anything not named here stays with the browser.
- * @property {function(Object): boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
- * @property {function(Object, KeyboardEvent)} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
+ * @property {( state: Object ) => boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
+ * @property {( state: Object, event: KeyboardEvent ) => void} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
  * @property {boolean} [worksDuringHelp] When true, the binding fires even with the help overlay open. Defaults to false.
  * @property {KeyBindingHint|null} [hint] Footer hint to surface, or null to omit one.
  */
@@ -273,7 +280,7 @@
 
 /**
  * @typedef {Object} CitizenCommandPaletteSearchClient
- * @property {function(string): Promise<CommandPaletteSearchResponse>} fetchByQuery
+ * @property {( query: string ) => Promise<CommandPaletteSearchResponse>} fetchByQuery
  */
 
 /**
@@ -289,9 +296,9 @@
  * @property {string} id - Unique identifier for the provider.
  * @property {number} debounceMs - Debounce in milliseconds; 0 fetches immediately on every keystroke.
  * @property {boolean} keepStaleResults - Whether the previous results stay on screen while fresh ones load.
- * @property {function(string): boolean} canProvide - Method to check if the provider can handle the query.
- * @property {function(string): Array<CommandPaletteItem>|Promise<Array<CommandPaletteItem>>} getResults - Method to fetch results.
- * @property {?function(CommandPaletteItem): CommandPaletteActionResult|Promise<CommandPaletteActionResult>} onResultSelect - Optional method to handle result selection.
+ * @property {( query: string ) => boolean} canProvide - Method to check if the provider can handle the query.
+ * @property {( query: string ) => Array<CommandPaletteItem>|Promise<Array<CommandPaletteItem>>} getResults - Method to fetch results.
+ * @property {?( item: CommandPaletteItem ) => CommandPaletteActionResult|Promise<CommandPaletteActionResult>} onResultSelect - Optional method to handle result selection.
  */
 
 /**

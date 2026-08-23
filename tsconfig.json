@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "es2020",
+		"module": "node16",
+		"moduleResolution": "node16",
+		"allowJs": true,
+		"checkJs": true,
+		"noEmit": true,
+		"skipLibCheck": true,
+		"strict": false
+	},
+	"include": [
+		"resources/skins.citizen.commandPalette/**/*.js",
+		"resources/skins.citizen.scripts/keyboardLayout.js",
+		"resources/types/**/*.d.ts"
+	]
+}

@@ -7,7 +7,7 @@ const { cdxIconCode } = require( '../icons.json' );
  * @return {Object} Palette registry service
  */
 function createPaletteRegistry() {
-	/** @type {Map<string, import('../types.js').PaletteMode|import('../types.js').PaletteCommand>} */
+	/** @type {Map<string, import('../types.js').PaletteHandler>} */
 	const handlers = new Map();
 
 	/** @type {Array<{trigger: string, id: string, lowerTrigger: string}>} */
@@ -29,7 +29,7 @@ function createPaletteRegistry() {
 	/**
 	 * Registers a new handler.
 	 *
-	 * @param {import('../types.js').PaletteMode|import('../types.js').PaletteCommand} handler The handler object (must include an 'id' property)
+	 * @param {Object} handler Unvalidated handler object; the body checks its shape.
 	 * @return {boolean} True if registration was successful, false otherwise.
 	 */
 	function register( handler ) {
@@ -139,7 +139,7 @@ function createPaletteRegistry() {
 			);
 			const uniqueIds = [ ...new Set( filteredTriggers.map( ( { id } ) => id ) ) ];
 			entries = uniqueIds
-				.map( ( id ) => [ id, handlers.get( id ) ] )
+				.map( ( id ) => /** @type {[string, import('../types.js').PaletteHandler]} */ ( [ id, handlers.get( id ) ] ) )
 				.filter( ( entry ) => entry[ 1 ] );
 		} else {
 			entries = Array.from( handlers.entries() );
@@ -200,7 +200,7 @@ function createPaletteRegistry() {
 		for ( const entry of flatTriggerList ) {
 			if ( entry.lowerTrigger === lowerKey ) {
 				const handler = handlers.get( entry.id );
-				if ( handler && typeof handler.getResults === 'function' ) {
+				if ( handler && 'getResults' in handler && typeof handler.getResults === 'function' ) {
 					return handler;
 				}
 			}
@@ -217,7 +217,7 @@ function createPaletteRegistry() {
 	 */
 	function findModeByQuery( query ) {
 		const match = findMatchingCommand( query );
-		if ( match && typeof match.handler.getResults === 'function' ) {
+		if ( match && 'getResults' in match.handler && typeof match.handler.getResults === 'function' ) {
 			return { mode: match.handler, trigger: match.trigger };
 		}
 		return null;
@@ -231,7 +231,7 @@ function createPaletteRegistry() {
 	function getTokenPatterns() {
 		const patterns = [];
 		for ( const handler of handlers.values() ) {
-			if ( handler.tokenPattern ) {
+			if ( 'tokenPattern' in handler && handler.tokenPattern ) {
 				if ( Array.isArray( handler.tokenPattern ) ) {
 					patterns.push( ...handler.tokenPattern );
 				} else {

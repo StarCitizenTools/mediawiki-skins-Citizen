@@ -47,7 +47,9 @@ function normalizeProviderResult( result ) {
  * Replaces the Pinia searchStore.
  *
  * @param {Array<Object>} providers Array of validated provider objects.
- * @param {Function} resultDecorator Function (items, query) => decoratedItems.
+ * @param {{leadActions: ( query: string ) => Array<Object>, trailActions: ( query: string ) => Array<Object>}} resultDecorator
+ *   `createAppendQueryActions()`'s return. Only its two attached action
+ *   builders are used here; the decorator itself is applied by the caller.
  * @param {Object} [deps] Optional dependencies for presults.
  * @param {Object} [deps.recentItemsProvider] Provider for recent items (presults).
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).

@@ -45,7 +45,7 @@ function useListNavigation( itemsRef, options ) {
 	/**
 	 * Scrolls the currently highlighted item into view.
 	 *
-	 * @param {import('vue').Ref<Map<number, HTMLElement|null>>} itemRefs Reactive reference to the Map of DOM elements.
+	 * @param {import('vue').Ref<Map<number, Object>>} itemRefs Map of row index → row component instance.
 	 */
 	function scrollToHighlighted( itemRefs ) {
 		const itemElement = itemRefs.value?.get( highlightedIndex.value );

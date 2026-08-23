@@ -121,7 +121,7 @@ function getCurrentPageCategoryItems() {
 /**
  * Factory for the category mode.
  *
- * @param {Function} ApiConstructor mw.Api constructor.
+ * @param {typeof mw.Api} ApiConstructor mw.Api constructor.
  * @return {Object}
  */
 function createCategoryMode( ApiConstructor ) {

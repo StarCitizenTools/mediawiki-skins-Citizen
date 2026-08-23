@@ -96,7 +96,7 @@ function initApp( overlayEl, options ) {
 
 	const appendQueryActions = createAppendQueryActions();
 
-	const app = Vue.createMwApp( App, {}, config );
+	const app = Vue.createMwApp( App );
 	app.provide( 'providers', providers );
 	app.provide( 'recentItemsService', recentItemsService );
 	app.provide( 'resultDecorator', appendQueryActions );

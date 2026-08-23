@@ -82,5 +82,4 @@ function usePendingActivation( options ) {
 	return { arm, cancel, isActivationQueued };
 }
 
-module.exports = usePendingActivation;
-module.exports.PENDING_ACTIVATION_TIMEOUT_MS = PENDING_ACTIVATION_TIMEOUT_MS;
+module.exports = Object.assign( usePendingActivation, { PENDING_ACTIVATION_TIMEOUT_MS } );

@@ -362,7 +362,7 @@ function adaptListItem( page ) {
 /**
  * Factory for the file/media mode.
  *
- * @param {Function} ApiConstructor mw.Api constructor.
+ * @param {typeof mw.Api} ApiConstructor mw.Api constructor.
  * @return {Object} Mode descriptor.
  */
 function createFileMode( ApiConstructor ) {
