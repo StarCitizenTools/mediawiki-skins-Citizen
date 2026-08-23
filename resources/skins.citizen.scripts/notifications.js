@@ -1,5 +1,6 @@
 const MODULE = 'skins.citizen.notifications';
 const { bindIntentPrefetch } = require( './intentPrefetch.js' );
+const { usingWithVue } = require( './vueBatch.js' );
 
 /**
  * Trigger orchestrator for the notifications dropdown.
@@ -129,6 +130,7 @@ function createNotifications( { document, mw } ) {
 		// touchstart too closely for an idle callback to win, and the mount is
 		// cheap enough to run inline.
 		cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw, {
+			vue: true,
 			onReady: ( req, eventType ) => {
 				const mount = () => {
 					// A click may have beaten this callback — the load path owns
@@ -169,7 +171,7 @@ function createNotifications( { document, mw } ) {
 			loading = true;
 			showPreview();
 
-			mw.loader.using( MODULE ).then(
+			usingWithVue( MODULE, mw ).then(
 				( req ) => {
 					// A throw here (module shape, Vue mount) is not caught by
 					// the rejection handler below, so guard it explicitly —

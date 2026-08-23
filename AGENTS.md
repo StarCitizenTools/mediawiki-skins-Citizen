@@ -446,15 +446,15 @@ Breaking changes never ship unguarded — they ride the preview channel until th
 
 Vue and per-module bundles are not part of the initial page load — they're loaded on intent via `mw.loader`. Any control that mounts a Vue app needs:
 
-- **Intent prefetch** via `bindIntentPrefetch()` on the trigger so hover/focus/touch starts the network round-trip before the click. Its optional `onReady` callback fires when the module is ready and can be used to also pre-mount the app during idle time, so the eventual click only pays for the first render — see `createCommandPalette` for the reference implementation (it skips `touchstart` intents, where the tap follows too closely for an idle mount to win).
-- **Lazy load on activation** via `mw.loader.using()` on the actual click/toggle event.
+- **Intent prefetch** via `bindIntentPrefetch()` on the trigger so hover/focus/touch starts the network round-trip before the click. Pass `{ vue: true }` so Vue is claimed as its own request. Its optional `onReady` callback fires when the module is ready and can be used to also pre-mount the app during idle time, so the eventual click only pays for the first render — see `createCommandPalette` for the reference implementation (it skips `touchstart` intents, where the tap follows too closely for an idle mount to win).
+- **Lazy load on activation** via `usingWithVue()` from `vueBatch.js` on the actual click/toggle event — never `mw.loader.using()` directly. `mw.loader` batches a module with every dependency still in state `registered`, so a bare `using()` welds a private copy of Vue into that panel's `load.php` URL. Vue is past `mw.loader.store`'s 100 kB cap, so such a copy is reusable by neither the module store nor the browser's URL-keyed HTTP cache, and every panel re-downloads Vue. `vueBatch.js` documents the ordering invariant that keeps the split free.
 - **Server-rendered skeleton** inside the mount target for in-place panels (Preferences, Share). Vue's `mount()` replaces it on success. The skeleton must be server-rendered because the JS that would render it isn't there yet.
 - **A failure path** sized to the UI's tolerance for staying broken. Pick what fits:
   - Retry the load in place (Preferences renders a retry button beside the skeleton).
   - Degrade to a non-Vue path that achieves the same goal (Share closes the panel and triggers the browser's native share sheet).
   - Surface a toast and dismiss the UI (Command palette uses `mw.notify`; the overlay sits empty during the load and disappears on failure).
 
-See `createPreferences`, `createShare`, and `createCommandPalette` for the patterns.
+See `createPreferences`, `createShare`, and `createCommandPalette` for the patterns, and `vueBatch.js` for why Vue is requested separately.
 
 ### i18n
 

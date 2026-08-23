@@ -1,5 +1,6 @@
 const MODULE = 'skins.citizen.share';
 const { bindIntentPrefetch } = require( './intentPrefetch.js' );
+const { usingWithVue } = require( './vueBatch.js' );
 const { triggerNativeShare } = require( './triggerNativeShare.js' );
 
 /**
@@ -92,7 +93,7 @@ function createShare( { document, window, mw, navigator, mode = 'auto' } ) {
  */
 function createPanel( { trigger, nativeDialog, mountPoint, mw, window } ) {
 	let state = 'idle'; // 'idle' | 'loading' | 'mounted'
-	const cancelPrefetch = bindIntentPrefetch( trigger, MODULE, mw );
+	const cancelPrefetch = bindIntentPrefetch( trigger, MODULE, mw, { vue: true } );
 
 	function closeNativeDialog() {
 		if ( nativeDialog.open ) {
@@ -102,7 +103,7 @@ function createPanel( { trigger, nativeDialog, mountPoint, mw, window } ) {
 
 	function load() {
 		state = 'loading';
-		mw.loader.using( MODULE ).then(
+		usingWithVue( MODULE, mw ).then(
 			( req ) => {
 				const mod = req( MODULE );
 				mod.initApp( mountPoint );

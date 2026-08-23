@@ -171,7 +171,7 @@ describe( 'notifications trigger', () => {
 		await tick();
 		await setOpen( true );
 
-		expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+		expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 1 );
 		expect( mockRefresh ).toHaveBeenCalledTimes( 1 );
 	} );
 
@@ -261,12 +261,12 @@ describe( 'notifications trigger', () => {
 		await setOpen( true );
 		resolveLoad();
 		await tick();
-		expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+		expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 1 );
 
 		await setOpen( false );
 		await setOpen( true );
 
-		expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+		expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 1 );
 		expect( mockRefresh ).toHaveBeenCalledTimes( 1 );
 		expect( mockMarkSeen ).toHaveBeenCalledTimes( 2 );
 	} );
@@ -299,7 +299,7 @@ describe( 'notifications trigger', () => {
 
 		// Retry re-attempts the load.
 		document.querySelector( '.citizen-notifications__retry' ).click();
-		expect( mw.loader.using ).toHaveBeenCalledTimes( 2 );
+		expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 2 );
 	} );
 
 	it( 'keeps the footer links reachable when the module fails to load', async () => {
@@ -354,6 +354,6 @@ describe( 'notifications trigger', () => {
 		await setOpen( false );
 		await setOpen( true );
 
-		expect( mw.loader.using ).toHaveBeenCalledTimes( 2 );
+		expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 2 );
 	} );
 } );

@@ -1,6 +1,7 @@
 const MODULE = 'skins.citizen.commandPalette';
 const LOAD_TIMEOUT_MS = 10000;
 const { bindIntentPrefetch } = require( './intentPrefetch.js' );
+const { usingWithVue } = require( './vueBatch.js' );
 
 /**
  * Create the command palette trigger orchestrator.
@@ -129,7 +130,7 @@ function createCommandPalette( { document, mw } ) {
 			timeoutId = setTimeout( () => reject( new Error( 'timeout' ) ), LOAD_TIMEOUT_MS );
 		} );
 
-		Promise.race( [ mw.loader.using( MODULE ), timeoutPromise ] ).then(
+		Promise.race( [ usingWithVue( MODULE, mw ), timeoutPromise ] ).then(
 			( req ) => {
 				clearTimeout( timeoutId );
 				mountApp( req );
@@ -229,6 +230,7 @@ function createCommandPalette( { document, mw } ) {
 		// Touch is excluded: touchstart precedes the tap's click by too
 		// little for an idle mount to win the race.
 		cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw, {
+			vue: true,
 			onReady: ( req, eventType ) => {
 				if ( eventType === 'touchstart' ) {
 					return;
