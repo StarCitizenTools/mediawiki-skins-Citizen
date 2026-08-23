@@ -1,3 +1,5 @@
+const { claimVueBatch } = require( './vueBatch.js' );
+
 const INTENT_EVENTS = [ 'pointerenter', 'focus', 'touchstart' ];
 
 /**
@@ -21,11 +23,14 @@ const INTENT_EVENTS = [ 'pointerenter', 'focus', 'touchstart' ];
  * @param {string} moduleName ResourceLoader module name
  * @param {Object} mw MediaWiki global
  * @param {Object} [options]
+ * @param {boolean} [options.vue] Module is Vue-backed, so claim Vue's own
+ *   ResourceLoader batch alongside it — see `vueBatch.js` for why
  * @param {Function} [options.onReady] Called with `( require, eventType )` when the module is ready
  * @return {Function} cancel
  */
 function bindIntentPrefetch( trigger, moduleName, mw, options ) {
 	const onReady = options && options.onReady;
+	const vue = !!( options && options.vue );
 	let fired = false;
 	let suppressOnReady = false;
 
@@ -34,6 +39,9 @@ function bindIntentPrefetch( trigger, moduleName, mw, options ) {
 			return;
 		}
 		fired = true;
+		if ( vue ) {
+			claimVueBatch( mw );
+		}
 		if ( !onReady ) {
 			mw.loader.load( moduleName );
 			return;

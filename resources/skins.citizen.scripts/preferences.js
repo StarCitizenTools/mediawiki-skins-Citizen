@@ -1,5 +1,6 @@
 const MODULE = 'skins.citizen.preferences';
 const { bindIntentPrefetch } = require( './intentPrefetch.js' );
+const { usingWithVue } = require( './vueBatch.js' );
 
 /**
  * @param {Object} deps
@@ -57,7 +58,7 @@ function createPreferences( { document, mw } ) {
 			}
 		}
 
-		const cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw );
+		const cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw, { vue: true } );
 
 		function load() {
 			if ( mounted || loading ) {
@@ -66,7 +67,7 @@ function createPreferences( { document, mw } ) {
 			loading = true;
 			showSkeleton();
 
-			mw.loader.using( MODULE ).then(
+			usingWithVue( MODULE, mw ).then(
 				() => {
 					mounted = true;
 					loading = false;

@@ -166,7 +166,7 @@ describe( 'createPreferences', () => {
 			Object.defineProperty( details, 'open', { value: true, configurable: true } );
 			details.dispatchEvent( new Event( 'toggle' ) );
 
-			expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+			expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 1 );
 		} );
 	} );
 
@@ -195,7 +195,7 @@ describe( 'createPreferences', () => {
 			const retryBtn = document.querySelector( '.citizen-preferences-error__retry' );
 			retryBtn.click();
 
-			expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+			expect( mw.loader.using.mock.calls.filter( ( [ name ] ) => name !== 'vue' ) ).toHaveLength( 1 );
 			const skeletonEl = document.querySelector( '.citizen-preferences-skeleton' );
 			const errorEl = document.querySelector( '.citizen-preferences-error' );
 			expect( skeletonEl.hidden ).toBe( false );

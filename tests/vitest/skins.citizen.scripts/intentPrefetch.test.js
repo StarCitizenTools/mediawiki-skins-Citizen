@@ -15,6 +15,40 @@ describe( 'bindIntentPrefetch', () => {
 		return document.getElementById( 'trigger' );
 	}
 
+	describe( 'vue option', () => {
+		beforeEach( () => {
+			mw.loader.using.mockClear();
+		} );
+
+		it( 'claims the vue batch before the module on the load path', () => {
+			const trigger = makeTrigger();
+
+			bindIntentPrefetch( trigger, 'foo.module', mw, { vue: true } );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.using ).toHaveBeenCalledWith( 'vue' );
+			expect( mw.loader.load ).toHaveBeenCalledWith( 'foo.module' );
+		} );
+
+		it( 'claims the vue batch before the module on the onReady path', () => {
+			const trigger = makeTrigger();
+
+			bindIntentPrefetch( trigger, 'foo.module', mw, { vue: true, onReady: () => {} } );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.using.mock.calls.map( ( [ name ] ) => name ) ).toEqual( [ 'vue', 'foo.module' ] );
+		} );
+
+		it( 'does not touch vue when the option is absent', () => {
+			const trigger = makeTrigger();
+
+			bindIntentPrefetch( trigger, 'foo.module', mw );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.using ).not.toHaveBeenCalledWith( 'vue' );
+		} );
+	} );
+
 	it( 'fires mw.loader.load once on pointerenter', () => {
 		const trigger = makeTrigger();
 
