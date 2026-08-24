@@ -6,6 +6,20 @@ const { cdxIconCode } = require( '../icons.json' );
  *
  * @return {Object} Palette registry service
  */
+/**
+ * A handler's triggers, or an empty list when it has none usable.
+ *
+ * `register` warns about a malformed `triggers` but still stores the handler,
+ * and third parties register through a public hook, so neither its presence nor
+ * its type can be assumed here.
+ *
+ * @param {import('../types.js').PaletteHandler} handler
+ * @return {string[]}
+ */
+function triggersOf( handler ) {
+	return Array.isArray( handler?.triggers ) ? handler.triggers : [];
+}
+
 function createPaletteRegistry() {
 	/** @type {Map<string, import('../types.js').PaletteHandler>} */
 	const handlers = new Map();
@@ -20,7 +34,7 @@ function createPaletteRegistry() {
 	 */
 	function rebuildTriggerList() {
 		flatTriggerList = Array.from( handlers.entries() ).flatMap(
-			( [ id, handler ] ) => ( handler?.triggers ?? [] ).map(
+			( [ id, handler ] ) => triggersOf( handler ).map(
 				( trigger ) => ( { trigger, id, lowerTrigger: trigger.toLowerCase() } )
 			)
 		);
@@ -145,24 +159,25 @@ function createPaletteRegistry() {
 			entries = Array.from( handlers.entries() );
 		}
 
-		try {
-			return entries.map( ( [ id, handler ] ) => ( {
+		return entries.flatMap( ( [ id, handler ] ) => {
+			const triggers = triggersOf( handler );
+			if ( !triggers.length ) {
+				return [];
+			}
+			return [ {
 				id: `citizen-command-palette-item-command-${ id }`,
 				type: 'command',
-				label: handler.triggers[ 0 ],
+				label: triggers[ 0 ],
 				description: handler.description,
 				thumbnailIcon: cdxIconCode,
-				value: handler.triggers[ 0 ],
-				metadata: handler.triggers.length > 1 ?
-					handler.triggers.slice( 1 ).map( ( trigger ) => ( { label: trigger } ) ) :
+				value: triggers[ 0 ],
+				metadata: triggers.length > 1 ?
+					triggers.slice( 1 ).map( ( trigger ) => ( { label: trigger } ) ) :
 					undefined,
 				source: `command:${ id }`,
 				highlightQuery: true
-			} ) );
-		} catch ( error ) {
-			mw.log.error( '[paletteRegistry|getCommandListItems] Error during mapping:', error );
-			return [];
-		}
+			} ];
+		} );
 	}
 
 	/**

@@ -245,6 +245,57 @@ describe( 'createPaletteRegistry', () => {
 
 			expect( items[ 0 ].metadata ).toEqual( [ { label: '@' } ] );
 		} );
+
+		it( 'skips a triggerless handler instead of emptying the list', () => {
+			registry.register( makeHandler( { id: 'valid', triggers: [ '/valid:' ] } ) );
+			// `register` warns about this but still accepts it, and third parties
+			// register through a public hook.
+			registry.register( makeHandler( { id: 'broken', triggers: [] } ) );
+
+			const items = registry.getCommandListItems();
+
+			expect( items ).toHaveLength( 1 );
+			expect( items[ 0 ].value ).toBe( '/valid:' );
+		} );
+
+		it( 'skips a handler whose triggers is not an array', () => {
+			registry.register( makeHandler( { id: 'valid', triggers: [ '/valid:' ] } ) );
+			// A single string instead of a list of them is an easy mistake for a
+			// third party calling `register` directly rather than via defineMode.
+			registry.register( makeHandler( { id: 'stringy', triggers: '/oops:' } ) );
+
+			const items = registry.getCommandListItems();
+
+			expect( items ).toHaveLength( 1 );
+			expect( items[ 0 ].value ).toBe( '/valid:' );
+		} );
+
+		it( 'skips a handler whose triggers property is missing entirely', () => {
+			registry.register( makeHandler( { id: 'valid', triggers: [ '/valid:' ] } ) );
+			const broken = makeHandler( { id: 'broken' } );
+			delete broken.triggers;
+			registry.register( broken );
+
+			const items = registry.getCommandListItems();
+
+			expect( items ).toHaveLength( 1 );
+			expect( items[ 0 ].value ).toBe( '/valid:' );
+		} );
+	} );
+
+	describe( 'register with a malformed handler', () => {
+		it( 'does not throw, and later registrations still work', () => {
+			expect( () => registry.register( makeHandler( { id: 'stringy', triggers: '/oops:' } ) ) )
+				.not.toThrow();
+
+			expect( () => registry.register( makeHandler( { id: 'good', triggers: [ '/good:' ] } ) ) )
+				.not.toThrow();
+
+			const items = registry.getCommandListItems();
+
+			expect( items ).toHaveLength( 1 );
+			expect( items[ 0 ].value ).toBe( '/good:' );
+		} );
 	} );
 
 	describe( 'getHandler', () => {
