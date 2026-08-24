@@ -7,7 +7,10 @@
 		"checkJs": true,
 		"noEmit": true,
 		"skipLibCheck": true,
-		"strict": false
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true
 	},
 	"include": [
 		"resources/skins.citizen.commandPalette/**/*.js",
