@@ -28,7 +28,6 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="Superstar Racers Wiki" href="https://sr.conecorp.cc" />
  <LinkCard title="Stella Sora Wiki" href="https://stellasora.miraheze.org" />
  <LinkCard title="CapoeiiraWiki" href="https://capoeirawiki.org" />
- <LinkCard title="The Petit Planet Wiki" href="https://petitplanet.wiki" />
  <LinkCard title="Pleasant Goat Wiki" href="https://xyy.miraheze.org" />
  <LinkCard title="Wikven Static Site Generator" href="https://chaotic-ground.github.io/wikven/citizen/index.html" />
 </LinkGrid>
