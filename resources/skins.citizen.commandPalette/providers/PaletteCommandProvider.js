@@ -1,4 +1,5 @@
 const createProvider = require( './createProvider.js' );
+const isAbortError = require( '../utils/isAbortError.js' );
 
 const MAX_COMMAND_RESULTS = 10;
 
@@ -41,7 +42,7 @@ async function getMatchedCommandResults( paletteRegistry, match, query, signal )
 		// A cancelled request is not a failure. Rethrowing lets the
 		// orchestration's lifecycle swallow it, so an aborted keystroke
 		// neither logs an error nor renders an empty list.
-		if ( err && err.name === 'AbortError' ) {
+		if ( isAbortError( err ) ) {
 			throw err;
 		}
 		mw.log.error(

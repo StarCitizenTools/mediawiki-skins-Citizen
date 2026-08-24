@@ -10,7 +10,9 @@
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
 		"noImplicitThis": true,
-		"alwaysStrict": true
+		"alwaysStrict": true,
+		"useUnknownInCatchVariables": true,
+		"strictNullChecks": true
 	},
 	"include": [
 		"resources/skins.citizen.commandPalette/**/*.js",

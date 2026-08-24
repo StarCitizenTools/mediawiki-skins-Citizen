@@ -8,7 +8,7 @@ const { defineCommand } = require( '../services/defineMode.js' );
  * a transient layer rendered on top of the active mode — opening or closing
  * it does not modify the active mode, query, or mode-context stack.
  *
- * @type {import('../types.js').PaletteCommand}
+ * @type {import('../types.js').PaletteCommand|null}
  */
 module.exports = defineCommand( {
 	id: 'help',

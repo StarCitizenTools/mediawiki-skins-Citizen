@@ -1,5 +1,6 @@
 const createProvider = require( './createProvider.js' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
+const isAbortError = require( '../utils/isAbortError.js' );
 
 /**
  * Creates a search provider with the given search client.
@@ -19,7 +20,7 @@ function createSearchProvider( searchClient ) {
 				const results = response.results ?? [];
 				return { items: results.map( ( item ) => ( { ...item, source: 'search' } ) ) };
 			} catch ( error ) {
-				if ( error.name === 'AbortError' ) {
+				if ( isAbortError( error ) ) {
 					return { items: [] };
 				}
 				throw error;

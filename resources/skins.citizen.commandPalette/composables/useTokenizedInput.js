@@ -12,6 +12,7 @@ const { ref, computed } = require( 'vue' );
  */
 function useTokenizedInput( getTokenPatterns, activeMode ) {
 	let tokenCounter = 0;
+	/** @type {import('vue').Ref<import('../types.js').CommandPaletteToken[]>} */
 	const tokens = ref( [] );
 	const freeText = ref( '' );
 	const selectedIndex = ref( -1 );

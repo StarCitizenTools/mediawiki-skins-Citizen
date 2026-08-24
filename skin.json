@@ -434,6 +434,7 @@
 				"resources/skins.citizen.commandPalette/composables/useResultRouter.js",
 				"resources/skins.citizen.commandPalette/composables/useTokenizedInput.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
+				"resources/skins.citizen.commandPalette/utils/isAbortError.js",
 				"resources/skins.citizen.commandPalette/utils/providerActions.js",
 				"resources/skins.citizen.commandPalette/utils/appendQueryActions.js",
 				"resources/skins.citizen.commandPalette/services/instantDiffs.js",

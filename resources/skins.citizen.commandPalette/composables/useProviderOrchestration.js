@@ -50,7 +50,7 @@ function normalizeProviderResult( result ) {
  * @param {{leadActions: ( query: string ) => Array<Object>, trailActions: ( query: string ) => Array<Object>}} resultDecorator
  *   `createAppendQueryActions()`'s return. Only its two attached action
  *   builders are used here; the decorator itself is applied by the caller.
- * @param {Object} [deps] Optional dependencies for presults.
+ * @param {Object} [deps={}] Optional dependencies for presults.
  * @param {Object} [deps.recentItemsProvider] Provider for recent items (presults).
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
@@ -58,13 +58,14 @@ function normalizeProviderResult( result ) {
  * @param {Function} [deps.getHelpCatalogItems] Returns the list of registered modes/commands shown in the help overlay's mode catalog at root.
  * @return {Object} Orchestration state and methods.
  */
-function useProviderOrchestration( providers, resultDecorator, deps ) {
-	deps = deps || {};
+function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 
 	const query = ref( '' );
 	const isPending = ref( false );
 	const showPending = ref( false );
+	/** @type {import('vue').ShallowRef<import('../types.js').PaletteMode|null>} */
 	const activeMode = shallowRef( null );
+	/** @type {import('vue').Ref<Object[]>} */
 	const activeModeContext = ref( [] );
 	const helpVisible = ref( false );
 
@@ -80,9 +81,13 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	// Every surface has at most one asynchronous group. `forSurface` is the
 	// staleness test: items are stale until a landing stamps them with the
 	// surface that is current when they arrive.
+	/** @type {import('vue').Ref<{ items: import('../types.js').CommandPaletteItem[], forSurface: string|null, providerId: string|null }>} */
 	const content = ref( { items: [], forSurface: null, providerId: null } );
+	/** @type {import('vue').Ref<{ items: import('../types.js').CommandPaletteItem[], settled: boolean }>} */
 	const related = ref( { items: [], settled: false } );
+	/** @type {import('vue').Ref<import('../types.js').CommandPaletteItem[]>} */
 	const recents = ref( [] );
+	/** @type {import('vue').Ref<import('../types.js').CommandPaletteItem[]>} */
 	const helpItems = ref( [] );
 
 	const isPresultsSurface = computed(
@@ -226,7 +231,8 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 *
 	 * @param {Array} items Items from the content provider.
 	 * @param {string} dispatchSurface surfaceKey captured when the request was issued.
-	 * @param {string} [providerId] Id of the provider that produced the items.
+	 * @param {string|null} [providerId] Id of the provider that produced the items,
+	 *   or null when none did.
 	 */
 	function applyContent( items, dispatchSurface, providerId ) {
 		if ( surfaceKey.value !== dispatchSurface ) {
@@ -612,12 +618,15 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			return;
 		}
 		const capturedItem = item;
+		// Captured after the guard above; the narrowing does not survive into the
+		// closure that runs it.
+		const getItemDetail = mode.getItemDetail;
 		const isStale = () => activeMode.value !== mode ||
 			!flatItems.value.includes( capturedItem );
 		detailLifecycle.runDebouncedAbortable( {
 			debounceMs: DETAIL_DEBOUNCE_MS,
 			isStale,
-			run: ( signal ) => mode.getItemDetail( capturedItem, signal ),
+			run: ( signal ) => getItemDetail( capturedItem, signal ),
 			onResult: ( result ) => {
 				if ( !result || !capturedItem.detail ) {
 					return;

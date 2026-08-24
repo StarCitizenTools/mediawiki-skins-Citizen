@@ -187,7 +187,7 @@ function matchNamespacePrefix( text ) {
 	return { label: name ? `${ name }:` : raw, raw };
 }
 
-/** @type {import('../types.js').PaletteMode} */
+/** @type {import('../types.js').PaletteMode|null} */
 module.exports = defineMode( {
 	id: 'namespace',
 	triggers: [ '/ns:', ':' ],

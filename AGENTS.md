@@ -22,7 +22,9 @@ Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run li
 
 `tsconfig.json`'s `include` names every checked path explicitly rather than relying on imports to pull files in, so coverage does not shrink silently when an import is removed. Vue SFC script bodies are not covered — those need `vue-tsc`.
 
-`strict` is enabled a flag at a time rather than as a bundle, because its members cost very different amounts here. `strictFunctionTypes`, `strictBindCallApply`, `noImplicitThis` and `alwaysStrict` are on — the code already satisfied them, so they cost nothing and now prevent regressions. Still off, with what they would currently cost: `useUnknownInCatchVariables` (8 diagnostics), `strictNullChecks` (42, and the ones worth fixing), `noImplicitAny` (524, mostly missing parameter annotations rather than defects). Do not switch on bare `strict` — it turns all of them on at once.
+`strict` is enabled a flag at a time rather than as a bundle, because its members cost very different amounts here. All are on except `noImplicitAny`, which is 524 diagnostics of missing parameter annotations rather than defects. Do not switch on bare `strict` — it turns that one on too.
+
+Two idioms the checker cannot follow, both of which appear in this codebase: a parameter defaulted with `x = x || {}` in the body does not stay narrowed inside a closure, so use a default parameter; and a `typeof obj.method === 'function'` guard does not survive into a callback, so bind the method to a local first.
 
 **Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. Run `composer preflight` from within a MediaWiki installation to execute all PHP lints, style checks, Phan static analysis, and PHPUnit tests.
 

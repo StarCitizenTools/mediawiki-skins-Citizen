@@ -236,12 +236,25 @@
  */
 
 /**
+ * A token chip in the input. A mode contributes one through a `tokenPattern`
+ * match or an `addToken` action; `id` is assigned when the token is stored.
+ *
+ * @typedef {Object} CommandPaletteToken
+ * @property {string} id Unique identifier for the chip.
+ * @property {string} label Text shown in the chip.
+ * @property {string} raw Source text the token was matched from.
+ * @property {string} modeId Mode that produced the token.
+ * @property {string} position Where the token may appear. Defaults to 'any'.
+ * @property {string} [variant] Optional visual variant for the chip.
+ */
+
+/**
  * Action to append a token chip to the input and clear the free text,
  * without leaving the current mode.
  *
  * @typedef {Object} CommandPaletteAddTokenAction
  * @property {'addToken'} action
- * @property {{label: string, raw: string, modeId: string, position: string, variant: (string|undefined)}} payload The token to append — the shape TokenPattern matchers produce, plus its owning mode.
+ * @property {Omit<CommandPaletteToken, 'id'>} payload The token to append — the shape TokenPattern matchers produce, plus its owning mode.
  */
 
 /**
