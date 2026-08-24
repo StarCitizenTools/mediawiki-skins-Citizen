@@ -21,6 +21,8 @@
  * @param {number} [options.pendingDelayMs=300] Delay before `showPending` flips on, so brief operations don't flash a spinner.
  * @return {{ reset: Function, runDebouncedAbortable: Function }}
  */
+const isAbortError = require( '../utils/isAbortError.js' );
+
 function useOperationLifecycle( { isPending, showPending, pendingDelayMs = 300 } ) {
 	let debounceTimeout = null;
 	let pendingDelayTimeout = null;
@@ -100,7 +102,7 @@ function useOperationLifecycle( { isPending, showPending, pendingDelayMs = 300 }
 					onResult( result );
 				}
 			} catch ( error ) {
-				if ( error && error.name !== 'AbortError' ) {
+				if ( !isAbortError( error ) ) {
 					onError( error );
 				}
 			} finally {

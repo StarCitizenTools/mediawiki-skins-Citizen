@@ -11,6 +11,7 @@
  *   the 50-rev window," which may still have a real parent outside it).
  */
 const { cdxIconHistory } = require( '../icons.json' );
+const isAbortError = require( '../utils/isAbortError.js' );
 const config = require( '../config.json' );
 const { defineMode } = require( '../services/defineMode.js' );
 
@@ -262,7 +263,7 @@ function createHistoryMode( ApiConstructor ) {
 			}, { signal } );
 			return extractRevisions( data );
 		} catch ( error ) {
-			if ( error && error.name !== 'AbortError' ) {
+			if ( !isAbortError( error ) ) {
 				mw.log.error( '[commandPalette] History fetch failed:', error );
 			}
 			return [];
@@ -294,7 +295,7 @@ function createHistoryMode( ApiConstructor ) {
 			tagDisplayNames = map;
 			return map;
 		} catch ( error ) {
-			if ( error && error.name !== 'AbortError' ) {
+			if ( !isAbortError( error ) ) {
 				mw.log.error( '[commandPalette] Tag display-name fetch failed:', error );
 			}
 			return new Map();

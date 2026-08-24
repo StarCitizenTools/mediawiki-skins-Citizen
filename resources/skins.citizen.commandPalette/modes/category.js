@@ -11,6 +11,7 @@
  *    case-insensitive title startsWith.
  */
 const { cdxIconTag, cdxIconArticle, cdxIconEdit } = require( '../icons.json' );
+const isAbortError = require( '../utils/isAbortError.js' );
 const config = require( '../config.json' );
 const { defineMode } = require( '../services/defineMode.js' );
 
@@ -142,7 +143,7 @@ function createCategoryMode( ApiConstructor ) {
 			const hits = data?.query?.prefixsearch || [];
 			return hits.map( ( hit ) => adaptCategoryItem( stripPrefix( hit.title ) ) );
 		} catch ( error ) {
-			if ( error && error.name === 'AbortError' ) {
+			if ( isAbortError( error ) ) {
 				return [];
 			}
 			mw.log.error( '[commandPalette] Category prefixsearch failed:', error );
@@ -176,7 +177,7 @@ function createCategoryMode( ApiConstructor ) {
 			} );
 			return subcats.concat( pages );
 		} catch ( error ) {
-			if ( error && error.name === 'AbortError' ) {
+			if ( isAbortError( error ) ) {
 				return [];
 			}
 			mw.log.error( '[commandPalette] Category members fetch failed:', error );

@@ -104,24 +104,27 @@ function createRestSearchClient( scriptPath ) {
 			query,
 			results: response.pages.map( ( page ) => {
 				const thumbnail = page.thumbnail;
-				const showRedirect = !!page.matched_title &&
-					isRedirectUseful( page.title, page.matched_title );
+				// Bound to a local so the null check narrows for the metadata
+				// label below; `showRedirect` alone is just a boolean.
+				const matchedTitle = page.matched_title;
+				const showRedirect = !!matchedTitle &&
+					isRedirectUseful( page.title, matchedTitle );
 				return {
 					id: `citizen-command-palette-item-page-${ page.key }`,
 					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,
-					url: mw.util.getUrl( page.matched_title ?? page.title ),
+					url: mw.util.getUrl( matchedTitle ?? page.title ),
 					thumbnail: thumbnail ? {
 						url: thumbnail.url,
 						width: thumbnail.width ?? undefined,
 						height: thumbnail.height ?? undefined
 					} : undefined,
 					thumbnailIcon: cdxIconArticle,
-					metadata: showRedirect ? [
+					metadata: showRedirect && matchedTitle ? [
 						{
 							icon: cdxIconArticleRedirect,
-							label: page.matched_title,
+							label: matchedTitle,
 							highlightQuery: true
 						}
 					] : undefined,
