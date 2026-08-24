@@ -20,7 +20,9 @@ Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run li
 
 **Type checking**: `npm run lint:types` runs `tsc --checkJs` over the JSDoc annotations; CI runs it via the shared lint workflow's `lint-types` input. Note that workflow invokes each `lint:*` script individually and never `npm run lint`, so adding a new lint script to the `lint` chain does not put it in CI — it needs an input on the shared workflow as well.
 
-`tsconfig.json`'s `include` names every checked path explicitly rather than relying on imports to pull files in, so coverage does not shrink silently when an import is removed. Vue SFC script bodies are not covered — those need `vue-tsc`. `strict` is off for this first pass, so `strictNullChecks` in particular is not enforced; tightening it is a deliberate follow-up, not an oversight.
+`tsconfig.json`'s `include` names every checked path explicitly rather than relying on imports to pull files in, so coverage does not shrink silently when an import is removed. Vue SFC script bodies are not covered — those need `vue-tsc`.
+
+`strict` is enabled a flag at a time rather than as a bundle, because its members cost very different amounts here. `strictFunctionTypes`, `strictBindCallApply`, `noImplicitThis` and `alwaysStrict` are on — the code already satisfied them, so they cost nothing and now prevent regressions. Still off, with what they would currently cost: `useUnknownInCatchVariables` (8 diagnostics), `strictNullChecks` (42, and the ones worth fixing), `noImplicitAny` (524, mostly missing parameter annotations rather than defects). Do not switch on bare `strict` — it turns all of them on at once.
 
 **Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. Run `composer preflight` from within a MediaWiki installation to execute all PHP lints, style checks, Phan static analysis, and PHPUnit tests.
 
