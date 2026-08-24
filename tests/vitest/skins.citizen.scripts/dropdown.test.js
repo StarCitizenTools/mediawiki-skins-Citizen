@@ -111,9 +111,72 @@ describe( 'Dropdown', () => {
 				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
 			toggleHandler();
 
-			const keyupHandler = win.addEventListener.mock.calls
-				.find( ( call ) => call[ 0 ] === 'keyup' )[ 1 ];
-			keyupHandler( { key: 'Escape' } );
+			const keydownHandler = win.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'keydown' )[ 1 ];
+			keydownHandler( { key: 'Escape', target: null } );
+
+			expect( details.open ).toBe( false );
+		} );
+
+		it( 'should not dismiss when a nested control has something expanded', () => {
+			const dropdown = create();
+			dropdown.init();
+			details.open = true;
+
+			const toggleHandler = details.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
+			toggleHandler();
+
+			// A Codex select handle whose menu is open. The capture-phase
+			// listener sees this before the control collapses it.
+			const handle = { closest: vi.fn( () => ( {} ) ) };
+
+			const keydownHandler = win.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'keydown' )[ 1 ];
+			keydownHandler( { key: 'Escape', target: handle } );
+
+			expect( handle.closest ).toHaveBeenCalledWith(
+				'[role="combobox"][aria-expanded="true"]'
+			);
+			expect( details.open ).toBe( true );
+		} );
+
+		it( 'should dismiss when the expanded element is not a combobox', () => {
+			const dropdown = create();
+			dropdown.init();
+			details.open = true;
+
+			const toggleHandler = details.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
+			toggleHandler();
+
+			// A table-of-contents section toggle: carries aria-expanded but
+			// handles no keys, so Escape still belongs to the dropdown.
+			const tocToggle = {
+				closest: vi.fn( ( selector ) => selector.includes( 'combobox' ) ? null : {} )
+			};
+
+			const keydownHandler = win.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'keydown' )[ 1 ];
+			keydownHandler( { key: 'Escape', target: tocToggle } );
+
+			expect( details.open ).toBe( false );
+		} );
+
+		it( 'should dismiss when a nested control is collapsed', () => {
+			const dropdown = create();
+			dropdown.init();
+			details.open = true;
+
+			const toggleHandler = details.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
+			toggleHandler();
+
+			const handle = { closest: vi.fn( () => null ) };
+
+			const keydownHandler = win.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'keydown' )[ 1 ];
+			keydownHandler( { key: 'Escape', target: handle } );
 
 			expect( details.open ).toBe( false );
 		} );
@@ -127,9 +190,9 @@ describe( 'Dropdown', () => {
 				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
 			toggleHandler();
 
-			const keyupHandler = win.addEventListener.mock.calls
-				.find( ( call ) => call[ 0 ] === 'keyup' )[ 1 ];
-			keyupHandler( { key: 'Enter' } );
+			const keydownHandler = win.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'keydown' )[ 1 ];
+			keydownHandler( { key: 'Enter', target: null } );
 
 			expect( details.open ).toBe( true );
 		} );
@@ -243,7 +306,7 @@ describe( 'Dropdown', () => {
 				'mousedown', expect.any( Function )
 			);
 			expect( win.addEventListener ).toHaveBeenCalledWith(
-				'keyup', expect.any( Function )
+				'keydown', expect.any( Function ), true
 			);
 		} );
 
@@ -267,7 +330,7 @@ describe( 'Dropdown', () => {
 				'mousedown', expect.any( Function )
 			);
 			expect( win.removeEventListener ).toHaveBeenCalledWith(
-				'keyup', expect.any( Function )
+				'keydown', expect.any( Function ), true
 			);
 		} );
 	} );
@@ -298,7 +361,7 @@ describe( 'Dropdown', () => {
 			dropdown.destroy();
 
 			expect( win.removeEventListener ).toHaveBeenCalledWith(
-				'keyup', expect.any( Function )
+				'keydown', expect.any( Function ), true
 			);
 			expect( target.removeEventListener ).toHaveBeenCalledWith(
 				'click', expect.any( Function )

@@ -37,12 +37,24 @@ class Dropdown {
 	/**
 	 * Dismiss the target when ESCAPE is pressed.
 	 *
-	 * @param {Event} event
+	 * Must stay bound on capture: a nested control stops Escape on keydown, and
+	 * by keyup has already collapsed, so the expanded state this reads is only
+	 * available before it runs. `role="combobox"` is what marks a control that
+	 * owns Escape — the table of contents and notification toggles carry
+	 * aria-expanded without handling any key.
+	 *
+	 * @param {KeyboardEvent} event
 	 */
 	dismissOnEscape( event ) {
-		if ( event.key === 'Escape' ) {
-			this.dismiss();
+		if ( event.key !== 'Escape' ) {
+			return;
 		}
+		const target = event.target;
+		if ( target && typeof target.closest === 'function' &&
+			target.closest( '[role="combobox"][aria-expanded="true"]' ) ) {
+			return;
+		}
+		this.dismiss();
 	}
 
 	/**
@@ -76,7 +88,7 @@ class Dropdown {
 		this.window.removeEventListener( 'mousedown', this.dismissIfExternalEventTarget );
 		this.window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
 		this.window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
-		this.window.removeEventListener( 'keyup', this.dismissOnEscape );
+		this.window.removeEventListener( 'keydown', this.dismissOnEscape, true );
 	}
 
 	/**
@@ -87,7 +99,7 @@ class Dropdown {
 		this.window.addEventListener( 'mousedown', this.dismissIfExternalEventTarget );
 		this.window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
 		this.window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
-		this.window.addEventListener( 'keyup', this.dismissOnEscape );
+		this.window.addEventListener( 'keydown', this.dismissOnEscape, true );
 	}
 
 	/**
