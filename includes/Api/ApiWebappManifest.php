@@ -15,6 +15,7 @@ use MediaWiki\MainConfigNames;
 use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
 use MediaWiki\Utils\UrlUtils;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 /**
  * Based on the MobileFrontend extension
@@ -38,6 +39,23 @@ class ApiWebappManifest extends ApiBase {
 	 */
 	private const LOGO_FETCH_TIMEOUT = 3;
 	private const LOGO_FETCH_CONNECT_TIMEOUT = 1;
+
+	/**
+	 * How long a measured icon list is kept, and how long one that came out
+	 * short is kept before the logos are measured again.
+	 *
+	 * Measuring a logo means fetching it from the wiki's own web server, so a
+	 * list that lost one to a failure is worth retrying long before a complete
+	 * one is.
+	 */
+	private const ICON_CACHE_TTL = WANObjectCache::TTL_DAY;
+	private const ICON_CACHE_INCOMPLETE_TTL = 5 * WANObjectCache::TTL_MINUTE;
+
+	/** Bumped when the shape of a cached icon list changes. */
+	private const ICON_CACHE_VERSION = 1;
+
+	/** The $wgLogos entries the manifest can carry, in the order it emits them. */
+	private const LOGO_KEYS = [ '1x', '1.5x', '2x', 'icon', 'svg' ];
 
 	/** Icon fields taken from config, per the manifest spec. */
 	private const ICON_KEYS = [ 'src', 'sizes', 'type', 'purpose' ];
@@ -65,6 +83,7 @@ class ApiWebappManifest extends ApiBase {
 		private readonly Language $contentLanguage,
 		private readonly HttpRequestFactory $httpRequestFactory,
 		private readonly UrlUtils $urlUtils,
+		private readonly WANObjectCache $wanCache,
 	) {
 		parent::__construct( $main, $moduleName );
 		$this->config = $this->getConfig();
@@ -153,39 +172,91 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get icons from wgLogos
+	 *
+	 * The key hashes the logos the list was built from, so a $wgLogos edit
+	 * misses the old entry rather than needing a purge.
 	 */
 	private function getIconsFromLogos(): array {
-		$urlUtils = $this->urlUtils;
-		$httpRequestFactory = $this->httpRequestFactory;
+		$logos = $this->getConfiguredLogos();
+		if ( $logos === [] ) {
+			return [];
+		}
+
+		$cache = $this->wanCache;
+
+		return $cache->getWithSetCallback(
+			$cache->makeKey(
+				'citizen-manifest-icons',
+				self::ICON_CACHE_VERSION,
+				hash( 'sha256', serialize( $logos ) )
+			),
+			self::ICON_CACHE_TTL,
+			function ( $oldValue, &$ttl, array &$setOpts ) use ( $logos ) {
+				// No replica read here, so no lag to declare. Left unsaid,
+				// WANObjectCache reads how long the fetches took as staleness
+				// and keeps the list for thirty seconds.
+				$setOpts['since'] = INF;
+
+				$icons = $this->buildIcons( $logos );
+				if ( count( $icons ) < count( $logos ) ) {
+					$ttl = self::ICON_CACHE_INCOMPLETE_TTL;
+				}
+				return $icons;
+			}
+		);
+	}
+
+	/**
+	 * The logos the manifest can carry, in the order it emits them.
+	 *
+	 * @return string[]
+	 */
+	private function getConfiguredLogos(): array {
+		$logos = $this->config->get( MainConfigNames::Logos );
+		if ( !is_array( $logos ) ) {
+			return [];
+		}
+
+		$configured = [];
+		foreach ( self::LOGO_KEYS as $logoKey ) {
+			// $wgLogos also carries array-shaped entries such as wordmark.
+			if ( isset( $logos[$logoKey] ) && is_string( $logos[$logoKey] ) ) {
+				$configured[$logoKey] = $logos[$logoKey];
+			}
+		}
+		return $configured;
+	}
+
+	/**
+	 * Turn configured logos into manifest icon entries.
+	 *
+	 * A logo yields one entry or none, so a list shorter than the logos it was
+	 * built from means something could not be measured.
+	 *
+	 * @param string[] $logos
+	 * @return array[]
+	 */
+	private function buildIcons( array $logos ): array {
 		$logger = LoggerFactory::getInstance( 'Citizen' );
 
 		$icons = [];
-		$logos = $this->config->get( MainConfigNames::Logos );
 
-		if ( !$logos ) {
-			return $icons;
-		}
-
-		$logoKeys = [
-			'1x',
-			'1.5x',
-			'2x',
-			'icon',
-			'svg'
-		];
-
-		foreach ( $logoKeys as $logoKey ) {
-			// Avoid undefined index
-			if ( !isset( $logos[$logoKey] ) ) {
+		foreach ( $logos as $logoPath ) {
+			if ( self::isSvgPath( $logoPath ) ) {
+				// An SVG fits any size, and getimagesizefromstring() cannot
+				// read one anyway, so fetching it would discard the bytes.
+				$icons[] = [
+					'src' => $logoPath,
+					'sizes' => 'any',
+					'type' => 'image/svg+xml',
+				];
 				continue;
 			}
 
-			$logoPath = (string)$logos[$logoKey];
-
 			$logoUrl = '';
 			try {
-				$logoUrl = $urlUtils->expand( $logoPath, PROTO_CURRENT ) ?? '';
-				$request = $httpRequestFactory->create( $logoUrl, [
+				$logoUrl = $this->urlUtils->expand( $logoPath, PROTO_CURRENT ) ?? '';
+				$request = $this->httpRequestFactory->create( $logoUrl, [
 					'timeout' => self::LOGO_FETCH_TIMEOUT,
 					'connectTimeout' => self::LOGO_FETCH_CONNECT_TIMEOUT,
 				], __METHOD__ );
@@ -194,9 +265,6 @@ class ApiWebappManifest extends ApiBase {
 					$logoContent = $request->getContent();
 				} else {
 					$logoContent = '';
-					// The manifest is cached for a week, so a logo the server
-					// could not reach is missing from it for a week with
-					// nothing else to show for it.
 					$logger->warning(
 						'Could not fetch logo {logo} for the webapp manifest, HTTP {code}',
 						[ 'logo' => $logoUrl, 'code' => $request->getStatus() ]
@@ -210,36 +278,29 @@ class ApiWebappManifest extends ApiBase {
 				);
 			}
 
-			if ( $logoContent !== '' ) {
-				$logoSize = getimagesizefromstring( $logoContent );
-			} else {
-				$logoSize = false;
-			}
-
-			$icon = [
-				'src' => $logoPath
-			];
-
-			if ( $logoSize !== false ) {
-				$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
-				$icon['type'] = $logoSize['mime'];
-			}
-
-			// Set sizes to any if it is a SVG
-			if ( str_ends_with( $logoPath, 'svg' ) ) {
-				$icon['sizes'] = 'any';
-				$icon['type'] = 'image/svg+xml';
-			}
-
-			// Exit if not sizes are detected
-			if ( !isset( $icon['sizes'] ) ) {
+			$logoSize = $logoContent !== '' ? getimagesizefromstring( $logoContent ) : false;
+			// Nothing measurable, so there are no sizes to declare.
+			if ( $logoSize === false ) {
 				continue;
 			}
 
-			$icons[] = $icon;
+			$icons[] = [
+				'src' => $logoPath,
+				'sizes' => $logoSize[0] . 'x' . $logoSize[1],
+				'type' => $logoSize['mime'],
+			];
 		}
 
 		return $icons;
+	}
+
+	/**
+	 * Whether a logo path points at an SVG.
+	 */
+	private static function isSvgPath( string $logoPath ): bool {
+		// A query string or fragment is not part of the extension.
+		$path = substr( $logoPath, 0, strcspn( $logoPath, '?#' ) );
+		return str_ends_with( strtolower( $path ), '.svg' );
 	}
 
 	/**
