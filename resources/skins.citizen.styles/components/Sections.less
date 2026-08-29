@@ -105,6 +105,12 @@ section[ data-mw-section-id ] > .mw-heading,
 		// margin instead of merging with it.
 		margin-block-end: 0;
 
+		// Hide edit section buttons when section is collapsed,
+		// since user no longer needs the section.
+		.mw-editsection {
+			display: none;
+		}
+
 		&::before,
 		> .citizen-section-toggle::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
