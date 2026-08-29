@@ -794,7 +794,6 @@
 			"+ext.CodeMirror.v6.mode.mediawiki": "skinStyles/extensions/CodeMirror/codemirror.mediawiki.less",
 			"+ext.CodeMirror.v6.visualEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.v6.visualEditor.less",
 			"+ext.CodeMirror.v6.WikiEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.v6.WikiEditor.less",
-			"+ext.CodeMirror.visualEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.less",
 			"+ext.CommentStreams": "skinStyles/extensions/CommentStreams/ext.CommentStreams.less",
 			"+ext.datamaps.core": "skinStyles/extensions/DataMaps/ext.datamaps.core.less",
 			"+ext.datamaps.core.styles": "skinStyles/extensions/DataMaps/ext.datamaps.core.styles.less",
