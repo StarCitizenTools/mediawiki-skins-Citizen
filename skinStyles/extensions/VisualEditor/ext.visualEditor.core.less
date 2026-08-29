@@ -17,20 +17,6 @@
 	font-size: 0.875rem;
 }
 
-.ve-ui-toolbar > .oo-ui-toolbar-bar {
-	/* Fix z-index */
-	z-index: @z-index-sticky;
-	/* Fix weird gap between save button and toolbar bottom */
-	border-bottom: 0;
-	box-shadow: 0 1px 0 0 var( --border-color-base );
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		.ve-ui-toolbar-floating& {
-			top: var( --header-size-block-start );
-		}
-	}
-}
-
 /* ve.ce.BranchNode.css */
 .ve-ce-branchNode-blockSlug,
 .ve-ce-branchNode-newSlug {
@@ -168,7 +154,20 @@
 
 /* Responsive handling */
 .ve-init-mw-desktopArticleTarget-toolbar {
+	/* Fix z-index */
+	z-index: @z-index-sticky;
+
 	> .oo-ui-toolbar-bar {
+		/* Fix weird gap between save button and toolbar bottom */
+		border-bottom: 0;
+		box-shadow: 0 1px 0 0 var( --border-color-base );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.ve-ui-toolbar-floating& {
+				top: var( --header-size-block-start );
+			}
+		}
+
 		> .oo-ui-toolbar-tools {
 			position: relative;
 			// Needed to hide overflow tools
