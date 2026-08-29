@@ -15,7 +15,10 @@ use MediaWiki\Utils\UrlUtils;
 use MediaWikiUnitTestCase;
 use MWHttpRequest;
 use ReflectionMethod;
+use RuntimeException;
 use StatusValue;
+use Wikimedia\ObjectCache\HashBagOStuff;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 /**
  * The default shortcuts resolve special page titles through the service
@@ -40,6 +43,7 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 			$this->createMock( Language::class ),
 			$this->createMock( HttpRequestFactory::class ),
 			$this->createMock( UrlUtils::class ),
+			self::createCache(),
 		);
 	}
 
@@ -255,10 +259,30 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
+	 * A real cache over an in-memory store: getWithSetCallback() is final, so
+	 * a mock cannot stand in for it.
+	 *
+	 * The no-op asyncHandler drops WANObjectCache's pre-emptive refresh of a
+	 * popular key. Without one it regenerates in line instead, which lands as
+	 * an unexpected call on a request mock about once in 800 reads.
+	 */
+	private static function createCache(): WANObjectCache {
+		return new WANObjectCache( [
+			'cache' => new HashBagOStuff(),
+			'asyncHandler' => static function ( callable $callback ): void {
+			},
+		] );
+	}
+
+	/**
 	 * Build an API whose only icon source is $wgLogos, fetched through the
 	 * given factory.
 	 */
-	private function createApiWithLogos( array $logos, HttpRequestFactory $httpRequestFactory ): ApiWebappManifest {
+	private function createApiWithLogos(
+		array $logos,
+		HttpRequestFactory $httpRequestFactory,
+		?WANObjectCache $cache = null
+	): ApiWebappManifest {
 		$contextMock = $this->createMock( IContextSource::class );
 		$contextMock->method( 'getConfig' )->willReturn( new HashConfig( [
 			'CitizenManifestOptions' => [ 'icons' => [] ],
@@ -277,6 +301,14 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 			$this->createMock( Language::class ),
 			$httpRequestFactory,
 			$urlUtils,
+			$cache ?? self::createCache(),
+		);
+	}
+
+	/** A 1x1 PNG, so getimagesizefromstring() has something real to measure. */
+	private static function onePixelPng(): string {
+		return (string)base64_decode(
+			'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='
 		);
 	}
 
@@ -323,21 +355,275 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
-	 * An SVG needs no measuring, so it survives a fetch the server could not
-	 * make — the browser fetches it on its own account, and a server that
-	 * cannot reach its own URL is not evidence the browser cannot either.
+	 * @return iterable<string, array{string}>
 	 */
-	public function testGetIconsFromLogosKeepsAnSvgItCannotFetch(): void {
+	public static function provideSvgLogoPaths(): iterable {
+		yield 'plain' => [ '/logo.svg' ];
+		// Extensions are not case sensitive, and a logo path may carry a
+		// cache-busting query string or a fragment.
+		yield 'uppercase extension' => [ '/logo.SVG' ];
+		yield 'query string' => [ '/logo.svg?ver=2' ];
+		yield 'fragment' => [ '/logo.svg#icon' ];
+	}
+
+	/**
+	 * Nothing about an SVG has to be measured, so fetching one is pure cost.
+	 *
+	 * @dataProvider provideSvgLogoPaths
+	 */
+	public function testGetIconsFromLogosDoesNotFetchAnSvg( string $logoPath ): void {
 		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
-		$httpRequestFactory->method( 'create' )->willReturn( $this->createLogoRequest( false ) );
-		$api = $this->createApiWithLogos( [ 'svg' => '/logo.svg' ], $httpRequestFactory );
+		$httpRequestFactory->expects( $this->never() )->method( 'create' );
+		$api = $this->createApiWithLogos( [ 'svg' => $logoPath ], $httpRequestFactory );
 
 		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
 
 		$this->assertSame(
-			[ [ 'src' => '/logo.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ] ],
+			[ [ 'src' => $logoPath, 'sizes' => 'any', 'type' => 'image/svg+xml' ] ],
 			$method->invoke( $api )
 		);
+	}
+
+	/**
+	 * The extension is what marks an SVG, not the last three characters of the
+	 * path — otherwise a raster logo would be advertised as a scalable one.
+	 */
+	public function testGetIconsFromLogosMeasuresAPathMerelyEndingInSvg(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( true, self::onePixelPng() ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logosvg' ], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame(
+			[ [ 'src' => '/logosvg', 'sizes' => '1x1', 'type' => 'image/png' ] ],
+			$method->invoke( $api )
+		);
+	}
+
+	/**
+	 * Measuring a logo means fetching it from the wiki's own web server, so an
+	 * uncached manifest response must not pay for the list a second time.
+	 */
+	public function testGetIconsFromLogosMeasuresEachLogoOnce(): void {
+		$clock = 1000.0;
+		$cache = self::createCache();
+		$cache->setMockTime( $clock );
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( true, self::onePixelPng() ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory, $cache );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+		$first = $method->invoke( $api );
+		$clock += 3600;
+
+		$this->assertSame( $first, $method->invoke( $api ) );
+	}
+
+	/**
+	 * A logo the server could not reach is missing from the manifest until the
+	 * cached list expires, so a list that came out short must be measured again
+	 * long before a complete one would be.
+	 */
+	public function testGetIconsFromLogosRetriesAnIncompleteListSooner(): void {
+		$clock = 1000.0;
+		$cache = self::createCache();
+		$cache->setMockTime( $clock );
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->exactly( 2 ) )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( false ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory, $cache );
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$method->invoke( $api );
+		$clock += 3600;
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	/**
+	 * The short retry must still be a cached window, not a bypass: an
+	 * unreachable logo that is measured again on every request is the defect
+	 * this memo exists to remove.
+	 */
+	public function testGetIconsFromLogosCachesAnIncompleteListBriefly(): void {
+		$clock = 1000.0;
+		$cache = self::createCache();
+		$cache->setMockTime( $clock );
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( false ) );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory, $cache );
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$method->invoke( $api );
+		$clock += 60;
+
+		$this->assertSame( [], $method->invoke( $api ) );
+	}
+
+	/**
+	 * A server slow to answer for its own logos is the one that can least
+	 * afford to measure them again, so how long measuring took must not shorten
+	 * how long the result is kept.
+	 */
+	public function testGetIconsFromLogosKeepsASlowlyMeasuredList(): void {
+		$clock = 1000.0;
+		$cache = self::createCache();
+		$cache->setMockTime( $clock );
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->willReturnCallback( function () use ( &$clock ): MWHttpRequest {
+				// Over WANObjectCache's MAX_READ_LAG of 7s, past which it cuts
+				// the entry to TTL_LAGGED (30s).
+				$clock += 10;
+				return $this->createLogoRequest( true, self::onePixelPng() );
+			} );
+		$api = $this->createApiWithLogos( [ '1x' => '/logo.png' ], $httpRequestFactory, $cache );
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$first = $method->invoke( $api );
+		$clock += 3600;
+
+		$this->assertSame( $first, $method->invoke( $api ) );
+	}
+
+	/**
+	 * The cached list is keyed on the logos it was built from, so editing
+	 * $wgLogos takes effect without a purge.
+	 */
+	public function testGetIconsFromLogosRemeasuresWhenTheLogosChange(): void {
+		$cache = self::createCache();
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->exactly( 2 ) )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( true, self::onePixelPng() ) );
+
+		foreach ( [ '/old.png', '/new.png' ] as $logoPath ) {
+			$api = $this->createApiWithLogos( [ '1x' => $logoPath ], $httpRequestFactory, $cache );
+			$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+			$this->assertSame(
+				[ [ 'src' => $logoPath, 'sizes' => '1x1', 'type' => 'image/png' ] ],
+				$method->invoke( $api )
+			);
+		}
+	}
+
+	/**
+	 * $wgLogos carries entries the manifest has no use for, and 'wordmark' is
+	 * an array rather than a path — neither may reach the fetch loop.
+	 */
+	public function testGetIconsFromLogosIgnoresLogosItCannotUse(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->never() )->method( 'create' );
+		$api = $this->createApiWithLogos( [
+			'1x' => '/logo.svg',
+			'wordmark' => [ 'src' => '/wordmark.svg', 'width' => 135, 'height' => 20 ],
+			'icon' => '/icon.svg',
+		], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame( [
+			[ 'src' => '/logo.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ],
+			[ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ],
+		], $method->invoke( $api ) );
+	}
+
+	/**
+	 * A malformed URL or a misconfigured proxy throws rather than answering,
+	 * which must leave the rest of the list intact.
+	 */
+	public function testGetIconsFromLogosDropsALogoWhoseFetchThrows(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->method( 'create' )
+			->willThrowException( new RuntimeException( 'Invalid reverseProxy configured' ) );
+		$api = $this->createApiWithLogos(
+			[ '1x' => '/logo.png', 'icon' => '/icon.svg' ],
+			$httpRequestFactory
+		);
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame(
+			[ [ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ] ],
+			$method->invoke( $api )
+		);
+	}
+
+	/**
+	 * $wgLogos is site config, so a value of the wrong shape under a key the
+	 * manifest does use must be skipped rather than stringified into a src.
+	 */
+	public function testGetIconsFromLogosSkipsALogoThatIsNotAPath(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->never() )->method( 'create' );
+		$api = $this->createApiWithLogos( [
+			'1x' => [ 'src' => '/logo.svg', 'width' => 135, 'height' => 20 ],
+			'icon' => '/icon.svg',
+		], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame(
+			[ [ 'src' => '/icon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml' ] ],
+			$method->invoke( $api )
+		);
+	}
+
+	/**
+	 * The manifest's icon order is Citizen's, not whatever order $wgLogos
+	 * happens to declare its keys in.
+	 */
+	public function testGetIconsFromLogosEmitsAFixedOrder(): void {
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->never() )->method( 'create' );
+		$api = $this->createApiWithLogos( [
+			'icon' => '/icon.svg',
+			'svg' => '/scalable.svg',
+			'1x' => '/one.svg',
+		], $httpRequestFactory );
+
+		$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+		$this->assertSame(
+			[ '/one.svg', '/icon.svg', '/scalable.svg' ],
+			array_column( $method->invoke( $api ), 'src' )
+		);
+	}
+
+	/**
+	 * The key covers only the logos the manifest can carry, so editing one it
+	 * cannot use must not throw the measured list away.
+	 */
+	public function testGetIconsFromLogosKeepsTheListWhenAnUnusedLogoChanges(): void {
+		$cache = self::createCache();
+		$httpRequestFactory = $this->createMock( HttpRequestFactory::class );
+		$httpRequestFactory->expects( $this->once() )
+			->method( 'create' )
+			->willReturn( $this->createLogoRequest( true, self::onePixelPng() ) );
+
+		$logoSets = [
+			[ '1x' => '/logo.png' ],
+			[ '1x' => '/logo.png', 'wordmark' => [ 'src' => '/wordmark.svg', 'width' => 135, 'height' => 20 ] ],
+		];
+		foreach ( $logoSets as $logos ) {
+			$api = $this->createApiWithLogos( $logos, $httpRequestFactory, $cache );
+			$method = new ReflectionMethod( $api, 'getIconsFromLogos' );
+
+			$this->assertSame(
+				[ [ 'src' => '/logo.png', 'sizes' => '1x1', 'type' => 'image/png' ] ],
+				$method->invoke( $api )
+			);
+		}
 	}
 
 	/**

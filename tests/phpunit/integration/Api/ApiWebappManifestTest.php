@@ -39,6 +39,7 @@ class ApiWebappManifestTest extends MediaWikiIntegrationTestCase {
 			$services->getContentLanguage(),
 			$services->getHttpRequestFactory(),
 			$services->getUrlUtils(),
+			$services->getMainWANObjectCache(),
 		);
 	}
 
@@ -114,6 +115,7 @@ class ApiWebappManifestTest extends MediaWikiIntegrationTestCase {
 			$services->getContentLanguage(),
 			$services->getHttpRequestFactory(),
 			$services->getUrlUtils(),
+			$services->getMainWANObjectCache(),
 		);
 
 		$api->execute();

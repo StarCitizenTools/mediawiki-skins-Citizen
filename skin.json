@@ -127,7 +127,8 @@
 			"services": [
 				"ContentLanguage",
 				"HttpRequestFactory",
-				"UrlUtils"
+				"UrlUtils",
+				"MainWANObjectCache"
 			]
 		}
 	},
