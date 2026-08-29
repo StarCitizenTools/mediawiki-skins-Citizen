@@ -28,3 +28,19 @@
 		background-color: var( --color-surface-1 );
 	}
 }
+
+/* ve.ui.MWTwoPaneTransclusionDialogLayout.less */
+.ve-ui-mwTwoPaneTransclusionDialogLayout {
+	&-stackLayout {
+		/* Reduce template form spacing for better mobile edit */
+		padding-inline: var( --padding-page );
+	}
+
+	> .oo-ui-panelLayout {
+		margin-top: 24px;
+
+		p {
+			margin: 0;
+		}
+	}
+}
