@@ -153,7 +153,7 @@ Citizen's own Black theme is defined as a small set of overrides, so a theme you
 
 #### Register the theme in the picker
 
-Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.json` — see [Extending preferences](../features/preferences.md#extending-preferences) for the full schema. The `options` array replaces the built-in list, so include the built-in themes you want to keep:
+Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.json` — see the [configuration schema](../features/preferences.md#configuration-schema) for the full shape. The `options` array replaces the built-in list, so include the built-in themes you want to keep:
 
 ```json
 {
