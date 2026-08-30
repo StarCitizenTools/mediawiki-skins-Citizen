@@ -104,14 +104,13 @@
 	"citizen-feature-pure-black-1-label": "On",
 
 	"citizen-feature-custom-font-size-name": "Text",
-	"citizen-feature-custom-font-size-description": "Change the font size of the body text",
 	"citizen-feature-custom-font-size-small-label": "Small",
 	"citizen-feature-custom-font-size-standard-label": "Standard",
 	"citizen-feature-custom-font-size-large-label": "Large",
 	"citizen-feature-custom-font-size-xlarge-label": "Extra large",
+	"citizen-preferences-font-size-sample": "Aa",
 
 	"citizen-feature-custom-width-name": "Width",
-	"citizen-feature-custom-width-description": "Change the width of the content area",
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Wide",
 	"citizen-feature-custom-width-full-label": "Full",

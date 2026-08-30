@@ -40,7 +40,19 @@
 						class="citizen-preferences-group"
 					>
 						<template #label>
-							{{ pref.heading }}
+							<span
+								v-if="hasReadout( pref )"
+								class="citizen-preferences-group__labelrow"
+							>
+								<span>{{ pref.heading }}</span>
+								<span
+									class="citizen-preferences-group__readout"
+									aria-hidden="true"
+								>{{ readout( pref ) }}</span>
+							</span>
+							<template v-else>
+								{{ pref.heading }}
+							</template>
 						</template>
 						<template
 							v-if="pref.description"
@@ -54,6 +66,15 @@
 							:selected="values[ pref.featureName ]"
 							@update:selected="setValue( pref.featureName, $event )"
 						></cdx-select>
+						<segmented-picker
+							v-else-if="pref.type === 'segmented'"
+							:model-value="values[ pref.featureName ]"
+							:options="pref.options"
+							:feature-name="pref.featureName"
+							:variant="pref.variant"
+							@update:model-value="setValue( pref.featureName, $event )"
+							@update:hovered="setHovered( pref.featureName, $event )"
+						></segmented-picker>
 						<theme-picker
 							v-else-if="pref.featureName === 'skin-theme' && isV4"
 							:model-value="values[ pref.featureName ]"
@@ -81,6 +102,7 @@ const { defineComponent, computed, inject, reactive, ref, watch } = require( 'vu
 const { NormalizedPreferencesConfig } = require( './types.js' );
 const { CdxField, CdxSelect, CdxToggleSwitch } = require( '../../codex.js' );
 const RadioGroup = require( './RadioGroup.vue' );
+const SegmentedPicker = require( './SegmentedPicker.vue' );
 const ThemePicker = require( './ThemePicker.vue' );
 const useVisibility = require( './useVisibility.js' );
 const { resolveLabel } = require( './configRegistry.js' );
@@ -133,6 +155,7 @@ module.exports = exports = defineComponent( {
 		CdxSelect,
 		CdxToggleSwitch,
 		RadioGroup,
+		SegmentedPicker,
 		ThemePicker
 	},
 	setup() {
@@ -162,6 +185,9 @@ module.exports = exports = defineComponent( {
 
 		const values = reactive( {} );
 		const visibilities = reactive( {} );
+		// Which option the pointer is over, per preference. The label-row
+		// readout previews it so a segment can be read before it is chosen.
+		const hovered = reactive( {} );
 
 		const themeDefault = inject( 'themeDefault', 'os' );
 		const themeValue = ref( themeDefault );
@@ -266,6 +292,7 @@ module.exports = exports = defineComponent( {
 
 							const pref = {
 								featureName,
+								variant: prefConfig.variant || '',
 								heading: resolveLabel( prefConfig, 'label' ),
 								description: resolveLabel(
 									prefConfig, 'description'
@@ -290,10 +317,45 @@ module.exports = exports = defineComponent( {
 				} );
 		} );
 
+		function setHovered( featureName, value ) {
+			hovered[ featureName ] = value;
+		}
+
+		/**
+		 * Whether this preference shows its current value in the label row
+		 * instead of spelling every option out beneath it.
+		 *
+		 * @param {Object} pref
+		 * @return {boolean}
+		 */
+		function hasReadout( pref ) {
+			return pref.type === 'segmented';
+		}
+
+		/**
+		 * Label for the preference's current value, or the one being
+		 * hovered while the pointer is over the control.
+		 *
+		 * @param {Object} pref
+		 * @return {string}
+		 */
+		function readout( pref ) {
+			const previewed = hovered[ pref.featureName ];
+			const value = ( previewed === null || previewed === undefined ) ?
+				values[ pref.featureName ] :
+				previewed;
+			const option = pref.options.find( ( opt ) => opt.value === value );
+			return option ? option.label : '';
+		}
+
 		// Fires mw.hook( 'citizen.preferences.changed' ) with ( featureName, value )
 		function setValue( featureName, value ) {
 			clientPrefs.set( featureName, value );
 			values[ featureName ] = value;
+			// Arrow-key navigation moves the selection without firing
+			// mouseenter/leave, so a stale hover would keep overriding the
+			// readout after the choice changed.
+			hovered[ featureName ] = null;
 
 			if ( featureName === 'skin-theme' ) {
 				themeValue.value = value;
@@ -308,6 +370,9 @@ module.exports = exports = defineComponent( {
 			values,
 			visibilities,
 			setValue,
+			setHovered,
+			hasReadout,
+			readout,
 			isV4
 		};
 	}
@@ -350,8 +415,38 @@ module.exports = exports = defineComponent( {
 	display: flex;
 	margin-top: 0;
 
+	&__labelrow {
+		display: flex;
+		gap: var( --space-xs );
+		align-items: baseline;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	&__readout {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: var( --font-size-small );
+		font-weight: var( --font-weight-normal );
+		color: var( --color-subtle );
+		white-space: nowrap;
+	}
+
 	.cdx-label {
 		padding-bottom: var( --space-xs );
+	}
+
+	// Codex's legend shrink-wraps its text, so a label row nested inside it
+	// has nothing to spread the readout against. Widen the chain only where
+	// a readout is actually present.
+	.cdx-label:has( .citizen-preferences-group__labelrow ) {
+		width: 100%;
+
+		.cdx-label__label,
+		.cdx-label__label__text {
+			display: block;
+			width: 100%;
+		}
 	}
 
 	.cdx-label__label__text {

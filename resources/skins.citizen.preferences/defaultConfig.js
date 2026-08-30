@@ -49,9 +49,9 @@ function getDefaultConfig() {
 					{ value: 'large', labelMsg: 'citizen-feature-custom-font-size-large-label' },
 					{ value: 'xlarge', labelMsg: 'citizen-feature-custom-font-size-xlarge-label' }
 				],
-				type: 'select',
+				type: 'segmented',
+				variant: 'font-size',
 				labelMsg: 'citizen-feature-custom-font-size-name',
-				descriptionMsg: 'citizen-feature-custom-font-size-description',
 				visibilityCondition: 'always'
 			},
 			'citizen-feature-custom-width': {
@@ -61,9 +61,9 @@ function getDefaultConfig() {
 					{ value: 'wide', labelMsg: 'citizen-feature-custom-width-wide-label' },
 					{ value: 'full', labelMsg: 'citizen-feature-custom-width-full-label' }
 				],
-				type: 'select',
+				type: 'segmented',
+				variant: 'width',
 				labelMsg: 'citizen-feature-custom-width-name',
-				descriptionMsg: 'citizen-feature-custom-width-description',
 				visibilityCondition: 'always'
 			},
 			// Switch preferences use short-form options (strings).

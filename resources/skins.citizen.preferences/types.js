@@ -23,8 +23,11 @@
  * @property {string} section Key of the section this preference belongs to.
  * @property {Array<string|PreferenceOption>} options Available values.
  *   Short-form strings are normalized to PreferenceOption by normalizeConfig().
- * @property {'switch'|'select'|'radio'} [type] Widget type.
+ * @property {'switch'|'select'|'radio'|'segmented'} [type] Widget type.
  *   Auto-detected if omitted: 2 options = 'switch', 3+ = 'select'.
+ * @property {string} [variant] For segmented type, which glyph set each
+ *   option draws: 'font-size', 'width'. Omitted or unrecognized renders
+ *   the option labels as text.
  * @property {string} [label] Literal heading text.
  * @property {string} [labelMsg] i18n message key for the heading.
  * @property {string} [description] Literal description text.
@@ -67,7 +70,11 @@
  * @typedef {Object} NormalizedPreferenceConfig
  * @property {string} section Key of the section this preference belongs to.
  * @property {PreferenceOption[]} options Normalized option objects.
- * @property {'switch'|'select'|'radio'} type Widget type (always present after normalization).
+ * @property {'switch'|'select'|'radio'|'segmented'} type Widget type
+ *   (always present after normalization).
+ * @property {string} [variant] For segmented type, which glyph set each
+ *   option draws: 'font-size', 'width'. Omitted or unrecognized renders
+ *   the option labels as text.
  * @property {string} [label] Literal heading text.
  * @property {string} [labelMsg] i18n message key for the heading.
  * @property {string} [description] Literal description text.
