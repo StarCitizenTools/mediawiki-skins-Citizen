@@ -1,0 +1,313 @@
+/**
+ * Generates the reference included by docs/src/features/preferences.md, from
+ * the skin's own source so it cannot drift. The output is gitignored and sits
+ * outside `src/`, which would otherwise publish the partial as its own page.
+ */
+
+import { createRequire } from "node:module";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const here = import.meta.filename;
+const repoRoot = resolve(import.meta.dirname, "../..");
+const moduleDir = resolve(repoRoot, "resources/skins.citizen.preferences");
+const outFile = resolve(repoRoot, "docs/generated/built-in-preferences.md");
+
+/** Escapes a table cell; a stray pipe would shift every column after it. */
+function cell(text) {
+	return String(text)
+		.replaceAll(/\s*\r?\n\s*/g, " ")
+		.replaceAll(/\|/g, String.raw`\|`);
+}
+
+/**
+ * Merges two ordered lists, keeping the first list's order.
+ *
+ * @param {string[]} first
+ * @param {string[]} second
+ * @returns {string[]}
+ */
+export function union(first, second) {
+	return [...first, ...second.filter((item) => !first.includes(item))];
+}
+
+/**
+ * Reads the built-in clientpref defaults out of SkinCitizen. They live in a
+ * PHP constant and the docs build has no interpreter, so the constant is
+ * parsed rather than evaluated.
+ *
+ * @param {string} source Contents of includes/SkinCitizen.php.
+ * @returns {Object<string, string>} Feature name to default value.
+ * @throws {Error} When the constant is gone or yields nothing.
+ */
+export function parseClientPrefDefaults(source) {
+	const block = /private const DEFAULT_CLIENT_PREFS = \[([\s\S]*?)];/.exec(source);
+	if (!block) {
+		throw new Error(
+			"SkinCitizen::DEFAULT_CLIENT_PREFS is gone; the reference cannot list defaults",
+		);
+	}
+
+	const defaults = Object.fromEntries(
+		[...block[1].matchAll(/'([^']+)'\s*=>\s*'([^']*)'/g)].map(([, key, value]) => [key, value]),
+	);
+	if (Object.keys(defaults).length === 0) {
+		throw new Error("SkinCitizen::DEFAULT_CLIENT_PREFS parsed to no entries");
+	}
+	return defaults;
+}
+
+/**
+ * Rows describing one entry across both release channels — two of them when
+ * the channels render it differently, so a difference is never shown as
+ * sameness.
+ *
+ * @param {Object} [stable] Rendered fields, if the stable channel has it.
+ * @param {Object} [preview] Rendered fields, if the preview channel has it.
+ * @returns {{ fields: Object, channel: string }[]}
+ */
+export function channelRows(stable, preview) {
+	if (!stable) {
+		return [{ fields: preview, channel: "Preview only" }];
+	}
+	if (!preview) {
+		return [{ fields: stable, channel: "Stable only" }];
+	}
+	if (JSON.stringify(stable) === JSON.stringify(preview)) {
+		return [{ fields: stable, channel: "—" }];
+	}
+	return [
+		{ fields: stable, channel: "Stable" },
+		{ fields: preview, channel: "Preview" },
+	];
+}
+
+/**
+ * Builds the reference markdown.
+ *
+ * @param {{ stable: Object, preview: Object }} channels Normalized configs.
+ * @param {Object<string, string>} messages Contents of i18n/en.json.
+ * @param {Object<string, string>} defaults Built-in clientpref defaults.
+ * @returns {string} Markdown, without a trailing newline.
+ * @throws {Error} On an unresolvable label, a preference that changes section
+ *   between channels, or a preference and its default going out of step.
+ */
+export function buildReference(channels, messages, defaults) {
+	const missing = new Set();
+
+	const label = (item) => {
+		if (item.label) {
+			return item.label;
+		}
+		if (!item.labelMsg) {
+			return "—";
+		}
+		if (!(item.labelMsg in messages)) {
+			missing.add(item.labelMsg);
+			return item.labelMsg;
+		}
+		return messages[item.labelMsg];
+	};
+
+	const prefKeys = union(
+		Object.keys(channels.stable.preferences),
+		Object.keys(channels.preview.preferences),
+	);
+	const sectionKeys = union(
+		Object.keys(channels.stable.sections),
+		Object.keys(channels.preview.sections),
+	);
+
+	const sectionOf = (key) => {
+		const stable = channels.stable.preferences[key];
+		const preview = channels.preview.preferences[key];
+		if (stable && preview && stable.section !== preview.section) {
+			throw new Error(
+				`\`${key}\` is in section \`${stable.section}\` on the stable channel but ` +
+					`\`${preview.section}\` on the preview channel; the reference cannot show that.`,
+			);
+		}
+		return (stable ?? preview).section;
+	};
+
+	// A preference the server has no default for gets no clientpref class on
+	// the first paint, so the two lists have to stay in step.
+	for (const key of prefKeys) {
+		if (!(key in defaults)) {
+			throw new Error(`\`${key}\` has no entry in SkinCitizen::DEFAULT_CLIENT_PREFS`);
+		}
+	}
+	for (const key of Object.keys(defaults)) {
+		if (!prefKeys.includes(key)) {
+			throw new Error(
+				`SkinCitizen::DEFAULT_CLIENT_PREFS lists \`${key}\`, which is not a preference`,
+			);
+		}
+	}
+
+	const lines = [
+		"<!-- Generated by docs/scripts/generate-preferences-reference.js. Do not edit. -->",
+		"",
+	];
+
+	for (const sectionKey of sectionKeys) {
+		const keys = prefKeys.filter((key) => sectionOf(key) === sectionKey);
+		if (keys.length === 0) {
+			continue;
+		}
+
+		// A heading cannot carry two values, so a divergent one is spelled out.
+		const stableSection = channels.stable.sections[sectionKey];
+		const previewSection = channels.preview.sections[sectionKey];
+		const names = channelRows(
+			stableSection ? { name: label(stableSection) } : undefined,
+			previewSection ? { name: label(previewSection) } : undefined,
+		);
+		const heading =
+			names.length === 1
+				? names[0].fields.name
+				: `${names[0].fields.name} (${names[1].fields.name} on the preview channel)`;
+
+		lines.push(
+			`### \`${sectionKey}\` — ${heading}`,
+			"",
+			"| Preference | Label | Widget | Default | Visible | Channel |",
+			"| :--- | :--- | :--- | :--- | :--- | :--- |",
+		);
+
+		for (const key of keys) {
+			const fields = (pref) =>
+				pref
+					? {
+							label: label(pref),
+							type: pref.type,
+							default: defaults[key],
+							visibility: pref.visibilityCondition ?? "always",
+						}
+					: undefined;
+
+			for (const row of channelRows(
+				fields(channels.stable.preferences[key]),
+				fields(channels.preview.preferences[key]),
+			)) {
+				lines.push(
+					`| \`${cell(key)}\` | ${cell(row.fields.label)} | \`${cell(row.fields.type)}\` | ` +
+						`\`${cell(row.fields.default)}\` | \`${cell(row.fields.visibility)}\` | ${row.channel} |`,
+				);
+			}
+		}
+		lines.push("");
+	}
+
+	lines.push(
+		"### Option values",
+		"",
+		"Overriding `options` replaces the whole array, so an override that keeps",
+		"existing choices has to restate them — these are the values and message",
+		"keys to restate. Preferences whose options carry no label message are left",
+		'out: the built-in on/off switches all take `["0", "1"]`.',
+		"",
+		"| Preference | Value | Label message | Channel |",
+		"| :--- | :--- | :--- | :--- |",
+	);
+
+	for (const key of prefKeys) {
+		const stableOptions = channels.stable.preferences[key]?.options ?? [];
+		const previewOptions = channels.preview.preferences[key]?.options ?? [];
+
+		// Unlabelled options carry no vocabulary to look up.
+		const labelled = [...stableOptions, ...previewOptions].some(
+			(option) => option.labelMsg || option.label,
+		);
+		if (!labelled) {
+			continue;
+		}
+
+		const values = union(
+			stableOptions.map((option) => option.value),
+			previewOptions.map((option) => option.value),
+		);
+
+		for (const value of values) {
+			const fields = (options) => {
+				const option = options.find((candidate) => candidate.value === value);
+				return option
+					? { message: option.labelMsg ? `\`${cell(option.labelMsg)}\`` : "—" }
+					: undefined;
+			};
+
+			for (const row of channelRows(fields(stableOptions), fields(previewOptions))) {
+				lines.push(
+					`| \`${cell(key)}\` | \`${cell(value)}\` | ${row.fields.message} | ${row.channel} |`,
+				);
+			}
+		}
+	}
+
+	if (missing.size > 0) {
+		throw new Error(
+			`no i18n/en.json entry for ${[...missing].join(", ")} — the panel would ` +
+				"render these as ⧼key⧽, so the reference will not be written.",
+		);
+	}
+
+	return lines.join("\n");
+}
+
+/**
+ * Builds the reference and writes it to disk.
+ *
+ * @returns {string} Path written.
+ * @throws {Error} Rather than emit a table it cannot vouch for.
+ */
+export function writeReference() {
+	const require = createRequire(here);
+	const getDefaultConfig = require(resolve(moduleDir, "defaultConfig.js"));
+	const { normalizeConfig } = require(resolve(moduleDir, "configRegistry.js"));
+	const messages = JSON.parse(readFileSync(resolve(repoRoot, "i18n/en.json"), "utf8"));
+	const defaults = parseClientPrefDefaults(
+		readFileSync(resolve(repoRoot, "includes/SkinCitizen.php"), "utf8"),
+	);
+	const channels = {
+		stable: normalizeConfig(getDefaultConfig(false)),
+		preview: normalizeConfig(getDefaultConfig(true)),
+	};
+
+	for (const [name, config] of Object.entries(channels)) {
+		if (Object.keys(config.preferences ?? {}).length === 0) {
+			throw new Error(
+				`the ${name} default config has no preferences — has its shape changed?`,
+			);
+		}
+	}
+
+	mkdirSync(dirname(outFile), { recursive: true });
+	writeFileSync(outFile, `${buildReference(channels, messages, defaults)}\n`, "utf8");
+	return outFile;
+}
+
+/**
+ * Regenerates the reference whenever VitePress starts a dev server or a
+ * build, so it cannot be served stale and no npm script has to remember it.
+ *
+ * @returns {{ name: string, buildStart: () => void }}
+ */
+export function preferencesReferencePlugin() {
+	return {
+		name: "citizen:preferences-reference",
+		buildStart() {
+			writeReference();
+		},
+	};
+}
+
+// Also runnable on its own, to regenerate without starting VitePress.
+if (process.argv[1] && resolve(process.argv[1]) === here) {
+	try {
+		console.log(`generate-preferences-reference: wrote ${writeReference()}`);
+	} catch (error) {
+		console.error(`generate-preferences-reference: ${error.message}`);
+		process.exit(1);
+	}
+}

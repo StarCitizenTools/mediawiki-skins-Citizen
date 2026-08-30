@@ -35,7 +35,7 @@ $wgCitizenHeaderPositionMobile = 'bottom';
 ### `$wgCitizenThemeDefault`
 
 ::: warning Deprecated
-Set the default with the `skin-theme` preference's [`default` field](../features/preferences.md#setting-defaults) in `MediaWiki:Citizen-preferences.json` instead. This config keeps working until Citizen 4 as a fallback — the JSON value wins when both are set.
+Set the default with the `skin-theme` preference's [`default` field](../features/preferences.md#defaults) in `MediaWiki:Citizen-preferences.json` instead. This config keeps working until Citizen 4 as a fallback — the JSON value wins when both are set.
 :::
 
 Sets the default color theme for new visitors.

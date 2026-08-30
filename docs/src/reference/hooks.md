@@ -13,7 +13,7 @@ Citizen fires several [`mw.hook`](https://doc.wikimedia.org/mediawiki-core/maste
 | :--- | :--- | :--- |
 | `citizen.commandPalette.register` | `{ register }` | Register custom modes and commands in the [command palette](/features/command-palette#extending-the-command-palette). `register( entry )` accepts a mode or command object. |
 | `citizen.preferences.register` | `register` | Register custom sections and preferences in the [preferences panel](/features/preferences#javascript-api). `register( config )` accepts a config object with `sections` and `preferences`. |
-| `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/features/preferences#listening-for-changes) in real time. |
+| `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/features/preferences#reacting-to-a-preference) in real time. |
 
 ## Usage pattern
 
