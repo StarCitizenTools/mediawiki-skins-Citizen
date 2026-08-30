@@ -269,13 +269,21 @@ describe( 'App', () => {
 			expect( radioGroups ).toHaveLength( 1 );
 		} );
 
-		it( 'should render CdxSelect for select-type preferences', () => {
+		it( 'should render SegmentedPicker for segmented-type preferences', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES );
+
+			const pickers = wrapper.findAllComponents( { name: 'SegmentedPicker' } );
+
+			// custom-font-size and custom-width are the two segmented types
+			expect( pickers ).toHaveLength( 2 );
+		} );
+
+		it( 'should render no CdxSelect now that nothing built in is a select', () => {
 			const wrapper = mountApp( ALL_PREF_CLASSES );
 
 			const selects = wrapper.findAllComponents( { name: 'CdxSelect' } );
 
-			// custom-font-size, custom-width are select types
-			expect( selects ).toHaveLength( 2 );
+			expect( selects ).toHaveLength( 0 );
 		} );
 	} );
 
@@ -395,13 +403,12 @@ describe( 'App', () => {
 			const wrapper = mountApp( classes );
 
 			const themeGroup = wrapper.findComponent( { name: 'RadioGroup' } );
-			const fontSelects = wrapper.findAllComponents( { name: 'CdxSelect' } );
-			const fontSelect = fontSelects.find(
-				( c ) => c.props( 'selected' ) === 'large'
+			const fontPicker = wrapper.findAllComponents( { name: 'SegmentedPicker' } ).find(
+				( c ) => c.props( 'featureName' ) === 'citizen-feature-custom-font-size'
 			);
 
 			expect( themeGroup.props( 'modelValue' ) ).toBe( 'night' );
-			expect( fontSelect ).toBeTruthy();
+			expect( fontPicker.props( 'modelValue' ) ).toBe( 'large' );
 		} );
 	} );
 
