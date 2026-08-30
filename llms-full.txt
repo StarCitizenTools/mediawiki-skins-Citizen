@@ -1444,7 +1444,8 @@ Each preference is keyed by its feature name.
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `section` | string | Which section this preference belongs to. |
-| `type` | string | `"switch"`, `"select"`, or `"radio"`. Switch and select are auto-detected from the option count (2 options = switch, 3+ = select); `"radio"` must be set explicitly. |
+| `type` | string | Which widget renders the options. See [Widget types](#widget-types). |
+| `variant` | string | For segmented type, the glyph each option draws instead of its label. See [Widget types](#widget-types). |
 | `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. Long-form options also accept `"label"` for literal text instead of an i18n key. |
 | `labelMsg` / `label` | string | i18n message key or literal text for the preference name. |
 | `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
@@ -1452,6 +1453,25 @@ Each preference is keyed by its feature name.
 | `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
 | `default` | string | The value that applies when the user hasn't made a choice. Must be one of the `options` values, letters and numbers only. For preferences defined on-wiki this is applied to every page by the server; for preferences registered through the JavaScript API it sets the panel's initial selection. See [Setting defaults](#setting-defaults). |
 | `hidden` | boolean | Set `true` to remove the preference from the panel while keeping it active — for preferences defined on-wiki, its `default` still applies site-wide. Use together with `default` to force a value. Sections whose preferences are all hidden disappear automatically. |
+
+### Widget types
+
+| Type | Renders as | Best for |
+| :--- | :--- | :--- |
+| `switch` | A toggle | On/off settings. |
+| `select` | A dropdown | Long option lists, or labels too long to show side by side. |
+| `radio` | A grid of cards | A few options that each need a visible label. `columns` sets the grid width. |
+| `segmented` | One connected track | An ordered scale, where the filled segment also shows where the current value sits. |
+
+`switch` and `select` are auto-detected from the option count — 2 options gives
+a switch, 3 or more a select. `radio` and `segmented` must be set explicitly.
+
+Keep labels short for `segmented`: a segment is a third to a quarter of the
+panel's width, and the current one is shown beside the preference's heading. The
+built-in Text and Width preferences add `variant` (`"font-size"` or `"width"`)
+to draw a glyph per segment instead of a label, sized by an option's position in
+the list, so a trimmed or extended `options` array still renders in order. Set
+`"type": "select"` on either to get the dropdown back.
 
 ### `label` vs `labelMsg`
 
@@ -2759,77 +2779,7 @@ url: /changelogs/v1.13.0.md
 ---
 
 ---
-url: /changelogs/v1.15.0.md
----
-
-
----
-
----
-url: /changelogs/v1.10.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.0.md
----
-
-
----
-
----
-url: /changelogs/v2.23.0.md
----
-
-
----
-
----
-url: /changelogs/v1.16.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.2.md
----
-
-
----
-
----
-url: /changelogs/v1.17.4.md
----
-
-
----
-
----
-url: /changelogs/v1.16.0.md
----
-
-
----
-
----
-url: /changelogs/v1.14.1.md
----
-
-
----
-
----
-url: /changelogs/v1.14.0.md
+url: /changelogs/v1.17.6.md
 ---
 
 
@@ -2843,6 +2793,41 @@ url: /changelogs/v1.17.3.md
 ---
 
 ---
+url: /changelogs/v1.10.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.1.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.15.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v1.17.5.md
 ---
 
@@ -2850,7 +2835,7 @@ url: /changelogs/v1.17.5.md
 ---
 
 ---
-url: /changelogs/v1.17.6.md
+url: /changelogs/v1.16.0.md
 ---
 
 
@@ -2864,7 +2849,35 @@ url: /changelogs/v1.17.7.md
 ---
 
 ---
+url: /changelogs/v1.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v1.17.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.1.md
 ---
 
 
@@ -2878,7 +2891,7 @@ url: /changelogs/v1.9.4.md
 ---
 
 ---
-url: /changelogs/v1.17.8.md
+url: /changelogs/v1.17.2.md
 ---
 
 
@@ -2899,7 +2912,7 @@ url: /changelogs/v2.0.0-alpha.1.md
 ---
 
 ---
-url: /changelogs/v2.0.0-alpha.2.md
+url: /changelogs/v2.0.0-beta.3.md
 ---
 
 
@@ -2913,27 +2926,6 @@ url: /changelogs/v2.0.0-beta.0.md
 ---
 
 ---
-url: /changelogs/v2.0.0-beta.1.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.3.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.2.md
----
-
-
----
-
----
 url: /changelogs/v2.0.0-beta.4.md
 ---
 
@@ -2941,7 +2933,7 @@ url: /changelogs/v2.0.0-beta.4.md
 ---
 
 ---
-url: /changelogs/v2.0.1.md
+url: /changelogs/v2.0.0-alpha.2.md
 ---
 
 
@@ -2955,7 +2947,35 @@ url: /changelogs/v2.0.0.md
 ---
 
 ---
-url: /changelogs/v2.1.0.md
+url: /changelogs/v2.0.0-beta.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.10.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.15.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.1.md
 ---
 
 
@@ -2970,13 +2990,6 @@ url: /changelogs/v2.10.0.md
 
 ---
 url: /changelogs/v2.11.0.md
----
-
-
----
-
----
-url: /changelogs/v2.10.1.md
 ---
 
 
@@ -3018,21 +3031,7 @@ url: /changelogs/v2.13.2.md
 ---
 
 ---
-url: /changelogs/v2.13.4.md
----
-
-
----
-
----
 url: /changelogs/v2.13.3.md
----
-
-
----
-
----
-url: /changelogs/v2.14.0.md
 ---
 
 
@@ -3046,6 +3045,27 @@ url: /changelogs/v2.13.5.md
 ---
 
 ---
+url: /changelogs/v1.14.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.14.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.14.1.md
 ---
 
@@ -3053,14 +3073,14 @@ url: /changelogs/v2.14.1.md
 ---
 
 ---
+url: /changelogs/v2.26.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.15.0.md
----
-
-
----
-
----
-url: /changelogs/v2.15.1.md
 ---
 
 
@@ -3102,13 +3122,6 @@ url: /changelogs/v2.17.2.md
 ---
 
 ---
-url: /changelogs/v2.18.0.md
----
-
-
----
-
----
 url: /changelogs/v2.18.1.md
 ---
 
@@ -3117,6 +3130,13 @@ url: /changelogs/v2.18.1.md
 
 ---
 url: /changelogs/v2.19.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.18.0.md
 ---
 
 
@@ -3144,14 +3164,14 @@ url: /changelogs/v2.21.0.md
 ---
 
 ---
-url: /changelogs/v2.22.1.md
+url: /changelogs/v2.22.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.4.2.md
+url: /changelogs/v2.23.0.md
 ---
 
 
@@ -3165,6 +3185,13 @@ url: /changelogs/v2.24.0.md
 ---
 
 ---
+url: /changelogs/v2.22.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.25.0.md
 ---
 
@@ -3172,7 +3199,7 @@ url: /changelogs/v2.25.0.md
 ---
 
 ---
-url: /changelogs/v2.26.0.md
+url: /changelogs/v2.38.2.md
 ---
 
 
@@ -3180,13 +3207,6 @@ url: /changelogs/v2.26.0.md
 
 ---
 url: /changelogs/v2.27.0.md
----
-
-
----
-
----
-url: /changelogs/v2.22.0.md
 ---
 
 
@@ -3221,6 +3241,13 @@ url: /changelogs/v2.3.2.md
 ---
 
 ---
+url: /changelogs/v2.3.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.3.3.md
 ---
 
@@ -3228,7 +3255,7 @@ url: /changelogs/v2.3.3.md
 ---
 
 ---
-url: /changelogs/v2.3.1.md
+url: /changelogs/v2.3.4.md
 ---
 
 
@@ -3242,7 +3269,7 @@ url: /changelogs/v2.3.5.md
 ---
 
 ---
-url: /changelogs/v2.3.4.md
+url: /changelogs/v2.3.6.md
 ---
 
 
@@ -3270,13 +3297,6 @@ url: /changelogs/v2.32.0.md
 ---
 
 ---
-url: /changelogs/v2.3.6.md
----
-
-
----
-
----
 url: /changelogs/v2.33.0.md
 ---
 
@@ -3285,13 +3305,6 @@ url: /changelogs/v2.33.0.md
 
 ---
 url: /changelogs/v2.34.0.md
----
-
-
----
-
----
-url: /changelogs/v2.35.0.md
 ---
 
 
@@ -3312,6 +3325,13 @@ url: /changelogs/v2.37.0.md
 ---
 
 ---
+url: /changelogs/v2.35.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.38.0.md
 ---
 
@@ -3326,7 +3346,7 @@ url: /changelogs/v2.38.1.md
 ---
 
 ---
-url: /changelogs/v2.38.3.md
+url: /changelogs/v2.40.2.md
 ---
 
 
@@ -3340,7 +3360,7 @@ url: /changelogs/v2.39.0.md
 ---
 
 ---
-url: /changelogs/v2.38.2.md
+url: /changelogs/v2.38.3.md
 ---
 
 
@@ -3382,6 +3402,13 @@ url: /changelogs/v2.4.0.md
 ---
 
 ---
+url: /changelogs/v2.4.2.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.4.1.md
 ---
 
@@ -3389,7 +3416,7 @@ url: /changelogs/v2.4.1.md
 ---
 
 ---
-url: /changelogs/v2.7.0.md
+url: /changelogs/v2.4.4.md
 ---
 
 
@@ -3397,13 +3424,6 @@ url: /changelogs/v2.7.0.md
 
 ---
 url: /changelogs/v2.4.3.md
----
-
-
----
-
----
-url: /changelogs/v2.4.4.md
 ---
 
 
@@ -3424,14 +3444,14 @@ url: /changelogs/v2.40.1.md
 ---
 
 ---
-url: /changelogs/v2.40.2.md
+url: /changelogs/v2.5.2.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.5.0.md
+url: /changelogs/v2.6.3.md
 ---
 
 
@@ -3445,7 +3465,7 @@ url: /changelogs/v2.5.1.md
 ---
 
 ---
-url: /changelogs/v2.5.2.md
+url: /changelogs/v2.5.0.md
 ---
 
 
@@ -3473,42 +3493,7 @@ url: /changelogs/v2.6.2.md
 ---
 
 ---
-url: /changelogs/v2.6.4.md
----
-
-
----
-
----
-url: /changelogs/v2.6.3.md
----
-
-
----
-
----
-url: /changelogs/v2.6.5.md
----
-
-
----
-
----
 url: /changelogs/v2.6.6.md
----
-
-
----
-
----
-url: /changelogs/v2.8.5.md
----
-
-
----
-
----
-url: /changelogs/v2.7.10.md
 ---
 
 
@@ -3522,7 +3507,35 @@ url: /changelogs/v2.7.1.md
 ---
 
 ---
-url: /changelogs/v2.7.11.md
+url: /changelogs/v2.6.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.10.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.0.md
 ---
 
 
@@ -3530,6 +3543,13 @@ url: /changelogs/v2.7.11.md
 
 ---
 url: /changelogs/v2.7.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.11.md
 ---
 
 
@@ -3551,6 +3571,13 @@ url: /changelogs/v2.7.4.md
 
 ---
 url: /changelogs/v2.7.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.1.0.md
 ---
 
 
@@ -3585,21 +3612,7 @@ url: /changelogs/v2.7.9.md
 ---
 
 ---
-url: /changelogs/v2.8.0.md
----
-
-
----
-
----
 url: /changelogs/v2.8.1.md
----
-
-
----
-
----
-url: /changelogs/v2.8.3.md
 ---
 
 
@@ -3613,14 +3626,7 @@ url: /changelogs/v2.8.2.md
 ---
 
 ---
-url: /changelogs/v2.8.4.md
----
-
-
----
-
----
-url: /changelogs/v3.2.0.md
+url: /changelogs/v2.8.5.md
 ---
 
 
@@ -3634,6 +3640,20 @@ url: /changelogs/v2.9.0.md
 ---
 
 ---
+url: /changelogs/v2.8.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.4.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.9.1.md
 ---
 
@@ -3641,35 +3661,14 @@ url: /changelogs/v2.9.1.md
 ---
 
 ---
+url: /changelogs/v3.16.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.0.0.md
----
-
-
----
-
----
-url: /changelogs/v3.1.0.md
----
-
-
----
-
----
-url: /changelogs/v3.10.0.md
----
-
-
----
-
----
-url: /changelogs/v3.11.0.md
----
-
-
----
-
----
-url: /changelogs/v3.12.0.md
 ---
 
 
@@ -3690,7 +3689,14 @@ url: /changelogs/v3.14.0.md
 ---
 
 ---
-url: /changelogs/v3.15.1.md
+url: /changelogs/v3.11.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.10.0.md
 ---
 
 
@@ -3704,49 +3710,14 @@ url: /changelogs/v3.15.0.md
 ---
 
 ---
-url: /changelogs/v3.16.0.md
+url: /changelogs/v3.12.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.17.0.md
----
-
-
----
-
----
-url: /changelogs/v3.16.1.md
----
-
-
----
-
----
-url: /changelogs/v3.17.1.md
----
-
-
----
-
----
-url: /changelogs/v3.18.0.md
----
-
-
----
-
----
-url: /changelogs/v3.19.0.md
----
-
-
----
-
----
-url: /changelogs/v3.20.0.md
+url: /changelogs/v3.15.1.md
 ---
 
 
@@ -3767,7 +3738,21 @@ url: /changelogs/v3.3.0.md
 ---
 
 ---
+url: /changelogs/v3.4.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.3.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.16.1.md
 ---
 
 
@@ -3781,14 +3766,49 @@ url: /changelogs/v3.3.2.md
 ---
 
 ---
+url: /changelogs/v3.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.19.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.2.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.18.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.20.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.5.0.md
----
-
-
----
-
----
-url: /changelogs/v3.4.0.md
 ---
 
 

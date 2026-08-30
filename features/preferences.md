@@ -79,7 +79,8 @@ Each preference is keyed by its feature name.
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `section` | string | Which section this preference belongs to. |
-| `type` | string | `"switch"`, `"select"`, or `"radio"`. Switch and select are auto-detected from the option count (2 options = switch, 3+ = select); `"radio"` must be set explicitly. |
+| `type` | string | Which widget renders the options. See [Widget types](#widget-types). |
+| `variant` | string | For segmented type, the glyph each option draws instead of its label. See [Widget types](#widget-types). |
 | `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. Long-form options also accept `"label"` for literal text instead of an i18n key. |
 | `labelMsg` / `label` | string | i18n message key or literal text for the preference name. |
 | `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
@@ -87,6 +88,25 @@ Each preference is keyed by its feature name.
 | `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
 | `default` | string | The value that applies when the user hasn't made a choice. Must be one of the `options` values, letters and numbers only. For preferences defined on-wiki this is applied to every page by the server; for preferences registered through the JavaScript API it sets the panel's initial selection. See [Setting defaults](#setting-defaults). |
 | `hidden` | boolean | Set `true` to remove the preference from the panel while keeping it active — for preferences defined on-wiki, its `default` still applies site-wide. Use together with `default` to force a value. Sections whose preferences are all hidden disappear automatically. |
+
+### Widget types
+
+| Type | Renders as | Best for |
+| :--- | :--- | :--- |
+| `switch` | A toggle | On/off settings. |
+| `select` | A dropdown | Long option lists, or labels too long to show side by side. |
+| `radio` | A grid of cards | A few options that each need a visible label. `columns` sets the grid width. |
+| `segmented` | One connected track | An ordered scale, where the filled segment also shows where the current value sits. |
+
+`switch` and `select` are auto-detected from the option count — 2 options gives
+a switch, 3 or more a select. `radio` and `segmented` must be set explicitly.
+
+Keep labels short for `segmented`: a segment is a third to a quarter of the
+panel's width, and the current one is shown beside the preference's heading. The
+built-in Text and Width preferences add `variant` (`"font-size"` or `"width"`)
+to draw a glyph per segment instead of a label, sized by an option's position in
+the list, so a trimmed or extended `options` array still renders in order. Set
+`"type": "select"` on either to get the dropdown back.
 
 ### `label` vs `labelMsg`
 
