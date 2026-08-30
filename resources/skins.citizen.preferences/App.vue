@@ -81,6 +81,7 @@
 							:options="pref.options"
 							:feature-name="pref.featureName"
 							@update:model-value="setValue( pref.featureName, $event )"
+							@update:hovered="setHovered( pref.featureName, $event )"
 						></theme-picker>
 						<radio-group
 							v-else
@@ -323,13 +324,16 @@ module.exports = exports = defineComponent( {
 
 		/**
 		 * Whether this preference shows its current value in the label row
-		 * instead of spelling every option out beneath it.
+		 * instead of spelling every option out beneath it. Every control in
+		 * Appearance that draws its options as glyphs reports the current one
+		 * this way.
 		 *
 		 * @param {Object} pref
 		 * @return {boolean}
 		 */
 		function hasReadout( pref ) {
-			return pref.type === 'segmented';
+			return pref.type === 'segmented' ||
+				( pref.featureName === 'skin-theme' && isV4 );
 		}
 
 		/**

@@ -110,35 +110,20 @@ describe( 'ThemePicker', () => {
 		expect( labels.map( ( l ) => l.text() ) ).toEqual( [ 'Auto', 'Light', 'Dark', 'Black' ] );
 	} );
 
-	it( 'readout shows the selected theme by default', () => {
-		const wrapper = mountThemePicker( { modelValue: 'night' } );
-
-		const readout = wrapper.find( '.citizen-preferences-themepicker__readout' );
-		expect( readout.text() ).toBe( 'Dark' );
-	} );
-
-	it( 'readout previews a theme on hover and reverts on mouseleave', async () => {
+	it( 'emits the hovered theme so the label row can preview it', async () => {
 		const wrapper = mountThemePicker( { modelValue: 'os' } );
-		const readout = wrapper.find( '.citizen-preferences-themepicker__readout' );
-
-		expect( readout.text() ).toBe( 'Auto' );
 
 		await wrapper.findAllComponents( { name: 'CdxRadio' } )[ 3 ].trigger( 'mouseenter' );
-		expect( readout.text() ).toBe( 'Black' );
+
+		expect( wrapper.emitted( 'update:hovered' ) ).toEqual( [ [ 'black' ] ] );
+	} );
+
+	it( 'emits null when the pointer leaves the grid', async () => {
+		const wrapper = mountThemePicker( { modelValue: 'os' } );
 
 		await wrapper.find( '.citizen-preferences-themepicker__grid' ).trigger( 'mouseleave' );
-		expect( readout.text() ).toBe( 'Auto' );
-	} );
 
-	it( 'readout follows a selection change made while hovering (keyboard)', async () => {
-		const wrapper = mountThemePicker(); // modelValue 'os' -> 'Auto'
-		const readout = wrapper.find( '.citizen-preferences-themepicker__readout' );
-
-		await wrapper.findAllComponents( { name: 'CdxRadio' } )[ 3 ].trigger( 'mouseenter' );
-		expect( readout.text() ).toBe( 'Black' );
-
-		await wrapper.setProps( { modelValue: 'day' } );
-		expect( readout.text() ).toBe( 'Light' );
+		expect( wrapper.emitted( 'update:hovered' ) ).toEqual( [ [ null ] ] );
 	} );
 
 	it( 'emits update:modelValue when a radio changes', () => {
