@@ -3,6 +3,7 @@ import { routex } from "@itznotabug/routex";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import llmstxt, { copyOrDownloadAsMarkdownButtons } from "vitepress-plugin-llms";
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
+import { preferencesReferencePlugin } from "../scripts/generate-preferences-reference.js";
 
 const BASE_URL = process.env.BASE_URL ?? "/",
 	SITE_ORIGIN = process.env.SITE_ORIGIN ?? "https://mwcitizen.skin";
@@ -235,6 +236,7 @@ export default defineConfig({
 	},
 	vite: {
 		plugins: [
+			preferencesReferencePlugin(),
 			groupIconVitePlugin(),
 			llmstxt(),
 			routex({

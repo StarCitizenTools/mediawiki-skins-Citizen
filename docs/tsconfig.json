@@ -3,6 +3,7 @@
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "bundler",
+		"allowJs": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
@@ -19,5 +20,6 @@
 		"src/**/*.vue",
 		".vitepress/**/*.ts",
 		".vitepress/**/*.vue",
+		"scripts/**/*.js",
 	]
 }

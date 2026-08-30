@@ -3,8 +3,13 @@ name: 📚 Docs deploy
 on:
   push:
     branches: [main]
+    # The built-in preferences reference is generated from these at build
+    # time, so a change to one of them makes the published docs stale.
     paths:
       - "docs/**"
+      - "resources/skins.citizen.preferences/**"
+      - "includes/SkinCitizen.php"
+      - "i18n/en.json"
   release:
     types: [published]
   workflow_dispatch:
