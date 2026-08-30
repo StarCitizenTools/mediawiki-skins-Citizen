@@ -5,7 +5,7 @@
 	>
 		<div
 			class="citizen-preferences-themepicker__grid"
-			@mouseleave="hovered = null"
+			@mouseleave="$emit( 'update:hovered', null )"
 		>
 			<cdx-radio
 				v-for="option in options"
@@ -14,7 +14,7 @@
 				:input-value="option.value"
 				:name="featureName"
 				@update:model-value="$emit( 'update:modelValue', $event )"
-				@mouseenter="hovered = option.value"
+				@mouseenter="$emit( 'update:hovered', option.value )"
 			>
 				<span
 					class="citizen-preferences-themecircle citizen-theme-preview"
@@ -25,17 +25,11 @@
 				<span class="citizen-preferences-themepicker__srlabel">{{ option.label }}</span>
 			</cdx-radio>
 		</div>
-		<div
-			class="citizen-preferences-themepicker__readout"
-			aria-hidden="true"
-		>
-			{{ readoutLabel }}
-		</div>
 	</div>
 </template>
 
 <script>
-const { defineComponent, ref, computed, watch, onMounted } = require( 'vue' );
+const { defineComponent, ref, onMounted } = require( 'vue' );
 const { CdxRadio } = require( '../../codex.js' );
 const { measureIdentityBaseline } = require( './themePreviewBaseline.js' );
 
@@ -48,21 +42,9 @@ module.exports = exports = defineComponent( {
 		options: { type: Array, required: true },
 		featureName: { type: String, required: true }
 	},
-	emits: [ 'update:modelValue' ],
-	setup( props ) {
+	emits: [ 'update:modelValue', 'update:hovered' ],
+	setup() {
 		const rootEl = ref( null );
-		const hovered = ref( null );
-		// A selection change (including keyboard arrow-key navigation, which
-		// doesn't fire mouseenter/leave) must win over a stuck hover so the
-		// readout always reflects the current choice.
-		watch( () => props.modelValue, () => {
-			hovered.value = null;
-		} );
-		const readoutLabel = computed( () => {
-			const value = hovered.value !== null ? hovered.value : props.modelValue;
-			const option = props.options.find( ( o ) => o.value === value );
-			return option ? option.label : '';
-		} );
 		// Publish the wiki's identity-knob baseline (defaults plus any
 		// admin rebrand at :root) on the picker root: the circles'
 		// theme-preview scope (themePreview.less) declares its knobs as
@@ -77,7 +59,7 @@ module.exports = exports = defineComponent( {
 				);
 			}
 		} );
-		return { rootEl, hovered, readoutLabel };
+		return { rootEl };
 	}
 } );
 </script>
@@ -165,13 +147,6 @@ module.exports = exports = defineComponent( {
 	// has an accessible name even though no label is shown.
 	&__srlabel {
 		.mixin-citizen-screen-reader-only();
-	}
-
-	&__readout {
-		min-height: 1.25em;
-		margin-top: var( --space-sm );
-		font-size: var( --font-size-small );
-		color: var( --color-subtle );
 	}
 }
 
