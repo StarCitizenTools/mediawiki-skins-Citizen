@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@itznotabug/routex": "^0.0.5",
 		"@octokit/rest": "^22.0.1",
-		"@octokit/types": "^17.0.0",
+		"@octokit/types": "^18.0.0",
 		"@types/node": "^26.4.0",
 		"@vitejs/plugin-vue": "^6.0.8",
 		"@vue/test-utils": "^2.5.0",
