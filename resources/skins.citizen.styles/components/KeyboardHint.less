@@ -12,12 +12,35 @@
 		color: var( --color-base );
 	}
 
+	// Of the nine glyphs these hints emit (↑ ↓ ← → ↵ ⌫ ⇧ ⌃ ⌥) the bundled
+	// Roboto subsets carry only ↑ and ↓; the rest fall through to the OS
+	// sans-serif, so one hint is routinely drawn by two typefaces at different
+	// widths and weights. The fixed box is what holds them to an even rhythm —
+	// min-width, centring and the em padding are load-bearing, not decoration.
+	// Sizes are in em so a cap tracks whatever font-size its context sets. Note
+	// that the reader font-size preference is not that: features.less scopes
+	// .cdx-mode-*() to .citizen-body, which neither the dropdowns nor the
+	// command palette footer are inside.
 	&-key {
+		display: inline-block;
+		flex: none;
+		min-width: 1.7em;
+		padding: 0.1em 0.4em;
 		font-family: var( --font-family-base );
 		font-weight: var( --font-weight-medium );
+		line-height: 1.4;
 		color: var( --color-subtle );
+		text-align: center;
 		// stylelint-disable-next-line declaration-property-value-disallowed-list
 		text-transform: capitalize;
+		background-color: var( --background-color-interactive-subtle );
+		// Width is spelled out because the skin resets `border: 0` on every
+		// element, so a colour-only rule would paint nothing.
+		border: var( --border-width-base ) solid var( --border-color-base );
+		border-radius: var( --border-radius-base );
+		// A hard bottom edge rather than a blurred drop shadow — at 12px a blur
+		// only muddies the border it sits under.
+		box-shadow: 0 1px 0 var( --border-color-base );
 		// Arrow glyphs are bidi-neutral, so a multi-key hint like `↑↓←` takes
 		// the paragraph direction and renders reversed on an RTL wiki. Isolate
 		// it so the authored order survives. @noflip because CSSJanus would
