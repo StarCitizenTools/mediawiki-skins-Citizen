@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.21.0...v3.22.0) (2026-09-02)
+
+
+### Features
+
+* **keyboardHint:** ✨ draw shortcut keys as keycaps ([17335d2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17335d25e687f7c1039267337ecfd1e7b9c15384))
+* **keyboardHint:** ✨ give each key in a shortcut its own cap ([82b2f7a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/82b2f7a68f40a4e14bce693bb6fa2cfb31c5794e))
+* **preferences:** ✨ show text and width options as a segmented track ([7c618e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7c618e74ee00326a716f41190b3e38d94eae146a))
+* **sections:** ✨ hide the edit buttons when a section is collapsed ([7b5965e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b5965e8c693e4c5b092e604eb1511e0a45d7370))
+* **sections:** ✨ move the collapse control to the end of the heading ([3716455](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37164553286af031df01c44c658ff992a1293659))
+* **VisualEditor:** ✨ tighten spacing for template editor ([d97e788](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d97e78868d854389fd3ab9ba09e7b148c8639ff1))
+
+
+### Bug Fixes
+
+* **CiteThisPage:** 🐛 correct the heading class in the citation box selector ([9614275](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/96142751118ce415a216daaae7c3df29d39455cb))
+* **commandPalette:** 🐛 open a result in a new tab with Ctrl+Enter ([c57cd3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c57cd3ce1db8cac91e59bc925aa39f05c8ea6f5d))
+* **commandPalette:** 🐛 say what the mode callback arrays contain ([834f254](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/834f2548b3fef687ea0bf92c228d4c9f5a754b23))
+* **commandPalette:** 🐛 stop recent results remembering how they were opened ([32149c9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32149c9b7f2baca41d5fee19cf667964fd8ae6c8))
+* **commandPalette:** 🐛 survive a handler with malformed triggers ([6fa439e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fa439ef7042bca427226a23373a7d68caca5361)), closes [#1816](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1816)
+* **core:** 🐛 lift bordered content boxes one step off the page ([fd0481c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fd0481c2526bd6ce93e33ef672d7aab394f3e8ce))
+* **dropdown:** 🐛 stop one Escape closing both a select and the dropdown ([600ea90](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/600ea901aad5075ddb7801688a69548fd9951f64)), closes [#1740](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1740)
+* **pwa:** 🐛 stop refetching the logos on every manifest request ([e7a1e5e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e7a1e5ee7573f19f222d2f72c2b29dd8c808575d)), closes [#1833](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1833)
+* **sections:** 🐛 collapse hatnotes and cards fully ([97a3616](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/97a361623ed654d80fc7a9b3004d3fc70a5edd52))
+* **sections:** 🐛 keep heading spacing steady when a section collapses ([5386cc5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5386cc537a8cbf78d9ae627b81e5137d82b33ec5))
+* **spacing:** 🐛 scale content spacing to the reading text size ([3e4663e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3e4663e1c4726dc99db211bfe5fe8ec2beb5245b))
+* **templates:** 🐛 separate icon button link attributes ([acf3325](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/acf33253913a1ac6b9c8d5728fa95ba190ece3af))
+* **typography:** 🐛 scale heading spacing to the reading text size ([a4ca6c8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a4ca6c8663261b0828bcf548d8f631edd83fe2ba))
+* **userMenu:** 🐛 label the registration date as membership ([e73fd8b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e73fd8b81a1f158e725514c00a6b102be0c1b496))
+* **userMenu:** 🐛 link user groups to their group page ([d1ed0ab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d1ed0abf530ba3d10f4fd28117a1acfad5344b99))
+* **userMenu:** 🐛 show real name alongside username ([80ecc8c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/80ecc8c7088b774b7428cf084febdb4c370ae6eb))
+* **VisualEditor:** 🐛 correct background color for sticky header in template dialog ([09b9168](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/09b916894946d2fbf05eb39601b62db54ae227b4))
+* **VisualEditor:** 🐛 fix toolbar z-index for MW 1.46 ([462a6bf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/462a6bfeb1643151f77dc15ac2c8f2f530559c6f))
+* **WikiLove:** 🐛 fix missing heart icon for the button ([#1846](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1846)) ([346ccd3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/346ccd3d95779069885880c06655366426f96fec))
+
+
+### Performance Improvements
+
+* ⚡️ load Vue once and reuse it across every menu that needs it ([f1595a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f1595a7b327e40863c86a574dc39d651d3d566a7))
+
+
+### Miscellaneous Chores
+
+* **commandPalette:** 🔧 check for null and unknown catch values ([977abcf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/977abcffb3a09e48f031e5f87df0d7ba2c705314))
+* **commandPalette:** 🔧 enable the strict flags that already pass ([d654154](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d654154b9541383f55c3377131dff2ee6fdc86df))
+* **commandPalette:** 🔧 type-check the JSDoc annotations ([bfa910c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bfa910cf75e47f08240838d53041392aa48cac35)), closes [#1775](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1775)
+
 ## [3.21.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.20.0...v3.21.0) (2026-08-16)
 
 
