@@ -97,6 +97,30 @@ function mirrorHint( kbd, rtl ) {
 }
 
 /**
+ * Break a hint's `kbd` into the individual keys it advertises, one per cap.
+ *
+ * Splits on `+`, then keeps each run of ASCII alphanumerics together and gives
+ * every other character its own key: `esc` stays one, `↑↓←→` becomes four,
+ * `⌘C` and `Ctrl+C` become two.
+ *
+ * @param {string} kbd
+ * @return {string[]}
+ */
+function splitKbd( kbd ) {
+	if ( typeof kbd !== 'string' || kbd === '' ) {
+		return [];
+	}
+	const keys = [];
+	for ( const part of kbd.split( '+' ) ) {
+		const matches = part.match( /[0-9A-Za-z]+|[^0-9A-Za-z]/g );
+		if ( matches ) {
+			keys.push( ...matches );
+		}
+	}
+	return keys;
+}
+
+/**
  * Core keybinding registry for the command palette.
  *
  * Each binding is data: { id, zone, keys, when, worksDuringHelp, handle, hint }.
@@ -858,10 +882,11 @@ function useKeyboard( options ) {
 		const hints = resolveHints( state, zone, activeBindings.value );
 		const rtl = hints.some( ( hint ) => /[←→]/.test( hint.kbd ) ) &&
 			isRtlDirection( state.inputElement );
-		return hints.map( ( hint ) => ( {
-			msgKey: hint.msgKey,
-			kbd: mirrorHint( hint.kbd, rtl )
-		} ) );
+		return hints.map( ( hint ) => {
+			// `kbd` stays the authored string; it is what dedupes hints.
+			const kbd = mirrorHint( hint.kbd, rtl );
+			return { msgKey: hint.msgKey, kbd: kbd, keys: splitKbd( kbd ) };
+		} );
 	} );
 
 	/**

@@ -3,7 +3,7 @@
 		<kbd
 			v-for="trigger in sortedTriggers"
 			:key="trigger"
-			class="citizen-command-palette-help__trigger-chip"
+			class="citizen-keyboard-hint-key citizen-keyboard-hint-key--literal"
 		>{{ trigger }}</kbd>
 	</div>
 </template>

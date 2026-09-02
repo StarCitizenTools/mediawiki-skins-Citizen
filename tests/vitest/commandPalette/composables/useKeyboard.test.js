@@ -706,7 +706,7 @@ describe( 'useKeyboard', () => {
 			// Enter has nothing to act on here, so advertising it would promise
 			// a keystroke that does nothing.
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			] );
 		} );
 
@@ -718,7 +718,7 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toContainEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] }
 			);
 		} );
 
@@ -732,10 +732,10 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toContainEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵', keys: [ '↵' ] }
 			);
 			expect( hints ).not.toContainEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] }
 			);
 		} );
 
@@ -746,9 +746,9 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
-				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', keys: [ '↑', '↓' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			] );
 		} );
 
@@ -762,10 +762,10 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
-				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
-				{ msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→' },
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', keys: [ '↑', '↓' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→', keys: [ '→' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			] );
 		} );
 
@@ -780,10 +780,10 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
-				{ msgKey: 'citizen-command-palette-keyhint-return', kbd: '←' },
-				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-return', kbd: '←', keys: [ '←' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', keys: [ '↑', '↓' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			] );
 		} );
 
@@ -798,9 +798,9 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints ).toEqual( [
-				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
-				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→' },
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→', keys: [ '↑', '↓', '←', '→' ] },
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			] );
 		} );
 
@@ -812,7 +812,7 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints[ hints.length - 1 ] ).toEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-clear', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-clear', kbd: 'esc', keys: [ 'esc' ] }
 			);
 		} );
 
@@ -825,7 +825,7 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints[ hints.length - 1 ] ).toEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc', keys: [ 'esc' ] }
 			);
 		} );
 	} );
@@ -1263,7 +1263,7 @@ describe( 'useKeyboard', () => {
 			const hints = keyboard.keyboardHints.value;
 
 			expect( hints[ hints.length - 1 ] ).toEqual(
-				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', keys: [ 'esc' ] }
 			);
 		} );
 	} );

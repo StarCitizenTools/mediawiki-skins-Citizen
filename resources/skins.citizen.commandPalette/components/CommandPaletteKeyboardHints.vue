@@ -6,7 +6,13 @@
 			class="citizen-keyboard-hint"
 		>
 			<span class="citizen-keyboard-hint-label">{{ hint.label }}</span>
-			<kbd class="citizen-keyboard-hint-key">{{ hint.kbd }}</kbd>
+			<span class="citizen-keyboard-hint-keys">
+				<kbd
+					v-for="( key, i ) in hint.keys"
+					:key="`${ hint.kbd }-${ i }`"
+					class="citizen-keyboard-hint-key"
+				>{{ key }}</kbd>
+			</span>
 		</div>
 	</div>
 </template>
@@ -27,7 +33,8 @@ module.exports = exports = defineComponent( {
 		/* eslint-disable mediawiki/msg-doc -- msgKeys are all documented; passed dynamically from useKeyboard */
 		const resolvedHints = computed( () => props.hints.map( ( hint ) => ( {
 			label: mw.message( hint.msgKey ).text(),
-			kbd: hint.kbd
+			kbd: hint.kbd,
+			keys: hint.keys
 		} ) ) );
 		/* eslint-enable mediawiki/msg-doc */
 
