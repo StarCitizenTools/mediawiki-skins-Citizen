@@ -47,8 +47,17 @@
 			gap: 0;
 			padding-right: var( --space-sm );
 			padding-left: var( --space-sm );
-			font-size: 0;
 			border-radius: var( --border-radius-medium );
+
+			// Collapse a label only where a glyph replaces it: getAssociated-
+			// NavigationLinks() tabs carry only text/href/class, so no icon map
+			// reaches them and collapsing every label left those blank but
+			// tappable (#1847). `link.text-wrapper` guarantees the span keyed on
+			// here. Do not bound the width either — those tabs get no title, so
+			// an ellipsis is unreadable on touch with nothing to recover it from.
+			> .citizen-ui-icon + span {
+				font-size: 0;
+			}
 		}
 	}
 
@@ -127,12 +136,26 @@
 		position: fixed;
 		right: 0;
 		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
-		height: var( --toolbar-size );
+		// `safe`: plain flex-end leaves a scroller's start-edge overflow unreachable.
+		justify-content: safe flex-end;
+		// Cap, don't pin: pinning both edges destroys the shrink-to-fit, and
+		// uncapped the start edge lands off the viewport with no way back.
+		max-inline-size: ~'calc( 100% - var( --space-xs ) * 2 )';
+		// Border-box: a bare --toolbar-size leaves 38px against 40px buttons.
+		height: ~'calc( var( --toolbar-size ) + var( --border-width-base ) * 2 )';
 		margin: var( --space-xs );
+		overflow: auto hidden;
+		// Must not chain into browser back-navigation.
+		overscroll-behavior: contain;
+		scrollbar-width: none;
 		background: var( --color-surface-1 );
 		border: 1px solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-large );
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
 
 		:not( .citizen-menu__card ) .mw-list-item {
 			--size-icon: 1rem;
@@ -145,11 +168,72 @@
 		&__item {
 			position: unset;
 		}
+	}
 
-		.citizen-menu__card {
-			bottom: 100%;
-			width: max-content; // Fix card width issue when the page tool bar is narrow
+	// Reserve the TOC button's footprint, but only where one is rendered.
+	.citizen-toc-enabled .citizen-page-actions {
+		max-inline-size: ~'calc( 100% - var( --toolbar-size ) - var( --space-xs ) * 3 )';
+	}
+
+	// The way out of the bar must not scroll out of it. By id, not
+	// `> .citizen-dropdown`: languages sits near the start of the template, so a
+	// shared trailing offset would land it on top of the more button.
+	#citizen-page-more-dropdown {
+		position: sticky;
+		inset-inline-end: 0;
+		z-index: @z-index-stacking-1;
+		background: var( --color-surface-1 );
+	}
+
+	#citizen-page-languages-dropdown {
+		position: sticky;
+		inset-inline-start: 0;
+		z-index: @z-index-stacking-1;
+		background: var( --color-surface-1 );
+	}
+
+	// Let a tab dissolve into the pinned button so the bar reads as scrollable.
+	// The gradient ends in the bar's own background, so it is invisible over
+	// empty bar and needs no scroll position. It reaches back over the button's
+	// padding and the gap; the end that meets a neighbour is the transparent
+	// one, so a stray overlap is imperceptible.
+	#citizen-page-more-dropdown,
+	#citizen-page-languages-dropdown {
+		&::before {
+			position: absolute;
+			inset-block: 0;
+			inline-size: var( --space-md );
+			pointer-events: none;
+			content: '';
 		}
+	}
+
+	#citizen-page-more-dropdown::before {
+		inset-inline-start: ~'calc( var( --space-md ) * -1 )';
+		background: linear-gradient( to right, transparent, var( --color-surface-1 ) );
+	}
+
+	#citizen-page-languages-dropdown::before {
+		inset-inline-end: ~'calc( var( --space-md ) * -1 )';
+		background: linear-gradient( to left, transparent, var( --color-surface-1 ) );
+	}
+
+	// The bar is a scroll container and, with `__item` unset, also the card's
+	// containing block, so it would clip its own dropdown. Promote the card out,
+	// repeating the bar's safe-area term so it still clears a home indicator.
+	.citizen-page-actions .citizen-menu__card {
+		position: fixed;
+		inset: auto var( --space-xs ) ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) + var( --toolbar-size ) + var( --space-xs ) * 2 )' var( --space-xs );
+	}
+
+	// ...and autohide must not take it back: a transformed ancestor is the
+	// containing block for fixed descendants. Dropdown.less already locks page
+	// scroll while a card is open. Opacity too — the card would inherit the fade.
+	.citizen-page-actions:has( .citizen-dropdown-details[ open ] ) {
+		pointer-events: auto;
+		opacity: 1;
+		transform: none;
+		transition: none;
 	}
 
 	.citizen-page-languages .citizen-dropdown-summary::after {
@@ -162,7 +246,13 @@
 		> .mw-portlet {
 			li > a {
 				gap: var( --space-xs );
-				font-size: inherit;
+
+				// Restate the base rule's selector: it is (0,3,3) and this
+				// block (0,2,2), so a bare font-size reset loses and every
+				// desktop label collapses.
+				> .citizen-ui-icon + span {
+					font-size: inherit;
+				}
 			}
 		}
 
