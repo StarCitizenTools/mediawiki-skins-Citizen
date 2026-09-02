@@ -8,6 +8,14 @@ const
 	DROPDOWN_SUMMARY_SELECTOR = '.citizen-dropdown-summary',
 	DROPDOWN_TARGET_SELECTOR = '.citizen-menu__card';
 
+// `alt` is deliberately absent: MediaWiki names both `alt` and `option`, and
+// they are different keys, so ⌥ would advertise a key Windows and Linux lack.
+const MODIFIER_GLYPHS = {
+	ctrl: '⌃',
+	shift: '⇧',
+	option: '⌥'
+};
+
 /**
  * Represents a Dropdown menu with enhanced functionality.
  * Handles dismissing the menu when clicking outside,
@@ -142,18 +150,24 @@ class Dropdown {
 				return;
 			}
 
-			const keyhintText = this.window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
-			if ( !keyhintText ) {
+			const accessKey = link.getAttribute( 'accesskey' );
+			if ( !accessKey ) {
 				return;
 			}
-			const keyhint = this.document.createElement( 'kbd' );
-			keyhint.classList.add( 'citizen-keyboard-hint-key' );
-			keyhint.innerText = keyhintText
-				.replace( /-/g, ' ' )
-				.replace( 'ctrl', '⌃' )
-				.replace( 'shift', '⇧' )
-				.replace( 'option', '⌥' );
-			link.append( keyhint );
+			// Dash-separated modifier names: `ctrl-option-` on a Mac,
+			// `alt-shift-` elsewhere. Split before substituting so each
+			// modifier gets its own cap.
+			const prefix = this.window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix();
+			const tokens = prefix.split( '-' ).filter( Boolean ).concat( accessKey );
+			const keys = this.document.createElement( 'span' );
+			keys.classList.add( 'citizen-keyboard-hint-keys' );
+			tokens.forEach( ( token ) => {
+				const keyhint = this.document.createElement( 'kbd' );
+				keyhint.classList.add( 'citizen-keyboard-hint-key' );
+				keyhint.innerText = MODIFIER_GLYPHS[ token ] || token;
+				keys.append( keyhint );
+			} );
+			link.append( keys );
 		} );
 	}
 

@@ -217,16 +217,6 @@ module.exports = exports = defineComponent( {
 		gap: var( --space-xs );
 	}
 
-	&__trigger-chip {
-		padding: var( --space-xxs ) var( --space-sm );
-		font-family: var( --font-family-monospace );
-		font-size: var( --font-size-medium );
-		color: var( --color-base );
-		background-color: var( --background-color-interactive );
-		border: var( --border-subtle );
-		border-radius: var( --border-radius-pill );
-	}
-
 	&__long-description {
 		code {
 			padding: 0 var( --space-xxs );

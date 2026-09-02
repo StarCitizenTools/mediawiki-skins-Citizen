@@ -180,9 +180,10 @@
  *
  * @typedef {Object} KeyBindingHint
  * @property {string} msgKey i18n message key for the hint label.
- * @property {string} kbd Keyboard glyph shown next to the label (e.g. '↵', '↑↓', '⌘C').
+ * @property {string} kbd Keyboard glyph(s) next to the label (e.g. '↵', '↑↓', '⌘C').
  *   A lone '←' or '→' is swapped on RTL interface languages so the hint names
  *   the key the user actually presses.
+ * @property {string[]} [keys] `kbd` split into individual keys, one cap each.
  * @property {number} [order] Sort order within the footer (lower = leftmost).
  */
 

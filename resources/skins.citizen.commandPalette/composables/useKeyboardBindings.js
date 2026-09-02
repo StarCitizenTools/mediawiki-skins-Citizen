@@ -7,7 +7,7 @@
  *
  * @typedef {Object} KeyHint
  * @property {string} msgKey i18n message key for the label.
- * @property {string} kbd Glyph(s) shown in the <kbd> chip.
+ * @property {string} kbd Glyph(s) the hint advertises; split into one cap each.
  * @property {number} [order=100] Ascending sort order in the footer.
  *
  * @typedef {Object} KeyBinding

@@ -12,21 +12,25 @@
 		color: var( --color-base );
 	}
 
-	// Of the nine glyphs these hints emit (↑ ↓ ← → ↵ ⌫ ⇧ ⌃ ⌥) the bundled
-	// Roboto subsets carry only ↑ and ↓; the rest fall through to the OS
-	// sans-serif, so one hint is routinely drawn by two typefaces at different
-	// widths and weights. The fixed box is what holds them to an even rhythm —
-	// min-width, centring and the em padding are load-bearing, not decoration.
-	// Sizes are in em so a cap tracks whatever font-size its context sets. Note
-	// that the reader font-size preference is not that: features.less scopes
-	// .cdx-mode-*() to .citizen-body, which neither the dropdowns nor the
-	// command palette footer are inside.
+	&-keys {
+		display: inline-flex;
+		flex: none;
+		gap: 3px;
+		align-items: center;
+	}
+
+	// The bundled Roboto subsets carry only ↑ and ↓ of the glyphs these hints
+	// emit; the rest fall back to the OS font, so a hint is often drawn by two
+	// typefaces at once. min-width and centring are what keep them even.
 	&-key {
 		display: inline-block;
 		flex: none;
 		min-width: 1.7em;
 		padding: 0.1em 0.4em;
 		font-family: var( --font-family-base );
+		// A step below its label, as a key legend reads against running text.
+		// Every other dimension here is em-relative, so this sizes the cap too.
+		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-medium );
 		line-height: 1.4;
 		color: var( --color-subtle );
@@ -34,31 +38,36 @@
 		// stylelint-disable-next-line declaration-property-value-disallowed-list
 		text-transform: capitalize;
 		background-color: var( --background-color-interactive-subtle );
-		// Width is spelled out because the skin resets `border: 0` on every
-		// element, so a colour-only rule would paint nothing.
+		// Needs the explicit width: the skin resets `border: 0` on every element.
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-base );
-		// A hard bottom edge rather than a blurred drop shadow — at 12px a blur
-		// only muddies the border it sits under.
 		box-shadow: 0 1px 0 var( --border-color-base );
-		// Arrow glyphs are bidi-neutral, so a multi-key hint like `↑↓←` takes
-		// the paragraph direction and renders reversed on an RTL wiki. Isolate
-		// it so the authored order survives. @noflip because CSSJanus would
-		// otherwise rewrite this to `rtl` in the RTL build — the one place the
-		// flip must not happen.
+		// Arrow glyphs are bidi-neutral and would take the paragraph direction
+		// on an RTL wiki. @noflip because CSSJanus would otherwise rewrite this
+		// to `rtl` in the RTL build — the one place the flip must not happen.
 		/* @noflip */
 		direction: ltr;
 		unicode-bidi: isolate;
 	}
+
+	// A trigger is a verbatim string to type. capitalize would turn `/cat:`
+	// into `/Cat:` and advertise a trigger that does not exist.
+	&-key--literal {
+		font-family: var( --font-family-monospace );
+		// A trigger has to be read character by character to be retyped, so it
+		// does not take the cap's step down.
+		font-size: var( --font-size-small );
+		text-transform: none;
+	}
 }
 
 // Align keyhint to the right
-.citizen-menu .mw-list-item .citizen-keyboard-hint-key {
+.citizen-menu .mw-list-item .citizen-keyboard-hint-keys {
 	margin-left: auto;
 }
 
 // Hide key hint in main menu for now
 // It has some wrapping issue with long label text
-#p-navigation .citizen-keyboard-hint-key {
+#p-navigation .citizen-keyboard-hint-keys {
 	display: none;
 }

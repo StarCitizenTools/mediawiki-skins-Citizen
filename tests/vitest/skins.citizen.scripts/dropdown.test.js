@@ -436,23 +436,43 @@ describe( 'Dropdown', () => {
 			expect( target.querySelectorAll ).not.toHaveBeenCalled();
 		} );
 
-		it( 'should create kbd elements for links with accesskeys', () => {
+		it( 'should create one kbd element per modifier and the access key', () => {
 			const link = {
 				getAttribute: vi.fn().mockReturnValue( 'e' ),
 				append: vi.fn(),
 				querySelector: vi.fn().mockReturnValue( null )
 			};
 			target.querySelectorAll.mockReturnValue( [ link ] );
-			const kbd = { classList: { add: vi.fn() }, innerText: '' };
-			doc.createElement.mockReturnValue( kbd );
+			const made = [];
+			doc.createElement.mockImplementation( ( tag ) => {
+				const el = { tag, classList: { add: vi.fn() }, innerText: '', append: vi.fn() };
+				made.push( el );
+				return el;
+			} );
 
 			const dropdown = create();
 			dropdown.init();
 
-			expect( doc.createElement ).toHaveBeenCalledWith( 'kbd' );
-			expect( kbd.classList.add ).toHaveBeenCalledWith( 'citizen-keyboard-hint-key' );
-			expect( link.append ).toHaveBeenCalledWith( kbd );
-			expect( kbd.innerText ).toBe( '⌃ e' );
+			const wrapper = made.find( ( el ) => el.tag === 'span' );
+			const keys = made.filter( ( el ) => el.tag === 'kbd' );
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-keyboard-hint-keys' );
+			expect( keys.map( ( el ) => el.innerText ) ).toEqual( [ '⌃', 'e' ] );
+			expect( keys[ 0 ].classList.add ).toHaveBeenCalledWith( 'citizen-keyboard-hint-key' );
+			expect( link.append ).toHaveBeenCalledWith( wrapper );
+		} );
+
+		it( 'should not render a hint for a link with an empty accesskey', () => {
+			const link = {
+				getAttribute: vi.fn().mockReturnValue( '' ),
+				append: vi.fn(),
+				querySelector: vi.fn().mockReturnValue( null )
+			};
+			target.querySelectorAll.mockReturnValue( [ link ] );
+
+			const dropdown = create();
+			dropdown.init();
+
+			expect( link.append ).not.toHaveBeenCalled();
 		} );
 
 		it( 'should not add a second hint to a link that already has one', () => {
