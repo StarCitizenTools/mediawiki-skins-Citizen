@@ -8,7 +8,16 @@ const
 	LIST_SELECTOR = '.citizen-menu__content-list',
 	// The one action worth a permanent slot. Both ids can be present; the
 	// merged-button rule in Pagetools.less decides which of them is drawn.
-	KEEP_SELECTOR = '#ca-ve-edit, #ca-edit';
+	KEEP_SELECTOR = '#ca-ve-edit, #ca-edit',
+	// What MenuItemDecorator::addButtonClassesToMenuItems adds. A list, not a
+	// prefix match, so nothing else can be taken by mistake.
+	BUTTON_CLASSES = [
+		'citizen-cdx-button--size-large',
+		'cdx-button',
+		'cdx-button--fake-button',
+		'cdx-button--fake-button--enabled',
+		'cdx-button--weight-quiet'
+	];
 
 /**
  * Below tablet the page-actions bar is reduced to the one action worth a
@@ -29,6 +38,8 @@ class PageTools {
 		this.window = window;
 		/** @type {{node: Element, parent: Element, next: Node|null}[]} */
 		this.moves = [];
+		/** @type {WeakMap<Element, string[]>} */
+		this.buttonChrome = new WeakMap();
 		this.shell = null;
 		this.isCollapsed = false;
 		this.sync = this.sync.bind( this );
@@ -60,6 +71,37 @@ class PageTools {
 		}
 		this.moves.push( { node, parent: origin, next: node.nextSibling } );
 		parent.insertBefore( node, before );
+	}
+
+	/**
+	 * In the bar these links are buttons; in the card they are rows, and
+	 * Codex's button styles would set them apart from every row beside them.
+	 *
+	 * @param {Element} scope
+	 */
+	undress( scope ) {
+		scope.querySelectorAll( 'a' ).forEach( ( link ) => {
+			const worn = BUTTON_CLASSES.filter( ( name ) => link.classList.contains( name ) );
+			if ( worn.length > 0 ) {
+				this.buttonChrome.set( link, worn );
+				link.classList.remove( ...worn );
+			}
+		} );
+	}
+
+	/**
+	 * Put it back on the way out.
+	 *
+	 * @param {Element} scope
+	 */
+	dress( scope ) {
+		scope.querySelectorAll( 'a' ).forEach( ( link ) => {
+			const worn = this.buttonChrome.get( link );
+			if ( worn ) {
+				link.classList.add( ...worn );
+				this.buttonChrome.delete( link );
+			}
+		} );
 	}
 
 	/**
@@ -128,6 +170,7 @@ class PageTools {
 		const associated = this.document.getElementById( ASSOCIATED_ID );
 		if ( associated && associated.parentElement === bar ) {
 			this.moveNode( associated, card, card.firstChild );
+			this.undress( associated );
 		}
 
 		const views = this.document.getElementById( VIEWS_ID );
@@ -150,6 +193,7 @@ class PageTools {
 		const target = this.ensureShell();
 		if ( target ) {
 			this.moveNode( item, target, null );
+			this.undress( item );
 		}
 	}
 
@@ -165,6 +209,7 @@ class PageTools {
 		// Reverse order, so each node's remembered next sibling is back in
 		// place before it is reinserted.
 		this.moves.reverse().forEach( ( { node, parent, next } ) => {
+			this.dress( node );
 			parent.insertBefore( node, next );
 		} );
 		this.moves = [];

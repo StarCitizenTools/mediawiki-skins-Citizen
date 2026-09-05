@@ -9,16 +9,16 @@ const BAR = `
 		<div class="citizen-menu__heading">Views</div>
 		<div class="citizen-menu__content">
 			<ul class="citizen-menu__content-list">
-				<li id="ca-view" class="mw-list-item"><a href="/wiki/Foo">Read</a></li>
-				<li id="ca-ve-edit" class="mw-list-item"><a href="#">Edit</a></li>
-				<li id="ca-history" class="mw-list-item"><a href="#">View history</a></li>
+				<li id="ca-view" class="mw-list-item"><a href="/wiki/Foo" class="citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet">Read</a></li>
+				<li id="ca-ve-edit" class="mw-list-item"><a href="#" class="cdx-button cdx-button--weight-quiet">Edit</a></li>
+				<li id="ca-history" class="mw-list-item"><a href="#" class="citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet">View history</a></li>
 			</ul>
 		</div>
 	</nav>
 	<nav id="p-associated-pages" class="citizen-menu mw-portlet" aria-label="Associated">
 		<div class="citizen-menu__content">
 			<ul class="citizen-menu__content-list">
-				<li id="ca-talk" class="mw-list-item"><a href="#">Discussion</a></li>
+				<li id="ca-talk" class="mw-list-item"><a href="#" class="new citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet">Discussion</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -178,6 +178,47 @@ describe( 'pageTools', () => {
 		await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
 
 		expect( document.getElementById( 'ca-edit' ).closest( '.citizen-menu__card' ) ).toBeNull();
+	} );
+
+	it( 'takes the button chrome off the rows it moves into the card', () => {
+		const tools = createPageTools( { document, window: makeWindow( true ) } );
+
+		tools.init();
+
+		const moved = [ ...card().querySelectorAll( 'li > a' ) ]
+			.filter( ( a ) => a.closest( 'li' ).id !== 'ca-move' );
+		expect( moved.length ).toBeGreaterThan( 0 );
+		moved.forEach( ( a ) => {
+			expect( a.className ).not.toMatch( /cdx-button/ );
+		} );
+		// classes the decorator did not add are left alone
+		expect( document.querySelector( '#ca-talk > a' ).classList.contains( 'new' ) ).toBe( true );
+	} );
+
+	it( 'leaves the button chrome on what stays in the bar', () => {
+		const tools = createPageTools( { document, window: makeWindow( true ) } );
+
+		tools.init();
+
+		expect( document.querySelector( '#ca-ve-edit > a' ).className ).toMatch( /cdx-button/ );
+	} );
+
+	it( 'puts the button chrome back on the way to desktop', () => {
+		const query = { matches: true, addEventListener: () => {} };
+		const tools = createPageTools( {
+			document,
+			window: { matchMedia: () => query, MutationObserver: class {
+				observe() {}
+			} }
+		} );
+		const original = document.querySelector( '#ca-view > a' ).className;
+		tools.init();
+
+		query.matches = false;
+		tools.sync();
+
+		expect( document.querySelector( '#ca-view > a' ).className ).toBe( original );
+		expect( document.querySelector( '#ca-talk > a' ).className ).toMatch( /^new / );
 	} );
 
 	it( 'survives a viewport with no matchMedia', () => {
