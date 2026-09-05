@@ -240,6 +240,7 @@
 			"packageFiles": [
 				"resources/skins.citizen.toc/index.js",
 				"resources/skins.citizen.toc/sectionObserver.js",
+				"resources/skins.citizen.toc/sectionLabel.js",
 				"resources/skins.citizen.toc/tableOfContents.js",
 				"resources/skins.citizen.toc/tableOfContentsSections.js",
 				{

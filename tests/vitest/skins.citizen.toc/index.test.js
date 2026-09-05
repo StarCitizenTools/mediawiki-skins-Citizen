@@ -195,10 +195,11 @@ describe( 'tableOfContents module entry', () => {
 		expect( tocItem.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( false );
 	} );
 
-	it( 'should not activate at idle on narrow viewports where the spy is paused', () => {
+	it( 'should activate at idle on narrow viewports, where the contents control is the only outline', () => {
 		const { tocItem } = createFixture();
 		win = createMockWindow();
-		// Below the desktop breakpoint the ToC popover is collapsed
+		// Below the desktop breakpoint the outline is a pill rather than a
+		// standing list, and the active section is that pill's value.
 		win.matchMedia = vi.fn( () => ( {
 			matches: false,
 			addEventListener: vi.fn(),
@@ -220,6 +221,6 @@ describe( 'tableOfContents module entry', () => {
 		idleCallbacks.forEach( ( cb ) => cb() );
 		flushFrame();
 
-		expect( tocItem.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( false );
+		expect( tocItem.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( true );
 	} );
 } );
