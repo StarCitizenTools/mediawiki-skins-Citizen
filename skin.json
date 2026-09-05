@@ -212,6 +212,7 @@
 				"resources/skins.citizen.scripts/overflowElements/state.js",
 				"resources/skins.citizen.scripts/overflowElements/stickyRows.js",
 				"resources/skins.citizen.scripts/performance.js",
+				"resources/skins.citizen.scripts/pageTools.js",
 				"resources/skins.citizen.scripts/preferences.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/search.js",

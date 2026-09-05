@@ -78,6 +78,7 @@ function main( window ) {
 		{ createShare } = require( './share.js' ),
 		setupObservers = require( './setupObservers.js' ),
 		deferUntilFrame = require( './deferUntilFrame.js' ),
+		{ createPageTools } = require( './pageTools.js' ),
 		{ createPreferences } = require( './preferences.js' ),
 		{ createCommandPalette } = require( './commandPalette.js' );
 
@@ -94,6 +95,7 @@ function main( window ) {
 		setupObservers.init( { document, window, mw, IntersectionObserver } );
 	}, 2 );
 	dropdown.init( { document, window } );
+	createPageTools( { document, window } ).init();
 	createLastModified( { document, Intl } ).init();
 	createShare( {
 		document,
