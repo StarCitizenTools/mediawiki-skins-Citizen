@@ -1,10 +1,11 @@
 // Adopted from Vector 2022
 const
 	{ createDirectionObserver, createScrollObserver } = require( './scrollObserver.js' ),
-	{ StickyHeader, STICKY_HEADER_ID, STICKY_HEADER_VISIBLE_CLASS } = require( './stickyHeader.js' ),
+	{ MOBILE_QUERY, StickyHeader, STICKY_HEADER_ID, STICKY_HEADER_VISIBLE_CLASS } = require( './stickyHeader.js' ),
 	TOC_ID = 'citizen-toc',
 	SCROLL_DOWN_CLASS = 'citizen-scroll--down',
 	SCROLL_UP_CLASS = 'citizen-scroll--up',
+	AUTOHIDE_CLASS = 'citizen-feature-autohide-navigation-clientpref-1',
 	PAGE_TITLE_INTERSECTION_CLASS = 'citizen-below-page-title';
 
 /**
@@ -61,14 +62,34 @@ const init = ( { document, window, mw, IntersectionObserver } ) => {
 		!!stickyIntersection &&
 		shouldStickyHeader;
 
-	const stickyHeaderInstance = isStickyHeaderAllowed ?
-		new StickyHeader( {
-			stickyHeaderElement,
-			document,
-			window,
-			requestIdleCallback: mw.requestIdleCallback
-		} ) :
+	// Bound to a local first: a guard on the expression does not narrow the
+	// type inside the callbacks below.
+	const mobileQuery = typeof window.matchMedia === 'function' ?
+		window.matchMedia( MOBILE_QUERY ) :
 		null;
+	const isNarrow = () => ( mobileQuery ? mobileQuery.matches : false );
+
+	// Built on first use rather than up front, because below tablet the bar is
+	// hidden and there is nothing for it to do — and building it is not free:
+	// it clones the page-tools dropdowns and keeps a MutationObserver on each
+	// for the rest of the page's life. A viewport that never crosses the
+	// breakpoint never pays for either.
+	let stickyHeaderInstance = null;
+	const ensureStickyHeader = () => {
+		if ( !isStickyHeaderAllowed || isNarrow() ) {
+			return null;
+		}
+		if ( !stickyHeaderInstance ) {
+			stickyHeaderInstance = new StickyHeader( {
+				stickyHeaderElement,
+				document,
+				window,
+				requestIdleCallback: mw.requestIdleCallback
+			} );
+			stickyHeaderInstance.init();
+		}
+		return stickyHeaderInstance;
+	};
 
 	const scrollDirectionObserver = createDirectionObserver( {
 		window,
@@ -84,30 +105,30 @@ const init = ( { document, window, mw, IntersectionObserver } ) => {
 		threshold: 10
 	} );
 
-	if ( stickyHeaderInstance ) {
-		stickyHeaderInstance.init();
-	}
-
+	// Autohide moves the page actions and the contents control, which are on
+	// screen at every width. It used to be started and stopped alongside the
+	// sticky header, which was harmless while that bar existed everywhere and
+	// would have taken autohide down with it on mobile once it stopped.
 	const resumeStickyHeader = () => {
-		if (
-			stickyHeaderInstance &&
-			!document.body.classList.contains( STICKY_HEADER_VISIBLE_CLASS ) &&
-			document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS )
-		) {
-			stickyHeaderInstance.show();
-			if ( document.documentElement.classList.contains( 'citizen-feature-autohide-navigation-clientpref-1' ) ) {
-				scrollDirectionObserver.resume();
-			}
+		if ( !document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS ) ) {
+			return;
+		}
+		if ( document.documentElement.classList.contains( AUTOHIDE_CLASS ) ) {
+			scrollDirectionObserver.resume();
+		}
+		const stickyHeader = ensureStickyHeader();
+		if ( stickyHeader && !document.body.classList.contains( STICKY_HEADER_VISIBLE_CLASS ) ) {
+			stickyHeader.show();
 		}
 	};
 
 	const pauseStickyHeader = () => {
+		scrollDirectionObserver.pause();
 		if (
 			stickyHeaderInstance &&
 			document.body.classList.contains( STICKY_HEADER_VISIBLE_CLASS )
 		) {
 			stickyHeaderInstance.hide();
-			scrollDirectionObserver.pause();
 		}
 	};
 
@@ -124,6 +145,18 @@ const init = ( { document, window, mw, IntersectionObserver } ) => {
 	);
 
 	pageHeaderObserver.observe( stickyIntersection );
+
+	// A rotation can cross the breakpoint, and the bar belongs on screen on
+	// exactly one side of it.
+	if ( mobileQuery && typeof mobileQuery.addEventListener === 'function' ) {
+		mobileQuery.addEventListener( 'change', () => {
+			if ( isNarrow() ) {
+				pauseStickyHeader();
+			} else {
+				resumeStickyHeader();
+			}
+		} );
+	}
 
 	mw.hook( 've.activationStart' ).add( () => {
 		pauseStickyHeader();
