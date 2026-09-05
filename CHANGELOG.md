@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.22.0...v3.23.0) (2026-09-05)
+
+
+### Features
+
+* **pagetools:** ✨ reduce the mobile page bar to edit and the overflow ([c25da52](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c25da52d2cd4902a59f56d1d193b9ab9e43c1bd8))
+* **stickyHeader:** ✨ drop the sticky bar below tablet ([be6ed58](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be6ed58a2366bf508053f98f7362855266d1260a))
+* **tableOfContents:** ✨ give the mobile contents control the section you are in ([91b6b5a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/91b6b5abcb579ea47a1ce598f6721894b0cf4c16))
+
+
+### Bug Fixes
+
+* **pagetools:** 🐛 drop the button chrome from rows moved into the overflow card ([826e8c4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/826e8c44917dd1be9f0dcd36b3731fcad4f53721))
+* **pagetools:** 🐛 keep the page tab labels at the menu's text size ([4e60d75](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e60d75634017e8e91ef71c193dcfb2921ff08ed))
+* **pagetools:** 🐛 make every page tab visible and reachable on mobile ([a76784c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a76784c8b4e0bfaeaed8fafb9d5f067f1e742482)), closes [#1847](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1847)
+
 ## [3.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.21.0...v3.22.0) (2026-09-02)
 
 
