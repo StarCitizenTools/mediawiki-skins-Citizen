@@ -125,8 +125,10 @@
 	}
 }
 
-// Sticky header styles
-.citizen-sticky-header-visible {
+// "Back to top" is only worth a row once there is a top to go back to. Keyed on
+// having scrolled past the page header rather than on the sticky header being
+// up, because below tablet that bar does not exist and the row still should.
+.citizen-below-page-title {
 	.citizen-toc .citizen-toc-top.citizen-toc-link {
 		height: 2rem; // 1rem text + 1rem padding
 		padding-block: var( --space-xs );
@@ -138,32 +140,51 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
+		// Inset by the offsets, not by a margin on the control inside. The
+		// margin made this box 16px larger than the control in both axes, which
+		// is what the pointer-events dance existed to undo, and it stacked on
+		// the block-end offset so the bottom gap was twice the side gap.
 		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
-		left: 0;
+		left: var( --space-xs );
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
-		pointer-events: none; // HACK: Make background clickable
 
 		&-card {
-			// Get consistent margin
-			bottom: ~'calc( 100% - var( --space-xs ) )';
+			// Sits on the control with the gap stated here rather than left to
+			// .citizen-menu__card's margin, which would also offset the card
+			// from the control's own inline edge.
+			bottom: ~'calc( 100% + var( --space-xs ) )';
 			width: max-content;
 			// This is not bulletproof since it will get covered by page header
 			// in extremely short height. but it should be good for now
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
-			padding: var( --space-xs );
+			margin: 0;
 			// Floating button at the bottom; card expands upward.
 			.mixin-citizen-card-expand( up );
+
+			// Padding belongs to the scrolling box, not the card. The content
+			// takes its max-height from the card, so padding out here makes the
+			// two disagree by that much: the list scrolls to what the container
+			// calls the end while its last row is still below the border, and
+			// rows disappear into the padding rather than at the border.
+			.citizen-menu__card-content {
+				padding: var( --space-xs );
+			}
 		}
 
 		.citizen-dropdown {
 			&-summary {
 				box-sizing: border-box;
-				display: grid;
-				place-content: center;
-				width: var( --toolbar-size );
-				height: var( --toolbar-size );
-				margin: var( --space-xs );
-				pointer-events: auto; // HACK: Make button clickable
+				display: flex;
+				gap: var( --space-xs );
+				align-items: center;
+				justify-content: center;
+				width: auto;
+				// Border-box with a 1px border, so a bare --toolbar-size would
+				// leave a 38px content box and stand 2px shorter than the page
+				// actions beside it. Same expression they use, so the two agree
+				// by construction rather than by coincidence.
+				min-width: ~'calc( var( --toolbar-size ) + var( --border-width-base ) * 2 )';
+				height: ~'calc( var( --toolbar-size ) + var( --border-width-base ) * 2 )';
 				background-color: var( --color-surface-1 );
 				border: 1px solid var( --border-color-base );
 				border-radius: var( --border-radius-medium );
@@ -180,10 +201,6 @@
 			}
 
 			&-details[ open ] {
-				+ .citizen-menu__card {
-					pointer-events: auto; // HACK: Make ToC clickable after ToC is expanded
-				}
-
 				> .citizen-dropdown-summary {
 					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
 				}
@@ -226,5 +243,123 @@
 		.citizen-dropdown-summary {
 			display: none;
 		}
+	}
+}
+
+// The contents control's current section. Below tablet only: above it the
+// outline is a standing list in the margin and the control is not a pill.
+@media ( max-width: ( @max-width-breakpoint-tablet ) ) {
+	// Absent until there is a section to name, which is also the state of every
+	// page with no headings — the control is then the glyph it has always been.
+	.citizen-toc-current {
+		display: none;
+	}
+
+	// The control carries the section you are in as its value, so it is a pill
+	// that grows rather than a fixed square. Sized from content rather than
+	// left to shrink-to-fit: the summary is a flex item inside a fixed,
+	// shrink-to-fit block, and an auto width resolves through that chain to the
+	// min-content of a track that is allowed to reach zero — which is zero.
+	// Bounded so it can never reach the page actions at the other edge; both
+	// are fixed to the same block position and neither knows the other is there.
+	.citizen-toc--tracking .citizen-dropdown-summary {
+		inline-size: max-content;
+		// Against the viewport, not the parent: this control's own ancestors are
+		// content-sized, so a percentage here resolves against a box that is
+		// itself waiting on this one.
+		max-inline-size: ~'calc( 100vw - var( --toolbar-size ) * 4 - var( --space-xs ) * 4 )';
+		padding-inline: var( --space-sm );
+		overflow: hidden;
+	}
+
+	.citizen-toc--tracking {
+		// The chevron says the same thing as the list glyph and says it about
+		// the value beside it, so the glyph is redundant once there is one.
+		.citizen-dropdown-summary > .citizen-ui-icon {
+			display: none;
+		}
+
+		.citizen-toc-current {
+			display: flex;
+			gap: var( --space-xs );
+			align-items: center;
+			min-width: 0;
+
+			> .citizen-ui-icon {
+				flex: none;
+			}
+		}
+	}
+
+	.citizen-toc-current__track {
+		position: relative;
+		flex: 0 1 auto;
+		min-width: 0;
+		height: 1lh;
+		overflow: hidden;
+		font-size: var( --font-size-small );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: 1lh;
+		color: var( --color-emphasized );
+		text-align: start;
+		white-space: nowrap;
+	}
+
+	// The arriving label stays in flow: it is what gives the track a width, and
+	// so the pill a width. Only the one on its way out is taken out of flow,
+	// which also stops the two stacking during the change.
+	.citizen-toc-current__line {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&.is-leaving {
+			position: absolute;
+			inset: 0;
+		}
+	}
+
+	@media ( prefers-reduced-motion: no-preference ) {
+		.citizen-toc-current__line {
+			&.is-entering-below {
+				animation: citizen-toc-line-in-below var( --transition-duration-medium ) var( --transition-timing-function-ease-out );
+			}
+
+			&.is-entering-above {
+				animation: citizen-toc-line-in-above var( --transition-duration-medium ) var( --transition-timing-function-ease-out );
+			}
+
+			&.is-leaving-above {
+				animation: citizen-toc-line-out-above var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) forwards;
+			}
+
+			&.is-leaving-below {
+				animation: citizen-toc-line-out-below var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) forwards;
+			}
+		}
+	}
+}
+
+@keyframes citizen-toc-line-in-below {
+	from {
+		transform: translateY( 100% );
+	}
+}
+
+@keyframes citizen-toc-line-in-above {
+	from {
+		transform: translateY( -100% );
+	}
+}
+
+@keyframes citizen-toc-line-out-above {
+	to {
+		transform: translateY( -100% );
+	}
+}
+
+@keyframes citizen-toc-line-out-below {
+	to {
+		transform: translateY( 100% );
 	}
 }

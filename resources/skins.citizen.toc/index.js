@@ -2,6 +2,7 @@
 const
 	{ createSectionObserver } = require( './sectionObserver.js' ),
 	{ TableOfContents } = require( './tableOfContents.js' ),
+	{ createSectionLabel } = require( './sectionLabel.js' ),
 	// deferUntilFrame.js is listed in both this module's and
 	// skins.citizen.scripts' packageFiles — keep the two in sync
 	deferUntilFrame = require( '../skins.citizen.scripts/deferUntilFrame.js' ),
@@ -132,6 +133,9 @@ const setupTableOfContents = (
 	// its live state is authoritative and the deferred pass must not run.
 	let sectionsActivated = false;
 
+	const sectionLabel = createSectionLabel( { document, window } );
+	sectionLabel.init();
+
 	const sectionObserver = createSectionObserver( {
 		window,
 		mw,
@@ -141,11 +145,15 @@ const setupTableOfContents = (
 		onIntersection: getHeadingIntersectionHandler( ( ids ) => {
 			sectionsActivated = true;
 			tableOfContents.changeActiveSections( ids );
+			sectionLabel.syncFromCard();
 		} )
 	} );
 	const updateElements = () => {
 		sectionObserver.resume();
 		sectionObserver.setElements( elements() );
+		// A rebuild reactivates its sections internally, so the control has to
+		// be told to read the card again.
+		sectionLabel.syncFromCard();
 	};
 
 	mw.hook( 've.activationStart' ).add( () => {
@@ -160,42 +168,18 @@ const setupTableOfContents = (
 		updateElements();
 	} );
 
-	// On narrow viewports the ToC is a collapsed popover — pause the scroll spy
-	// to avoid unnecessary work. Resume + recalculate when returning to desktop.
-	// Uses @min-width-breakpoint-desktop from MediaWiki core (1120px).
-	const desktopMql = window.matchMedia( '(min-width: 1120px)' );
-	let tocCollapsed = !desktopMql.matches;
-
-	if ( tocCollapsed ) {
-		sectionObserver.pause();
-	}
-
-	desktopMql.addEventListener( 'change', ( e ) => {
-		if ( e.matches ) {
-			// Crossed into desktop — resume scroll spy.
-			tocCollapsed = false;
-			sectionObserver.resume();
-			sectionObserver.calcIntersection();
-		} else {
-			// Crossed into narrow — pause scroll spy.
-			tocCollapsed = true;
-			sectionObserver.pause();
-		}
-	} );
-
+	// The spy used to be paused below desktop, where the ToC is a collapsed
+	// popover and nobody could see which row was active. The contents control
+	// now carries the active section as its own value, so on a narrow screen
+	// the spy is the only thing telling a reader where they are — the width it
+	// was skipped on is the width it matters most.
+	//
 	// Recalculate active sections on window resize since viewport dimensions change.
 	window.addEventListener( 'resize', mw.util.debounce( () => {
-		if ( !tocCollapsed ) {
-			sectionObserver.calcIntersection();
-		}
+		sectionObserver.calcIntersection();
 	}, 200 ) );
 
-	// Skip initial active section calculation on narrow viewports
-	// since the ToC is collapsed and scroll spy is paused.
 	const setInitialActiveSection = () => {
-		if ( tocCollapsed ) {
-			return;
-		}
 		const hash = window.location.hash.slice( 1 );
 		// If hash fragment is blank, determine the active section with section
 		// observer.
@@ -225,6 +209,7 @@ const setupTableOfContents = (
 			Math.round( window.innerHeight + window.scrollY ) >= document.body.scrollHeight
 		) {
 			tableOfContents.changeActiveSection( hashSection.id );
+			sectionLabel.syncFromCard();
 		} else {
 			// Fallback to section observer's calculation for the active section.
 			sectionObserver.calcIntersection();
