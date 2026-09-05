@@ -1,6 +1,9 @@
 const
 	STICKY_HEADER_ID = 'citizen-sticky-header',
-	STICKY_HEADER_VISIBLE_CLASS = 'citizen-sticky-header-visible';
+	STICKY_HEADER_VISIBLE_CLASS = 'citizen-sticky-header-visible',
+	// Kept in step with @max-width-breakpoint-tablet, which is core's
+	// @min-width-breakpoint-desktop less the 0.02px it reserves for the seam.
+	MOBILE_QUERY = '( max-width: 1119.98px )';
 
 const { initDropdown } = require( './dropdown.js' );
 
@@ -316,6 +319,7 @@ class StickyHeader {
 }
 
 module.exports = {
+	MOBILE_QUERY,
 	STICKY_HEADER_ID,
 	STICKY_HEADER_VISIBLE_CLASS,
 	StickyHeader

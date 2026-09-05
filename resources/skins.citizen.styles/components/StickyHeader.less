@@ -41,6 +41,13 @@
 		transition-duration: var( --transition-duration-medium );
 		transition-property: transform, visibility;
 
+		// Below tablet this bar has nothing left to say. It carried the page
+		// title and a way back to the top; the contents control now carries the
+		// section you are in, and the page actions carry the actions.
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			display: none;
+		}
+
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			margin-right: var( --header-size-inline-end );
 			margin-left: var( --header-size-inline-start );
