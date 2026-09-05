@@ -325,6 +325,17 @@ class SkinCitizen extends SkinMustache {
 		// page so its bottom placement holds from the first streamed paint.
 		$parentData['is-mainpage'] = $title->isMainPage() && $this->getActionName() === 'view';
 
+		// Core has no message for the associated-pages menu, so SkinComponentMenu
+		// falls back to the raw menu name (T252727) and the heading reads
+		// "associated-pages". Nobody saw that while the heading was
+		// screen-reader-only in the bar; it is a visible row heading once the
+		// menu moves into the overflow card. Matched on the fallback rather than
+		// set outright, so a message added upstream would win.
+		if ( ( $parentData['data-portlets']['data-associated-pages']['label'] ?? null ) === 'associated-pages' ) {
+			$parentData['data-portlets']['data-associated-pages']['label'] =
+				$this->msg( 'citizen-page-associated-pages' )->text();
+		}
+
 		$parentData['toc-enabled'] = !empty( $parentData['data-toc'][ 'array-sections' ] );
 		if ( $parentData['toc-enabled'] ) {
 			// This body class depends on template data so it can't move to

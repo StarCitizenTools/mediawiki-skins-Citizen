@@ -17,6 +17,7 @@
 	"include": [
 		"resources/skins.citizen.commandPalette/**/*.js",
 		"resources/skins.citizen.scripts/keyboardLayout.js",
+		"resources/skins.citizen.scripts/pageTools.js",
 		"resources/types/**/*.d.ts"
 	]
 }

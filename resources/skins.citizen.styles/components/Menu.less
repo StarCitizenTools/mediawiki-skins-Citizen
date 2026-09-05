@@ -23,6 +23,13 @@
 		transform: var( --citizen-translate-closed );
 		.mixin-citizen-frosted-glass;
 
+		// A menu that renders as buttons elsewhere arrives here as rows, and
+		// Codex centres a button's content. Every other card starts its labels
+		// at the same edge; a centred row reads as a button in a list of rows.
+		.cdx-button {
+			justify-content: flex-start;
+		}
+
 		&-content {
 			max-width: inherit;
 			max-height: inherit;

@@ -134,7 +134,11 @@
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-page-actions {
 		position: fixed;
-		right: 0;
+		// Inset by the offsets, not by a margin. A margin here would sit on top
+		// of the block-end offset, which already carries a --space-xs floor, and
+		// the two would read as one gap of twice the size against side gaps of
+		// one.
+		right: var( --space-xs );
 		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
 		// `safe`: plain flex-end leaves a scroller's start-edge overflow unreachable.
 		justify-content: safe flex-end;
@@ -143,7 +147,6 @@
 		max-inline-size: ~'calc( 100% - var( --space-xs ) * 2 )';
 		// Border-box: a bare --toolbar-size leaves 38px against 40px buttons.
 		height: ~'calc( var( --toolbar-size ) + var( --border-width-base ) * 2 )';
-		margin: var( --space-xs );
 		overflow: auto hidden;
 		// Must not chain into browser back-navigation.
 		overscroll-behavior: contain;
@@ -196,7 +199,8 @@
 	// The gradient ends in the bar's own background, so it is invisible over
 	// empty bar and needs no scroll position. It reaches back over the button's
 	// padding and the gap; the end that meets a neighbour is the transparent
-	// one, so a stray overlap is imperceptible.
+	// one, so a stray overlap is imperceptible — but only over a quiet control,
+	// which is why the collapsed bar opts out below.
 	#citizen-page-more-dropdown,
 	#citizen-page-languages-dropdown {
 		&::before {
@@ -218,12 +222,30 @@
 		background: linear-gradient( to left, transparent, var( --color-surface-1 ) );
 	}
 
+	// A collapsed bar holds two controls and cannot scroll, so the fade has
+	// nothing to soften and only tints whatever sits next to the sink — which
+	// after the collapse is the filled edit button, not a quiet tab. The class
+	// is set by script, so a bar with no script keeps both the scrolling and
+	// the affordance for it.
+	.citizen-page-actions--collapsed {
+		#citizen-page-more-dropdown::before,
+		#citizen-page-languages-dropdown::before {
+			content: none;
+		}
+	}
+
 	// The bar is a scroll container and, with `__item` unset, also the card's
 	// containing block, so it would clip its own dropdown. Promote the card out,
 	// repeating the bar's safe-area term so it still clears a home indicator.
 	.citizen-page-actions .citizen-menu__card {
 		position: fixed;
-		inset: auto var( --space-xs ) ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) + var( --toolbar-size ) + var( --space-xs ) * 2 )' var( --space-xs );
+		// Stated once, like the bar itself: .citizen-menu__card's own margin
+		// would land on top of these offsets and put the card 16px from each
+		// side and 14px off the bar it belongs to. The block-end term is the
+		// bar's inset, then the bar's full height — borders included, which
+		// --toolbar-size alone leaves out — then the gap.
+		inset: auto var( --space-xs ) ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) + var( --toolbar-size ) + var( --border-width-base ) * 2 + var( --space-xs ) )' var( --space-xs );
+		margin: 0;
 	}
 
 	// ...and autohide must not take it back: a transformed ancestor is the
