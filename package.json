@@ -46,7 +46,7 @@
 		"stylelint-plugin-use-baseline": "^1.4.6",
 		"types-mediawiki": "2.1.0",
 		"typescript": "5.9.3",
-		"vitest": "^4.1.10",
+		"vitest": "^5.0.0",
 		"vue": "3.4.27"
 	},
 	"overrides": {
