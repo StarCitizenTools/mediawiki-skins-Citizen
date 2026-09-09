@@ -74,7 +74,10 @@
 	// expression so light-dark() picks one of two finished colors
 	// (color-mix can't span a light-dark() pair).
 	--background-color-backdrop-light: light-dark( ~'color-mix( in oklch, var( --color-neutral-50 ) calc( var( --backdrop-opacity ) * 100% ), transparent )', ~'color-mix( in oklch, var( --color-neutral-1000 ) calc( var( --backdrop-opacity ) * 100% ), transparent )' );
-	--background-color-backdrop-dark: rgba( 0, 0, 0, var( --backdrop-opacity ) );
+	// Escaped: less.php < 5.5.0 (MediaWiki < 1.43.7 / < 1.44.4 / < 1.45.2)
+	// evaluates rgba() itself and rejects a var() argument, taking the whole
+	// module down with it.
+	--background-color-backdrop-dark: ~'rgba( 0, 0, 0, var( --backdrop-opacity ) )';
 
 	// Theme-invariant bg utilities
 	--background-color-transparent: transparent;
