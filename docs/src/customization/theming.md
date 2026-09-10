@@ -184,7 +184,6 @@ Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting wit
     /* Dark baseline for effects light-dark() can't express — copy as-is */
     --opacity-glass: 0.8;
     --shadow-opacity: 0.44;
-    --font-grade: 0;
     --filter-invert: invert( 1 ) hue-rotate( 180deg );
 
     /* Your palette — override only what differs from the default dark theme */
