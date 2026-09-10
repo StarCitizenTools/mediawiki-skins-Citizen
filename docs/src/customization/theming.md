@@ -58,7 +58,7 @@ Surface colors form the depth hierarchy of the UI — lower numbers sit further 
 
 ## Typography
 
-Citizen ships with [Roboto Flex](https://fonts.google.com/specimen/Roboto+Flex) as its default typeface. You can swap it out by overriding the font family variables:
+Citizen ships with [Roboto Flex](https://fonts.google.com/specimen/Roboto+Flex) as its default typeface. Citizen prefers a locally installed Roboto over its bundled copy. You can swap it out by overriding the font family variables:
 
 | Property | Description | Default value |
 | :--- | :--- | :--- |
