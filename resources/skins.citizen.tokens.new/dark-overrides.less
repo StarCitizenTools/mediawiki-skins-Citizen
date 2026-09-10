@@ -1,7 +1,7 @@
 /**
  * Dark-mode overrides for theme-variant non-color tokens — all Citizen
  * extensions. light-dark() only handles color values, so these
- * non-color tokens (opacity, font-grade, filter, percentages) get a
+ * non-color tokens (opacity, filter, percentages) get a
  * separate companion mixin.
  *
  * Called at .skin-theme-clientpref-night and at clientpref-os under
@@ -10,7 +10,6 @@
 .new-dark-overrides() {
 	--opacity-glass: 0.8;
 	--shadow-opacity: 0.44;
-	--font-grade: 0;
 	--filter-invert: invert( 1 ) hue-rotate( 180deg );
 	--color-progressive-hsl__l: 60%;
 	// Codex blends quiet controls with `multiply` on light, `screen` on dark.

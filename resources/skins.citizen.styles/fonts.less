@@ -3,7 +3,13 @@
  * Version: 3.200
  * Link: https://github.com/googlefonts/roboto-flex
  * Subset: Google Fonts: https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,GRAD@8..144,100..1000,-200..150&display=swap
- * Axis: opsz, wght, GRAD
+ * Axis: wght only. The Google Fonts files carry opsz and GRAD as well, and
+ * the variation deltas for those two axes are three quarters of each file.
+ * They are pinned to the axis defaults (opsz 14, GRAD 0) before shipping, so
+ * every size renders with the text master, the same as static Roboto:
+ *   fonttools varLib.instancer RobotoFlex_<subset>.woff2 opsz=14 GRAD=0 wght=100:1000 --output=...
+ * The pin only strips gvar deltas; cmap, layout features and every glyph
+ * outline at the default location are unchanged, so unicode-range stays valid.
  * Note:
  ** faux italic is better than the current slnt support from different browsers
  ** wdth is too big at the moment
