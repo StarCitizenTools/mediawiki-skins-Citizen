@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.22.0...v3.23.0) (2026-09-10)
+
+
+### Features
+
+* **pagetools:** ✨ reduce the mobile page bar to edit and the overflow ([c25da52](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c25da52d2cd4902a59f56d1d193b9ab9e43c1bd8))
+* **stickyHeader:** ✨ drop the sticky bar below tablet ([be6ed58](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be6ed58a2366bf508053f98f7362855266d1260a))
+* **tableOfContents:** ✨ give the mobile contents control the section you are in ([91b6b5a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/91b6b5abcb579ea47a1ce598f6721894b0cf4c16))
+
+
+### Bug Fixes
+
+* **fonts:** 🐛 refresh the Roboto Flex subsets and their unicode ranges ([c7b607d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c7b607d9b013af7866d6a339206df3d3020fda32))
+* **pagetools:** 🐛 drop the button chrome from rows moved into the overflow card ([826e8c4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/826e8c44917dd1be9f0dcd36b3731fcad4f53721))
+* **pagetools:** 🐛 keep the page tab labels at the menu's text size ([4e60d75](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e60d75634017e8e91ef71c193dcfb2921ff08ed))
+* **pagetools:** 🐛 make every page tab visible and reachable on mobile ([a76784c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a76784c8b4e0bfaeaed8fafb9d5f067f1e742482)), closes [#1847](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1847)
+* **tokens:** 🐛 restore escape on the dark backdrop token ([c379144](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c379144fda51379ecd2dbe9141a7bd19a0fd6509)), closes [#1873](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1873)
+
+
+### Performance Improvements
+
+* **fonts:** ⚡️ shrink the Roboto Flex download by pinning optical size and grade ([346c63d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/346c63d16f7a0f1940e981fcc6e83ca7ff4c8ef9)), closes [#1879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1879)
+* **fonts:** ⚡️ use the device's own Roboto instead of downloading it ([8d11369](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8d11369314138c573cc4f861ab079aa55bf307df))
+
 ## [3.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.21.0...v3.22.0) (2026-09-02)
 
 
