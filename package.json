@@ -41,7 +41,7 @@
 		"mustache": "^4.2.0",
 		"stylelint": "17.15.0",
 		"stylelint-config-recess-order": "7.8.0",
-		"stylelint-config-wikimedia": "0.19.3",
+		"stylelint-config-wikimedia": "0.19.4",
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.4.6",
 		"types-mediawiki": "2.1.0",
