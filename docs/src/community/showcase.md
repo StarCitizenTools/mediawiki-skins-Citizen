@@ -31,4 +31,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="Pleasant Goat Wiki" href="https://xyy.miraheze.org" />
  <LinkCard title="Wikven Static Site Generator" href="https://chaotic-ground.github.io/wikven/citizen/index.html" />
  <LinkCard title="Vocawiki" href="https://voca.wiki" />
+ <LinkCard title="Official DOORS Wiki" href="https://doorsgame.wiki" />
 </LinkGrid>
