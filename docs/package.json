@@ -28,7 +28,7 @@
 		"@vue/test-utils": "^2.5.0",
 		"jsdom": "^30.0.1",
 		"less": "^4.9.1",
-		"markdown-it": "15.0.1",
+		"markdown-it": "15.0.2",
 		"markdownlint-cli": "^0.49.1",
 		"oxfmt": "^0.67.0",
 		"oxlint": "^1.82.0",
