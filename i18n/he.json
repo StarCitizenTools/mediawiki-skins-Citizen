@@ -98,7 +98,7 @@
 	"citizen-command-palette-command-ns-label": "מרחבי שם",
 	"citizen-command-palette-command-user-description": "חיפוש אחר משתמש",
 	"citizen-command-palette-mode-history-empty-title": "אין כאן היסטוריה",
-	"citizen-command-palette-mode-history-no-summary-text": "(ללא סיכום עריכה)",
+	"citizen-command-palette-mode-history-no-summary-text": "(ללא תקציר עריכה)",
 	"citizen-command-palette-mode-history-noresults-description": "כדאי לנסות שם עורך אחר או לערוך את מילת המפתח לסיכום העריכה",
 	"citizen-command-palette-mode-ns-placeholder": "חיפוש במרחבי שם",
 	"citizen-command-palette-mode-smw-malformed-description": "יש לסגור את התנאי שלך ב־[[ כדי להריץ את השאילתה",
@@ -111,7 +111,7 @@
 	"citizen-command-palette-mode-smw-noresults-title": "אין דפים תואמים",
 	"citizen-command-palette-mode-smw-novalues-description": "נא לבדוק מה הערך או לנסות חיפוש רחב יותר",
 	"citizen-command-palette-mode-smw-novalues-title": "אין ערכים תואמים",
-	"citizen-command-palette-mode-smw-placeholder": "הזנת שאילתה לחיפוש",
+	"citizen-command-palette-mode-smw-placeholder": "נא להקליד שאילתה",
 	"citizen-command-palette-mode-user-empty-title": "חיפוש משתמשים",
 	"citizen-command-palette-queryaction-fulltext-search-description": "חיפוש בטקסט המלא של כל הדפים",
 	"citizen-command-palette-queryaction-page-edit-description": "יצירה או עריכה של דף"
