@@ -1,0 +1,52 @@
+name: 🧹 Showcase cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/data/showcase-shots.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: showcase-gc
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    name: 🗑 Delete superseded screenshots
+    if: github.repository == 'StarCitizenTools/mediawiki-skins-Citizen'
+    runs-on: ubuntu-latest
+    # One delete per dropped screenshot, 24 at the very most. This job holds a
+    # token that can permanently remove published objects, so it gets a ceiling
+    # rather than the default six hours.
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # gc.js diffs HEAD against the commit main was at before this push,
+          # which is any number of commits back.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # gc.js imports only its own sibling module, so wrangler is the whole of
+      # this job's tooling.
+      - name: Setup wrangler
+        uses: ./.github/actions/setup-wrangler
+
+      # Post-merge on purpose: while a capture PR is open, main still serves the
+      # old keys and the preview serves the new ones, so both sets must live.
+      - name: Delete dropped objects
+        working-directory: docs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_BUCKET: mwcitizen-media
+          GC_BEFORE_SHA: ${{ github.event.before }}
+        run: node scripts/showcase/gc.js

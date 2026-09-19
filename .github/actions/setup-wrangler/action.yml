@@ -1,0 +1,18 @@
+name: Setup wrangler
+description: Installs the pinned wrangler CLI used by the showcase R2 jobs.
+
+runs:
+  using: composite
+  steps:
+    # The one place the wrangler version is written. Both callers run with an R2
+    # token carrying write and delete scope, so a floating range would let the
+    # code that token executes change without a commit. Bumping the version here
+    # changes it for every job; nothing else pins it.
+    #
+    # Installed per job rather than as a docs devDependency: wrangler pulls in
+    # esbuild, workerd and miniflare, and docs CI runs npm ci on every pull
+    # request, which would pay that cost for two jobs that run weekly and
+    # monthly.
+    - name: Install wrangler
+      shell: bash
+      run: npm install --global wrangler@4.135.0
