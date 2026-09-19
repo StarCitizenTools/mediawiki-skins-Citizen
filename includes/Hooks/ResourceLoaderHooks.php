@@ -69,6 +69,10 @@ class ResourceLoaderHooks {
 		$extensionRegistry = ExtensionRegistry::getInstance();
 
 		return [
+			'isBucketEnabled' => $extensionRegistry->isLoaded( 'Bucket' ) && defined( 'NS_BUCKET' ),
+			// Bucket's schemas live on pages in NS_BUCKET, which is where
+			// the palette mode reads them from.
+			'bucketNamespaceId' => defined( 'NS_BUCKET' ) ? NS_BUCKET : null,
 			'isSemanticMediaWikiEnabled' => $extensionRegistry->isLoaded( 'SemanticMediaWiki' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];

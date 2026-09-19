@@ -26,6 +26,7 @@ The palette has two kinds of entries:
 | `/hist:` | `!` | Mode | Browse the current page's edit history and jump to a diff. |
 | `/file:` | `~` | Mode | Find images, PDFs, audio, video, and other files as a gallery. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
+| `/bucket:` | - | Mode | Drill into structured data stored by Bucket. Only available when Bucket is installed. |
 | `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
 You can type the single-character aliases (`@`, `>`, `:`, `#`, `!`, `~`, `?`) directly — no `/` prefix needed.
@@ -104,6 +105,25 @@ When [Semantic MediaWiki](https://www.semantic-mediawiki.org/) is installed, the
 You can chain multiple conditions together. Each chip narrows the query further, just like conditions in a regular SMW Ask query.
 
 This mode is loaded conditionally and only registered when SMW is available on the wiki.
+
+#### Buckets
+
+When [Bucket](https://www.mediawiki.org/wiki/Extension:Bucket) is installed, the `/bucket:` mode browses the wiki's structured data by drilling into it rather than by writing a query.
+
+- **An empty input** lists every bucket on the wiki, read from the `Bucket:` pages that define them.
+- **Pick a bucket** to step inside: its fields first, then the pages currently matching.
+- **Pick a field** to see the values it holds, and a value to filter by it. The header becomes a breadcrumb (`Buckets / Item / item_type: Weapon`) and the page list narrows. Drill into another field to stack a second filter.
+- **The panel on the right** describes whatever is highlighted — a field's type and its repeated and indexed flags, or a page's stored row, field by field. A page holding several rows is listed once with a row count; **View data** opens the full set.
+- **<kbd>Backspace</kbd> on an empty input** steps back one level per press: the filter, then the field it came from, then the bucket. <kbd>Esc</kbd> leaves the mode.
+- **Type to filter.** Pages are fetched from where you type rather than filtered out of the first rows, so a late letter still finds its pages in a large bucket. On a numeric field, a typed number also offers `>` and `<`; on a text field, a value the sample missed is offered as an exact match.
+- **Copy query as Lua** leads the list and copies the query behind it, written with the `mw.ext.bucket` entry point a Scribunto module uses. Before you filter anything it is the bucket's skeleton query, and it drops out while you type.
+- **Action buttons** sit on the right of each result — buckets offer **View** (the `Bucket:` page) and **Browse** (`Special:Bucket`, with a full query builder); pages offer **Edit** and **View data**.
+
+::: warning Value counts come from a sample
+Bucket's query API has no `DISTINCT`, so a field's values are collected from the first 500 matching rows and counted in the browser. The counts are exact when that sample covers the bucket and read `48+` when it doesn't. A value confined to rarer rows may not be listed at all — type it in to filter by it anyway.
+:::
+
+This mode is loaded conditionally and only registered when Bucket is available on the wiki.
 
 ## Extending the command palette
 

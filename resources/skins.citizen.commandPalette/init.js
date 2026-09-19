@@ -78,6 +78,17 @@ function initApp( overlayEl, options ) {
 		}
 	} );
 
+	if ( config.isBucketEnabled ) {
+		mw.loader.using( 'skins.citizen.commandPalette.bucket' ).then( ( req ) => {
+			const createBucketMode = req( 'skins.citizen.commandPalette.bucket' );
+			paletteRegistry.register(
+				createBucketMode( mw.Api, config.bucketNamespaceId )
+			);
+		} ).catch( ( e ) => {
+			mw.log.error( '[commandPalette] Failed to load Bucket mode:', e );
+		} );
+	}
+
 	if ( config.isSemanticMediaWikiEnabled ) {
 		mw.loader.using( 'skins.citizen.commandPalette.smw' ).then( ( req ) => {
 			const smwMode = req( 'skins.citizen.commandPalette.smw' );
