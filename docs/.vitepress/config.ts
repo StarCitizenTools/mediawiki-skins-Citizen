@@ -43,6 +43,10 @@ export default defineConfig({
 				link: "/guide/introduction",
 			},
 			{
+				text: "Showcase",
+				link: "/community/showcase",
+			},
+			{
 				text: "Resources",
 				items: [
 					{
