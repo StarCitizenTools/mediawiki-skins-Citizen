@@ -1,0 +1,93 @@
+name: 📊 Showcase metadata
+
+on:
+  schedule:
+    # Mondays at 05:00 UTC.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: showcase-metadata
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: 🔄 Refresh counts
+    if: github.repository == 'StarCitizenTools/mediawiki-skins-Citizen'
+    runs-on: ubuntu-latest
+    # 24 sequential fetches, two of which tarpit until the 25s timeout. A run
+    # that has not finished in this long is stuck, not slow, and the default
+    # six-hour cap would hold the concurrency group all day.
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Refresh metadata
+        working-directory: docs
+        run: node scripts/showcase/metadata.js
+
+      # One open issue at a time, refreshed in place and closed once every wiki
+      # is answering again. Filing a fresh issue every Monday, or leaving a
+      # stale one open, would both train the maintainer to ignore the one that
+      # matters — the same alert fatigue the four-week failure threshold exists
+      # to prevent. Same find-and-update idiom as the docs preview comment.
+      - name: Report wikis needing attention
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COUNT=$(jq 'length' docs/showcase-alerts.json)
+          # Idempotent, and both paths below need it: the label has to exist
+          # before it can be applied or searched on.
+          # Deliberately not "showcase", which the submission issue form applies:
+          # the search below edits the newest open issue carrying this label in
+          # place, so a label a human can apply would let this overwrite someone's
+          # submission. Nothing but this step may ever apply showcase-health.
+          gh label create showcase-health --force --color ededed --description "Weekly showcase metadata refresh"
+          EXISTING=$(gh issue list --state open --label showcase-health --limit 1 --json number --jq '.[0].number // empty')
+          if [ "$COUNT" -gt 0 ]; then
+            FLAGGED=$(jq -r '.[] | "- " + .' docs/showcase-alerts.json)
+            TITLE="Showcase: $COUNT wiki(s) need attention"
+            BODY="$(printf 'The weekly showcase refresh flagged:\n\n%s\n\nRemove the entry from `docs/data/showcase.json` if it is no longer a Citizen wiki.' "$FLAGGED")"
+            if [ -n "$EXISTING" ]; then
+              gh issue edit "$EXISTING" --title "$TITLE" --body "$BODY"
+            else
+              gh issue create --label showcase-health --title "$TITLE" --body "$BODY"
+            fi
+          elif [ -n "$EXISTING" ]; then
+            # consecutiveFailures resets to zero on any success, so a wiki that
+            # recovers simply stops being flagged and nothing else would ever
+            # retract the issue.
+            gh issue comment "$EXISTING" --body "Every wiki is answering again, so nothing needs attention. Closing; the next refresh that flags anything will open a new issue."
+            gh issue close "$EXISTING"
+          fi
+
+      - name: Discard the alerts scratch file
+        run: rm -f docs/showcase-alerts.json
+
+      # Using SHOWCASE_PAT when present means ci-docs.yml runs without a manual
+      # "Approve and run" click. With GITHUB_TOKEN the run is created but gated.
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.SHOWCASE_PAT || secrets.GITHUB_TOKEN }}
+          branch: showcase/metadata-refresh
+          base: main
+          commit-message: "chore(showcase): refresh wiki article counts"
+          title: "chore(showcase): refresh wiki article counts"
+          body: |
+            Weekly refresh of `docs/data/showcase-metadata.json` from each wiki's own API.
+
+            Counts display rounded down with a `+`, so small movements do not change the page.
+          add-paths: docs/data/showcase-metadata.json
+          delete-branch: true

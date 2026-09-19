@@ -49,3 +49,14 @@ Thumbs.db
 # Codex audit cache
 scripts/.cache/
 .playwright-cli/
+
+# Scratch output from the showcase refresh jobs
+/docs/showcase-alerts.json
+/docs/showcase-failures.json
+
+# Local screenshot captures. Screenshots live in R2, never in git.
+/docs/tmp-shots/
+
+# Local credentials
+.env*
+*.env
