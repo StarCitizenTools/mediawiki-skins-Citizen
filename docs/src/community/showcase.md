@@ -1,35 +1,19 @@
 ---
 title: Showcase
-description: A showcase of wikis using Citizen
+description: Wikis using Citizen
+layout: page
 ---
 
-# Showcase
+<div class="vp-doc showcase-page">
 
-Check out these amazing wikis powering their content with Citizen:
+# Wikis running Citizen
 
-<LinkGrid>
- <LinkCard title="Star Citizen Wiki" href="https://starcitizen.tools" />
- <LinkCard title="Tolkien Gateway" href="https://tolkiengateway.net" />
- <LinkCard title="The Apple Wiki" href="https://theapplewiki.com" />
- <LinkCard title="求聞百科" href="https://www.qiuwenbaike.cn" />
- <LinkCard title="中文音MAD维基" href="https://otomad.wiki" />
- <LinkCard title="Coasterpedia" href="https://coasterpedia.net" />
- <LinkCard title="Dustloop Wiki" href="https://dustloop.com" />
- <LinkCard title="Untitled Tag Game Wiki" href="https://utg.miraheze.org" />
- <LinkCard title="Soulframe Wiki" href="https://wiki.avakot.org" />
- <LinkCard title="Industrialist Wiki" href="https://industrialist.miraheze.org" />
- <LinkCard title="Prism Party" href="https://www.prismparty.net" />
- <LinkCard title="Outlaster Wiki" href="https://outlaster.miraheze.org" />
- <LinkCard title="Battlestar Wiki" href="https://en.battlestarwiki.org" />
- <LinkCard title="Wordle Hub" href="https://wordles.miraheze.org" />
- <LinkCard title="Sorry We're Closed Wiki" href="https://sorrywereclosed.wiki" />
- <LinkCard title="Obby Wiki" href="https://obby.wiki" />
- <LinkCard title="NITC Wiki" href="https://wiki.fosscell.org" />
- <LinkCard title="Superstar Racers Wiki" href="https://sr.conecorp.cc" />
- <LinkCard title="Stella Sora Wiki" href="https://stellasora.miraheze.org" />
- <LinkCard title="CapoeiiraWiki" href="https://capoeirawiki.org" />
- <LinkCard title="Pleasant Goat Wiki" href="https://xyy.miraheze.org" />
- <LinkCard title="Wikven Static Site Generator" href="https://chaotic-ground.github.io/wikven/citizen/index.html" />
- <LinkCard title="Vocawiki" href="https://voca.wiki" />
- <LinkCard title="Official DOORS Wiki" href="https://doorsgame.wiki" />
-</LinkGrid>
+Every one of these runs the same skin, customized by its own community.
+
+<ShowcaseGrid />
+
+## Add your wiki
+
+Running Citizen? [Open a showcase submission](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=showcase_submission.yml) and we will add it. The screenshot and article count fill in on the next refresh.
+
+</div>

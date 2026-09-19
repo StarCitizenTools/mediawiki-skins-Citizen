@@ -6,6 +6,7 @@ import CopyOrDownloadAsMarkdownButtons from "vitepress-plugin-llms/vitepress-com
 import CopyCode from "./components/CopyCode.vue";
 import LinkGrid from "./components/LinkGrid.vue";
 import LinkCard from "./components/LinkCard.vue";
+import ShowcaseGrid from "./components/ShowcaseGrid.vue";
 import VersionSwitcher from "./components/VersionSwitcher.vue";
 import "./styles.less";
 
@@ -16,6 +17,7 @@ export default {
 		app.component("CopyCode", CopyCode);
 		app.component("LinkGrid", LinkGrid);
 		app.component("LinkCard", LinkCard);
+		app.component("ShowcaseGrid", ShowcaseGrid);
 		app.component("VersionSwitcher", VersionSwitcher);
 		app.component("CopyOrDownloadAsMarkdownButtons", CopyOrDownloadAsMarkdownButtons);
 	},

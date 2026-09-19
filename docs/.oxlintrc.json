@@ -44,6 +44,8 @@
 		"import/exports-last": "off",
 		// reason: side-effect-only imports (CSS, LESS, virtual modules) are required by VitePress and bundlers; assigning them to a variable would be dead code
 		"import/no-unassigned-import": "off",
+		// reason: directly contradicts no-duplicate-imports when a module supplies both a type and a value — this rule wants two statements, that one reports them as a duplicate. The merged `import { value, type Type }` form is the ordinary TypeScript convention and names the module once, and no-duplicate-imports catches a real readability problem, so this purely stylistic rule is the one that gives way
+		"import/consistent-type-specifier-style": "off",
 		// reason: regexes here only target ASCII (markdown headings, hex shas, CVE IDs); the 'u' flag adds no behavior and changes none of the matches
 		"require-unicode-regexp": "off",
 		// reason: numbers like 100 (per_page), 0 (first element), 2 (regex group index) are self-explanatory in context; extracting constants for them adds noise
