@@ -1,0 +1,41 @@
+name: Showcase submission
+description: Add your wiki to the Citizen showcase
+title: "showcase: add <wiki name>"
+labels: [showcase]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Your wiki needs to be publicly reachable and have Citizen as its default skin.
+        The screenshot and article count fill in automatically once it is added.
+  - type: input
+    id: name
+    attributes:
+      label: Wiki name
+      description: As you would like it shown on the card.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://example.wiki
+    validations:
+      required: true
+  - type: dropdown
+    id: tag
+    attributes:
+      label: Topic
+      description: Whichever one fits best.
+      options:
+        - Games
+        - Media
+        - Technology
+        - Real world
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else we should know about the wiki.
