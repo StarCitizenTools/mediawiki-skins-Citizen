@@ -55,6 +55,60 @@ class MenuItemDecoratorTest extends MediaWikiUnitTestCase {
 		$this->assertArrayNotHasKey( 'link-html', $links['views']['edit'] );
 	}
 
+	public function testMapIconsToMenuItemsByHrefMatchesOnTheLinkTarget(): void {
+		// The shape core gives tabs from getAssociatedNavigationLinks(): an
+		// ordinal key, and no id to match on.
+		$links = [
+			'associated-pages' => [
+				'special-specialAssociatedNavigationLinks-link-0' => [ 'href' => '/wiki/Special:Foo/core' ],
+				'special-specialAssociatedNavigationLinks-link-1' => [ 'href' => '/wiki/Special:Foo/other' ],
+			],
+		];
+
+		MenuItemDecorator::mapIconsToMenuItemsByHref( $links, 'associated-pages', [
+			'/wiki/Special:Foo/core' => 'configure',
+		] );
+
+		$this->assertSame(
+			'configure',
+			$links['associated-pages']['special-specialAssociatedNavigationLinks-link-0']['icon']
+		);
+		$this->assertArrayNotHasKey(
+			'icon',
+			$links['associated-pages']['special-specialAssociatedNavigationLinks-link-1']
+		);
+	}
+
+	public function testMapIconsToMenuItemsByHrefKeepsAnIconTheItemAlreadyHas(): void {
+		// Matches mapIconsToMenuItems(): an icon set upstream wins, so an
+		// extension that still maps its own links is not overridden.
+		$links = [
+			'associated-pages' => [
+				'link-0' => [ 'href' => '/wiki/Special:Foo/core', 'icon' => 'settings' ],
+			],
+		];
+
+		MenuItemDecorator::mapIconsToMenuItemsByHref( $links, 'associated-pages', [
+			'/wiki/Special:Foo/core' => 'configure',
+		] );
+
+		$this->assertSame( 'settings', $links['associated-pages']['link-0']['icon'] );
+	}
+
+	public function testMapIconsToMenuItemsByHrefIgnoresItemsWithoutAnHref(): void {
+		$links = [
+			'associated-pages' => [
+				'main' => [ 'id' => 'ca-nstab-main' ],
+			],
+		];
+
+		MenuItemDecorator::mapIconsToMenuItemsByHref( $links, 'associated-pages', [
+			'/wiki/Special:Foo/core' => 'configure',
+		] );
+
+		$this->assertArrayNotHasKey( 'icon', $links['associated-pages']['main'] );
+	}
+
 	public function testAppendClassToItemMergesIntoAnArrayTarget(): void {
 		$item = [ 'cdx-button', 'cdx-button--weight-quiet' ];
 

@@ -66,7 +66,7 @@ final class NavigationMenuTransformer {
 		}
 
 		if ( isset( $links['associated-pages'] ) ) {
-			$this->updateAssociatedPagesMenu( $links );
+			$this->updateAssociatedPagesMenu( $skin, $links );
 		}
 
 		if ( isset( $links['notifications'] ) ) {
@@ -114,7 +114,7 @@ final class NavigationMenuTransformer {
 	/**
 	 * Update associated pages menu items
 	 */
-	private function updateAssociatedPagesMenu( array &$links ): void {
+	private function updateAssociatedPagesMenu( SkinTemplate $skin, array &$links ): void {
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'main' => 'article',
@@ -136,8 +136,45 @@ final class NavigationMenuTransformer {
 		}
 
 		MenuItemDecorator::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
+		$this->mapManageWikiTabIcons( $skin, $links );
 		MenuItemDecorator::addIconsToMenuItems( $links, 'associated-pages' );
 		MenuItemDecorator::addButtonClassesToMenuItems( $links, 'associated-pages' );
+	}
+
+	/**
+	 * Icon the module tabs Extension:ManageWiki contributes through
+	 * SpecialPage::getAssociatedNavigationLinks().
+	 *
+	 * Core keys those tabs by ordinal position and gives them no id, so they
+	 * are matched on their target instead. Checking the page first keeps that
+	 * lookup off content pages, which carry an associated-pages menu of their
+	 * own but never these tabs.
+	 */
+	private function mapManageWikiTabIcons( SkinTemplate $skin, array &$links ): void {
+		$title = $skin->getTitle();
+
+		if ( $title === null || !$title->isSpecial( 'ManageWiki' ) ) {
+			return;
+		}
+
+		$iconMap = [
+			'core' => 'configure',
+			'extensions' => 'puzzle',
+			'namespaces' => 'articles',
+			'permissions' => 'userRights',
+			'settings' => 'settings',
+		];
+
+		$hrefMap = [];
+		foreach ( $iconMap as $module => $icon ) {
+			// Core builds the tab href the same way, so the two match.
+			$moduleTitle = $this->specialPageFactory->getTitleForAlias( "ManageWiki/$module" );
+			if ( $moduleTitle !== null ) {
+				$hrefMap[$moduleTitle->getLocalURL()] = $icon;
+			}
+		}
+
+		MenuItemDecorator::mapIconsToMenuItemsByHref( $links, 'associated-pages', $hrefMap );
 	}
 
 	/**

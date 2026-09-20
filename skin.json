@@ -755,6 +755,7 @@
 				"article",
 				"articleNotFound",
 				"articleRedirect",
+				"articles",
 				"articleSearch",
 				"articlesSearch",
 				"bell",
@@ -784,6 +785,7 @@
 				"message",
 				"move",
 				"printer",
+				"puzzle",
 				"qrCode",
 				"quotes",
 				"recentChanges",
@@ -809,6 +811,7 @@
 				"userAvatar",
 				"userContributions",
 				"userGroup",
+				"userRights",
 				"userTalk",
 				"watchlist",
 				"wikiText"
