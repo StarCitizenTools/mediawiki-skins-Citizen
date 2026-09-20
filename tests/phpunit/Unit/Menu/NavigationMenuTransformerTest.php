@@ -173,6 +173,69 @@ class NavigationMenuTransformerTest extends MediaWikiUnitTestCase {
 		$this->assertSame( 'image', $links['associated-pages']['file']['icon'] );
 	}
 
+	/**
+	 * A skin whose current page is Special:<name>, which is what gates the
+	 * icons for tabs contributed by getAssociatedNavigationLinks().
+	 */
+	private function createSkinTemplateOnSpecialPage( string $specialPage ): SkinTemplate {
+		$title = $this->createMock( Title::class );
+		$title->method( 'isSpecial' )->willReturnCallback(
+			static fn ( string $name ): bool => $name === $specialPage
+		);
+
+		$sktemplate = $this->createSkinTemplateMock();
+		$sktemplate->method( 'getTitle' )->willReturn( $title );
+
+		return $sktemplate;
+	}
+
+	public function testAssociatedPagesMenuIconsManageWikiTabsByTarget(): void {
+		// Core keys these tabs by their position in the list ManageWiki returns
+		// and gives them no id, so the target is all there is to match on.
+		$sktemplate = $this->createSkinTemplateOnSpecialPage( 'ManageWiki' );
+		$links = [
+			'associated-pages' => [
+				'special-specialAssociatedNavigationLinks-link-0' => [
+					'href' => '/wiki/Special:ManageWiki/core',
+				],
+				'special-specialAssociatedNavigationLinks-link-3' => [
+					'href' => '/wiki/Special:ManageWiki/permissions',
+				],
+			],
+		];
+
+		$this->newTransformer()->transform( $sktemplate, $links );
+
+		$this->assertSame(
+			'configure',
+			$links['associated-pages']['special-specialAssociatedNavigationLinks-link-0']['icon']
+		);
+		$this->assertSame(
+			'userRights',
+			$links['associated-pages']['special-specialAssociatedNavigationLinks-link-3']['icon']
+		);
+	}
+
+	public function testAssociatedPagesMenuLeavesTabsAloneAwayFromManageWiki(): void {
+		// Watchlist, Contributions and AbuseFilter reuse the same ordinal keys,
+		// so the icons are gated on the page being viewed.
+		$sktemplate = $this->createSkinTemplateOnSpecialPage( 'Watchlist' );
+		$links = [
+			'associated-pages' => [
+				'special-specialAssociatedNavigationLinks-link-0' => [
+					'href' => '/wiki/Special:ManageWiki/core',
+				],
+			],
+		];
+
+		$this->newTransformer()->transform( $sktemplate, $links );
+
+		$this->assertArrayNotHasKey(
+			'icon',
+			$links['associated-pages']['special-specialAssociatedNavigationLinks-link-0']
+		);
+	}
+
 	private function createSkinTemplateWithUser(
 		bool $isRegistered,
 		bool $isTemp

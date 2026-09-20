@@ -25,6 +25,23 @@ final class MenuItemDecorator {
 	}
 
 	/**
+	 * Set the icon parameter of the menu item based on a mapping of link targets
+	 *
+	 * For menu items whose key carries no meaning — tabs contributed through
+	 * SpecialPage::getAssociatedNavigationLinks() are keyed by ordinal position
+	 * — the href is the only field identifying where the item leads.
+	 */
+	public static function mapIconsToMenuItemsByHref( array &$links, string $menu, array $map ): void {
+		foreach ( $links[$menu] ?? [] as $key => $item ) {
+			$href = $item['href'] ?? null;
+
+			if ( $href !== null && isset( $map[$href] ) ) {
+				$links[$menu][$key]['icon'] ??= $map[$href];
+			}
+		}
+	}
+
+	/**
 	 * Add Codex button classes to menu items
 	 */
 	public static function addButtonClassesToMenuItems( array &$links, string $menu ): void {
