@@ -43,11 +43,15 @@
 					rx="1"
 				/>
 			</svg>
+			<cdx-icon
+				v-else-if="themeIcon( option.value )"
+				:icon="themeIcon( option.value )"
+			></cdx-icon>
 			<template v-else>
 				{{ option.label }}
 			</template>
 			<span
-				v-if="hasGlyph"
+				v-if="hasGlyph( option )"
 				class="citizen-preferences-segmented__srlabel"
 			>{{ option.label }}</span>
 		</cdx-radio>
@@ -55,12 +59,22 @@
 </template>
 
 <script>
-const { computed, defineComponent } = require( 'vue' );
-const { CdxRadio } = require( '../../codex.js' );
+const { defineComponent } = require( 'vue' );
+const { CdxIcon, CdxRadio } = require( '../../codex.js' );
+const { cdxIconBright, cdxIconHalfBright, cdxIconMoon } = require( './icons.json' );
 
-// Every glyph is sized from an option's rank in the list, never a lookup on
-// its value: an admin override replaces the options array wholesale, so a
+// Ramped glyphs are sized from an option's rank in the list, never a lookup
+// on its value: an admin override replaces the options array wholesale, so a
 // value the skin has never seen still has to land in the right place.
+
+// Themes are the exception — what a theme means is its name, not its place in
+// the list. A value with no icon here, such as a wiki-defined theme in an
+// overridden options array, falls back to its label.
+const THEME_ICONS = {
+	os: cdxIconHalfBright,
+	day: cdxIconBright,
+	night: cdxIconMoon
+};
 
 // The real body sizes this preference sets, in rem because Codex's mode
 // mixins declare --font-size-medium that way: a px sample would stop matching
@@ -99,7 +113,7 @@ function ramp( index, count, min, max ) {
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'SegmentedPicker',
-	components: { CdxRadio },
+	components: { CdxIcon, CdxRadio },
 	props: {
 		modelValue: {
 			type: String,
@@ -124,11 +138,31 @@ module.exports = exports = defineComponent( {
 	},
 	emits: [ 'update:modelValue', 'update:hovered' ],
 	setup( props ) {
-		// Without a glyph the label is visible text, which already names the
-		// segment; a second copy would announce it twice.
-		const hasGlyph = computed(
-			() => props.variant === 'font-size' || props.variant === 'width'
-		);
+		/**
+		 * The icon this option draws, or null when it draws no icon — the
+		 * variant is not `theme`, or the theme is one the skin has no icon
+		 * for.
+		 *
+		 * @param {string} value
+		 * @return {string|Object|null}
+		 */
+		function themeIcon( value ) {
+			return ( props.variant === 'theme' && THEME_ICONS[ value ] ) || null;
+		}
+
+		/**
+		 * Whether this option is drawn as a glyph. Without one the label is
+		 * visible text, which already names the segment; a second copy would
+		 * announce it twice.
+		 *
+		 * @param {Object} option
+		 * @return {boolean}
+		 */
+		function hasGlyph( option ) {
+			return props.variant === 'font-size' ||
+				props.variant === 'width' ||
+				themeIcon( option.value ) !== null;
+		}
 
 		/**
 		 * @param {number} index
@@ -153,6 +187,7 @@ module.exports = exports = defineComponent( {
 
 		return {
 			hasGlyph,
+			themeIcon,
 			// Latin 'Aa' means nothing in most scripts.
 			sampleText: mw.message( 'citizen-preferences-font-size-sample' ).text(),
 			sampleSize,
@@ -306,6 +341,11 @@ module.exports = exports = defineComponent( {
 	// below it, riding high.
 	&__page {
 		display: block;
+	}
+
+	// Same for the theme icons: Codex draws .cdx-icon inline-flex.
+	.cdx-icon {
+		display: flex;
 	}
 
 	&__page-frame {

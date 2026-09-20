@@ -77,7 +77,7 @@ describe( 'defaultConfig', () => {
 	it( 'should include type and visibilityCondition', () => {
 		const config = getDefaultConfig();
 
-		expect( config.preferences[ 'skin-theme' ].type ).toBe( 'radio' );
+		expect( config.preferences[ 'skin-theme' ].type ).toBe( 'segmented' );
 		expect( config.preferences[ 'citizen-feature-pure-black' ].type )
 			.toBe( 'switch' );
 		expect( config.preferences[ 'citizen-feature-pure-black' ].visibilityCondition )
@@ -101,7 +101,14 @@ describe( 'defaultConfig', () => {
 			expect( themePref.options[ 3 ] ).toEqual( {
 				value: 'black', labelMsg: 'citizen-theme-black-label'
 			} );
-			expect( themePref.columns ).toBe( 4 );
+		} );
+
+		it( 'should leave the widget to the ThemePicker', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.type ).toBe( 'radio' );
+			expect( themePref.variant ).toBeUndefined();
 		} );
 
 		it( 'should not offer the pure black switch', () => {
@@ -126,16 +133,23 @@ describe( 'defaultConfig', () => {
 
 			const themePref = config.preferences[ 'skin-theme' ];
 			expect( themePref.options ).toHaveLength( 3 );
-			expect( themePref.columns ).toBe( 3 );
 			expect( config.preferences ).toHaveProperty( 'citizen-feature-pure-black' );
 		} );
 
-		it( 'should keep the "Color" label and description', () => {
+		it( 'should draw the themes as a segmented track of icons', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.type ).toBe( 'segmented' );
+			expect( themePref.variant ).toBe( 'theme' );
+		} );
+
+		it( 'should keep the "Color" label with no description', () => {
 			const config = getDefaultConfig();
 
 			const themePref = config.preferences[ 'skin-theme' ];
 			expect( themePref.labelMsg ).toBe( 'citizen-theme-name' );
-			expect( themePref.descriptionMsg ).toBe( 'citizen-theme-description' );
+			expect( themePref.descriptionMsg ).toBeUndefined();
 		} );
 	} );
 } );

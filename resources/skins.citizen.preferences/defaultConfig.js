@@ -32,14 +32,16 @@ function getDefaultConfig( isV4 = document.documentElement.classList.contains( '
 			'skin-theme': {
 				section: 'appearance',
 				options: themeOptions,
-				type: 'radio',
-				// Legacy RadioGroup reads columns; the v4 ThemePicker ignores it.
-				columns: themeOptions.length,
-				// v4 relabels this to just "Theme" and drops the description.
-				// The legacy arm (labelMsg/descriptionMsg below) is deleted at
-				// the 4.0 flip when this conditional collapses to the v4 value.
+				// The legacy world draws the themes as a segmented track of
+				// icons. On v4 the ThemePicker claims skin-theme before a
+				// widget type is read, so this type is inert there.
+				type: isV4 ? 'radio' : 'segmented',
+				// citizen-v4-remove
+				...( isV4 ? {} : { variant: 'theme' } ),
+				// v4 relabels this to just "Theme".
+				// The legacy arm is deleted at the 4.0 flip when this
+				// conditional collapses to the v4 value.
 				labelMsg: isV4 ? 'citizen-theme-name-v4' : 'citizen-theme-name',
-				...( isV4 ? {} : { descriptionMsg: 'citizen-theme-description' } ),
 				visibilityCondition: 'always'
 			},
 			'citizen-feature-custom-font-size': {
