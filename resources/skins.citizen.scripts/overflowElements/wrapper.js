@@ -50,6 +50,11 @@ function createOverflowWrapper( {
 		if ( isPointerDevice ) {
 			const createButton = ( type ) => {
 				const button = document.createElement( 'button' );
+				// Must not be a submit button: it would become the default
+				// button of any surrounding <form> (e.g. the WikiEditor
+				// realtime preview pane), so Enter pressed in another field
+				// would scroll the table instead of submitting the form.
+				button.type = 'button';
 				button.className = `citizen-overflow-navButton citizen-overflow-navButton-${ type } citizen-ui-icon mw-ui-icon-wikimedia-collapse`;
 				button.setAttribute( 'aria-hidden', 'true' );
 				button.setAttribute( 'tabindex', '-1' );
