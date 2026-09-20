@@ -19,7 +19,7 @@ These are the preferences Citizen ships, and the keys, values and message keys a
 
 | Preference | Label | Widget | Default | Visible | Channel |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `skin-theme` | Color | `radio` | `os` | `always` | Stable |
+| `skin-theme` | Color | `segmented` | `os` | `always` | Stable |
 | `skin-theme` | Theme | `radio` | `os` | `always` | Preview |
 | `citizen-feature-custom-font-size` | Text | `segmented` | `standard` | `always` | — |
 | `citizen-feature-custom-width` | Width | `segmented` | `standard` | `always` | — |
@@ -135,8 +135,8 @@ Keep labels short for `segmented`: a segment is a third to a quarter of the
 panel's width, and the current one is shown beside the preference's heading. The
 built-in Text and Width preferences add `variant` (`"font-size"` or `"width"`)
 to draw a glyph per segment instead of a label, sized by an option's position in
-the list, so a trimmed or extended `options` array still renders in order. Set
-`"type": "select"` on either to get the dropdown back.
+the list, so a trimmed or extended `options` array still renders in order. Color
+adds `"theme"`, which draws an icon for each built-in theme.
 
 ## On-wiki JSON
 
@@ -195,8 +195,7 @@ This removes the "auto" option from the theme preference, leaving only day and n
       "options": [
         { "value": "day", "labelMsg": "citizen-theme-day-label" },
         { "value": "night", "labelMsg": "citizen-theme-night-label" }
-      ],
-      "columns": 2
+      ]
     }
   }
 }
