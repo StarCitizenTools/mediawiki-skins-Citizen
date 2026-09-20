@@ -166,6 +166,32 @@ describe( 'overflowElements', () => {
 			expect( document.querySelector( '.citizen-overflow-wrapper' ) ).toBe( null );
 			expect( observers.IntersectionObserver ).not.toHaveBeenCalled();
 		} );
+
+		it( 'should create nav buttons that are not submit buttons', () => {
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
+			const win = createMockWindow( { matchMedia: vi.fn( () => ( { matches: true } ) ) } );
+			const config = createConfig();
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: win,
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config
+			} );
+
+			// A submit button becomes the form's default button, so Enter in any
+			// other field of a surrounding <form> would scroll the table instead
+			// of submitting (e.g. the WikiEditor realtime preview pane).
+			const buttons = document.querySelectorAll( '.citizen-overflow-navButton' );
+			expect( buttons ).toHaveLength( 2 );
+			buttons.forEach( ( button ) => {
+				expect( button.type ).toBe( 'button' );
+			} );
+		} );
 	} );
 
 	describe( 'detectFloatDirection', () => {
