@@ -29,6 +29,14 @@ const lines = () => Array.from( document.querySelectorAll( '.citizen-toc-current
 describe( 'sectionLabel', () => {
 	beforeEach( () => {
 		document.body.innerHTML = FIXTURE;
+		// jsdom does no layout, so every element reports no client rects —
+		// the very signal the label uses for "not rendered". Declare the
+		// fixture rendered by default; tests for the hidden case opt out.
+		vi.spyOn( window.Element.prototype, 'getClientRects' ).mockReturnValue( [ {} ] );
+	} );
+
+	afterEach( () => {
+		vi.restoreAllMocks();
 	} );
 
 	it( 'gives the control a value slot without disturbing its label', () => {
@@ -117,6 +125,35 @@ describe( 'sectionLabel', () => {
 		const leaving = lines().find( ( l ) => l.classList.contains( 'is-leaving' ) );
 
 		leaving.dispatchEvent( new window.Event( 'animationend' ) );
+
+		expect( lines() ).toHaveLength( 1 );
+		expect( track().textContent ).toBe( 'Care' );
+	} );
+
+	it( 'takes the leaving label out at once when the track is not rendered', () => {
+		// Above the tablet breakpoint the control is display:none, so no
+		// animation runs and animationend never fires. Left to that event,
+		// one stale line accumulated per section change for the life of the page.
+		const label = createSectionLabel( { document, window: win() } );
+		label.init();
+		track().getClientRects = () => [];
+
+		label.update( 'toc-History' );
+		label.update( 'toc-Care' );
+		label.update( 'toc-Health' );
+
+		expect( lines() ).toHaveLength( 1 );
+		expect( track().textContent ).toBe( 'Health' );
+	} );
+
+	it( 'takes the leaving label out if its animation is cancelled', () => {
+		const label = createSectionLabel( { document, window: win() } );
+		label.init();
+		label.update( 'toc-History' );
+		label.update( 'toc-Care' );
+		const leaving = lines().find( ( l ) => l.classList.contains( 'is-leaving' ) );
+
+		leaving.dispatchEvent( new window.Event( 'animationcancel' ) );
 
 		expect( lines() ).toHaveLength( 1 );
 		expect( track().textContent ).toBe( 'Care' );

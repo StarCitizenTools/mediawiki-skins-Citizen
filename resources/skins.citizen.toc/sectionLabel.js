@@ -102,7 +102,11 @@ class SectionLabel {
 		if ( !leaving ) {
 			return;
 		}
-		if ( reduced || !text ) {
+		// A track that is not rendered runs no animation, so a line left
+		// waiting for animationend there is never removed. Above the tablet
+		// breakpoint the whole control is display:none, and this update still
+		// fires on every section change.
+		if ( reduced || !text || this.track.getClientRects().length === 0 ) {
 			leaving.remove();
 			return;
 		}
@@ -110,7 +114,11 @@ class SectionLabel {
 		// cascade race, and the one it arrived with is meaningless now.
 		leaving.classList.remove( 'is-entering-below', 'is-entering-above' );
 		leaving.classList.add( 'is-leaving', forward ? 'is-leaving-above' : 'is-leaving-below' );
-		leaving.addEventListener( 'animationend', () => leaving.remove(), { once: true } );
+		// The control can be hidden mid-swap — the card closing, a resize
+		// across the breakpoint — and a cancelled animation never ends.
+		const done = () => leaving.remove();
+		leaving.addEventListener( 'animationend', done, { once: true } );
+		leaving.addEventListener( 'animationcancel', done, { once: true } );
 	}
 
 	/**
