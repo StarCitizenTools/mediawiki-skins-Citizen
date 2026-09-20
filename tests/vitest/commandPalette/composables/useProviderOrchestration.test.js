@@ -1,6 +1,10 @@
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
+const useTokenizedInput = require(
+	'../../../../resources/skins.citizen.commandPalette/composables/useTokenizedInput.js'
+);
+
 const useProviderOrchestration = require(
 	'../../../../resources/skins.citizen.commandPalette/composables/useProviderOrchestration.js'
 );
@@ -780,6 +784,105 @@ describe( 'useProviderOrchestration', () => {
 
 			expect( orch.flatItems.value.map( ( i ) => i.id ) )
 				.not.toContain( 'abandoned' );
+		} );
+	} );
+
+	describe( 'enteredTrigger', () => {
+		function makeMode() {
+			return { id: 'user', getResults: vi.fn().mockResolvedValue( [] ) };
+		}
+
+		it( 'records the trigger that entered the mode', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+
+			orch.enterMode( makeMode(), '@' );
+
+			expect( orch.enteredTrigger.value ).toBe( '@' );
+		} );
+
+		it( 'is empty for a mode entered without a trigger', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+
+			orch.enterMode( makeMode() );
+
+			expect( orch.enteredTrigger.value ).toBe( '' );
+		} );
+
+		it( 'clears when the mode exits', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( makeMode(), '@' );
+
+			await orch.exitMode();
+
+			expect( orch.enteredTrigger.value ).toBe( '' );
+		} );
+
+		it( 'does not carry a trigger over from a previous mode', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( makeMode(), '@' );
+
+			orch.enterMode( makeMode() );
+
+			expect( orch.enteredTrigger.value ).toBe( '' );
+		} );
+	} );
+
+	describe( 'literal query routing', () => {
+		const triggerProvider = {
+			id: 'command',
+			canProvide: ( q ) => q.startsWith( '#' ),
+			getResults: () => ( { items: [ { id: 'c1', label: 'Cat', source: 'command:cat' } ] } ),
+			onResultSelect: vi.fn(),
+			debounceMs: 0,
+			keepStaleResults: false,
+			readsTriggers: true
+		};
+		const textProvider = {
+			id: 'search',
+			canProvide: ( q ) => !!q,
+			getResults: () => ( { items: [ { id: 'p1', label: 'Page', source: 'search' } ] } ),
+			onResultSelect: vi.fn(),
+			debounceMs: 0,
+			keepStaleResults: false
+		};
+
+		// Drives the real tokenizer rather than a stand-in predicate: the
+		// latch and the provider skip are the two halves of one contract, and
+		// a hand-written stub here would pass even if they disagreed.
+		async function sourcesFor( literal, query ) {
+			const tokenInput = useTokenizedInput( () => [] );
+			if ( literal ) {
+				tokenInput.setLiteralPrefix( literal );
+			}
+			const orch = useProviderOrchestration(
+				[ triggerProvider, textProvider ],
+				mockDecorator,
+				{ isHeldLiteral: tokenInput.isHeldLiteral }
+			);
+
+			orch.updateQuery( query );
+			await vi.runAllTimersAsync();
+
+			return orch.flatItems.value.map( ( i ) => i.source );
+		}
+
+		it( 'sends a query held literal past the trigger-reading provider', async () => {
+			const sources = await sourcesFor( '#', '#cat' );
+
+			expect( sources ).toContain( 'search' );
+			expect( sources ).not.toContain( 'command:cat' );
+		} );
+
+		it( 'lets the trigger-reading provider claim the query with no latch', async () => {
+			const sources = await sourcesFor( '', '#cat' );
+
+			expect( sources ).toContain( 'command:cat' );
+		} );
+
+		it( 'only holds back the provider for queries the latch actually covers', async () => {
+			const sources = await sourcesFor( '@', '#cat' );
+
+			expect( sources ).toContain( 'command:cat' );
 		} );
 	} );
 

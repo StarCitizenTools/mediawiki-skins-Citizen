@@ -36,6 +36,10 @@ describe( 'createPaletteCommandProvider', () => {
 		vi.restoreAllMocks();
 	} );
 
+	it( 'declares that it reads triggers, so a literal query can bypass it', () => {
+		expect( provider.readsTriggers ).toBe( true );
+	} );
+
 	describe( 'canProvide', () => {
 		it( 'should handle slash prefix', () => {
 			expect( provider.canProvide( '/' ) ).toBe( true );

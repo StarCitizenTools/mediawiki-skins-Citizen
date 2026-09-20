@@ -48,6 +48,7 @@ function toGrouped( deps ) {
 			findModeByTrigger: deps.findModeByTrigger,
 			onEnterMode: deps.onEnterMode,
 			onExitMode: deps.onExitMode,
+			onExitModeToLiteral: deps.onExitModeToLiteral,
 			onPopModeContext: deps.onPopModeContext
 		},
 		tokens: {
@@ -322,7 +323,7 @@ describe( 'useKeyboard', () => {
 
 			keyboard.handleKeydown( event );
 
-			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode, '@' );
 		} );
 	} );
 
@@ -343,7 +344,7 @@ describe( 'useKeyboard', () => {
 
 			keyboard.handleKeydown( event );
 
-			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode, '@' );
 		} );
 
 		it( 'should still ignore Ctrl+Alt with a non-printable key', () => {
@@ -389,7 +390,7 @@ describe( 'useKeyboard', () => {
 
 			keyboard.handleKeydown( event );
 
-			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode, '@' );
 		} );
 
 		it( 'should not let Ctrl+Alt+Space activate the focused action', () => {
@@ -1011,7 +1012,20 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( event );
 
 			expect( event.preventDefault ).toHaveBeenCalled();
-			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode, '@' );
+		} );
+
+		it( 'forwards the typed trigger so it can be restored as literal text', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			const mode = { id: 'category', triggers: [ '#' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			keyboard.handleKeydown( createKeyEvent( '#' ) );
+
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode, '#' );
 		} );
 
 		it( 'does not intercept trigger when mode is already active', () => {
@@ -1055,7 +1069,7 @@ describe( 'useKeyboard', () => {
 	} );
 
 	describe( 'Backspace with mode context', () => {
-		function setupBackspace( { tokens, query, modeContext } ) {
+		function setupBackspace( { tokens, query, modeContext, activeMode } ) {
 			const inputEl = {
 				selectionStart: 0,
 				selectionEnd: 0,
@@ -1069,9 +1083,14 @@ describe( 'useKeyboard', () => {
 			deps.onSelectToken = vi.fn();
 			deps.onRemoveToken = vi.fn();
 			deps.query = ref( query );
-			deps.activeMode = ref( modeContext.length > 0 ? { id: 'm' } : null );
+			deps.activeMode = ref(
+				activeMode === undefined ?
+					( modeContext.length > 0 ? { id: 'm' } : null ) :
+					activeMode
+			);
 			deps.activeModeContext = ref( modeContext );
 			deps.onPopModeContext = vi.fn();
+			deps.onExitModeToLiteral = vi.fn();
 			keyboard = useKeyboard( toGrouped( deps ) );
 			return { inputEl };
 		}
@@ -1116,6 +1135,66 @@ describe( 'useKeyboard', () => {
 
 			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
 			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
+		} );
+
+		it( 'exits an empty mode to literal text when nothing else is left to pop', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [],
+				activeMode: { id: 'user' }
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onExitModeToLiteral ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'pops the context stack before exiting the mode', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [ { name: 'A' } ],
+				activeMode: { id: 'user' }
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).toHaveBeenCalledTimes( 1 );
+			expect( deps.onExitModeToLiteral ).not.toHaveBeenCalled();
+		} );
+
+		it( 'leaves a non-empty mode query to the native caret', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: 'ali',
+				modeContext: [],
+				activeMode: { id: 'user' }
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onExitModeToLiteral ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		it( 'selects a surviving chip rather than exiting the mode', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [ { id: 't1', label: 'Talk' } ],
+				query: '',
+				modeContext: [],
+				activeMode: { id: 'user' }
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
+			expect( deps.onExitModeToLiteral ).not.toHaveBeenCalled();
 		} );
 	} );
 

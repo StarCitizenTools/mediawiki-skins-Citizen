@@ -55,6 +55,7 @@ function normalizeProviderResult( result ) {
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
  * @param {import('vue').Ref<Array>} [deps.tokens] Ref containing the current token array.
+ * @param {Function} [deps.isHeldLiteral] Returns whether a query's leading span is text the user declared literal.
  * @param {Function} [deps.getHelpCatalogItems] Returns the list of registered modes/commands shown in the help overlay's mode catalog at root.
  * @return {Object} Orchestration state and methods.
  */
@@ -67,6 +68,10 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	const activeMode = shallowRef( null );
 	/** @type {import('vue').Ref<Object[]>} */
 	const activeModeContext = ref( [] );
+	// The trigger text the user typed to enter the active mode, so backing out
+	// of the mode can hand that text back as a literal query. Empty when the
+	// mode was entered some other way, e.g. by picking it from the list.
+	const enteredTrigger = ref( '' );
 	const helpVisible = ref( false );
 
 	// Identifies the surface a request belongs to. Every staleness decision
@@ -399,12 +404,14 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	 * Enters a mode, clearing query and displayed items.
 	 *
 	 * @param {Object} mode The mode to enter.
+	 * @param {string} [trigger] The trigger text that entered the mode.
 	 */
-	function enterMode( mode ) {
+	function enterMode( mode, trigger ) {
 		resetOperationState();
 		resetDetailState();
 		activeMode.value = mode;
 		activeModeContext.value = [];
+		enteredTrigger.value = trigger || '';
 		query.value = '';
 		resetContent();
 		handleModeQuery( mode, '' );
@@ -418,6 +425,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	function exitMode() {
 		activeMode.value = null;
 		activeModeContext.value = [];
+		enteredTrigger.value = '';
 		// clearSearch() also calls resetDetailState(), but the direct call
 		// here keeps exitMode's contract self-evident — every navigation
 		// function explicitly resets both lifecycles.
@@ -490,8 +498,14 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 			return;
 		}
 
+		// A latched literal is text the user asked to search for, so a trigger
+		// sitting at the front of it is not a command. Trigger-reading
+		// providers stand down and the query falls through to plain text.
+		const heldLiteral = deps.isHeldLiteral ?
+			deps.isHeldLiteral( newQuery ) :
+			false;
 		const contentProvider = providers.find(
-			( p ) => p.canProvide( newQuery )
+			( p ) => !( heldLiteral && p.readsTriggers ) && p.canProvide( newQuery )
 		);
 		const dispatchSurface = surfaceKey.value;
 
@@ -751,6 +765,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		stateConfig,
 		activeMode,
 		activeModeContext,
+		enteredTrigger,
 		helpVisible,
 		updateQuery,
 		clearSearch,

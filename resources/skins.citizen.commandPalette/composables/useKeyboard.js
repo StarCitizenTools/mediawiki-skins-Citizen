@@ -577,7 +577,7 @@ const coreBindings = [
 		hint: { msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', order: 999 }
 	},
 
-	// --- INPUT ZONE: Backspace (3 disjoint cases) ---
+	// --- INPUT ZONE: Backspace (4 disjoint cases) ---
 	{
 		id: 'input-pop-mode-context',
 		zone: 'input',
@@ -596,6 +596,29 @@ const coreBindings = [
 			state.onPopModeContext();
 		},
 		hint: { msgKey: 'citizen-command-palette-keyhint-back', kbd: '⌫', order: 200 }
+	},
+	{
+		// Leaving a mode this way restores the trigger the user typed to get
+		// in, as literal text, which is the only route to searching for a
+		// title that starts with a trigger character.
+		id: 'input-exit-mode-to-literal',
+		zone: 'input',
+		keys: [ 'Backspace' ],
+		when: ( state ) => {
+			if ( !cursorAtStart( state ) ) {
+				return false;
+			}
+			return Boolean( state.activeMode ) &&
+				!state.query &&
+				state.tokens.length === 0 &&
+				state.modeContext.length === 0 &&
+				Boolean( state.onExitModeToLiteral );
+		},
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onExitModeToLiteral();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-exit-literal', kbd: '⌫', order: 200 }
 	},
 	{
 		id: 'input-remove-selected-token',
@@ -687,7 +710,7 @@ function actionCount( state ) {
  *   isGalleryLayout, actionNav.
  * @param {Object} options.mode Required. activeMode, findModeByTrigger,
  *   onEnterMode, onExitMode, onPopModeContext, plus optional
- *   activeModeContext.
+ *   activeModeContext and onExitModeToLiteral.
  * @param {Object} [options.tokens] tokens, selectedTokenIndex,
  *   onSelectToken, onRemoveToken.
  * @param {Object} [options.help] helpVisible, onToggleHelp, onCloseHelp.
@@ -859,6 +882,7 @@ function useKeyboard( options ) {
 			onClose: core.onClose,
 			onClearQuery: core.onClearQuery,
 			onExitMode: mode.onExitMode,
+			onExitModeToLiteral: mode.onExitModeToLiteral,
 			onEnterMode: mode.onEnterMode,
 			onSelect: core.onSelect,
 			onToggleHelp: help.onToggleHelp,
@@ -1025,7 +1049,7 @@ function useKeyboard( options ) {
 			const matched = mode.findModeByTrigger( event.key );
 			if ( matched ) {
 				event.preventDefault();
-				mode.onEnterMode( matched );
+				mode.onEnterMode( matched, event.key );
 			}
 		}
 	}
