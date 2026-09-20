@@ -51,6 +51,7 @@ jobs:
             script:
               - resources/**/*.js
               - resources/**/*.d.ts
+              - resources/**/*.vue
               - tests/vitest/**
               - vitest.config.js
               - tsconfig.json
@@ -61,6 +62,7 @@ jobs:
             stylesheet:
               - resources/**/*.css
               - resources/**/*.less
+              - resources/**/*.vue
               - skinStyles/**/*.css
               - skinStyles/**/*.less
               - package.json
