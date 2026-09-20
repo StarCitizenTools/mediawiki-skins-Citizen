@@ -110,33 +110,6 @@ const { resolveLabel } = require( './configRegistry.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
 
 /**
- * Map a theme-pref value to a CSS `color-scheme` value. The preview
- * element sets this on itself, which causes the inherited light-dark()
- * tokens (--color-surface-0, --color-base) to resolve to the correct
- * side per preview — without swapping classes or reading computed
- * styles.
- *
- * citizen-v4-remove — legacy-only. The v4 ThemePicker paints the real
- * theme via its class, so this whole function dies at the 4.0 flip.
- *
- * @param {string} value - Theme value, e.g. 'os', 'day', 'night', 'black'
- * @return {string}
- */
-function getThemeColorScheme( value ) {
-	if ( value === 'day' ) {
-		return 'light';
-	}
-	// Shipped themes — their scheme is known, hardcode it.
-	if ( value === 'night' || value === 'black' ) {
-		return 'dark';
-	}
-	// 'os' — and wiki-defined themes, whose real scheme lives in their
-	// CSS where the swatch can't read it. Adaptive is the least-wrong
-	// preview for both.
-	return 'light dark';
-}
-
-/**
  * Capitalize the first letter of a theme value for a display label.
  * Theme values are already [a-zA-Z0-9]+ (clientPrefs enforces this), so the
  * result is safe to render as escaped text.
@@ -162,11 +135,11 @@ module.exports = exports = defineComponent( {
 	setup() {
 		/** @type {NormalizedPreferencesConfig} */
 		const config = inject( 'preferencesConfig' );
-		// The v4 theme picker (ThemePicker) replaces the legacy RadioGroup
-		// swatch grid for skin-theme. citizen-v4-remove — at the 4.0 flip,
-		// drop the `&& isV4` from ThemePicker's template condition so it
-		// always claims skin-theme, and delete this const. RadioGroup.vue
-		// itself stays: it still renders wiki-defined radio preferences.
+		// The v4 theme picker (ThemePicker) replaces the legacy segmented
+		// track for skin-theme. citizen-v4-remove — at the 4.0 flip, drop
+		// the `&& isV4` from ThemePicker's template condition so it always
+		// claims skin-theme, and delete this const. RadioGroup.vue itself
+		// stays: it still renders wiki-defined radio preferences.
 		const isV4 = document.documentElement.classList.contains( 'citizen-v4' );
 
 		// A theme applied to <html> but absent from the picker options
@@ -269,20 +242,10 @@ module.exports = exports = defineComponent( {
 					const sectionPrefs = Object.entries( config.preferences )
 						.filter( ( [ , pref ] ) => pref.section === key && pref.hidden !== true )
 						.map( ( [ featureName, prefConfig ] ) => {
-							const options = prefConfig.options.map( ( opt ) => {
-								const option = {
-									value: opt.value,
-									label: resolveLabel( opt, 'label' )
-								};
-								// Legacy swatch hint only — the v4 ThemePicker paints
-								// the real theme, so it needs no colorScheme.
-								// citizen-v4-remove
-								if ( featureName === 'skin-theme' && !isV4 ) {
-									option.colorScheme =
-										getThemeColorScheme( opt.value );
-								}
-								return option;
-							} );
+							const options = prefConfig.options.map( ( opt ) => ( {
+								value: opt.value,
+								label: resolveLabel( opt, 'label' )
+							} ) );
 
 							if (
 								featureName === 'skin-theme' && syntheticTheme &&

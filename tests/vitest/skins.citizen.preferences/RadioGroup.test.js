@@ -7,11 +7,6 @@ globalThis.mw = mw;
 
 // Mock Codex components before loading the component
 setCodexStubs( {
-	CdxIcon: {
-		name: 'CdxIcon',
-		template: '<span class="cdx-icon"></span>',
-		props: [ 'icon', 'size' ]
-	},
 	CdxRadio: {
 		name: 'CdxRadio',
 		template: '<div class="cdx-radio"><input type="radio" /><slot /></div>',
@@ -121,39 +116,7 @@ describe( 'RadioGroup', () => {
 		} );
 	} );
 
-	describe( 'card previews', () => {
-		it( 'should render theme preview with icon when option has colorScheme', () => {
-			const optionsWithPreview = [
-				{
-					value: 'light',
-					label: 'Light',
-					colorScheme: 'light'
-				},
-				{
-					value: 'dark',
-					label: 'Dark',
-					colorScheme: 'dark'
-				}
-			];
-
-			const wrapper = mountRadioGroup( { options: optionsWithPreview } );
-
-			const previews = wrapper.findAll( '.citizen-preferences-card__preview--theme' );
-
-			expect( previews ).toHaveLength( 2 );
-			expect( previews[ 0 ].element.style.colorScheme ).toBe( 'light' );
-			expect( previews[ 1 ].element.style.colorScheme ).toBe( 'dark' );
-			expect( previews[ 0 ].findComponent( { name: 'CdxIcon' } ).exists() ).toBe( true );
-		} );
-
-		it( 'should not render preview when options have no preview data', () => {
-			const wrapper = mountRadioGroup();
-
-			const previews = wrapper.findAll( '.citizen-preferences-card__preview' );
-
-			expect( previews ).toHaveLength( 0 );
-		} );
-
+	describe( 'cards', () => {
 		it( 'should render labels for all cards', () => {
 			const wrapper = mountRadioGroup();
 

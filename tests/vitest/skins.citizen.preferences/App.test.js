@@ -13,6 +13,11 @@ setCodexStubs( {
 		template: '<fieldset :id="id" class="cdx-field citizen-preferences-group"><div class="cdx-label"><slot name="label" /></div><div class="cdx-label__description"><slot name="description" /></div><slot /></fieldset>',
 		props: [ 'id', 'isFieldset' ]
 	},
+	CdxIcon: {
+		name: 'CdxIcon',
+		template: '<span class="cdx-icon"></span>',
+		props: [ 'icon' ]
+	},
 	CdxRadio: {
 		name: 'CdxRadio',
 		template: '<div class="cdx-radio"><input type="radio" /><slot /></div>',
@@ -127,6 +132,20 @@ function mountApp( prefClasses, configOverride ) {
  */
 function shallowMountApp( prefClasses, configOverride ) {
 	return doMount( shallowMount, prefClasses, configOverride );
+}
+
+/**
+ * Find the segmented track rendering one preference. Three of them are on
+ * the panel, so the component name alone does not identify one.
+ *
+ * @param {import('@vue/test-utils').VueWrapper} wrapper
+ * @param {string} featureName
+ * @return {import('@vue/test-utils').VueWrapper}
+ */
+function findTrack( wrapper, featureName ) {
+	return wrapper.findAllComponents( { name: 'SegmentedPicker' } ).find(
+		( c ) => c.props( 'featureName' ) === featureName
+	);
 }
 
 /**
@@ -260,13 +279,12 @@ describe( 'App', () => {
 			globalThis.matchMedia = savedMatchMedia;
 		} );
 
-		it( 'should render RadioGroup for radio-type preferences', () => {
+		it( 'should render no RadioGroup now that nothing built in is a radio', () => {
 			const wrapper = mountApp( ALL_PREF_CLASSES );
 
 			const radioGroups = wrapper.findAllComponents( { name: 'RadioGroup' } );
 
-			// Only skin-theme is a radio type
-			expect( radioGroups ).toHaveLength( 1 );
+			expect( radioGroups ).toHaveLength( 0 );
 		} );
 
 		it( 'should render SegmentedPicker for segmented-type preferences', () => {
@@ -274,8 +292,26 @@ describe( 'App', () => {
 
 			const pickers = wrapper.findAllComponents( { name: 'SegmentedPicker' } );
 
-			// custom-font-size and custom-width are the two segmented types
-			expect( pickers ).toHaveLength( 2 );
+			// skin-theme, custom-font-size and custom-width are segmented
+			expect( pickers ).toHaveLength( 3 );
+		} );
+
+		it( 'should name the current theme in the label row instead of a description', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES );
+
+			const group = wrapper.find( '#skin-client-prefs-skin-theme' );
+
+			expect( group.find( '.citizen-preferences-group__readout' ).text() )
+				.toBe( 'citizen-theme-os-label' );
+			expect( group.find( '.cdx-label__description' ).text() ).toBe( '' );
+		} );
+
+		it( 'should pass the theme variant to the theme track', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES );
+
+			const themeTrack = findTrack( wrapper, 'skin-theme' );
+
+			expect( themeTrack.props( 'variant' ) ).toBe( 'theme' );
 		} );
 
 		it( 'should render no CdxSelect now that nothing built in is a select', () => {
@@ -402,12 +438,10 @@ describe( 'App', () => {
 			);
 			const wrapper = mountApp( classes );
 
-			const themeGroup = wrapper.findComponent( { name: 'RadioGroup' } );
-			const fontPicker = wrapper.findAllComponents( { name: 'SegmentedPicker' } ).find(
-				( c ) => c.props( 'featureName' ) === 'citizen-feature-custom-font-size'
-			);
+			const themeTrack = findTrack( wrapper, 'skin-theme' );
+			const fontPicker = findTrack( wrapper, 'citizen-feature-custom-font-size' );
 
-			expect( themeGroup.props( 'modelValue' ) ).toBe( 'night' );
+			expect( themeTrack.props( 'modelValue' ) ).toBe( 'night' );
 			expect( fontPicker.props( 'modelValue' ) ).toBe( 'large' );
 		} );
 	} );
@@ -488,8 +522,8 @@ describe( 'App', () => {
 			// Changing the theme swaps the root class, so the computed
 			// color-scheme resolves to dark and dark-theme conditions show.
 			mockColorScheme = 'dark';
-			const radioGroup = wrapper.findComponent( { name: 'RadioGroup' } );
-			radioGroup.vm.$emit( 'update:modelValue', 'night' );
+			const themeTrack = findTrack( wrapper, 'skin-theme' );
+			themeTrack.vm.$emit( 'update:modelValue', 'night' );
 			await wrapper.vm.$nextTick();
 
 			expect( pureBlack.attributes( 'style' ) ).not.toContain( 'display: none' );
@@ -514,7 +548,7 @@ describe( 'App', () => {
 
 			const calls = mw.message.mock.calls;
 			const descriptionCall = calls.find(
-				( args ) => args[ 0 ] === 'citizen-theme-description'
+				( args ) => args[ 0 ] === 'citizen-feature-image-dimming-description'
 			);
 
 			expect( descriptionCall ).toBeTruthy();

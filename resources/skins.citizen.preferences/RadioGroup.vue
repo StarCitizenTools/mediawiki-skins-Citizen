@@ -12,14 +12,6 @@
 			@update:model-value="$emit( 'update:modelValue', $event )"
 		>
 			<span class="citizen-preferences-card">
-				<span
-					v-if="option.colorScheme"
-					class="citizen-preferences-card__preview
-						citizen-preferences-card__preview--theme"
-					:style="{ colorScheme: option.colorScheme }"
-				>
-					<cdx-icon :icon="cdxIconAlignRight"></cdx-icon>
-				</span>
 				<span class="citizen-preferences-card__label">{{ option.label }}</span>
 			</span>
 		</cdx-radio>
@@ -28,13 +20,12 @@
 
 <script>
 const { defineComponent } = require( 'vue' );
-const { CdxIcon, CdxRadio } = require( '../../codex.js' );
-const { cdxIconAlignRight } = require( './icons.json' );
+const { CdxRadio } = require( '../../codex.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'RadioGroup',
-	components: { CdxIcon, CdxRadio },
+	components: { CdxRadio },
 	props: {
 		modelValue: {
 			type: String,
@@ -53,10 +44,7 @@ module.exports = exports = defineComponent( {
 			default: 2
 		}
 	},
-	emits: [ 'update:modelValue' ],
-	setup() {
-		return { cdxIconAlignRight };
-	}
+	emits: [ 'update:modelValue' ]
 } );
 </script>
 
@@ -127,28 +115,6 @@ module.exports = exports = defineComponent( {
 		.cdx-radio:has( .cdx-radio__input:checked ) & {
 			font-weight: var( --font-weight-semi-bold );
 			color: var( --color-progressive );
-		}
-	}
-
-	&__preview {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		aspect-ratio: 3 / 2;
-		padding: var( --space-xs );
-		// `color-scheme` is set inline per option on theme previews —
-		// the inherited light-dark() tokens below resolve to whichever
-		// side matches the option's scheme, so each preview shows its
-		// own theme colors without class-swapping.
-		color: var( --color-base );
-		background-color: var( --color-surface-0 );
-		border-bottom: var( --border-subtle );
-
-		.cdx-icon {
-			width: 2rem;
-			height: 2rem;
-			color: inherit;
 		}
 	}
 }

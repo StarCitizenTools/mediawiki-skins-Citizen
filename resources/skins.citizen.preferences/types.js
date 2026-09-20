@@ -26,8 +26,8 @@
  * @property {'switch'|'select'|'radio'|'segmented'} [type] Widget type.
  *   Auto-detected if omitted: 2 options = 'switch', 3+ = 'select'.
  * @property {string} [variant] For segmented type, which glyph set each
- *   option draws: 'font-size', 'width'. Omitted or unrecognized renders
- *   the option labels as text.
+ *   option draws: 'font-size', 'width', 'theme'. Omitted or unrecognized
+ *   renders the option labels as text.
  * @property {string} [label] Literal heading text.
  * @property {string} [labelMsg] i18n message key for the heading.
  * @property {string} [description] Literal description text.
@@ -73,8 +73,8 @@
  * @property {'switch'|'select'|'radio'|'segmented'} type Widget type
  *   (always present after normalization).
  * @property {string} [variant] For segmented type, which glyph set each
- *   option draws: 'font-size', 'width'. Omitted or unrecognized renders
- *   the option labels as text.
+ *   option draws: 'font-size', 'width', 'theme'. Omitted or unrecognized
+ *   renders the option labels as text.
  * @property {string} [label] Literal heading text.
  * @property {string} [labelMsg] i18n message key for the heading.
  * @property {string} [description] Literal description text.

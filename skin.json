@@ -290,7 +290,9 @@
 					"name": "resources/skins.citizen.preferences/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
-						"cdxIconAlignRight"
+						"cdxIconBright",
+						"cdxIconHalfBright",
+						"cdxIconMoon"
 					]
 				},
 				{
@@ -331,7 +333,6 @@
 				"citizen-preferences-font-size-sample",
 				"citizen-preferences-section-appearance",
 				"citizen-preferences-section-behavior",
-				"citizen-theme-description",
 				"citizen-theme-black-label",
 				"citizen-theme-day-label",
 				"citizen-theme-name",

@@ -3,9 +3,15 @@
 const { mount } = require( '@vue/test-utils' );
 const mw = require( '../mocks/mw.js' );
 const { setCodexStubs } = require( '../mocks/codex.js' );
+const icons = require( '../mocks/preferencesIcons.js' );
 globalThis.mw = mw;
 
 setCodexStubs( {
+	CdxIcon: {
+		name: 'CdxIcon',
+		template: '<span class="cdx-icon"></span>',
+		props: [ 'icon' ]
+	},
 	CdxRadio: {
 		name: 'CdxRadio',
 		template: '<div class="cdx-radio"><input type="radio" /><slot /></div>',
@@ -28,6 +34,24 @@ const WIDTH_OPTIONS = [
 	{ value: 'wide', label: 'Wide' },
 	{ value: 'full', label: 'Full' }
 ];
+
+const THEME_OPTIONS = [
+	{ value: 'os', label: 'Auto' },
+	{ value: 'day', label: 'Light' },
+	{ value: 'night', label: 'Dark' }
+];
+
+/**
+ * Icons drawn by the theme segments, in source order.
+ *
+ * @param {Object} wrapper
+ * @return {Array}
+ */
+function themeIcons( wrapper ) {
+	return wrapper
+		.findAllComponents( { name: 'CdxIcon' } )
+		.map( ( c ) => c.props( 'icon' ) );
+}
 
 function mountPicker( propsOverrides = {} ) {
 	return mount( SegmentedPicker, {
@@ -209,6 +233,87 @@ describe( 'SegmentedPicker', () => {
 		} );
 	} );
 
+	describe( 'theme variant', () => {
+		function mountThemePicker( propsOverrides = {} ) {
+			return mountPicker( {
+				options: THEME_OPTIONS,
+				featureName: 'skin-theme',
+				variant: 'theme',
+				modelValue: 'os',
+				...propsOverrides
+			} );
+		}
+
+		it( 'should draw one icon per shipped theme', () => {
+			const wrapper = mountThemePicker();
+
+			expect( themeIcons( wrapper ) ).toEqual( [
+				icons.cdxIconHalfBright,
+				icons.cdxIconBright,
+				icons.cdxIconMoon
+			] );
+		} );
+
+		it( 'should key the icon on the value, not the position', () => {
+			const wrapper = mountThemePicker( {
+				options: [ ...THEME_OPTIONS ].reverse(),
+				modelValue: 'night'
+			} );
+
+			expect( themeIcons( wrapper ) ).toEqual( [
+				icons.cdxIconMoon,
+				icons.cdxIconBright,
+				icons.cdxIconHalfBright
+			] );
+		} );
+
+		it( 'should name every icon segment for a screen reader', () => {
+			const wrapper = mountThemePicker();
+
+			const labels = wrapper
+				.findAll( '.citizen-preferences-segmented__srlabel' )
+				.map( ( el ) => el.text() );
+
+			expect( labels ).toEqual( [ 'Auto', 'Light', 'Dark' ] );
+		} );
+
+		it( 'should label a wiki-defined theme as text and keep the rest as icons', () => {
+			const wrapper = mountThemePicker( {
+				options: [ ...THEME_OPTIONS, { value: 'ocean', label: 'Ocean' } ]
+			} );
+
+			expect( themeIcons( wrapper ) ).toHaveLength( 3 );
+			expect( wrapper.text() ).toContain( 'Ocean' );
+		} );
+
+		it( 'should fall back to a full text track when no theme is recognised', () => {
+			const wrapper = mountThemePicker( {
+				options: [
+					{ value: 'sunset', label: 'Sunset' },
+					{ value: 'forest', label: 'Forest' }
+				],
+				modelValue: 'sunset'
+			} );
+
+			expect( themeIcons( wrapper ) ).toHaveLength( 0 );
+			expect( wrapper.findAll( '.citizen-preferences-segmented__srlabel' ) )
+				.toHaveLength( 0 );
+			expect( wrapper.text() ).toContain( 'Sunset' );
+		} );
+
+		it( 'should not double up the label of a theme drawn as text', () => {
+			const wrapper = mountThemePicker( {
+				options: [ ...THEME_OPTIONS, { value: 'ocean', label: 'Ocean' } ]
+			} );
+
+			const labels = wrapper
+				.findAll( '.citizen-preferences-segmented__srlabel' )
+				.map( ( el ) => el.text() );
+
+			expect( labels ).toEqual( [ 'Auto', 'Light', 'Dark' ] );
+		} );
+	} );
+
 	describe( 'no variant', () => {
 		it( 'should fall back to plain text labels', () => {
 			const wrapper = mountPicker( { variant: '' } );
@@ -234,6 +339,17 @@ describe( 'SegmentedPicker', () => {
 			expect( wrapper.findAll( '.citizen-preferences-segmented__sample' ) )
 				.toHaveLength( 0 );
 			expect( wrapper.text() ).toContain( 'Small' );
+		} );
+
+		it( 'should not draw theme icons for options that share a theme value', () => {
+			const wrapper = mountPicker( {
+				options: THEME_OPTIONS,
+				variant: '',
+				modelValue: 'os'
+			} );
+
+			expect( themeIcons( wrapper ) ).toHaveLength( 0 );
+			expect( wrapper.text() ).toContain( 'Auto' );
 		} );
 	} );
 } );
