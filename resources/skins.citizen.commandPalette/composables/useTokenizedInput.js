@@ -16,8 +16,12 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	const tokens = ref( [] );
 	const freeText = ref( '' );
 	const selectedIndex = ref( -1 );
-	let suppressDetection = false;
-	let suppressedTextLength = 0;
+	/**
+	 * Text the user has declared literal by undoing the tag that rendered it.
+	 * Detection stays off for as long as the input still starts with this
+	 * span, so typing past it cannot re-create the tag that was just undone.
+	 */
+	const literalPrefix = ref( '' );
 
 	const fullQuery = computed( () => {
 		const prefixTokens = tokens.value.filter( ( t ) => t.position === 'prefix' );
@@ -50,17 +54,45 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	}
 
 	/**
-	 * Removes a token by index and suppresses auto-detection until the user
-	 * types new content (text length grows). This prevents the removed token's
-	 * raw text from being immediately re-tokenized while the user edits it.
+	 * Removes a token by index and latches its raw text as literal, so the
+	 * caller can type that text back into the input without the pattern that
+	 * produced the token matching it again.
 	 *
 	 * @param {number} index The index of the token to remove.
 	 */
 	function removeToken( index ) {
+		const token = tokens.value[ index ];
+		if ( !token ) {
+			return;
+		}
 		tokens.value = tokens.value.filter( ( _, i ) => i !== index );
 		selectedIndex.value = -1;
-		suppressDetection = true;
-		suppressedTextLength = Infinity;
+		literalPrefix.value = token.raw;
+	}
+
+	/**
+	 * Latches a span as literal without a token having been removed, for text
+	 * that never became a token in the first place — a mode trigger the user
+	 * backed out of, say.
+	 *
+	 * @param {string} raw The text to hold literal.
+	 */
+	function setLiteralPrefix( raw ) {
+		literalPrefix.value = raw;
+	}
+
+	/**
+	 * Whether the latch covers this text, i.e. whether its leading span is
+	 * something the user declared to be plain text. Anything that reads the
+	 * front of a query as a trigger asks this before acting on it, so the
+	 * condition has one definition rather than one per caller.
+	 *
+	 * @param {string} text The text to check.
+	 * @return {boolean}
+	 */
+	function isHeldLiteral( text ) {
+		return Boolean( literalPrefix.value ) &&
+			text.startsWith( literalPrefix.value );
 	}
 
 	/**
@@ -241,24 +273,23 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	}
 
 	/**
-	 * Sets the free text value. Runs auto-detection against registered
-	 * tokenPatterns unless detection is suppressed (e.g. after removeToken).
+	 * Sets the free text value, running auto-detection against registered
+	 * tokenPatterns unless a literal span is latched.
 	 *
-	 * Detection stays suppressed while the text is shrinking or unchanged
-	 * (user is backspacing/editing the removed token). It resumes once the
-	 * text grows (user typed new content past the edit point).
+	 * The latch releases the moment the text stops starting with it: the user
+	 * has edited into the span they declared literal, so the declaration no
+	 * longer describes anything. Anchoring on the text rather than on its
+	 * length is what lets the literal survive further typing.
 	 *
 	 * @param {string} text The new free text value.
 	 */
 	function setFreeText( text ) {
-		if ( suppressDetection ) {
-			if ( text.length > suppressedTextLength ) {
-				suppressDetection = false;
-			} else {
-				suppressedTextLength = text.length;
+		if ( literalPrefix.value ) {
+			if ( isHeldLiteral( text ) ) {
 				freeText.value = text;
 				return;
 			}
+			literalPrefix.value = '';
 		}
 		freeText.value = detectTokens( text );
 	}
@@ -270,17 +301,19 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		tokens.value = [];
 		freeText.value = '';
 		selectedIndex.value = -1;
-		suppressDetection = false;
-		suppressedTextLength = 0;
+		literalPrefix.value = '';
 	}
 
 	return {
 		tokens,
 		freeText,
 		selectedIndex,
+		literalPrefix,
 		fullQuery,
 		addToken,
 		removeToken,
+		setLiteralPrefix,
+		isHeldLiteral,
 		setFreeText,
 		selectToken,
 		deselectToken,

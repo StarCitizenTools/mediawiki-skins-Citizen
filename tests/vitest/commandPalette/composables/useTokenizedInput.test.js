@@ -76,6 +76,74 @@ describe( 'useTokenizedInput', () => {
 
 			expect( ti.selectedIndex.value ).toBe( -1 );
 		} );
+
+		it( 'should latch the removed raw so callers can gate on it', () => {
+			const ti = useTokenizedInput( () => [] );
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
+
+			ti.removeToken( 0 );
+
+			expect( ti.literalPrefix.value ).toBe( 'Talk:' );
+		} );
+
+		it( 'should leave the latch alone when the index matches no token', () => {
+			const ti = useTokenizedInput( () => [] );
+			ti.setLiteralPrefix( '@' );
+
+			ti.removeToken( 3 );
+
+			expect( ti.literalPrefix.value ).toBe( '@' );
+		} );
+	} );
+
+	describe( 'setLiteralPrefix', () => {
+		const talkPattern = {
+			modeId: 'namespace',
+			position: 'prefix',
+			activeIn: 'root',
+			match: ( text ) => {
+				const m = text.match( /^(Talk):/ );
+				return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
+			}
+		};
+
+		it( 'should hold text literal without a token having been removed', () => {
+			const ti = useTokenizedInput( () => [ talkPattern ] );
+
+			ti.setLiteralPrefix( 'Talk:' );
+			ti.setFreeText( 'Talk:Main Page' );
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( 'Talk:Main Page' );
+		} );
+
+		it( 'should report which text the latch covers', () => {
+			const ti = useTokenizedInput( () => [ talkPattern ] );
+
+			ti.setLiteralPrefix( 'Talk:' );
+
+			expect( ti.isHeldLiteral( 'Talk:Main Page' ) ).toBe( true );
+			expect( ti.isHeldLiteral( 'Talk' ) ).toBe( false );
+			expect( ti.isHeldLiteral( 'Other text' ) ).toBe( false );
+		} );
+
+		it( 'should cover nothing when no latch is armed', () => {
+			const ti = useTokenizedInput( () => [ talkPattern ] );
+
+			expect( ti.isHeldLiteral( 'Talk:Main Page' ) ).toBe( false );
+			expect( ti.isHeldLiteral( '' ) ).toBe( false );
+		} );
+
+		it( 'should release once the text no longer starts with the latch', () => {
+			const ti = useTokenizedInput( () => [ talkPattern ] );
+			ti.setLiteralPrefix( 'Talk:' );
+			ti.setFreeText( 'Talk:Main' );
+
+			ti.setFreeText( 'Other text' );
+
+			expect( ti.literalPrefix.value ).toBe( '' );
+			expect( ti.freeText.value ).toBe( 'Other text' );
+		} );
 	} );
 
 	describe( 'selectToken / deselectToken', () => {
@@ -114,7 +182,7 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.fullQuery.value ).toBe( '' );
 		} );
 
-		it( 'should reset suppressDetection so detection works after clear', () => {
+		it( 'should reset the literal latch so detection works after clear', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -126,7 +194,7 @@ describe( 'useTokenizedInput', () => {
 			};
 			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
-			ti.removeToken( 0 ); // sets suppressDetection = true
+			ti.removeToken( 0 ); // arms the literal latch
 
 			ti.clear();
 			ti.setFreeText( 'Talk:Main Page' );
@@ -262,7 +330,7 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( ' some text' );
 		} );
 
-		it( 'should suppress detection after removeToken', () => {
+		it( 'should keep the restored raw text literal after removeToken', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -278,12 +346,12 @@ describe( 'useTokenizedInput', () => {
 			ti.removeToken( 0 );
 			ti.setFreeText( 'Talk:Main Page' );
 
-			// Detection suppressed: no new token created
+			// Latch armed: no new token created
 			expect( ti.tokens.value ).toHaveLength( 0 );
 			expect( ti.freeText.value ).toBe( 'Talk:Main Page' );
 		} );
 
-		it( 'should stay suppressed while text shrinks after removeToken', () => {
+		it( 'should stay literal while the text still starts with the removed raw', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -296,15 +364,15 @@ describe( 'useTokenizedInput', () => {
 			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 			ti.removeToken( 0 );
-			ti.setFreeText( 'Talk:Main Page' ); // suppressed
+			ti.setFreeText( 'Talk:Main Page' );
 
-			ti.setFreeText( 'Talk:Main Pag' ); // still shrinking
+			ti.setFreeText( 'Talk:Main Pag' );
 
 			expect( ti.tokens.value ).toHaveLength( 0 );
 			expect( ti.freeText.value ).toBe( 'Talk:Main Pag' );
 		} );
 
-		it( 'should resume detection when text grows after removeToken', () => {
+		it( 'should stay literal when the text grows after removeToken', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -317,14 +385,35 @@ describe( 'useTokenizedInput', () => {
 			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 			ti.removeToken( 0 );
-			ti.setFreeText( 'Talk:Main Page' ); // suppressed
-			ti.setFreeText( 'Talk:Mai' ); // shrinking, still suppressed
+			ti.setFreeText( 'Talk:Main' );
 
-			ti.setFreeText( 'Talk:Main' ); // grew — resume detection
+			ti.setFreeText( 'Talk:Main Page' );
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( 'Talk:Main Page' );
+		} );
+
+		it( 'should release the latch once the text stops starting with the removed raw', () => {
+			const pattern = {
+				modeId: 'namespace',
+				position: 'prefix',
+				activeIn: 'root',
+				match: ( text ) => {
+					const m = text.match( /^(Talk):/ );
+					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ pattern ] );
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
+			ti.removeToken( 0 );
+			ti.setFreeText( 'Talk:Main' );
+			ti.setFreeText( 'Talk' );
+
+			ti.setFreeText( 'Talk:' );
 
 			expect( ti.tokens.value ).toHaveLength( 1 );
 			expect( ti.tokens.value[ 0 ].label ).toBe( 'Talk:' );
-			expect( ti.freeText.value ).toBe( 'Main' );
+			expect( ti.freeText.value ).toBe( '' );
 		} );
 
 		it( 'should not infinite loop on empty raw match', () => {

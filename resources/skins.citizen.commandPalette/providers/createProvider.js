@@ -6,7 +6,11 @@ const DEFAULT_DEBOUNCE_MS = 120;
 /** @type {Object} */
 const DEFAULT_CONFIG = {
 	debounceMs: DEFAULT_DEBOUNCE_MS,
-	keepStaleResults: false
+	keepStaleResults: false,
+	// Set by a provider whose canProvide reads the front of the query as a
+	// trigger rather than as text. Such a provider stands down for a query the
+	// user has declared literal.
+	readsTriggers: false
 };
 
 /**
@@ -48,7 +52,8 @@ function createProvider( id, handler, config ) {
 		getResults: handler.getResults,
 		onResultSelect,
 		debounceMs: merged.debounceMs,
-		keepStaleResults: merged.keepStaleResults
+		keepStaleResults: merged.keepStaleResults,
+		readsTriggers: merged.readsTriggers
 	} );
 }
 

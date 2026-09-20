@@ -70,6 +70,7 @@ describe( 'createProvider', () => {
 
 		expect( provider.debounceMs ).toBe( 120 );
 		expect( provider.keepStaleResults ).toBe( false );
+		expect( provider.readsTriggers ).toBe( false );
 		expect( createProvider.DEFAULT_DEBOUNCE_MS ).toBe( 120 );
 	} );
 
@@ -78,10 +79,12 @@ describe( 'createProvider', () => {
 
 		const provider = createProvider( 'test', handler, {
 			debounceMs: 500,
-			keepStaleResults: true
+			keepStaleResults: true,
+			readsTriggers: true
 		} );
 
 		expect( provider.debounceMs ).toBe( 500 );
 		expect( provider.keepStaleResults ).toBe( true );
+		expect( provider.readsTriggers ).toBe( true );
 	} );
 } );

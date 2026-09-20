@@ -190,6 +190,9 @@ module.exports = exports = defineComponent( {
 		const tokenInput = useTokenizedInput( getTokenPatterns, orch.activeMode );
 		// Late-bind tokens so handleModeQuery can read them at call time
 		orchDeps.tokens = tokenInput.tokens;
+		// Same late bind: provider selection has to see the literal latch, or
+		// a trigger the user backed out of would still route to its mode.
+		orchDeps.isHeldLiteral = tokenInput.isHeldLiteral;
 
 		const flatItems = computed( () => orch.flatItems.value );
 
@@ -351,8 +354,23 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 			tokenInput.removeToken( index );
-			// Prepend the raw text back to freeText (detection is suppressed)
+			// Prepend the raw text back to freeText. removeToken latched that
+			// text as literal, so detection leaves it alone.
 			tokenInput.setFreeText( token.raw + tokenInput.freeText.value );
+		};
+
+		// Backing out of a mode from an empty input hands the trigger the user
+		// typed back as literal text, so a title that starts with a trigger
+		// character is reachable. A mode entered from the list has no trigger
+		// to restore, and just exits.
+		const handleExitModeToLiteral = () => {
+			const trigger = orch.enteredTrigger.value;
+			orch.exitMode();
+			if ( trigger ) {
+				tokenInput.setLiteralPrefix( trigger );
+				tokenInput.setFreeText( trigger );
+			}
+			nextTick( focusInput );
 		};
 
 		// Bumped by the keyboard's Cmd/Ctrl+C handler so the detail panel
@@ -393,8 +411,9 @@ module.exports = exports = defineComponent( {
 				activeMode: orch.activeMode,
 				activeModeContext: orch.activeModeContext,
 				findModeByTrigger,
-				onEnterMode: ( m ) => orch.enterMode( m ),
+				onEnterMode: ( m, trigger ) => orch.enterMode( m, trigger ),
 				onExitMode: () => orch.exitMode(),
+				onExitModeToLiteral: handleExitModeToLiteral,
 				onPopModeContext: () => orch.popModeContext()
 			},
 			tokens: {
@@ -449,11 +468,20 @@ module.exports = exports = defineComponent( {
 		// Sync tokenized fullQuery to orchestrator
 		// Auto-enter mode when typed query matches a multi-char trigger (e.g. '/smw:')
 		watch( tokenInput.fullQuery, ( newQuery ) => {
-			if ( !orch.activeMode.value && newQuery ) {
+			// A latched literal occupies the front of the query, so a trigger
+			// sitting there is text the user asked to search for, not a mode
+			// to re-enter.
+			if ( !orch.activeMode.value && newQuery &&
+				!tokenInput.isHeldLiteral( newQuery ) ) {
 				const match = findModeByQuery( newQuery );
 				if ( match ) {
 					const subQuery = newQuery.slice( match.trigger.length );
-					orch.enterMode( match.mode );
+					// Triggers match case-insensitively, so record what was
+					// typed rather than the registered spelling — backing out
+					// of the mode types this straight back into the input.
+					orch.enterMode(
+						match.mode, newQuery.slice( 0, match.trigger.length )
+					);
 					tokenInput.setFreeText( subQuery );
 					nextTick( focusInput );
 					return;

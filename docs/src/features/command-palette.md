@@ -53,11 +53,26 @@ When you enter a mode:
 - A back button appears to exit the mode
 - Escape follows the pattern: **close help (if open)** → **clear query** → **exit mode** → **close palette**
 
+### Searching for a trigger character
+
+Trigger characters like `@`, `#` and `~` open a mode instead of being searched
+for, which would otherwise make a page titled `@Home` unreachable. Press
+<kbd>Backspace</kbd> on a mode's empty input to back out: the mode closes and
+the trigger you typed returns to the input as plain text (footer hint:
+**Search as text**). Carry on typing and the rest of the query is searched
+literally — the trigger won't re-open the mode.
+
+The text stays literal until you delete back past it, at which point the
+trigger works as a trigger again.
+
 ### Tags
 
 Some modes turn parts of your query into tags. For example, typing `Talk:` in default search becomes a `Talk:` tag, so the rest of what you type searches within the Talk namespace.
 
 To change a tag, press <kbd>Backspace</kbd> on an empty input. The first press highlights the last tag (footer hint: **Select tag**). A second press turns it back into editable text (footer hint: **Edit tag**), so you can fix a typo without retyping the whole thing. Keep pressing to delete the text character by character.
+
+Once a tag is back to text it stays text, so you can keep typing without it
+turning into a tag again. Delete back past it to get the tag behavior back.
 
 ### Built-in modes
 
@@ -70,7 +85,7 @@ The category mode helps you find a category and see what's inside it. Open it wi
 - **An empty input** shows the current page's categories — a quick way to see what this article belongs to without scrolling to the bottom of the page.
 - **Type a query** to search every category on the wiki by name.
 - **Pick a category** to step inside. The header turns into a breadcrumb (e.g. `Categories / Animals / Mammals`), and the list shows the category's subcategories first, then its pages. Keep typing to filter what's at the current level.
-- **<kbd>Backspace</kbd> on an empty input** backs out one level. At the top, <kbd>Backspace</kbd> closes the mode.
+- **<kbd>Backspace</kbd> on an empty input** backs out one level. At the top, <kbd>Backspace</kbd> closes the mode and returns `#` to the input as plain text.
 - **Each result has action buttons** on the right — focus them with <kbd>→</kbd>. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
 
 #### Revision history
@@ -253,7 +268,7 @@ It's opt-in. Modes that don't need it can ignore it entirely.
 - `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
 - `getResults` gets the current stack as its fourth argument and decides what to show per level.
 - `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
-- <kbd>Backspace</kbd> on an empty input pops one level. With an empty stack, it falls through to the normal exit-mode behavior.
+- <kbd>Backspace</kbd> on an empty input pops one level. With an empty stack, it exits the mode and restores the trigger the user typed as plain text.
 
 A minimal example of a drill-down mode:
 

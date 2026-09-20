@@ -126,7 +126,7 @@ function createPaletteCommandProvider( paletteRegistry ) {
 				return { action: 'none' };
 			}
 		}
-	}, { debounceMs: 0, keepStaleResults: true } );
+	}, { debounceMs: 0, keepStaleResults: true, readsTriggers: true } );
 }
 
 module.exports = createPaletteCommandProvider;
