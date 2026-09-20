@@ -150,6 +150,13 @@ module.exports = exports = defineComponent( {
 	}
 }
 
+// Split the two halves with a linear gradient, not a conic one: a conic
+// stop is angular, so the junction resolves per row and tears under
+// fractional display scaling. The hairline band keeps the edge antialiased.
+.mixin-themecircle-split( @dir; @from; @to ) {
+	background: linear-gradient( @dir, @from calc( 50% - 0.5px ), @to calc( 50% + 0.5px ) );
+}
+
 .citizen-preferences-themecircle {
 	display: block;
 	width: @min-size-interactive-touch;
@@ -164,7 +171,7 @@ module.exports = exports = defineComponent( {
 	// themePreview.less, which re-derives every token locally) plus the
 	// theme's clientpref class, so these tokens resolve to that theme's
 	// real surface + accent.
-	background: conic-gradient( from 0deg, var( --color-surface-0 ) 0 50%, var( --color-progressive ) 50% 100% );
+	.mixin-themecircle-split( to right; var( --color-progressive ); var( --color-surface-0 ) );
 	border-radius: var( --border-radius-circle );
 	// The hairline ring keeps a light-surface circle visible against a
 	// light panel.
@@ -175,7 +182,7 @@ module.exports = exports = defineComponent( {
 	// os / Auto — adaptive: a static light/dark split (a live media query
 	// can't be shown in a static swatch).
 	&--adaptive {
-		background: conic-gradient( from -45deg, var( --color-white ) 0 50%, var( --color-neutral-1000 ) 50% 100% );
+		.mixin-themecircle-split( to top right; var( --color-neutral-1000 ); var( --color-white ) );
 	}
 
 	.cdx-radio:hover & {
