@@ -1,3 +1,9 @@
+// The component is the page aside; the class is still `citizen-page-sidebar`.
+// Renaming a class that lives in cached HTML needs a compat slice, and a
+// rename on its own is not worth one. It rides the next change to this
+// component that needs a slice anyway — a pinned-group wrapper for a second
+// pinned panel, or the 4.0 flip, whichever comes first.
+
 .citizen-page-sidebar {
 	--size-icon: 1rem;
 
