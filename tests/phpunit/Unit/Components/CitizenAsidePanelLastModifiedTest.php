@@ -30,8 +30,7 @@ class CitizenAsidePanelLastModifiedTest extends MediaWikiUnitTestCase {
 
 	/**
 	 * getLabel() calls ->text() on the Message, so msg() has to return a
-	 * Message, not a string. The deleted PageSidebar test could return a
-	 * string only because that component passed the Message through untouched.
+	 * Message, not a string.
 	 *
 	 * @return MessageLocalizer&MockObject
 	 */
