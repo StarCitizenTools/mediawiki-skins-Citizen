@@ -29,17 +29,24 @@ class CitizenAsidePanelLastModifiedTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
-	 * getLabel() calls ->text() on the Message, so msg() has to return a
-	 * Message, not a string.
+	 * Both messages the panel reads are answered through ->text(): the panel
+	 * label, and `lastmodifiedat` with the date and time as parameters.
 	 *
 	 * @return MessageLocalizer&MockObject
 	 */
 	private function getMockMessageLocalizer(): MessageLocalizer&MockObject {
-		$message = $this->createMock( Message::class );
-		$message->method( 'text' )->willReturn( 'Last modified' );
-
 		$mock = $this->createMock( MessageLocalizer::class );
-		$mock->method( 'msg' )->willReturn( $message );
+		$mock->method( 'msg' )->willReturnCallback(
+			function ( string $key, ...$params ): Message {
+				$message = $this->createMock( Message::class );
+				$message->method( 'text' )->willReturn(
+					$key === 'lastmodifiedat'
+						? "This page was last edited on $params[0], at $params[1]."
+						: 'Last modified'
+				);
+				return $message;
+			}
+		);
 		return $mock;
 	}
 
@@ -54,8 +61,12 @@ class CitizenAsidePanelLastModifiedTest extends MediaWikiUnitTestCase {
 	private function populatedData(): array {
 		return [
 			'timestamp' => '20240315100000',
-			'text' => 'Last modified text',
+			// Core's pre-parsed sentence as a lagged replica serves it: HTML,
+			// with the replica notice appended.
+			'text' => ' This page was last edited on March 15, 2024, at 10:00. <strong>'
+				. '<strong>Warning:</strong> Page may not contain recent updates.</strong>',
 			'date' => 'March 15, 2024',
+			'time' => '10:00',
 		];
 	}
 
@@ -80,7 +91,7 @@ class CitizenAsidePanelLastModifiedTest extends MediaWikiUnitTestCase {
 	 * @covers ::hasContent
 	 */
 	public function testHasContentIsFalseWithoutTimestamp(): void {
-		$component = $this->newComponent( [ 'timestamp' => null, 'text' => '', 'date' => '' ] );
+		$component = $this->newComponent( [ 'timestamp' => null, 'text' => '', 'date' => null, 'time' => null ] );
 
 		$this->assertFalse( $component->hasContent() );
 		$this->assertSame( [], $component->getTemplateData() );
@@ -96,46 +107,17 @@ class CitizenAsidePanelLastModifiedTest extends MediaWikiUnitTestCase {
 		$this->assertTrue( $component->hasContent() );
 
 		$data = $component->getTemplateData();
-
-		$this->assertSame( 'citizen-sidebar-lastmod', $data['id'] );
-		$this->assertSame( 'Last modified', $data['label'] );
-		$this->assertStringContainsString( 'citizen-page-aside__panel', $data['class'] );
-		$this->assertStringContainsString( 'citizen-page-aside__panel--lastmod', $data['class'] );
-
-		$items = $data['array-list-items'];
-		$this->assertSame( 'lm-time', $items['item-id'] );
-		$this->assertSame( 'mw-list-item', $items['item-class'] );
-
-		$links = $items['array-links'];
-		$this->assertSame( 'history', $links['icon'] );
-		$this->assertSame( 'March 15, 2024', $links['text'] );
-
-		$this->assertContainsEquals(
-			[ 'key' => 'id', 'value' => 'citizen-lastmod-relative' ],
-			$links['array-attributes']
-		);
-		$this->assertContainsEquals(
-			[ 'key' => 'href', 'value' => 'mock-url' ],
-			$links['array-attributes']
-		);
-		$this->assertContainsEquals(
-			[ 'key' => 'title', 'value' => 'Last modified text' ],
-			$links['array-attributes']
-		);
-
-		$foundTimestamp = false;
-		foreach ( $links['array-attributes'] as $attribute ) {
-			if ( $attribute['key'] === 'data-timestamp' ) {
-				$foundTimestamp = true;
-				$this->assertMatchesRegularExpression( '/^[0-9]+$/', $attribute['value'] );
-			}
-		}
-		$this->assertTrue( $foundTimestamp, 'data-timestamp attribute not found' );
-
-		// Menu defaults are filled in by CitizenComponentMenu, not here.
-		$this->assertArrayNotHasKey( 'html-tooltip', $data );
-		$this->assertArrayNotHasKey( 'html-before-portal', $data );
-		$this->assertArrayNotHasKey( 'html-after-portal', $data );
-		$this->assertArrayNotHasKey( 'label-class', $data );
+		// A tooltip shows markup literally, so the title is built from the date
+		// and time fields, never from core's HTML sentence.
+		$this->assertStringNotContainsString( '<', $data['title'] );
+		// Flat and complete: the chrome partial owns id, class and label, and
+		// the template reads nothing but these five keys.
+		$this->assertSame( [
+			'href' => 'mock-url',
+			'title' => 'This page was last edited on March 15, 2024, at 10:00.',
+			'datetime' => '2024-03-15T10:00:00Z',
+			'date' => 'March 15, 2024',
+			'icon' => 'history',
+		], $data );
 	}
 }

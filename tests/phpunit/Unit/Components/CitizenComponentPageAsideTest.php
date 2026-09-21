@@ -49,7 +49,7 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 				[ 'data-toc' => [ 'array-sections' => [] ] ],
 				CitizenAsidePanel::PLACEMENT_PINNED
 			),
-			$this->panel( 'lastmod', 10, true, [ 'id' => 'citizen-sidebar-lastmod' ] ),
+			$this->panel( 'lastmod', 10, true, [ 'href' => 'mock-url' ] ),
 		] );
 
 		$panels = $component->getTemplateData()['array-panels'];
@@ -57,6 +57,11 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$this->assertCount( 2, $panels );
 		$this->assertSame( 'lastmod', $panels[0]['panel-id'] );
 		$this->assertSame( 'toc', $panels[1]['panel-id'] );
+
+		// The chrome partial renders the heading from this; the panel no
+		// longer carries its own label.
+		$this->assertSame( 'Lastmod', $panels[0]['panel-label'] );
+		$this->assertSame( 'Toc', $panels[1]['panel-label'] );
 
 		// PageAside.mustache dispatches on these; without them every panel
 		// section is falsy and the aside renders empty.
@@ -67,7 +72,7 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$this->assertSame( CitizenAsidePanel::PLACEMENT_PINNED, $panels[1]['panel-placement'] );
 
 		// The panel's own data is what its partial renders from, unchanged.
-		$this->assertSame( [ 'id' => 'citizen-sidebar-lastmod' ], $panels[0]['body'] );
+		$this->assertSame( [ 'href' => 'mock-url' ], $panels[0]['body'] );
 		$this->assertSame( [ 'data-toc' => [ 'array-sections' => [] ] ], $panels[1]['body'] );
 	}
 
@@ -109,8 +114,9 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		// merged into them.
 		$component = new CitizenComponentPageAside( [
 			$this->panel( 'lastmod', 10, true, [
-				'id' => 'citizen-sidebar-lastmod',
+				'href' => 'mock-url',
 				'panel-id' => 'from-panel',
+				'panel-label' => 'from-panel',
 				'panel-placement' => CitizenAsidePanel::PLACEMENT_PINNED,
 				'is-lastmod' => false,
 			] ),
@@ -119,12 +125,14 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$panel = $component->getTemplateData()['array-panels'][0];
 
 		$this->assertSame( 'lastmod', $panel['panel-id'] );
+		$this->assertSame( 'Lastmod', $panel['panel-label'] );
 		$this->assertSame( CitizenAsidePanel::PLACEMENT_FLOW, $panel['panel-placement'] );
 		$this->assertTrue( $panel['is-lastmod'] );
 
-		$this->assertSame( 'citizen-sidebar-lastmod', $panel['body']['id'] );
+		$this->assertSame( 'mock-url', $panel['body']['href'] );
+		$this->assertSame( 'from-panel', $panel['body']['panel-label'] );
 		$this->assertSame( 'from-panel', $panel['body']['panel-id'] );
 		$this->assertFalse( $panel['body']['is-lastmod'] );
-		$this->assertArrayNotHasKey( 'id', $panel );
+		$this->assertArrayNotHasKey( 'href', $panel );
 	}
 }

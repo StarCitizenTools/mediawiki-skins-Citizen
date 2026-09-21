@@ -49,35 +49,17 @@ class CitizenAsidePanelLastModified implements CitizenAsidePanel {
 		}
 
 		return [
-			'id' => 'citizen-sidebar-lastmod',
-			'class' => 'citizen-page-aside__panel citizen-page-aside__panel--lastmod',
-			'label' => $this->getLabel(),
-			'array-list-items' => [
-				'item-id' => 'lm-time',
-				'item-class' => 'mw-list-item',
-				'array-links' => [
-					'array-attributes' => [
-						[
-							'key' => 'id',
-							'value' => 'citizen-lastmod-relative'
-						],
-						[
-							'key' => 'href',
-							'value' => $this->title->getLocalURL( [ 'diff' => '' ] )
-						],
-						[
-							'key' => 'title',
-							'value' => trim( $this->lastModifiedData['text'] )
-						],
-						[
-							'key' => 'data-timestamp',
-							'value' => wfTimestamp( TS_UNIX, $this->lastModifiedData['timestamp'] )
-						]
-					],
-					'icon' => 'history',
-					'text' => $this->lastModifiedData['date']
-				]
-			]
+			'href' => $this->title->getLocalURL( [ 'diff' => '' ] ),
+			// From core's date and time fields rather than its pre-parsed
+			// sentence, which is HTML and can carry a lagged-replica notice.
+			'title' => $this->localizer->msg(
+				'lastmodifiedat',
+				$this->lastModifiedData['date'],
+				$this->lastModifiedData['time']
+			)->text(),
+			'datetime' => wfTimestamp( TS_ISO_8601, $this->lastModifiedData['timestamp'] ),
+			'date' => $this->lastModifiedData['date'],
+			'icon' => $this->getIcon(),
 		];
 	}
 }
