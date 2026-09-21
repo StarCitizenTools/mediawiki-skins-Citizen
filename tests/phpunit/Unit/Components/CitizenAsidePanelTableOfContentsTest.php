@@ -5,20 +5,22 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 
 use MediaWiki\Config\HashConfig;
-use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
+use MediaWiki\Skins\Citizen\Components\CitizenAsidePanel;
+use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelTableOfContents;
 use MediaWikiUnitTestCase;
 
 /**
  * @group Citizen
  * @group Components
- * @coversDefaultClass \MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents
+ * @coversDefaultClass \MediaWiki\Skins\Citizen\Components\CitizenAsidePanelTableOfContents
  */
-class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
+class CitizenAsidePanelTableOfContentsTest extends MediaWikiUnitTestCase {
 
 	private function createLocalizer(): \MessageLocalizer {
 		$message = $this->createMock( \Message::class );
 		$message->method( 'rawParams' )->willReturnSelf();
 		$message->method( 'escaped' )->willReturn( 'Toggle Test subsection' );
+		$message->method( 'text' )->willReturn( 'Contents' );
 
 		$localizer = $this->createMock( \MessageLocalizer::class );
 		$localizer->method( 'msg' )->willReturn( $message );
@@ -37,7 +39,7 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 	 * @covers ::getTemplateData
 	 */
 	public function testEmptySectionsReturnsEmptyArray(): void {
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			[],
 			$this->createLocalizer(),
 			$this->createConfig()
@@ -53,7 +55,7 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 	 * @covers ::getTemplateData
 	 */
 	public function testEmptyArraySectionsReturnsEmptyArray(): void {
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			[ 'array-sections' => [] ],
 			$this->createLocalizer(),
 			$this->createConfig()
@@ -80,13 +82,13 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			'number-section-count' => 1,
 		];
 
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			$tocData,
 			$this->createLocalizer(),
 			$this->createConfig()
 		);
 
-		$result = $component->getTemplateData();
+		$result = $component->getTemplateData()['data-toc'];
 
 		$this->assertArrayHasKey( 'citizen-button-label', $result['array-sections'][0] );
 		$this->assertSame( 'Toggle Test subsection', $result['array-sections'][0]['citizen-button-label'] );
@@ -108,13 +110,13 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			'number-section-count' => 1,
 		];
 
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			$tocData,
 			$this->createLocalizer(),
 			$this->createConfig()
 		);
 
-		$result = $component->getTemplateData();
+		$result = $component->getTemplateData()['data-toc'];
 
 		$this->assertArrayNotHasKey( 'citizen-button-label', $result['array-sections'][0] );
 	}
@@ -142,13 +144,13 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			'number-section-count' => 2,
 		];
 
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			$tocData,
 			$this->createLocalizer(),
 			$this->createConfig()
 		);
 
-		$result = $component->getTemplateData();
+		$result = $component->getTemplateData()['data-toc'];
 
 		$childSection = $result['array-sections'][0]['array-sections'][0];
 		$this->assertArrayNotHasKey( 'citizen-button-label', $childSection );
@@ -185,13 +187,13 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			// 'number-section-count' intentionally omitted
 		];
 
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			$tocData,
 			$this->createLocalizer(),
 			$this->createConfig( 1 )
 		);
 
-		$result = $component->getTemplateData();
+		$result = $component->getTemplateData()['data-toc'];
 
 		$this->assertFalse(
 			$result['citizen-is-collapse-sections-enabled'],
@@ -225,13 +227,13 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			'number-section-count' => $totalSectionCount,
 		];
 
-		$component = new CitizenComponentTableOfContents(
+		$component = new CitizenAsidePanelTableOfContents(
 			$tocData,
 			$this->createLocalizer(),
 			$this->createConfig( $collapseAtCount )
 		);
 
-		$result = $component->getTemplateData();
+		$result = $component->getTemplateData()['data-toc'];
 
 		$this->assertSame(
 			$expected,
@@ -272,5 +274,68 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 			'expected' => false,
 			'scenario' => 'Should not collapse when top-level is exactly 3 (need > 3)',
 		];
+	}
+
+	/**
+	 * @covers ::getId
+	 * @covers ::getLabel
+	 * @covers ::getIcon
+	 * @covers ::getOrder
+	 * @covers ::getPlacement
+	 */
+	public function testPanelDescription(): void {
+		$component = new CitizenAsidePanelTableOfContents(
+			[ 'array-sections' => [
+				[ 'is-top-level-section' => true, 'is-parent-section' => false, 'line' => 'A' ],
+			] ],
+			$this->createLocalizer(),
+			$this->createConfig()
+		);
+
+		$this->assertSame( 'toc', $component->getId() );
+		$this->assertSame( 'Contents', $component->getLabel() );
+		$this->assertSame( 'listBullet', $component->getIcon() );
+		$this->assertSame( CitizenAsidePanel::PLACEMENT_PINNED, $component->getPlacement() );
+		$this->assertIsInt( $component->getOrder() );
+	}
+
+	/**
+	 * @covers ::hasContent
+	 */
+	public function testHasContentFollowsSections(): void {
+		$empty = new CitizenAsidePanelTableOfContents(
+			[ 'array-sections' => [] ],
+			$this->createLocalizer(),
+			$this->createConfig()
+		);
+		$this->assertFalse( $empty->hasContent() );
+
+		$populated = new CitizenAsidePanelTableOfContents(
+			[ 'array-sections' => [
+				[ 'is-top-level-section' => true, 'is-parent-section' => false, 'line' => 'A' ],
+			] ],
+			$this->createLocalizer(),
+			$this->createConfig()
+		);
+		$this->assertTrue( $populated->hasContent() );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testTemplateDataIsNestedUnderDataToc(): void {
+		$component = new CitizenAsidePanelTableOfContents(
+			[ 'array-sections' => [
+				[ 'is-top-level-section' => true, 'is-parent-section' => false, 'line' => 'A' ],
+			] ],
+			$this->createLocalizer(),
+			$this->createConfig()
+		);
+
+		$data = $component->getTemplateData();
+
+		$this->assertArrayHasKey( 'data-toc', $data );
+		$this->assertArrayHasKey( 'array-sections', $data['data-toc'] );
+		$this->assertArrayHasKey( 'citizen-is-collapse-sections-enabled', $data['data-toc'] );
 	}
 }

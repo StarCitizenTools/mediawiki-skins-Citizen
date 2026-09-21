@@ -13,6 +13,7 @@ use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Permissions\PermissionManager;
+use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
@@ -22,7 +23,6 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageTools;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
-use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Skins\Citizen\Menu\NavigationMenuTransformer;
 use MediaWiki\SpecialPage\SpecialPageFactory;
@@ -297,7 +297,7 @@ class SkinCitizen extends SkinMustache {
 				$parentData['html-body-content'],
 				$this->shouldMakeSections( $config, $title )
 			),
-			'data-toc' => new CitizenComponentTableOfContents(
+			'data-toc' => new CitizenAsidePanelTableOfContents(
 				$parentData['data-toc'] ?? [],
 				$localizer,
 				$config
