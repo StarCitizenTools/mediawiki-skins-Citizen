@@ -1,0 +1,11 @@
+{{!
+	string href the page's diff link
+	string title the full "last edited on … at …" sentence, plain text
+	string datetime ISO 8601; lastModified.js reads it
+	string date the user-formatted date the script replaces with a relative time
+	string icon
+}}
+<a class="citizen-page-aside__link" href="{{href}}" title="{{title}}">
+	{{#icon}}{{>Icon}}{{/icon}}
+	<time id="citizen-page-aside-lastmod-time" datetime="{{datetime}}">{{date}}</time>
+</a>

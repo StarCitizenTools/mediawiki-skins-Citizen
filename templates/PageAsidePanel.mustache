@@ -1,0 +1,17 @@
+{{!
+	One entry of data-page-aside.array-panels: the chrome every flow panel
+	shares. Root, heading and body are direct children in that order; the
+	body holds the panel's own partial, opened on its `body` data. Dispatch
+	is static because MediaWiki's TemplateParser cannot resolve a partial
+	name from data, so a new panel costs one line inside the body.
+	string panel-id
+	string panel-label
+	bool is-<panel-id>
+	object body the panel's own template data
+}}
+<div id="citizen-page-aside-{{panel-id}}" class="citizen-page-aside__panel citizen-page-aside__panel--{{panel-id}}">
+	<div id="citizen-page-aside-{{panel-id}}-heading" class="citizen-page-aside__heading">{{panel-label}}</div>
+	<div class="citizen-page-aside__body">
+		{{#is-lastmod}}{{#body}}{{>PageAsidePanel__lastmod}}{{/body}}{{/is-lastmod}}
+	</div>
+</div>

@@ -57,3 +57,63 @@
 		display: none;
 	}
 }
+
+// Panel chrome: root, heading, body — the shape every panel shares whether
+// PHP or a registered script renders it. What a body contains is the panel's
+// own; nothing here reaches into it.
+.citizen-page-aside {
+	&__heading {
+		padding: var( --space-xs ) var( --space-xs ) var( --space-xxs );
+		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'overline' );
+	}
+
+	&__body {
+		.mixin-citizen-font-styles( 'small' );
+	}
+
+	// A single-row link inside a panel body, sized like a menu item.
+	&__link {
+		display: flex;
+		gap: var( --space-xs );
+		align-items: center;
+		min-height: 2.25rem;
+		padding-inline: var( --space-xs );
+		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
+		border-radius: var( --border-radius-base );
+		transition: var( --transition-hover );
+		transition-property: background-color;
+
+		// Panel chrome, not content: the link keeps one colour whatever its
+		// state. Codex's link mixin recolours `a` per state at (0,1,1), and
+		// `:visited:hover` at (0,2,1), so these pins carry the `a` as well and
+		// win the tie by sitting later in skin.less than common/links.less.
+		a&:visited,
+		a&:hover,
+		a&:focus,
+		a&:active {
+			color: var( --color-base );
+		}
+
+		a&:hover,
+		a&:focus {
+			text-decoration: none;
+		}
+
+		&:hover {
+			background-color: var( --background-color-button-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+		}
+	}
+
+	&__panel--lastmod {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			// Duplicated with footer already
+			display: none;
+		}
+	}
+}

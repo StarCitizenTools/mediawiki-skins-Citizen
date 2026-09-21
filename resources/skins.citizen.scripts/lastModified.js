@@ -43,8 +43,14 @@ function formatTimeAgo( date, nowMs, rtf, divisions ) {
  */
 function createLastModified( { document, Intl: IntlObj } ) {
 	function init() {
-		const lastmodEl = document.getElementById( 'citizen-lastmod-relative' );
+		const lastmodEl = document.getElementById( 'citizen-page-aside-lastmod-time' );
 		if ( !lastmodEl || typeof IntlObj.RelativeTimeFormat !== 'function' ) {
+			return;
+		}
+
+		// Seconds: the unit formatTimeAgo and its divisions are written in.
+		const timestamp = Date.parse( lastmodEl.getAttribute( 'datetime' ) || '' ) / SECONDS_IN_MILLISECOND;
+		if ( isNaN( timestamp ) ) {
 			return;
 		}
 
@@ -57,7 +63,7 @@ function createLastModified( { document, Intl: IntlObj } ) {
 			// A structurally invalid BCP 47 tag (e.g. the x-xss testing
 			// pseudo-language) makes the constructor throw. The relative time is
 			// a progressive enhancement, so leave the server-rendered absolute
-			// timestamp in place rather than aborting the rest of skin init.
+			// date in place rather than aborting the rest of skin init.
 			mw.log.warn(
 				'[Citizen] Skipping the relative last-modified time; the interface language is not a valid BCP 47 tag:',
 				e
@@ -65,9 +71,10 @@ function createLastModified( { document, Intl: IntlObj } ) {
 			return;
 		}
 
-		const timestamp = lastmodEl.getAttribute( 'data-timestamp' );
-
-		lastmodEl.lastChild.textContent = formatTimeAgo( timestamp, Date.now(), rtf, DIVISIONS );
+		const relative = formatTimeAgo( String( timestamp ), Date.now(), rtf, DIVISIONS );
+		if ( relative !== undefined ) {
+			lastmodEl.textContent = relative;
+		}
 	}
 
 	return { init };

@@ -37,6 +37,7 @@ class CitizenComponentPageAside implements CitizenComponent {
 			'array-panels' => array_map(
 				static fn ( CitizenAsidePanel $panel ): array => [
 					'panel-id' => $panel->getId(),
+					'panel-label' => $panel->getLabel(),
 					'panel-placement' => $panel->getPlacement(),
 					// The template dispatches on this rather than on a partial
 					// name, because MediaWiki's TemplateParser cannot resolve a

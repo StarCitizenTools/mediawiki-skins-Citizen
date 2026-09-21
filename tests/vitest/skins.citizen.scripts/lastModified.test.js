@@ -99,6 +99,9 @@ describe( 'formatTimeAgo', () => {
 } );
 
 describe( 'createLastModified', () => {
+	const fixture = ( datetime ) => `<time id="citizen-page-aside-lastmod-time" datetime="${ datetime }">3 January 2020</time>`;
+	const text = () => document.getElementById( 'citizen-page-aside-lastmod-time' ).textContent;
+
 	afterEach( () => {
 		document.body.innerHTML = '';
 		document.documentElement.removeAttribute( 'lang' );
@@ -106,7 +109,7 @@ describe( 'createLastModified', () => {
 	} );
 
 	it( 'should not throw when the page language is not a valid BCP 47 tag', () => {
-		document.body.innerHTML = '<span id="citizen-lastmod-relative" data-timestamp="1000000">3 January 2020</span>';
+		document.body.innerHTML = fixture( '2020-01-03T00:00:00Z' );
 		document.documentElement.setAttribute( 'lang', 'x-xss' );
 
 		const lastModified = createLastModified( { document, Intl } );
@@ -114,25 +117,38 @@ describe( 'createLastModified', () => {
 		expect( () => lastModified.init() ).not.toThrow();
 	} );
 
-	it( 'should leave the server-rendered timestamp in place and warn when the language tag is invalid', () => {
-		document.body.innerHTML = '<span id="citizen-lastmod-relative" data-timestamp="1000000">3 January 2020</span>';
+	it( 'should leave the server-rendered date in place and warn when the language tag is invalid', () => {
+		document.body.innerHTML = fixture( '2020-01-03T00:00:00Z' );
 		document.documentElement.setAttribute( 'lang', 'x-xss' );
 
 		createLastModified( { document, Intl } ).init();
 
-		expect( document.getElementById( 'citizen-lastmod-relative' ).textContent ).toBe( '3 January 2020' );
+		expect( text() ).toBe( '3 January 2020' );
 		expect( mw.log.warn ).toHaveBeenCalled();
 	} );
 
-	it( 'should replace the timestamp with a relative time for a valid language tag', () => {
-		const nowSeconds = Math.floor( Date.now() / 1000 );
-		document.body.innerHTML = `<span id="citizen-lastmod-relative" data-timestamp="${ nowSeconds - 30 }">3 January 2020</span>`;
+	it( 'should replace the date with a relative time for a valid language tag', () => {
+		document.body.innerHTML = fixture( new Date( Date.now() - 30 * 1000 ).toISOString() );
 		document.documentElement.setAttribute( 'lang', 'en' );
 
 		createLastModified( { document, Intl } ).init();
 
-		const text = document.getElementById( 'citizen-lastmod-relative' ).textContent;
-		expect( text ).not.toBe( '3 January 2020' );
-		expect( text ).toMatch( /second/i );
+		expect( text() ).not.toBe( '3 January 2020' );
+		expect( text() ).toMatch( /second/i );
+	} );
+
+	it( 'should leave the date alone when datetime cannot be parsed', () => {
+		document.body.innerHTML = fixture( 'not-a-date' );
+		document.documentElement.setAttribute( 'lang', 'en' );
+
+		createLastModified( { document, Intl } ).init();
+
+		expect( text() ).toBe( '3 January 2020' );
+	} );
+
+	it( 'should do nothing when the element is absent', () => {
+		document.documentElement.setAttribute( 'lang', 'en' );
+
+		expect( () => createLastModified( { document, Intl } ).init() ).not.toThrow();
 	} );
 } );
