@@ -26,7 +26,7 @@
 		"@types/node": "^26.5.1",
 		"@vitejs/plugin-vue": "^6.0.9",
 		"@vue/test-utils": "^2.5.1",
-		"jsdom": "^30.0.1",
+		"jsdom": "^30.1.0",
 		"less": "^4.9.1",
 		"markdown-it": "15.0.2",
 		"markdownlint-cli": "^0.49.1",
