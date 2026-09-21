@@ -78,7 +78,7 @@ jobs:
       # Using SHOWCASE_PAT when present means ci-docs.yml runs without a manual
       # "Approve and run" click. With GITHUB_TOKEN the run is created but gated.
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.SHOWCASE_PAT || secrets.GITHUB_TOKEN }}
           branch: showcase/metadata-refresh
