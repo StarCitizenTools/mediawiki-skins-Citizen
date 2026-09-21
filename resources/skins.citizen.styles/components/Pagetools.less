@@ -176,8 +176,13 @@
 		}
 	}
 
-	// Reserve the TOC button's footprint, but only where one is rendered.
-	.citizen-toc-enabled .citizen-page-actions {
+	// Reserve the TOC button's footprint, but only where the button is
+	// rendered. `citizen-toc-enabled` means the aside is rendered, which a
+	// heading-less article now is without an outline, so the body class alone
+	// would reserve space for a button that is not there. Gated on the button
+	// rather than on a new body class: cached HTML carries only
+	// `citizen-toc-enabled`, and it carries the button whenever it had one.
+	.citizen-toc-enabled:has( #citizen-toc ) .citizen-page-actions {
 		max-inline-size: ~'calc( 100% - var( --toolbar-size ) - var( --space-xs ) * 3 )';
 	}
 

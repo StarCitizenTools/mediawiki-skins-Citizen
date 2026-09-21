@@ -13,10 +13,20 @@
 		grid-area: sidebar;
 		gap: var( --space-sm );
 		margin-top: var( --space-sm ); // align with first paragraph
+		contain: paint style;
+
+		// Size containment is for the outline's sake: it stops a long outline
+		// growing the grid row. But a size-contained box contributes no height
+		// of its own, so the row is sized by the article alone and paint
+		// containment clips any rail taller than it. A heading-less article has
+		// no outline, is shorter than its own rail, and would be clipped — so
+		// the size half only applies where the outline is.
 		// Not `strict`: pairing `layout` with `size` makes this a reflow root
 		// in Firefox, which strands the sticky ToC at its static position
 		// mid-scroll (#1175). Do not add `layout` back.
-		contain: size paint style;
+		&:has( .citizen-toc ) {
+			contain: size paint style;
+		}
 	}
 
 	.citizen-menu__heading,
@@ -33,6 +43,17 @@
 #citizen-sidebar-lastmod {
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		// Duplicated with footer already
+		display: none;
+	}
+}
+
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	// Last modified is hidden just above and the outline is the only other
+	// panel, so a rail without an outline holds nothing perceivable at this
+	// width — a named `complementary` landmark with no content in it. Old HTML
+	// only ever rendered the rail alongside `.citizen-toc`, so `:not( :has() )`
+	// never matches a cached page.
+	.citizen-page-sidebar:not( :has( .citizen-toc ) ) {
 		display: none;
 	}
 }

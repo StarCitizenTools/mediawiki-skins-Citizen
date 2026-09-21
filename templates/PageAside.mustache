@@ -1,0 +1,18 @@
+{{!
+	object data-page-aside
+		array array-panels one entry per panel with content, ordered. Each carries
+			panel-id, panel-placement, is-<id>, and body — the panel's own
+			template data, opened before its partial so its keys never meet the
+			container's. The dispatch below is static and boolean because
+			MediaWiki's TemplateParser cannot resolve a partial name from data,
+			so adding a panel costs one line here.
+	string msg-citizen-page-aside-label accessible name for the landmark
+}}
+<aside class="citizen-page-sidebar" aria-label="{{msg-citizen-page-aside-label}}">
+	{{#data-page-aside}}
+		{{#array-panels}}
+			{{#is-lastmod}}{{#body}}{{>Menu}}{{/body}}{{/is-lastmod}}
+			{{#is-toc}}{{#body}}{{>TableOfContents}}{{/body}}{{/is-toc}}
+		{{/array-panels}}
+	{{/data-page-aside}}
+</aside>

@@ -44,6 +44,7 @@
 	"citizen-sitestats-images-label": "Label for the file statistics",
 	"citizen-sitestats-users-label": "Label for the user statistics",
 	"citizen-sitestats-edits-label": "Label for the edit statistics",
+	"citizen-page-aside-label": "Accessible name of the complementary landmark beside the article content. Keep it generic and describe the region, not its contents: the panels it holds vary per wiki (table of contents, last modified date, or whatever a wiki registers there). Avoid \"sidebar\", which in MediaWiki means the site navigation. Wikis can override it via MediaWiki:Citizen-page-aside-label.",
 	"citizen-page-associated-pages": "Heading for the menu of pages associated with the current page: namespace tabs on an article, related special pages elsewhere. Used where MediaWiki core provides no label for the associated-pages menu.",
 	"citizen-page-info-copyright": "Label for the copyright message",
 	"citizen-page-info-credits": "Label for the article credits message",
