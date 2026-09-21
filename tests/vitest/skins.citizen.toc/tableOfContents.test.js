@@ -25,7 +25,7 @@ const lineTemplate = fs.readFileSync(
 );
 
 /**
- * Template data matching the shape produced by CitizenComponentTableOfContents.
+ * Template data matching the shape produced by CitizenAsidePanelTableOfContents.
  *
  * Structure:
  *   section1 (top-level parent, toclevel 1)
@@ -84,7 +84,7 @@ const tocTemplateData = {
 
 /**
  * Render a ToC DOM from real Mustache templates using template data that
- * mirrors the shape produced by CitizenComponentTableOfContents::getTemplateData().
+ * mirrors the shape produced by CitizenAsidePanelTableOfContents::getTemplateData().
  *
  * @param {Object} [data] Template data override; defaults to tocTemplateData.
  * @return {{ container: HTMLElement }}

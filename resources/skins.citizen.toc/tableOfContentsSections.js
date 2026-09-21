@@ -16,7 +16,7 @@
 /**
  * Prepares the data for rendering the table of contents,
  * nesting child sections within their parent sections.
- * The PHP equivalent is CitizenComponentTableOfContents::getTemplateData().
+ * The PHP equivalent is CitizenAsidePanelTableOfContents::getTemplateData().
  * Keep the two implementations in sync.
  *
  * @param {Section[]} sections
