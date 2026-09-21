@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
+use MediaWiki\Request\FauxRequest;
 use MediaWiki\Skins\Citizen\CompatSlices;
 use MediaWiki\Skins\Citizen\ResourceLoader\CompatSkinModule;
 use MediaWiki\Skins\Citizen\SkinCitizen;
@@ -14,6 +15,7 @@ use Wikimedia\TestingAccessWrapper;
 
 /**
  * @group Citizen
+ * @group Database
  * @covers \MediaWiki\Skins\Citizen\SkinCitizen
  */
 class SkinCitizenTest extends MediaWikiIntegrationTestCase {
@@ -293,5 +295,85 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			'citizen-sections-enabled',
 			$skin->getOptions()['bodyClasses']
 		);
+	}
+
+	/**
+	 * A skin rendering $title for $queryParams, with a last-modified timestamp on the
+	 * output — that timestamp is what gives the aside a panel with content, so it is
+	 * the aside's own gate, not an empty panel list, that the tests below observe.
+	 */
+	private function createSkinForRequest( Title $title, array $queryParams = [] ): SkinCitizen {
+		RequestContext::resetMain();
+		$context = RequestContext::getMain();
+		$context->setTitle( $title );
+		$context->setRequest( new FauxRequest( $queryParams ) );
+		// What core's last-modified component reads, and the only reason the
+		// aside has a panel with content here. Core keeps the timestamp in the
+		// output's metadata since 1.44 and in a field of its own before that.
+		$out = $context->getOutput();
+		$out->getMetadata()->setRevisionTimestamp( '20240315100000' );
+		if ( version_compare( MW_VERSION, '1.44', '<' ) ) {
+			$out->setRevisionTimestamp( '20240315100000' );
+		}
+
+		// Through the factory so the skin carries its skin.json options (menus,
+		// templates, messages), which getTemplateData() needs and a bare
+		// constructor call does not supply.
+		$skin = $this->getServiceContainer()->getSkinFactory()->makeSkin( 'citizen' );
+		$this->assertInstanceOf( SkinCitizen::class, $skin );
+
+		return $skin;
+	}
+
+	/**
+	 * @return string[] The classes getTemplateData() added to the body, which
+	 *   OutputPage only merges with the rest when it builds the head element.
+	 */
+	private function getAddedBodyClasses( SkinCitizen $skin ): array {
+		return TestingAccessWrapper::newFromObject( $skin->getOutput() )->mAdditionalBodyClasses;
+	}
+
+	/**
+	 * The main page is its own layout in Citizen, so it never opens a second column —
+	 * not even for a panel that does have content.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testAsideIsNotRenderedOnTheMainPageView(): void {
+		$skin = $this->createSkinForRequest( Title::newMainPage() );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertFalse( $data['aside-enabled'] );
+		$this->assertNotContains( 'citizen-toc-enabled', $this->getAddedBodyClasses( $skin ) );
+	}
+
+	/**
+	 * The counterpart of the gate above: the same panel content on an ordinary title
+	 * still opens the side column.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testAsideIsRenderedOnAnOrdinaryPageWithATimestamp(): void {
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertTrue( $data['aside-enabled'] );
+		$this->assertContains( 'citizen-toc-enabled', $this->getAddedBodyClasses( $skin ) );
+	}
+
+	/**
+	 * The gate keys on the main page *view*, the same scope the main-page layout
+	 * itself uses; history and the other actions are ordinary pages.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testAsideIsRenderedOnANonViewActionOfTheMainPage(): void {
+		$skin = $this->createSkinForRequest( Title::newMainPage(), [ 'action' => 'history' ] );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertTrue( $data['aside-enabled'] );
 	}
 }

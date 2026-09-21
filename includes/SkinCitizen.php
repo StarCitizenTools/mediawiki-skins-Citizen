@@ -341,7 +341,8 @@ class SkinCitizen extends SkinMustache {
 		// Scope matches the .page-Main_Page.action-view main-page styles.
 		// skin.mustache renders the page header after the content on the main
 		// page so its bottom placement holds from the first streamed paint.
-		$parentData['is-mainpage'] = $title->isMainPage() && $this->getActionName() === 'view';
+		$isMainPageView = $title->isMainPage() && $this->getActionName() === 'view';
+		$parentData['is-mainpage'] = $isMainPageView;
 
 		// Core has no message for the associated-pages menu, so SkinComponentMenu
 		// falls back to the raw menu name (T252727) and the heading reads
@@ -354,17 +355,9 @@ class SkinCitizen extends SkinMustache {
 				$this->msg( 'citizen-page-associated-pages' )->text();
 		}
 
-		// The outline decides whether the scroll spy is worth loading; the aside
-		// decides whether there is a second column at all. They were one flag
-		// while the outline was the only panel.
-		if ( $tocHasContent ) {
-			// Queue the scroll spy with the initial module batch. Cached HTML
-			// from before this condition existed is covered by the client-side
-			// element check in setupObservers.js, which mw.loader dedupes.
-			$out->addModules( [ 'skins.citizen.toc' ] );
-		}
+		$parentData['aside-enabled'] = !$isMainPageView
+			&& $parentData['data-page-aside']['array-panels'] !== [];
 
-		$parentData['aside-enabled'] = $parentData['data-page-aside']['array-panels'] !== [];
 		if ( $parentData['aside-enabled'] ) {
 			// This body class depends on template data so it can't move to
 			// getHtmlElementAttributes(). Safe here because getTemplateData()
@@ -372,6 +365,10 @@ class SkinCitizen extends SkinMustache {
 			// "toc" because renaming a class in cached HTML needs a compat
 			// slice; its meaning is "the aside is rendered".
 			$out->addBodyClasses( 'citizen-toc-enabled' );
+
+			if ( $tocHasContent ) {
+				$out->addModules( [ 'skins.citizen.toc' ] );
+			}
 		}
 
 		return $parentData;
