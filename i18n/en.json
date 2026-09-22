@@ -167,8 +167,8 @@
 	"citizen-command-palette-command-user-description": "Search for a user",
 	"citizen-command-palette-command-user-label": "Users",
 
+	"citizen-command-palette-help-placeholder": "Search modes",
 	"citizen-command-palette-help-section-description": "Description",
-	"citizen-command-palette-help-section-modes": "Modes",
 	"citizen-command-palette-help-section-triggers": "Triggers",
 
 	"citizen-command-palette-mode-action-description-help": "Find admin actions, special pages, and links pulled from the page menus.",

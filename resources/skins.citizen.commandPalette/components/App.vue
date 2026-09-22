@@ -48,17 +48,11 @@
 						'citizen-command-palette__body-viewport--has-detail': viewportHasDetail
 					}"
 				>
-					<command-palette-help-view
-						v-if="helpVisible"
-						:active-mode="activeMode"
-						:highlighted-help-mode="highlightedHelpMode"
-						:displayed-items="displayedItems"
-						:highlighted-item-index="highlightedItemIndex"
-						:search-query="query"
-						:set-item-ref="setItemRef"
-						@select="selectResult"
-						@hover="handleHover"
-					></command-palette-help-view>
+					<command-palette-detail-panel
+						v-if="helpVisible && activeModeHelpDetail"
+						class="citizen-command-palette__results"
+						:detail="activeModeHelpDetail"
+					></command-palette-detail-panel>
 					<template v-else>
 						<div class="citizen-command-palette__results">
 							<command-palette-empty-state
@@ -113,6 +107,7 @@ const useBodyHeightAnimation = require( '../composables/useBodyHeightAnimation.j
 const useGalleryColumnCount = require( '../composables/useGalleryColumnCount.js' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
+const useHelpInput = require( '../composables/useHelpInput.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const usePendingActivation = require( '../composables/usePendingActivation.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
@@ -124,7 +119,7 @@ const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
-const CommandPaletteHelpView = require( './CommandPaletteHelpView.vue' );
+const modeHelpDetail = require( '../utils/modeHelpDetail.js' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -139,8 +134,7 @@ module.exports = exports = defineComponent( {
 		CommandPaletteEmptyState,
 		CommandPaletteDetailPanel,
 		CommandPaletteFooter,
-		CommandPaletteHeader,
-		CommandPaletteHelpView
+		CommandPaletteHeader
 	},
 	props: {},
 	setup() {
@@ -153,8 +147,7 @@ module.exports = exports = defineComponent( {
 		const findModeByTrigger = inject( 'findModeByTrigger' );
 		const findModeByQuery = inject( 'findModeByQuery' );
 		const getTokenPatterns = inject( 'getTokenPatterns' );
-		const getHelpCatalogItems = inject( 'getHelpCatalogItems', null );
-		const getHandler = inject( 'getHandler', null );
+		const getHandler = inject( 'getHandler' );
 		// Duck-typed { isAvailable, processContext, triggerForAnchor, onReady }
 		// service — today the InstantDiffs gadget bridge, swappable via init.js.
 		const previewService = inject( 'previewService' );
@@ -182,12 +175,12 @@ module.exports = exports = defineComponent( {
 		const orchDeps = {
 			recentItemsProvider,
 			relatedArticlesProvider,
-			recentItemsService,
-			getHelpCatalogItems
+			recentItemsService
 		};
 		const orch = useProviderOrchestration( providers, resultDecorator, orchDeps );
 
 		const tokenInput = useTokenizedInput( getTokenPatterns, orch.activeMode );
+		const helpInput = useHelpInput( { orchestrator: orch, tokenInput } );
 		// Late-bind tokens so handleModeQuery can read them at call time
 		orchDeps.tokens = tokenInput.tokens;
 		// Same late bind: provider selection has to see the literal latch, or
@@ -266,39 +259,14 @@ module.exports = exports = defineComponent( {
 			}
 		}, { immediate: true } );
 
-		// While help is open at root, the highlighted catalog row's source
-		// (e.g. "command:category") tells us which registered handler to
-		// surface in the right pane. Outside the help-at-root case there is
-		// no help-detail to render.
-		const highlightedHelpMode = computed( () => {
-			if ( !orch.helpVisible.value || orch.activeMode.value || !getHandler ) {
-				return null;
-			}
-			const idx = listNav.highlightedIndex.value;
-			const items = orch.flatItems.value;
-			if ( idx < 0 || idx >= items.length ) {
-				return null;
-			}
-			const item = items[ idx ];
-			if ( !item || !item.source ) {
-				return null;
-			}
-			const match = ( /^command:(.+)$/ ).exec( item.source );
-			if ( !match ) {
-				return null;
-			}
-			return getHandler( match[ 1 ] ) || null;
-		} );
+		// The help overlay is a single pane that fills the dialog.
+		const viewportHasDetail = computed(
+			() => orch.helpVisible.value ? false : highlightedItemDetail.value !== null
+		);
 
-		// Two-pane layout activates when:
-		//   - a regular result has structured detail data (existing behaviour), OR
-		//   - help is open at root with a highlighted mode to describe.
-		const viewportHasDetail = computed( () => {
-			if ( orch.helpVisible.value ) {
-				return !orch.activeMode.value && highlightedHelpMode.value !== null;
-			}
-			return highlightedItemDetail.value !== null;
-		} );
+		const activeModeHelpDetail = computed(
+			() => orch.activeMode.value ? modeHelpDetail( orch.activeMode.value ) : null
+		);
 
 		const actionNav = useActionNavigation( {
 			items: orch.flatItems,
@@ -328,7 +296,7 @@ module.exports = exports = defineComponent( {
 		const { selectResult, handleAction } = useResultRouter( {
 			orchestrator: orch,
 			tokenInput,
-			navigation: { findModeByQuery },
+			navigation: { findModeByQuery, getHandler },
 			control: { focusInput, close, paletteRoot },
 			preview: previewService
 		} );
@@ -424,6 +392,7 @@ module.exports = exports = defineComponent( {
 			},
 			help: {
 				helpVisible: orch.helpVisible,
+				helpAvailable: helpInput.helpAvailable,
 				onToggleHelp: () => orch.toggleHelp(),
 				onCloseHelp: () => orch.closeHelp()
 			}
@@ -542,7 +511,6 @@ module.exports = exports = defineComponent( {
 		// This function is called externally from commandPalette.js
 		const open = ( prefillText ) => {
 			isOpen.value = true;
-			orch.closeHelp();
 			if ( orch.activeMode.value ) {
 				orch.exitMode();
 			} else {
@@ -591,8 +559,8 @@ module.exports = exports = defineComponent( {
 			// Reading it off `keyboard` would bind the Ref object itself, which
 			// renders as "[object Object]" and resolves to no element.
 			activeDescendantId: keyboard.activeDescendantId,
-			highlightedHelpMode,
 			viewportHasDetail,
+			activeModeHelpDetail,
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state

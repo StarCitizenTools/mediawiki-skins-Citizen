@@ -126,13 +126,14 @@ describe( 'dispatcher modifier policy', () => {
 			},
 			help: {
 				helpVisible: ref( false ),
+				helpAvailable: ref( false ),
 				onToggleHelp: spies.onToggleHelp,
 				onCloseHelp: vi.fn()
 			},
 			mode: {
 				activeMode: ref( null ),
 				activeModeContext: ref( [] ),
-				findModeByTrigger: vi.fn( ( char ) => ( char === '@' ? { id: 'user' } : null ) ),
+				findModeByTrigger: vi.fn( ( char ) => ( { '@': { id: 'user' }, '?': { id: 'help' } }[ char ] || null ) ),
 				onEnterMode: spies.onEnterMode,
 				onExitMode: vi.fn(),
 				onPopModeContext: vi.fn()
@@ -185,9 +186,10 @@ describe( 'dispatcher modifier policy', () => {
 		[ 'a', 'ctrl', 'action', 'ignored' ],
 		[ 'Tab', 'none', 'action', 'deactivate (claimed)' ],
 
-		// `?` is Shift+/ on a US layout, so Shift must not suppress it.
-		[ '?', 'none', 'input', 'onToggleHelp (claimed)' ],
-		[ '?', 'shift', 'input', 'onToggleHelp (claimed)' ],
+		// `?` is Shift+/ on a US layout, so Shift must not suppress it. At root
+		// it is help mode's trigger.
+		[ '?', 'none', 'input', 'onEnterMode (claimed)' ],
+		[ '?', 'shift', 'input', 'onEnterMode (claimed)' ],
 
 		// Chords belong to the browser and the text field.
 		[ 'Tab', 'ctrl', 'input', 'ignored' ],
@@ -201,10 +203,11 @@ describe( 'dispatcher modifier policy', () => {
 		[ '@', 'meta', 'input', 'ignored' ],
 
 		// Two rows that record a defect rather than an intention. The guards
-		// classify by key shape, not by what the binding wants, so a real chord
-		// reaches a binding that only ever meant to claim a bare key.
-		// `Ctrl+Alt+?` is not AltGr on a US layout — it is a chord.
-		[ '?', 'altgr', 'input', 'onToggleHelp (claimed)' ],
+		// classify by key shape, not by what the handler wants, so a real chord
+		// is read as the bare key a handler only ever meant to take.
+		// `Ctrl+Alt+?` is not AltGr on a US layout — it is a chord, yet it
+		// reaches the mode-trigger fallback as a typed `?`.
+		[ '?', 'altgr', 'input', 'onEnterMode (claimed)' ],
 		// `action-select` lists `Enter` and `' '` together; the space picks up
 		// Shift because Guard B exempts single-character keys.
 		[ ' ', 'shift', 'action', 'clickFocused (claimed)' ]
@@ -326,6 +329,7 @@ describe( 'Shift never changes what Enter or Backspace does', () => {
 			},
 			help: {
 				helpVisible: ref( Boolean( state.helpVisible ) ),
+				helpAvailable: ref( false ),
 				onToggleHelp: vi.fn(),
 				onCloseHelp: spies.onCloseHelp
 			}

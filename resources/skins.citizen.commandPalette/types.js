@@ -114,15 +114,17 @@
  */
 
 /**
- * Optional help content for a mode or command, surfaced by the in-palette
- * help overlay. The description is an i18n message key whose body is rendered
- * via `mw.message( key ).parse()` — so it may contain inline HTML such as
- * `<kbd>`, `<code>`, and `<strong>` for keyboard hints or examples. Used as a
- * longer-form continuation of the mode's one-line `description`. Keyboard
- * shortcuts live in the palette footer rather than here.
+ * Optional help content for a mode or command. Help mode shows it in its
+ * detail pane for the highlighted entry, and a mode's own help can also be
+ * opened over that mode while it is active. The description is an i18n message
+ * key whose body is rendered via `mw.message( key ).parse()` — so it may
+ * contain inline HTML such as `<kbd>`, `<code>`, and `<strong>` for keyboard
+ * hints or examples. Used as a longer-form continuation of the mode's one-line
+ * `description`. Keyboard shortcuts live in the palette footer rather than
+ * here.
  *
  * @typedef {Object} PaletteHelp
- * @property {string} [description] Localised i18n message key whose parsed (HTML) body is rendered in the help overlay.
+ * @property {string} [description] Localised i18n message key whose parsed (HTML) body is rendered wherever the entry's help is shown.
  */
 
 /**
@@ -137,11 +139,12 @@
  * @property {Object} [icon] Codex icon object for the header when mode is active.
  * @property {'list'|'gallery'} [layout='list'] Result rendering layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content and widens the palette to fit. Mutually exclusive with `compactResults`.
  * @property {boolean} [compactResults=false] Render results in a denser layout — small icon instead of thumbnail, description inline. Use for command-style modes whose items lack real thumbnails. Ignored in gallery layout.
+ * @property {number} [debounceMs=120] Delay in milliseconds between a keystroke and `getResults` for a non-empty query. 0 runs it on every keystroke; an empty query never waits.
  * @property {KeyBinding[]} [keybindings] Optional mode-contributed keyboard bindings. Prepended onto the core binding list at dispatch time, so mode bindings win on key collisions within their own zone.
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
  * @property {( query: string, tokens?: CommandPaletteToken[] ) => StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
- * @property {PaletteHelp} [help] Optional content surfaced by the help overlay when this mode is active.
+ * @property {PaletteHelp} [help] Optional long-form help, shown in help mode's detail pane, and over this mode when help is opened inside it.
  * @property {( query: string, signal?: AbortSignal, tokens?: CommandPaletteToken[], modeContext?: Object[] ) => Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state). The signal is honoured by mw.Api on MediaWiki 1.44+ and ignored on 1.43.
  * @property {( item: CommandPaletteItem, signal?: AbortSignal ) => Promise<Object>} [getItemDetail] Lazy detail-pane data for the highlighted item, resolving to `{ description, pairs }` — each field is merged into the item's `detail` when present. Use when the data is too heavy to compute for every item upfront. Same signal caveat as `getResults`.
  * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
@@ -175,8 +178,8 @@
  * @property {string[]} triggers Prefixes that activate the command.
  * @property {string} [label] Display label for this command in the command list.
  * @property {string} [description] Short explanation shown in the command list.
- * @property {PaletteHelp} [help] Optional content surfaced by the help overlay.
- * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
+ * @property {PaletteHelp} [help] Optional long-form help, shown in help mode's detail pane.
+ * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action. Picked from help mode, the action applies as it would at root: help closes before an `updateQuery`, `addToken` or `pushModeContext` takes effect.
  */
 
 /**
@@ -267,7 +270,9 @@
  */
 
 /**
- * Action to toggle the in-palette help overlay.
+ * Action to toggle help. At root it opens help mode, and inside help mode it
+ * leaves it. Inside any other mode it shows or hides that mode's help over it,
+ * without leaving the mode.
  *
  * @typedef {Object} CommandPaletteToggleHelpAction
  * @property {'toggleHelp'} action

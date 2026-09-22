@@ -141,9 +141,6 @@ module.exports = exports = defineComponent( {
 		} );
 
 		const currentPlaceholder = computed( () => {
-			if ( props.helpVisible ) {
-				return mw.message( 'citizen-command-palette-command-help-label' ).text();
-			}
 			if ( props.activeMode && typeof props.activeMode.headerLabel === 'function' ) {
 				const label = props.activeMode.headerLabel( props.activeModeContext );
 				if ( label ) {

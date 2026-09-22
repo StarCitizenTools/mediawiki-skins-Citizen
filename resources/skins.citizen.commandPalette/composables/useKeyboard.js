@@ -500,7 +500,8 @@ const coreBindings = [
 		id: 'input-toggle-help',
 		zone: 'input',
 		keys: [ '?' ],
-		when: ( state ) => Boolean( state.onToggleHelp ) &&
+		when: ( state ) => state.helpAvailable &&
+			Boolean( state.onToggleHelp ) &&
 			!state.query &&
 			state.tokens.length === 0,
 		worksDuringHelp: true,
@@ -510,13 +511,16 @@ const coreBindings = [
 		},
 		hint: null
 	},
+	// At root the `?` it advertises is help mode's trigger, which the
+	// mode-trigger fallback in handleKeydown takes, not the binding above.
 	{
 		id: 'input-toggle-help-hint',
 		zone: 'input',
 		keys: [],
 		when: ( state ) => Boolean( state.onToggleHelp ) &&
 			!state.query &&
-			state.tokens.length === 0,
+			state.tokens.length === 0 &&
+			( !state.activeMode || state.helpAvailable ),
 		handle: () => {},
 		hint: { msgKey: 'citizen-command-palette-command-help-label', kbd: '?', order: 40 }
 	},
@@ -705,7 +709,8 @@ function actionCount( state ) {
  *  - `mode`       — active-mode refs, mode-context stack, mode-trigger
  *                   callbacks, and the cross-mode lookup.
  *  - `tokens`     — token state + selection callbacks for chip handling.
- *  - `help`       — help overlay visibility flag and toggle/close callbacks.
+ *  - `help`       — help overlay visibility and availability flags, and
+ *                   toggle/close callbacks.
  *
  * Optionality contract:
  *  - `tokens` and `help` are entire-bucket-optional — callers without
@@ -727,7 +732,8 @@ function actionCount( state ) {
  *   activeModeContext and onExitModeToLiteral.
  * @param {Object} [options.tokens] tokens, selectedTokenIndex,
  *   onSelectToken, onRemoveToken.
- * @param {Object} [options.help] helpVisible, onToggleHelp, onCloseHelp.
+ * @param {Object} [options.help] helpVisible, helpAvailable (whether the
+ *   active mode is one the overlay can describe), onToggleHelp, onCloseHelp.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( options ) {
@@ -888,6 +894,7 @@ function useKeyboard( options ) {
 				highlightedItem.detail.header.copyValue
 			),
 			helpVisible: help.helpVisible ? help.helpVisible.value : false,
+			helpAvailable: help.helpAvailable ? help.helpAvailable.value : false,
 			actionsFocused: actionNav.isActive.value,
 			canQueueActivation: Boolean(
 				core.canQueueActivation && core.canQueueActivation.value
@@ -1050,8 +1057,8 @@ function useKeyboard( options ) {
 		// Mode-trigger fallback (Note C): a printable single-char with no active
 		// mode and empty query routes through findModeByTrigger. The set of
 		// trigger characters is open-ended, so it can't be enumerated as bindings.
-		// The `!state.helpVisible` guard makes help-mode protection explicit at
-		// this fallback rather than relying on the help-swallow fallback above
+		// The `!state.helpVisible` guard makes the overlay's protection explicit
+		// at this fallback rather than relying on the help-swallow fallback above
 		// firing first.
 		if (
 			isTypedText &&

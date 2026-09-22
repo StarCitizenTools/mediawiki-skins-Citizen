@@ -56,7 +56,6 @@ function normalizeProviderResult( result ) {
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
  * @param {import('vue').Ref<Array>} [deps.tokens] Ref containing the current token array.
  * @param {Function} [deps.isHeldLiteral] Returns whether a query's leading span is text the user declared literal.
- * @param {Function} [deps.getHelpCatalogItems] Returns the list of registered modes/commands shown in the help overlay's mode catalog at root.
  * @return {Object} Orchestration state and methods.
  */
 function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
@@ -92,11 +91,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	const related = ref( { items: [], settled: false } );
 	/** @type {import('vue').Ref<import('../types.js').CommandPaletteItem[]>} */
 	const recents = ref( [] );
-	/** @type {import('vue').Ref<import('../types.js').CommandPaletteItem[]>} */
-	const helpItems = ref( [] );
 
 	const isPresultsSurface = computed(
-		() => !query.value && !activeMode.value && !helpVisible.value
+		() => !query.value && !activeMode.value
 	);
 	const isContentCurrent = computed(
 		() => content.value.forSurface === surfaceKey.value
@@ -105,9 +102,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	// The lead action restates the typed query as a search, so it only leads
 	// when the query IS a search. A trigger-prefixed query (`#cat`) means
 	// something else, and its own results keep the lead. An empty query here
-	// is how modes, help and presults opt out of query actions entirely.
+	// is how modes and presults opt out of query actions entirely.
 	const queryActionQuery = computed(
-		() => ( activeMode.value || helpVisible.value ) ? '' : query.value
+		() => activeMode.value ? '' : query.value
 	);
 	const leadActions = computed( () => content.value.providerId === 'search' ?
 		resultDecorator.leadActions( queryActionQuery.value ) :
@@ -129,10 +126,10 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	// Each surface names its own groups, in render order. A group therefore
 	// cannot survive into a surface that does not mention it.
 	const displayedItems = computed( () => {
+		// The help overlay describes the mode in place of its results, so
+		// Enter cannot select a row nobody can see.
 		if ( helpVisible.value ) {
-			return activeMode.value ? [] : [ section(
-				'citizen-command-palette-help-section-modes', helpItems.value
-			) ].filter( Boolean );
+			return [];
 		}
 
 		if ( isPresultsSurface.value ) {
@@ -188,9 +185,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 
 	const defaultHighlightIndex = computed( () => {
 		// Presults are the only list shown without being asked for, so they
-		// get no default highlight and Enter does nothing. The help catalog
-		// and a mode's root listing also render at an empty query, but the
-		// user elicited those, so they keep theirs.
+		// get no default highlight and Enter does nothing. A mode's root
+		// listing also renders at an empty query, but the user elicited it,
+		// so it keeps its highlight.
 		if ( isPresultsSurface.value ) {
 			return -1;
 		}
@@ -407,6 +404,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	 * @param {string} [trigger] The trigger text that entered the mode.
 	 */
 	function enterMode( mode, trigger ) {
+		helpVisible.value = false;
 		resetOperationState();
 		resetDetailState();
 		activeMode.value = mode;
@@ -423,6 +421,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	 * @return {Promise} Resolves when initial results are loaded.
 	 */
 	function exitMode() {
+		helpVisible.value = false;
 		activeMode.value = null;
 		activeModeContext.value = [];
 		enteredTrigger.value = '';
@@ -481,9 +480,8 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		resetOperationState();
 		resetDetailState();
 
-		// Help layers over the underlying state and owns displayedItems while
-		// visible. Skip the provider pipeline so input clears that fire after
-		// openHelp (e.g. selecting `/help`) don't overwrite the catalog.
+		// The overlay hides the mode's results; closeHelp re-runs the mode for
+		// whatever query it left.
 		if ( helpVisible.value ) {
 			return;
 		}
@@ -664,62 +662,30 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	}
 
 	/**
-	 * Loads the registered-modes catalog into displayedItems so listNav can
-	 * navigate it. Only meaningful at root (no active mode).
-	 */
-	function loadHelpCatalog() {
-		if ( !deps.getHelpCatalogItems ) {
-			return;
-		}
-		resetOperationState();
-		resetDetailState();
-		helpItems.value = deps.getHelpCatalogItems() || [];
-	}
-
-	/**
-	 * Opens the help overlay. Help is layered on top of the active mode and
-	 * mode context — opening it does not modify query, activeMode, or
-	 * activeModeContext, so users can peek at help and return to where they
-	 * were without losing in-progress state.
-	 *
-	 * At root, the mode catalog is loaded into displayedItems so listNav can
-	 * navigate it. Inside a mode, displayedItems is cleared so that pressing
-	 * Enter while help shows a static view does not select an invisible
-	 * result underneath.
+	 * Opens the help overlay over the active mode. It describes that mode
+	 * without modifying query, activeMode or activeModeContext, so closing it
+	 * returns the user to where they were. At root, help is a mode instead.
 	 */
 	function openHelp() {
-		if ( helpVisible.value ) {
+		if ( helpVisible.value || !activeMode.value ) {
 			return;
 		}
 		helpVisible.value = true;
-		if ( activeMode.value ) {
-			resetOperationState();
-			resetDetailState();
-			helpItems.value = [];
-		} else {
-			loadHelpCatalog();
-		}
+		resetOperationState();
+		resetDetailState();
 	}
 
 	/**
-	 * Closes the help overlay. At root, restores recents/related results that
-	 * were displaced by the mode catalog. Inside a mode, re-runs the mode's
-	 * getResults so the list that was hidden under help comes back.
+	 * Closes the help overlay and re-runs the mode for the query it left, so
+	 * the list hidden under help comes back.
 	 */
 	function closeHelp() {
 		if ( !helpVisible.value ) {
 			return;
 		}
 		helpVisible.value = false;
-		helpItems.value = [];
 		if ( activeMode.value ) {
 			handleModeQuery( activeMode.value, query.value );
-		} else if ( query.value ) {
-			// updateQuery records a query typed while help is up but skips
-			// dispatch, so the surface underneath is rebuilt on the way out.
-			updateQuery( query.value );
-		} else {
-			clearSearch();
 		}
 	}
 
