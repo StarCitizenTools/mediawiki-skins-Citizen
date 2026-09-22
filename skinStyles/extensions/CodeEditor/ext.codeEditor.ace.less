@@ -6,11 +6,49 @@
  * Version: REL1_43
  */
 
-.ace {
-	&-tm {
-		color: var( --color-emphasized );
-		background-color: transparent;
+.skin-citizen {
+	.ace {
+		&_editor {
+			font-family: var( --font-family-monospace );
+			color: var( --color-emphasized );
+			background: var( --color-surface-1 );
+		}
 
+		&_gutter {
+			color: var( --color-subtle );
+			background: var( --color-surface-1 );
+
+			&-cell {
+				cursor: pointer;
+
+				&:hover {
+					color: var( --color-base );
+				}
+			}
+
+			&-active-line {
+				background: var( --color-surface-2 );
+				border-left: 2px solid var( --color-progressive );
+			}
+		}
+
+		&_marker-layer {
+			.ace_active-line {
+				background: var( --color-surface-2 );
+			}
+
+			.ace_selection {
+				background: var( --color-surface-2--hover );
+			}
+		}
+
+		// Print margin is not useful
+		&_print-margin {
+			display: none;
+		}
+	}
+
+	.ace_editor {
 		.ace {
 			&_gutter {
 				color: var( --color-subtle );
@@ -163,7 +201,9 @@
 			}
 		}
 	}
+}
 
+.ace {
 	&_gutter {
 		&-cell {
 			color: var( --color-subtle );
@@ -263,49 +303,6 @@
 					border-color: var( --color-progressive--active );
 				}
 			}
-		}
-	}
-}
-
-.skin-citizen {
-	.ace {
-		&_editor {
-			font-family: var( --font-family-monospace );
-			color: var( --color-emphasized );
-			background: var( --color-surface-1 );
-		}
-
-		&_gutter {
-			color: var( --color-subtle );
-			background: var( --color-surface-1 );
-
-			&-cell {
-				cursor: pointer;
-
-				&:hover {
-					color: var( --color-base );
-				}
-			}
-
-			&-active-line {
-				background: var( --color-surface-2 );
-				border-left: 2px solid var( --color-progressive );
-			}
-		}
-
-		&_marker-layer {
-			.ace_active-line {
-				background: var( --color-surface-2 );
-			}
-
-			.ace_selection {
-				background: var( --color-surface-2--hover );
-			}
-		}
-
-		// Print margin is not useful
-		&_print-margin {
-			display: none;
 		}
 	}
 }
