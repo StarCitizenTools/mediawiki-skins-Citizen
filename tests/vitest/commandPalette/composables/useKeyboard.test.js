@@ -223,6 +223,41 @@ describe( 'useKeyboard', () => {
 			);
 		} );
 
+		// iOS reports every key on its `#+=` symbol layer as shifted, so tapping
+		// Return straight after typing `#`, `~` or `>` arrives as Shift+Enter.
+		it( 'should select on Shift+Enter in the current tab, as Enter does', () => {
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( { id: '1', actions: [ { id: 'edit' } ] } );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'should run the fulltext row on Shift+Enter', () => {
+			deps.items.value = [ { id: 'fulltext', source: 'queryAction:fulltext-search' } ];
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
+		} );
+
+		it( 'should hold a Shift+Enter as a plain activation while results load', () => {
+			listNav.highlightedIndex.value = -1;
+			deps.canQueueActivation.value = true;
+			const event = createKeyEvent( 'Enter' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onQueueActivation ).toHaveBeenCalledWith();
+		} );
+
 		it( 'should carry the new-tab request into a held activation', () => {
 			listNav.highlightedIndex.value = -1;
 			deps.canQueueActivation.value = true;
@@ -1180,6 +1215,68 @@ describe( 'useKeyboard', () => {
 
 			expect( deps.onExitModeToLiteral ).not.toHaveBeenCalled();
 			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		// iOS reports its `#+=` symbol layer as the shifted `123` layer, so a
+		// Backspace typed there carries shiftKey — and Shift+Backspace edits a
+		// text field exactly as Backspace does everywhere else.
+		it( 'exits an empty mode to literal text on Shift+Backspace', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [],
+				activeMode: { id: 'category' }
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onExitModeToLiteral ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'pops context on Shift+Backspace', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [ { name: 'A' } ]
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'selects the last chip on Shift+Backspace', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [ { id: 't1', label: 'Talk' } ],
+				query: '',
+				modeContext: []
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
+		} );
+
+		it( 'removes the selected chip on Shift+Backspace', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [ { id: 't1', label: 'Talk' } ],
+				query: '',
+				modeContext: []
+			} );
+			deps.selectedTokenIndex.value = 0;
+			const event = createKeyEvent( 'Backspace', inputEl );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onRemoveToken ).toHaveBeenCalledWith( 0 );
 		} );
 
 		it( 'selects a surviving chip rather than exiting the mode', () => {
