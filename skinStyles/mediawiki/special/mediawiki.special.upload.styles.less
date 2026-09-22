@@ -237,6 +237,13 @@
 		.mixin-citizen-cdx-input();
 	}
 
+	// The summary is the file page's initial wikitext; on a re-upload the same ID is a one-line input.
+	textarea#wpUploadDescription {
+		font-family: var( --font-family-monospace );
+		font-size: var( --font-size-small );
+		line-height: 1.5em;
+	}
+
 	input[ name='wpUpload' ] {
 		width: 100%;
 		min-height: @min-size-interactive-touch;
