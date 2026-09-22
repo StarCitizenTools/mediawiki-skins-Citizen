@@ -250,7 +250,7 @@ describe( 'createRestSearchClient', () => {
 			expect( result.results[ 0 ].url ).toBe( "/wiki/'One Meal' Nutrition Bar (Grilled Steak)" );
 		} );
 
-		it( 'includes edit action with navigate type', async () => {
+		it( 'includes an edit action linking to the edit form', async () => {
 			stubFetch( makeResponse( [
 				{
 					id: 4,
@@ -265,9 +265,24 @@ describe( 'createRestSearchClient', () => {
 			const action = result.results[ 0 ].actions[ 0 ];
 
 			expect( action.id ).toBe( 'edit' );
-			expect( action.type ).toBe( 'navigate' );
 			expect( action.label ).toBe( 'action-edit' );
 			expect( action.url ).toBe( '/wiki/Fox?action=edit' );
+		} );
+
+		it( 'omits the edit action for a title that cannot be a real page', async () => {
+			stubFetch( makeResponse( [
+				{
+					id: 0,
+					key: 'Special:Version',
+					title: 'Special:Version',
+					matched_title: null,
+					thumbnail: null
+				}
+			] ) );
+
+			const result = await client.fetchByQuery( 'Special:Version', 10 );
+
+			expect( result.results[ 0 ].actions ).toEqual( [] );
 		} );
 
 		it( 'omits descriptions when showDescription is false', async () => {

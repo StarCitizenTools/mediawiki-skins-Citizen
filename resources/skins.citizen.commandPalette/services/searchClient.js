@@ -92,6 +92,32 @@ function createRestSearchClient( scriptPath ) {
 	const editMessage = mw.msg( 'action-edit' );
 
 	/**
+	 * The actions offered on a result row.
+	 *
+	 * The REST handler reports a page id of 0 for any title that cannot be a
+	 * real page — a virtual namespace such as `Special:` or `Media:`, or an
+	 * interwiki target. Such a title holds no wikitext, so `action=edit` is
+	 * ignored and merely renders the page.
+	 *
+	 * @param {RestResult} page
+	 * @return {import('../types.js').CommandPaletteItemAction[]}
+	 */
+	function buildActions( page ) {
+		if ( !page.id ) {
+			return [];
+		}
+
+		return [
+			{
+				id: 'edit',
+				label: editMessage,
+				icon: cdxIconEdit,
+				url: mw.util.getUrl( page.title, { action: 'edit' } )
+			}
+		];
+	}
+
+	/**
 	 * Adapt the REST API response to CommandPaletteSearchResponse format.
 	 *
 	 * @param {string} query Original (unprocessed) query for highlight matching
@@ -128,15 +154,7 @@ function createRestSearchClient( scriptPath ) {
 							highlightQuery: true
 						}
 					] : undefined,
-					actions: [
-						{
-							id: 'edit',
-							type: 'navigate',
-							label: editMessage,
-							icon: cdxIconEdit,
-							url: mw.util.getUrl( page.title, { action: 'edit' } )
-						}
-					],
+					actions: buildActions( page ),
 					highlightQuery: true
 				};
 			} )
