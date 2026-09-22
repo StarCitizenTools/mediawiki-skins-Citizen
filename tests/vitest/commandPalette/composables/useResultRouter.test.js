@@ -278,14 +278,51 @@ describe( 'useResultRouter — selectResult', () => {
 					exitMode: vi.fn(),
 					helpVisible: ref( false ),
 					closeHelp: vi.fn()
-				}
+				},
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( null ) }
 			} );
 
 			const { selectResult } = useResultRouter( deps );
 			await selectResult( {} );
 
+			expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
 			expect( deps.orchestrator.exitMode ).toHaveBeenCalled();
 			expect( deps.tokenInput.setFreeText ).toHaveBeenCalledWith( 'Foo:' );
+		} );
+
+		it( 'inside a mode, switches straight to a mode its payload names', async () => {
+			const target = { id: 'category' };
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( { id: 'help' } ),
+					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/cat:' } )
+				},
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: target, trigger: '/cat:' } ) }
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.tokenInput.clear ).toHaveBeenCalled();
+			expect( deps.orchestrator.enterMode ).toHaveBeenCalledWith( target );
+			expect( deps.orchestrator.exitMode ).not.toHaveBeenCalled();
+		} );
+
+		it( 'inside a mode, puts a payload that only starts with a trigger into the input whole', async () => {
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( { id: 'namespace' } ),
+					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '!Archive:' } )
+				},
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'history' }, trigger: '!' } ) }
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
+			expect( deps.orchestrator.exitMode ).toHaveBeenCalled();
+			expect( deps.tokenInput.setFreeText ).toHaveBeenCalledWith( '!Archive:' );
 		} );
 
 		it( 'at root, enters a matching mode if found', async () => {
@@ -295,7 +332,7 @@ describe( 'useResultRouter — selectResult', () => {
 					activeMode: ref( null ),
 					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:' } )
 				},
-				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: matchedMode } ) }
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: matchedMode, trigger: '/smw:' } ) }
 			} );
 
 			const { selectResult } = useResultRouter( deps );
@@ -303,6 +340,24 @@ describe( 'useResultRouter — selectResult', () => {
 
 			expect( deps.tokenInput.clear ).toHaveBeenCalled();
 			expect( deps.orchestrator.enterMode ).toHaveBeenCalledWith( matchedMode );
+			expect( deps.orchestrator.exitMode ).not.toHaveBeenCalled();
+		} );
+
+		it( 'at root, matches a trigger regardless of case', async () => {
+			const matchedMode = { id: 'smw' };
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( null ),
+					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/SMW:' } )
+				},
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: matchedMode, trigger: '/smw:' } ) }
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.orchestrator.enterMode ).toHaveBeenCalledWith( matchedMode );
+			expect( deps.tokenInput.setFreeText ).not.toHaveBeenCalled();
 		} );
 
 		it( 'at root, closes help before entering mode if help was visible', async () => {
@@ -312,7 +367,7 @@ describe( 'useResultRouter — selectResult', () => {
 					helpVisible: ref( true ),
 					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:' } )
 				},
-				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' } } ) }
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' }, trigger: '/smw:' } ) }
 			} );
 
 			const { selectResult } = useResultRouter( deps );
@@ -321,7 +376,7 @@ describe( 'useResultRouter — selectResult', () => {
 			expect( deps.orchestrator.closeHelp ).toHaveBeenCalled();
 		} );
 
-		it( 'at root, no-ops if no matching mode is found', async () => {
+		it( 'at root, types a payload that names no mode into the input', async () => {
 			const deps = makeDeps( {
 				orchestrator: {
 					activeMode: ref( null ),
@@ -334,6 +389,24 @@ describe( 'useResultRouter — selectResult', () => {
 			await selectResult( {} );
 
 			expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
+			expect( deps.orchestrator.exitMode ).not.toHaveBeenCalled();
+			expect( deps.tokenInput.setFreeText ).toHaveBeenCalledWith( 'random' );
+		} );
+
+		it( 'at root, types a payload that only starts with a trigger into the input', async () => {
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( null ),
+					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:foo' } )
+				},
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' }, trigger: '/smw:' } ) }
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
+			expect( deps.tokenInput.setFreeText ).toHaveBeenCalledWith( '/smw:foo' );
 		} );
 	} );
 
@@ -467,7 +540,7 @@ describe( 'useResultRouter — selectResult', () => {
 					helpVisible: ref( true ),
 					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:' } )
 				},
-				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' } } ) }
+				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' }, trigger: '/smw:' } ) }
 			} );
 
 			const { selectResult } = useResultRouter( deps );
