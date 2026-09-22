@@ -95,37 +95,7 @@ function createPaletteCommandProvider( paletteRegistry ) {
 			return { items: [] };
 		},
 
-		async onResultSelect( item ) {
-			const sourceParts = item.source?.split( ':' );
-			if ( sourceParts?.[ 0 ] !== 'command' || sourceParts.length < 2 ) {
-				return { action: 'none' };
-			}
-
-			const handlerId = sourceParts[ 1 ];
-			const handler = paletteRegistry.getHandler( handlerId );
-
-			if ( !handler ) {
-				return { action: 'none' };
-			}
-
-			try {
-				// Commands with getResults expand the query on select
-				if ( item.type === 'command' &&
-					typeof handler.getResults === 'function' ) {
-					return { action: 'exitWithQuery', payload: item.value };
-				}
-
-				if ( typeof handler.onResultSelect === 'function' ) {
-					return handler.onResultSelect( item );
-				}
-				return { action: 'none' };
-			} catch ( err ) {
-				mw.log.error(
-					'[commandPalette] Selection handler "' + handlerId + '" failed:', err
-				);
-				return { action: 'none' };
-			}
-		}
+		onResultSelect: ( item ) => paletteRegistry.selectCommandListItem( item )
 	}, { debounceMs: 0, keepStaleResults: true, readsTriggers: true } );
 }
 

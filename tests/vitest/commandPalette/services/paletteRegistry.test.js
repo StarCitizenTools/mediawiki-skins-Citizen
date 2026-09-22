@@ -283,6 +283,186 @@ describe( 'createPaletteRegistry', () => {
 		} );
 	} );
 
+	describe( 'searchCommandListItems', () => {
+		function registerBuiltIns() {
+			registry.register( makeHandler( {
+				id: 'namespace',
+				triggers: [ '/ns:', ':' ],
+				label: 'Namespaces',
+				description: 'Search for a page in a specific namespace'
+			} ) );
+			registry.register( makeHandler( {
+				id: 'category',
+				triggers: [ '/cat:', '#' ],
+				label: 'Categories',
+				description: 'Search and explore categories'
+			} ) );
+			registry.register( makeHandler( {
+				id: 'file',
+				triggers: [ '/file:', '~' ],
+				label: 'Files and media',
+				description: 'Find images, PDFs, audio, video and other files'
+			} ) );
+		}
+
+		function sourcesFor( query ) {
+			return registry.searchCommandListItems( query ).map( ( item ) => item.source );
+		}
+
+		it( 'returns every entry in registration order for an empty query', () => {
+			registerBuiltIns();
+
+			const sources = sourcesFor( '' );
+
+			expect( sources ).toEqual( [ 'command:namespace', 'command:category', 'command:file' ] );
+		} );
+
+		it( 'matches a trigger by prefix, so a bare colon does not match every `/x:` trigger', () => {
+			registerBuiltIns();
+
+			expect( sourcesFor( '#' ) ).toEqual( [ 'command:category' ] );
+			expect( sourcesFor( ':' ) ).toEqual( [ 'command:namespace' ] );
+			expect( sourcesFor( '/ca' ) ).toEqual( [ 'command:category' ] );
+		} );
+
+		it( 'matches a slash trigger by the word after its slash', () => {
+			registerBuiltIns();
+
+			// Neither the name nor the description contains "ns".
+			const sources = sourcesFor( 'ns' );
+
+			expect( sources ).toEqual( [ 'command:namespace' ] );
+		} );
+
+		it( 'matches the name anywhere, ignoring case', () => {
+			registerBuiltIns();
+
+			const sources = sourcesFor( 'MEDIA' );
+
+			expect( sources ).toEqual( [ 'command:file' ] );
+		} );
+
+		it( 'matches the description anywhere', () => {
+			registerBuiltIns();
+
+			const sources = sourcesFor( 'image' );
+
+			expect( sources ).toEqual( [ 'command:file' ] );
+		} );
+
+		it( 'ranks a trigger match above a name match above a description match', () => {
+			registry.register( makeHandler( {
+				id: 'by-description', triggers: [ '/a:' ], label: 'A', description: 'Mentions foo'
+			} ) );
+			registry.register( makeHandler( {
+				id: 'by-name', triggers: [ '/b:' ], label: 'Foo things', description: 'B'
+			} ) );
+			registry.register( makeHandler( {
+				id: 'by-trigger', triggers: [ '/foo:' ], label: 'C', description: 'C'
+			} ) );
+
+			const sources = sourcesFor( 'foo' );
+
+			expect( sources ).toEqual( [ 'command:by-trigger', 'command:by-name', 'command:by-description' ] );
+		} );
+
+		it( 'keeps registration order within a rank', () => {
+			registerBuiltIns();
+
+			const sources = sourcesFor( 'search' );
+
+			expect( sources ).toEqual( [ 'command:namespace', 'command:category' ] );
+		} );
+
+		it( 'ignores whitespace around the query', () => {
+			registerBuiltIns();
+
+			expect( sourcesFor( '  cat ' ) ).toEqual( [ 'command:category' ] );
+			expect( sourcesFor( '   ' ) ).toHaveLength( 3 );
+		} );
+
+		it( 'returns nothing when no entry matches', () => {
+			registerBuiltIns();
+
+			const sources = sourcesFor( 'zzz' );
+
+			expect( sources ).toEqual( [] );
+		} );
+
+		it( 'matches a handler that declares no label or description by its triggers alone', () => {
+			// Third parties register through a public hook, so neither field
+			// can be assumed.
+			registry.register( { id: 'bare', triggers: [ '/bare:' ], onResultSelect: () => {} } );
+
+			expect( sourcesFor( '/ba' ) ).toEqual( [ 'command:bare' ] );
+			expect( sourcesFor( 'bare thing' ) ).toEqual( [] );
+		} );
+	} );
+
+	describe( 'selectCommandListItem', () => {
+		it( 'opens a mode with its first trigger', async () => {
+			registry.register( makeHandler( { id: 'cat', triggers: [ '/cat:', '#' ], getResults: () => [] } ) );
+			const [ item ] = registry.getCommandListItems();
+
+			const action = await registry.selectCommandListItem( item );
+
+			expect( action ).toEqual( { action: 'exitWithQuery', payload: '/cat:' } );
+		} );
+
+		it( 'runs a plain command through its own handler', async () => {
+			const onResultSelect = vi.fn( () => ( { action: 'navigate', payload: '/wiki/X' } ) );
+			registry.register( makeHandler( { id: 'go', triggers: [ '/go' ], onResultSelect } ) );
+			const [ item ] = registry.getCommandListItems();
+
+			const action = await registry.selectCommandListItem( item );
+
+			expect( onResultSelect ).toHaveBeenCalledWith( item );
+			expect( action ).toEqual( { action: 'navigate', payload: '/wiki/X' } );
+		} );
+
+		it( 'does nothing for a row that is not a command', async () => {
+			const action = await registry.selectCommandListItem( { source: 'search:Foo' } );
+
+			expect( action ).toEqual( { action: 'none' } );
+		} );
+
+		it( 'does nothing for an unregistered handler', async () => {
+			const action = await registry.selectCommandListItem( { source: 'command:gone', type: 'command' } );
+
+			expect( action ).toEqual( { action: 'none' } );
+		} );
+
+		it( 'logs and does nothing when the handler throws', async () => {
+			registry.register( makeHandler( { id: 'bad', triggers: [ '/bad' ], onResultSelect: () => {
+				throw new Error( 'boom' );
+			} } ) );
+			const [ item ] = registry.getCommandListItems();
+			mw.log.error.mockClear();
+
+			const action = await registry.selectCommandListItem( item );
+
+			expect( action ).toEqual( { action: 'none' } );
+			expect( mw.log.error ).toHaveBeenCalled();
+		} );
+
+		it( 'logs and does nothing when the handler rejects', async () => {
+			registry.register( makeHandler( {
+				id: 'bad',
+				triggers: [ '/bad' ],
+				onResultSelect: () => Promise.reject( new Error( 'boom' ) )
+			} ) );
+			const [ item ] = registry.getCommandListItems();
+			mw.log.error.mockClear();
+
+			const action = await registry.selectCommandListItem( item );
+
+			expect( action ).toEqual( { action: 'none' } );
+			expect( mw.log.error ).toHaveBeenCalledWith(
+				expect.stringContaining( '"bad"' ), expect.any( Error )
+			);
+		} );
+	} );
+
 	describe( 'register with a malformed handler', () => {
 		it( 'does not throw, and later registrations still work', () => {
 			expect( () => registry.register( makeHandler( { id: 'stringy', triggers: '/oops:' } ) ) )
