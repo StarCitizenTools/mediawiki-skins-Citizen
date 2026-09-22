@@ -118,26 +118,30 @@ function useResultRouter( {
 					close();
 				}
 				break;
-			case 'exitWithQuery':
-				if ( orchestrator.activeMode.value ) {
-					// From within a mode: exit and seed the freeText.
-					orchestrator.exitMode();
-					tokenInput.setFreeText( action.payload );
-				} else {
-					// From root: try to enter a matching mode.
-					const match = findModeByQuery( action.payload );
-					if ( match ) {
-						tokenInput.clear();
-						// Closing help before entering the mode keeps openHelp's
-						// catalog from being preserved across the enterMode reset.
-						if ( wasHelpVisible ) {
-							orchestrator.closeHelp();
-						}
-						orchestrator.enterMode( match.mode );
+			case 'exitWithQuery': {
+				// A payload that is exactly a mode's trigger names that mode, so
+				// switch to it as if it were picked from the `/` list. Anything
+				// else, even text that only starts with a trigger — a namespace
+				// called `!Archive`, say — goes into the input whole rather than
+				// switching modes from here.
+				const match = findModeByQuery( action.payload );
+				if ( match && match.trigger.toLowerCase() === action.payload.toLowerCase() ) {
+					tokenInput.clear();
+					// Closing help before entering the mode keeps openHelp's
+					// catalog from being preserved across the enterMode reset.
+					if ( wasHelpVisible ) {
+						orchestrator.closeHelp();
 					}
+					orchestrator.enterMode( match.mode );
+				} else {
+					if ( orchestrator.activeMode.value ) {
+						orchestrator.exitMode();
+					}
+					tokenInput.setFreeText( action.payload );
 				}
 				nextTick( focusInput );
 				break;
+			}
 			case 'updateQuery':
 				tokenInput.setFreeText( action.payload );
 				nextTick( focusInput );

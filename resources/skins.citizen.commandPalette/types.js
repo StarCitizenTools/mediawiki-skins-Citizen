@@ -218,11 +218,13 @@
  */
 
 /**
- * Action to exit the current mode and set the query string.
+ * Action to leave any mode and put the payload in the input. A payload that
+ * is exactly a mode trigger (compared case-insensitively) instead switches to
+ * that mode, with an empty input and no remembered trigger.
  *
  * @typedef {Object} CommandPaletteExitWithQueryAction
  * @property {'exitWithQuery'} action
- * @property {string} payload - The new query string.
+ * @property {string} payload - Text for the input, or a mode trigger to switch to.
  */
 
 /**
