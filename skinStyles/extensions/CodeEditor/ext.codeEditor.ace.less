@@ -3,9 +3,7 @@
  *
  * SkinStyles for Extension:CodeEditor
  * Module: ext.codeEditor.ace
- * Version: REL1_39 67c012c
- *
- * Date: 2023-06-03
+ * Version: REL1_43
  */
 
 .ace {
@@ -17,32 +15,15 @@
 			&_gutter {
 				color: var( --color-subtle );
 				background-color: transparent;
-
-				&-active-line {
-					background-color: var( --background-color-button-quiet--hover );
-				}
 			}
 
 			&_marker-layer {
 				.ace {
-					&_active-line {
-						background-color: var( --background-color-button-quiet--hover );
-					}
-
 					&_selected-word {
 						background: var( --background-color-progressive-subtle );
 						border-color: var( --border-color-base );
 					}
-
-					&_selection {
-						background: var( --background-color-progressive-subtle );
-						box-shadow: inset 0 0 0 2px var( --color-progressive );
-					}
 				}
-			}
-
-			&_print-margin {
-				background: var( --border-color-base );
 			}
 
 			&_cursor {
@@ -110,24 +91,30 @@
 				color: var( --color-syntax-green );
 
 				&.ace {
-					&_regex {
+					&_regexp {
 						color: var( --color-syntax-red );
 					}
 				}
 			}
 
 			&_comment {
-				color: var( --color-subtle );
+				color: var( --color-syntax-gray );
 
 				&.ace {
 					&_doc {
+						color: var( --color-syntax-gray );
+
 						&.ace {
 							&_tag {
-								color: var( --color-subtle );
+								color: var( --color-syntax-gray );
 							}
 						}
 					}
 				}
+			}
+
+			&_invisible {
+				color: var( --color-placeholder );
 			}
 
 			&_variable {
@@ -168,7 +155,7 @@
 
 			&_paren,
 			&_punctuation {
-				color: var( --color-syntax-cyan );
+				color: var( --color-syntax-gray );
 			}
 
 			&_indent-guide {
@@ -276,6 +263,49 @@
 					border-color: var( --color-progressive--active );
 				}
 			}
+		}
+	}
+}
+
+.skin-citizen {
+	.ace {
+		&_editor {
+			font-family: var( --font-family-monospace );
+			color: var( --color-emphasized );
+			background: var( --color-surface-1 );
+		}
+
+		&_gutter {
+			color: var( --color-subtle );
+			background: var( --color-surface-1 );
+
+			&-cell {
+				cursor: pointer;
+
+				&:hover {
+					color: var( --color-base );
+				}
+			}
+
+			&-active-line {
+				background: var( --color-surface-2 );
+				border-left: 2px solid var( --color-progressive );
+			}
+		}
+
+		&_marker-layer {
+			.ace_active-line {
+				background: var( --color-surface-2 );
+			}
+
+			.ace_selection {
+				background: var( --color-surface-2--hover );
+			}
+		}
+
+		// Print margin is not useful
+		&_print-margin {
+			display: none;
 		}
 	}
 }
