@@ -1,6 +1,16 @@
 @import '../../../resources/mixins.less';
 @import '../../../resources/variables.less';
 
+// Empty, zero-width glyphs for U+003A and U+FF1A and nothing else: the source tabs drop the colon
+// that ends core's labels in most languages. A fixed-width clip cannot do this, since some
+// translations end in a letter. `.notdef` carries a box because OTS rejects an empty glyf table.
+@font-face {
+	font-family: 'citizen-hide-colon';
+	src: url( data:font/woff2;base64,d09GMgABAAAAAAEkAAoAAAAAAnwAAADeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAPAoYNgE2AiQDCAsGAAQgBWYHJhvfAcgeB3aTD7UO3lzk6oz0IZ7v24/dN7OoJNFESOK1kAK1QUpy+pK/um0815dnQxHBI8L4QDCkrv3A89RHJydykij3MNGitsAsorYAI2yeTu54ONwOYRAm1NZGnZlPKwYiyD68t8DTctJXywN95RsAwBUoNI614Nhwi1VD1NiXhTy3fPlFAFBgIBhYAQwQRnqnzDmBINx8/Dv+r3f/wc9jKGRmohUIGywT8QATKxMQlCGgAAAw3AmIDQSUNRtaxoY4tF9Rdt3cwNJF1W/UBRC2KTkhKU1aLhoOY+n0HA== ) format( 'woff2' );
+	font-display: block;
+	unicode-range: U+003A, U+FF1A;
+}
+
 #mw-upload-form {
 	fieldset {
 		border-radius: var( --border-radius-medium );
@@ -31,7 +41,105 @@
 		.mw-htmlform-field-UploadSourceField {
 			margin-bottom: var( --space-xs );
 
-			.mw-label {
+			// Core adds the source radios to the label cell, which is otherwise redundant with the dropzone.
+			&:not( :has( input[ name='wpSourceType' ] ) ) .mw-label {
+				display: none;
+			}
+		}
+
+		&:has( input[ name='wpSourceType' ] ) {
+			margin-top: calc( -1 * var( --space-md ) );
+
+			> tbody {
+				display: flex;
+				flex-wrap: wrap;
+				row-gap: var( --space-xs );
+
+				> tr {
+					flex-basis: 100%;
+				}
+
+				// Rows ahead of the first source, such as a hook's intro text, stay ahead of the tabs.
+				> .mw-htmlform-field-UploadSourceField ~ tr {
+					order: 1;
+				}
+
+				// Each source's label cell becomes a tab on the first line, its field a panel below.
+				> .mw-htmlform-field-UploadSourceField {
+					display: contents;
+
+					> .mw-label {
+						position: relative;
+						display: flex;
+						align-items: center;
+						min-width: 0;
+						padding: var( --space-xs ) var( --space-sm );
+						font-size: var( --font-size-medium );
+						font-weight: var( --font-weight-medium );
+						color: var( --color-emphasized );
+						white-space: nowrap;
+						box-shadow: inset 0 calc( -1 * var( --border-width-base ) ) 0 var( --border-color-base );
+						transition-duration: var( --transition-duration-base );
+						transition-property: color, box-shadow;
+
+						&:hover {
+							color: var( --color-progressive--hover );
+							box-shadow: inset 0 calc( -1 * var( --border-width-thick ) ) 0 var( --color-progressive--hover );
+						}
+
+						&:has( > input:checked ) {
+							color: var( --color-progressive );
+							box-shadow: inset 0 calc( -1 * var( --border-width-thick ) ) 0 var( --color-progressive );
+						}
+
+						> label {
+							overflow: hidden;
+							text-overflow: ellipsis;
+							font-family: 'citizen-hide-colon', var( --font-family-base );
+						}
+
+						// The label names the source field, not the radio, so the radio covers the tab to
+						// take the click core's script listens for.
+						> input {
+							position: absolute;
+							inset: 0;
+							margin: 0;
+							appearance: none;
+							cursor: pointer;
+							background: none;
+							border: 0;
+							border-radius: var( --border-radius-base );
+
+							&:checked {
+								cursor: default;
+							}
+
+							&:focus-visible {
+								outline: var( --border-width-thick ) solid var( --color-progressive );
+								outline-offset: calc( -1 * var( --border-width-thick ) );
+							}
+						}
+					}
+
+					> .mw-input {
+						flex-basis: 100%;
+						order: 1;
+					}
+				}
+
+				// Continues the tab baseline to the end of the line.
+				&::after {
+					flex: 1 1 0;
+					content: '';
+					box-shadow: inset 0 calc( -1 * var( --border-width-base ) ) 0 var( --border-color-base );
+				}
+			}
+		}
+
+		// Hides unselected sources; with none selected, every field stays visible.
+		&:has( input[ name='wpSourceType' ]:checked ) .mw-htmlform-field-UploadSourceField:not( :has( input[ name='wpSourceType' ]:checked ) ) {
+			> .mw-input,
+			+ tr:has( > .htmlform-tip ) {
 				display: none;
 			}
 		}
@@ -85,6 +193,10 @@
 		}
 	}
 
+	#wpUploadFileURL {
+		width: 100%;
+	}
+
 	#mw-upload-thumbnail {
 		margin: 0 auto;
 		text-align: center;
@@ -104,6 +216,11 @@
 		}
 	}
 
+	// Core keeps the file preview when another source is selected.
+	&:has( #wpSourceTypeFile:not( :checked ) ) #mw-upload-thumbnail {
+		display: none;
+	}
+
 	#mw-upload-permitted > p {
 		margin: 0;
 	}
@@ -113,6 +230,7 @@
 	}
 
 	input#wpDestFile,
+	input#wpUploadFileURL,
 	textarea,
 	select#wpLicense {
 		font-family: inherit;
