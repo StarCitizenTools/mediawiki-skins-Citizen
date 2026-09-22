@@ -1,9 +1,9 @@
 @import '../../../resources/mixins.less';
 @import '../../../resources/variables.less';
 
-// Empty, zero-width glyphs for U+003A and U+FF1A and nothing else: the source tabs drop the colon
-// that ends core's labels in most languages. A fixed-width clip cannot do this, since some
-// translations end in a letter. `.notdef` carries a box because OTS rejects an empty glyf table.
+// HACK: Hide trailing colon by using a custom font to make the colon zero-width
+// A fixed-width clip would cut the last letter of translations that end without a colon
+// `.notdef` carries a box because the OTS font sanitizer rejects an empty glyf table
 @font-face {
 	font-family: 'citizen-hide-colon';
 	src: url( data:font/woff2;base64,d09GMgABAAAAAAEkAAoAAAAAAnwAAADeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAPAoYNgE2AiQDCAsGAAQgBWYHJhvfAcgeB3aTD7UO3lzk6oz0IZ7v24/dN7OoJNFESOK1kAK1QUpy+pK/um0815dnQxHBI8L4QDCkrv3A89RHJydykij3MNGitsAsorYAI2yeTu54ONwOYRAm1NZGnZlPKwYiyD68t8DTctJXywN95RsAwBUoNI614Nhwi1VD1NiXhTy3fPlFAFBgIBhYAQwQRnqnzDmBINx8/Dv+r3f/wc9jKGRmohUIGywT8QATKxMQlCGgAAAw3AmIDQSUNRtaxoY4tF9Rdt3cwNJF1W/UBRC2KTkhKU1aLhoOY+n0HA== ) format( 'woff2' );
