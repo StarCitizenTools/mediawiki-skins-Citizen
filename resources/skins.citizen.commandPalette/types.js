@@ -36,6 +36,11 @@
  * @property {string} [key] Optional slot name. When set, the detail panel
  *   renders the named slot in place of `value`, allowing rich content like
  *   chips, lists, or other components.
+ * @property {string[]} [keys] Text the user types, rendered as key caps.
+ *   Takes precedence over value.
+ * @property {string} [html] Trusted, already-sanitised markup (e.g.
+ *   mw.message().parse() output), rendered as HTML. Never pass user or API
+ *   content. Takes precedence over value.
  */
 
 /**
@@ -48,6 +53,7 @@
  * @typedef {Object} CommandPaletteItemDetailHeader
  * @property {string} label Primary heading text (e.g. a filename).
  * @property {string} [description] Subtle subtitle text (e.g. "PNG image").
+ * @property {Object|string} [icon] Codex icon drawn beside the label.
  * @property {string} [copyValue] When set, the panel renders a copy
  *   button next to the label. Clicking it (or pressing Cmd/Ctrl+C with
  *   the item highlighted and no text selected) copies this value to the

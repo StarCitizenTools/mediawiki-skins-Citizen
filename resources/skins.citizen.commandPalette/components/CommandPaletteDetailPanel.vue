@@ -24,6 +24,11 @@
 				v-if="detail.header"
 				class="citizen-command-palette-detail-panel__header"
 			>
+				<cdx-thumbnail
+					v-if="detail.header.icon"
+					:placeholder-icon="detail.header.icon"
+					class="citizen-command-palette-detail-panel__header-icon"
+				></cdx-thumbnail>
 				<div class="citizen-command-palette-detail-panel__header-text">
 					<div class="citizen-command-palette-detail-panel__header-label">
 						{{ detail.header.label }}
@@ -65,7 +70,26 @@
 				<dd class="citizen-command-palette-detail-panel__value">
 					<!-- eslint-disable-next-line mediawiki/no-vue-dynamic-i18n -- slot name is the consumer's pair key, not an i18n message -->
 					<slot :name="pair.key || `pair-${index}`" :pair="pair">
-						{{ pair.value }}
+						<span
+							v-if="pair.keys"
+							class="citizen-command-palette-detail-panel__keys"
+						>
+							<kbd
+								v-for="key in pair.keys"
+								:key="key"
+								class="citizen-keyboard-hint-key citizen-keyboard-hint-key--literal"
+							>{{ key }}</kbd>
+						</span>
+						<!-- eslint-disable vue/no-v-html -- `pair.html` is trusted, already-sanitised markup by contract. -->
+						<div
+							v-else-if="pair.html"
+							class="citizen-command-palette-detail-panel__html"
+							v-html="pair.html"
+						></div>
+						<!-- eslint-enable vue/no-v-html -->
+						<template v-else>
+							{{ pair.value }}
+						</template>
 					</slot>
 				</dd>
 			</div>
@@ -75,7 +99,7 @@
 
 <script>
 const { defineComponent, ref, computed, watch, onBeforeUnmount } = require( 'vue' );
-const { CdxButton, CdxIcon } = require( '../../../codex.js' );
+const { CdxButton, CdxIcon, CdxThumbnail } = require( '../../../codex.js' );
 const { cdxIconCopy, cdxIconCheck } = require( '../icons.json' );
 const CommandPaletteImage = require( './CommandPaletteImage.vue' );
 
@@ -87,6 +111,7 @@ module.exports = exports = defineComponent( {
 	components: {
 		CdxButton,
 		CdxIcon,
+		CdxThumbnail,
 		CommandPaletteImage
 	},
 	props: {
@@ -200,6 +225,11 @@ module.exports = exports = defineComponent( {
 		padding-block-end: var( --space-md );
 	}
 
+	&__header-icon {
+		flex-shrink: 0;
+		margin-inline-end: var( --space-xxs );
+	}
+
 	&__header-text {
 		flex: 1;
 		min-width: 0;
@@ -250,6 +280,18 @@ module.exports = exports = defineComponent( {
 	&__value {
 		margin: 0;
 		overflow-wrap: break-word;
+	}
+
+	&__keys {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var( --space-xs );
+	}
+
+	&__html code {
+		padding: 0 var( --space-xxs );
+		background-color: var( --background-color-interactive );
+		border-radius: var( --border-radius-base );
 	}
 }
 </style>
