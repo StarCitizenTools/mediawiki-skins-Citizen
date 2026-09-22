@@ -59,6 +59,7 @@ function toGrouped( deps ) {
 		},
 		help: {
 			helpVisible: deps.helpVisible,
+			helpAvailable: deps.helpAvailable,
 			onToggleHelp: deps.onToggleHelp,
 			onCloseHelp: deps.onCloseHelp
 		}
@@ -1296,18 +1297,25 @@ describe( 'useKeyboard', () => {
 	} );
 
 	describe( 'help overlay', () => {
-		function setupHelp( { helpVisible = false, query = '', tokens = [], activeMode = null } = {} ) {
+		function setupHelp( {
+			helpVisible = false,
+			helpAvailable = false,
+			query = '',
+			tokens = [],
+			activeMode = null
+		} = {} ) {
 			deps.query = ref( query );
 			deps.tokens = ref( tokens );
 			deps.activeMode = ref( activeMode );
 			deps.helpVisible = ref( helpVisible );
+			deps.helpAvailable = ref( helpAvailable );
 			deps.onToggleHelp = vi.fn();
 			deps.onCloseHelp = vi.fn();
 			keyboard = useKeyboard( toGrouped( deps ) );
 		}
 
 		it( '"?" at empty input toggles help', () => {
-			setupHelp( { query: '', tokens: [] } );
+			setupHelp( { activeMode: { id: 'category' }, helpAvailable: true } );
 			const event = createKeyEvent( '?' );
 
 			keyboard.handleKeydown( event );
@@ -1316,17 +1324,34 @@ describe( 'useKeyboard', () => {
 			expect( event.preventDefault ).toHaveBeenCalled();
 		} );
 
-		it( '"?" toggles help even when a mode is active, as long as input is empty', () => {
-			setupHelp( { query: '', tokens: [], activeMode: { id: 'category' } } );
+		it( '"?" at root is left to the mode-trigger fallback', () => {
+			setupHelp();
+			const helpMode = { id: 'help', triggers: [ '/help', '?' ] };
+			deps.findModeByTrigger = vi.fn( ( key ) => ( key === '?' ? helpMode : null ) );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '?' );
 
 			keyboard.handleKeydown( event );
 
-			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( helpMode, '?' );
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( '"?" inside help mode is text', () => {
+			setupHelp( { activeMode: { id: 'help' } } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
 		} );
 
 		it( '"?" mid-typing does NOT toggle help', () => {
-			setupHelp( { query: 'cat', tokens: [] } );
+			setupHelp( { query: 'cat', activeMode: { id: 'category' }, helpAvailable: true } );
 			const event = createKeyEvent( '?' );
 
 			keyboard.handleKeydown( event );
@@ -1335,12 +1360,46 @@ describe( 'useKeyboard', () => {
 		} );
 
 		it( '"?" with tokens present does NOT toggle help', () => {
-			setupHelp( { query: '', tokens: [ { id: 't1', label: 'Talk:' } ] } );
+			setupHelp( {
+				tokens: [ { id: 't1', label: 'Talk:' } ],
+				activeMode: { id: 'category' },
+				helpAvailable: true
+			} );
 			const event = createKeyEvent( '?' );
 
 			keyboard.handleKeydown( event );
 
 			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+		} );
+
+		describe( 'the "?" footer hint', () => {
+			const hasHelpHint = () => keyboard.keyboardHints.value.some(
+				( hint ) => hint.msgKey === 'citizen-command-palette-command-help-label'
+			);
+
+			it( 'shows at root with an empty input, where "?" enters help mode', () => {
+				setupHelp();
+
+				expect( hasHelpHint() ).toBe( true );
+			} );
+
+			it( 'shows inside a mode the overlay can describe', () => {
+				setupHelp( { activeMode: { id: 'category' }, helpAvailable: true } );
+
+				expect( hasHelpHint() ).toBe( true );
+			} );
+
+			it( 'hides inside help mode, where "?" is text', () => {
+				setupHelp( { activeMode: { id: 'help' }, helpAvailable: false } );
+
+				expect( hasHelpHint() ).toBe( false );
+			} );
+
+			it( 'hides once something is typed', () => {
+				setupHelp( { query: 'cat' } );
+
+				expect( hasHelpHint() ).toBe( false );
+			} );
 		} );
 
 		it( 'Escape closes help when help is visible (precedence over 3-level ladder)', () => {
@@ -1356,7 +1415,7 @@ describe( 'useKeyboard', () => {
 		} );
 
 		it( '"?" closes help when help is visible', () => {
-			setupHelp( { helpVisible: true } );
+			setupHelp( { helpVisible: true, activeMode: { id: 'category' }, helpAvailable: true } );
 			const event = createKeyEvent( '?' );
 
 			keyboard.handleKeydown( event );

@@ -53,6 +53,29 @@ function matchRank( handler, needle ) {
 	return -1;
 }
 
+/**
+ * @param {import('../types.js').PaletteHandler|undefined} handler
+ * @return {boolean} Whether the handler is a mode, which produces results.
+ */
+function isMode( handler ) {
+	return handler !== undefined && 'getResults' in handler &&
+		typeof handler.getResults === 'function';
+}
+
+/**
+ * @param {string} modeId
+ * @param {string} modeTrigger
+ * @param {string} otherId
+ * @param {string} otherTrigger A trigger that starts with `modeTrigger`.
+ */
+function warnShadowedTrigger( modeId, modeTrigger, otherId, otherTrigger ) {
+	mw.log.warn(
+		`[paletteRegistry] Mode "${ modeId }" trigger "${ modeTrigger }" is a prefix of ` +
+		`handler "${ otherId }" trigger "${ otherTrigger }". ` +
+		`Typing "${ otherTrigger }" enters "${ modeId }" first.`
+	);
+}
+
 function createPaletteRegistry() {
 	/** @type {Map<string, import('../types.js').PaletteHandler>} */
 	const handlers = new Map();
@@ -111,8 +134,9 @@ function createPaletteRegistry() {
 			);
 		} else {
 			handler.triggers.forEach( ( trigger ) => {
+				const lowerTrigger = trigger.toLowerCase();
 				const conflict = flatTriggerList.find(
-					( t ) => t.lowerTrigger === trigger.toLowerCase() && t.id !== handlerId
+					( t ) => t.lowerTrigger === lowerTrigger && t.id !== handlerId
 				);
 				if ( conflict ) {
 					mw.log.warn(
@@ -120,6 +144,19 @@ function createPaletteRegistry() {
 						`collides with existing handler "${ conflict.id }". Last registration wins.`
 					);
 				}
+				// A mode opens as soon as the input matches its trigger, so a
+				// longer trigger that starts with a mode's is entered through that
+				// mode before it can be typed out.
+				flatTriggerList.forEach( ( t ) => {
+					if ( t.id === handlerId || t.lowerTrigger === lowerTrigger ) {
+						return;
+					}
+					if ( isMode( handler ) && t.lowerTrigger.startsWith( lowerTrigger ) ) {
+						warnShadowedTrigger( handlerId, trigger, t.id, t.trigger );
+					} else if ( lowerTrigger.startsWith( t.lowerTrigger ) && isMode( handlers.get( t.id ) ) ) {
+						warnShadowedTrigger( t.id, t.trigger, handlerId, trigger );
+					}
+				} );
 			} );
 		}
 

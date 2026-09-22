@@ -113,6 +113,75 @@ describe( 'createPaletteRegistry', () => {
 			expect( collisionWarnings ).toHaveLength( 0 );
 		} );
 
+		describe( 'a mode trigger that starts another handler\'s trigger', () => {
+			const helpMode = () => makeHandler( { id: 'help', triggers: [ '/help', '?' ], getResults: () => [] } );
+			const helpdesk = () => makeHandler( { id: 'helpdesk', triggers: [ '/helpdesk:' ], onResultSelect: () => ( { action: 'none' } ) } );
+			const prefixWarnings = () => mw.log.warn.mock.calls.filter(
+				( c ) => /is a prefix of/.test( c[ 0 ] )
+			);
+
+			it( 'warns, naming both, when the longer trigger registers second', () => {
+				registry.register( helpMode() );
+				mw.log.warn.mockClear();
+
+				registry.register( helpdesk() );
+
+				expect( prefixWarnings() ).toEqual( [ [
+					expect.stringMatching( /"help".*"\/help".*"helpdesk".*"\/helpdesk:"/ )
+				] ] );
+			} );
+
+			it( 'warns, naming both, when the mode registers second', () => {
+				registry.register( helpdesk() );
+				mw.log.warn.mockClear();
+
+				registry.register( helpMode() );
+
+				expect( prefixWarnings() ).toEqual( [ [
+					expect.stringMatching( /"help".*"\/help".*"helpdesk".*"\/helpdesk:"/ )
+				] ] );
+			} );
+
+			it( 'ignores case, as trigger matching does', () => {
+				registry.register( makeHandler( { id: 'help', triggers: [ '/HELP' ], getResults: () => [] } ) );
+				mw.log.warn.mockClear();
+
+				registry.register( helpdesk() );
+
+				expect( prefixWarnings() ).toHaveLength( 1 );
+			} );
+
+			it( 'does not warn when the shorter trigger is a plain command, which typing never enters', () => {
+				registry.register( makeHandler( { id: 'go', triggers: [ '/help' ], onResultSelect: () => ( { action: 'none' } ) } ) );
+				mw.log.warn.mockClear();
+
+				registry.register( helpdesk() );
+
+				expect( prefixWarnings() ).toHaveLength( 0 );
+			} );
+
+			it( 'does not warn for the built-in triggers', () => {
+				mw.log.warn.mockClear();
+				const builtIns = {
+					namespace: [ '/ns:', ':' ],
+					action: [ '/action:', '>' ],
+					user: [ '/user:', '@' ],
+					category: [ '/cat:', '#' ],
+					history: [ '/hist:', '!' ],
+					file: [ '/file:', '~' ],
+					help: [ '/help', '?' ],
+					smw: [ '/smw:' ],
+					bucket: [ '/bucket:' ]
+				};
+
+				Object.entries( builtIns ).forEach( ( [ id, triggers ] ) => {
+					registry.register( makeHandler( { id, triggers, getResults: () => [] } ) );
+				} );
+
+				expect( prefixWarnings() ).toHaveLength( 0 );
+			} );
+		} );
+
 		it( 'warns when a handler has neither getResults nor onResultSelect', () => {
 			mw.log.warn.mockClear();
 

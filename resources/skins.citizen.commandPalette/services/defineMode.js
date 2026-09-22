@@ -39,7 +39,8 @@ const MODE_FIELDS = COMMON_FIELDS.concat( [
 	'tokenPattern',
 	'getResults',
 	'getItemDetail',
-	'headerLabel'
+	'headerLabel',
+	'debounceMs'
 ] );
 
 const COMMAND_FIELDS = COMMON_FIELDS;

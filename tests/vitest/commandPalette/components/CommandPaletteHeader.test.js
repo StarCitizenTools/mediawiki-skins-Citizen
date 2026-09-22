@@ -75,19 +75,28 @@ describe( 'CommandPaletteHeader combobox wiring', () => {
 			.toBe( 'citizen-command-palette-item-page-Foo' );
 	} );
 
-	it( 'reports expanded while the help overlay is up, which also lists options', () => {
-		// The help view renders the same command-palette-list, so a listbox is
-		// on screen; saying aria-expanded="false" there would be a lie.
-		const wrapper = mountHeader( { helpVisible: true, expanded: true } );
-
-		expect( wrapper.get( 'input' ).attributes( 'aria-expanded' ) ).toBe( 'true' );
-	} );
-
 	it( 'omits aria-activedescendant when nothing is highlighted', () => {
 		// An empty or stringified value ("[object Object]" from an unwrapped
 		// ref) resolves to no element, which is worse than omitting it.
 		const wrapper = mountHeader( { activeDescendantId: null } );
 
 		expect( wrapper.get( 'input' ).attributes( 'aria-activedescendant' ) ).toBeUndefined();
+	} );
+} );
+
+describe( 'CommandPaletteHeader placeholder', () => {
+	it( 'keeps the mode\'s own placeholder while the help overlay describes it', () => {
+		const wrapper = mountHeader( {
+			helpVisible: true,
+			activeMode: { id: 'category', placeholder: 'Search categories' }
+		} );
+
+		expect( wrapper.get( 'input' ).attributes( 'aria-label' ) ).toBe( 'Search categories' );
+	} );
+
+	it( 'names help mode\'s search', () => {
+		const wrapper = mountHeader( { activeMode: { id: 'help', placeholder: 'Search modes' } } );
+
+		expect( wrapper.get( 'input' ).attributes( 'aria-label' ) ).toBe( 'Search modes' );
 	} );
 } );

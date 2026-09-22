@@ -43,6 +43,7 @@ function makeDeps( overrides = {} ) {
 	};
 	const navigation = {
 		findModeByQuery: vi.fn(),
+		getHandler: vi.fn(),
 		...( overrides.navigation || {} )
 	};
 	const control = {
@@ -360,22 +361,6 @@ describe( 'useResultRouter — selectResult', () => {
 			expect( deps.tokenInput.setFreeText ).not.toHaveBeenCalled();
 		} );
 
-		it( 'at root, closes help before entering mode if help was visible', async () => {
-			const deps = makeDeps( {
-				orchestrator: {
-					activeMode: ref( null ),
-					helpVisible: ref( true ),
-					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:' } )
-				},
-				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' }, trigger: '/smw:' } ) }
-			} );
-
-			const { selectResult } = useResultRouter( deps );
-			await selectResult( {} );
-
-			expect( deps.orchestrator.closeHelp ).toHaveBeenCalled();
-		} );
-
 		it( 'at root, types a payload that names no mode into the input', async () => {
 			const deps = makeDeps( {
 				orchestrator: {
@@ -458,9 +443,59 @@ describe( 'useResultRouter — selectResult', () => {
 		expect( deps.tokenInput.clear ).toHaveBeenCalled();
 	} );
 
-	it( 'toggleHelp toggles and clears tokens', async () => {
+	describe( 'a command picked from help mode', () => {
+		const cases = [
+			{
+				action: { action: 'updateQuery', payload: 'Main Page' },
+				effect: ( deps ) => deps.tokenInput.setFreeText
+			},
+			{
+				action: { action: 'addToken', payload: { raw: 'Cat:' } },
+				effect: ( deps ) => deps.tokenInput.addToken
+			},
+			{
+				action: { action: 'pushModeContext', payload: { title: 'Mammals' } },
+				effect: ( deps ) => deps.orchestrator.pushModeContext
+			}
+		];
+
+		it.each( cases )( 'leaves help before applying $action.action', async ( { action, effect } ) => {
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( { id: 'help' } ),
+					handleSelection: vi.fn().mockResolvedValue( action )
+				}
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.orchestrator.exitMode ).toHaveBeenCalledTimes( 1 );
+			expect( effect( deps ) ).toHaveBeenCalledWith( action.payload );
+			expect( deps.orchestrator.exitMode.mock.invocationCallOrder[ 0 ] )
+				.toBeLessThan( effect( deps ).mock.invocationCallOrder[ 0 ] );
+		} );
+
+		it.each( cases )( 'applies $action.action inside any other mode without leaving it', async ( { action, effect } ) => {
+			const deps = makeDeps( {
+				orchestrator: {
+					activeMode: ref( { id: 'category' } ),
+					handleSelection: vi.fn().mockResolvedValue( action )
+				}
+			} );
+
+			const { selectResult } = useResultRouter( deps );
+			await selectResult( {} );
+
+			expect( deps.orchestrator.exitMode ).not.toHaveBeenCalled();
+			expect( effect( deps ) ).toHaveBeenCalledWith( action.payload );
+		} );
+	} );
+
+	it( 'toggleHelp inside a mode toggles the overlay over it', async () => {
 		const deps = makeDeps( {
 			orchestrator: {
+				activeMode: ref( { id: 'cat' } ),
 				handleSelection: vi.fn().mockResolvedValue( { action: 'toggleHelp' } )
 			}
 		} );
@@ -469,7 +504,45 @@ describe( 'useResultRouter — selectResult', () => {
 		await selectResult( {} );
 
 		expect( deps.orchestrator.toggleHelp ).toHaveBeenCalled();
+		expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
 		expect( deps.tokenInput.clear ).toHaveBeenCalled();
+	} );
+
+	it( 'toggleHelp at root enters help mode, as if picked from the list', async () => {
+		const helpMode = { id: 'help' };
+		const deps = makeDeps( {
+			orchestrator: {
+				activeMode: ref( null ),
+				handleSelection: vi.fn().mockResolvedValue( { action: 'toggleHelp' } )
+			},
+			navigation: { getHandler: vi.fn( () => helpMode ) }
+		} );
+
+		const { selectResult } = useResultRouter( deps );
+		await selectResult( {} );
+
+		expect( deps.navigation.getHandler ).toHaveBeenCalledWith( 'help' );
+		expect( deps.tokenInput.clear ).toHaveBeenCalled();
+		expect( deps.orchestrator.enterMode ).toHaveBeenCalledWith( helpMode );
+		expect( deps.orchestrator.enterMode.mock.calls[ 0 ] ).toHaveLength( 1 );
+		expect( deps.orchestrator.toggleHelp ).not.toHaveBeenCalled();
+	} );
+
+	it( 'toggleHelp inside help mode leaves it, the off half of the toggle', async () => {
+		const deps = makeDeps( {
+			orchestrator: {
+				activeMode: ref( { id: 'help' } ),
+				handleSelection: vi.fn().mockResolvedValue( { action: 'toggleHelp' } )
+			}
+		} );
+
+		const { selectResult } = useResultRouter( deps );
+		await selectResult( {} );
+
+		expect( deps.tokenInput.clear ).toHaveBeenCalled();
+		expect( deps.orchestrator.exitMode ).toHaveBeenCalled();
+		expect( deps.orchestrator.toggleHelp ).not.toHaveBeenCalled();
+		expect( deps.orchestrator.enterMode ).not.toHaveBeenCalled();
 	} );
 
 	it( 'none and unknown actions no-op', async () => {
@@ -484,71 +557,6 @@ describe( 'useResultRouter — selectResult', () => {
 
 		expect( deps.control.close ).not.toHaveBeenCalled();
 		expect( deps.tokenInput.setFreeText ).not.toHaveBeenCalled();
-	} );
-
-	describe( 'help auto-dismiss', () => {
-		it( 'closes help after a non-toggle/non-navigate/non-exit action when help was visible', async () => {
-			const deps = makeDeps( {
-				orchestrator: {
-					helpVisible: ref( true ),
-					handleSelection: vi.fn().mockResolvedValue( { action: 'updateQuery', payload: 'foo' } )
-				}
-			} );
-
-			const { selectResult } = useResultRouter( deps );
-			await selectResult( {} );
-
-			expect( deps.orchestrator.closeHelp ).toHaveBeenCalled();
-		} );
-
-		it( 'does NOT close help on toggleHelp (the toggle handles it)', async () => {
-			const deps = makeDeps( {
-				orchestrator: {
-					helpVisible: ref( true ),
-					handleSelection: vi.fn().mockResolvedValue( { action: 'toggleHelp' } )
-				}
-			} );
-
-			const { selectResult } = useResultRouter( deps );
-			await selectResult( {} );
-
-			expect( deps.orchestrator.closeHelp ).not.toHaveBeenCalled();
-		} );
-
-		it( 'does NOT close help on navigate (the palette closes anyway)', async () => {
-			const deps = makeDeps( {
-				orchestrator: {
-					helpVisible: ref( true ),
-					handleSelection: vi.fn().mockResolvedValue( { action: 'navigate', payload: '/wiki/Foo' } )
-				}
-			} );
-			Object.defineProperty( window, 'location', {
-				configurable: true,
-				value: { set href( _v ) {} }
-			} );
-
-			const { selectResult } = useResultRouter( deps );
-			await selectResult( {} );
-
-			expect( deps.orchestrator.closeHelp ).not.toHaveBeenCalled();
-		} );
-
-		it( 'does NOT close help on exitWithQuery (it closed it explicitly before entering mode)', async () => {
-			const deps = makeDeps( {
-				orchestrator: {
-					activeMode: ref( null ),
-					helpVisible: ref( true ),
-					handleSelection: vi.fn().mockResolvedValue( { action: 'exitWithQuery', payload: '/smw:' } )
-				},
-				navigation: { findModeByQuery: vi.fn().mockReturnValue( { mode: { id: 'smw' }, trigger: '/smw:' } ) }
-			} );
-
-			const { selectResult } = useResultRouter( deps );
-			await selectResult( {} );
-
-			// Closed exactly once (the explicit closeHelp before enterMode), not the auto-dismiss path.
-			expect( deps.orchestrator.closeHelp ).toHaveBeenCalledTimes( 1 );
-		} );
 	} );
 } );
 

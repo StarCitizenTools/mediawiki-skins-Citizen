@@ -208,6 +208,13 @@ describe( 'defineMode', () => {
 
 			expect( mw.log.warn ).not.toHaveBeenCalled();
 		} );
+
+		it( 'accepts a debounce override, including none at all', () => {
+			const result = defineMode( Object.assign( {}, VALID_MODE, { debounceMs: 0 } ) );
+
+			expect( result.debounceMs ).toBe( 0 );
+			expect( mw.log.warn ).not.toHaveBeenCalled();
+		} );
 	} );
 } );
 
