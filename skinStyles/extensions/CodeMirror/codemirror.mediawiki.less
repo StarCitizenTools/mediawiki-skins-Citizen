@@ -26,7 +26,8 @@
 	}
 
 	&-list,
-	&-indenting {
+	&-indenting,
+	&-redirect {
 		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
 	}
 
@@ -83,6 +84,24 @@
 		}
 	}
 
+	&-conversion {
+		&-bracket {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-purple ) );
+		}
+
+		&-delimiter {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+		}
+
+		&-flag,
+		&-lang {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-blue ) );
+		}
+	}
+
 	&-template {
 		&-name-mnemonic {
 			font-weight: var( --font-weight-normal );
@@ -109,6 +128,14 @@
 		&-attribute {
 			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-yellow ) );
 		}
+	}
+
+	&-exttag-attribute-value,
+	&-htmltag-attribute-value,
+	&-table-definition-value,
+	&-image-parameter {
+		font-weight: var( --font-weight-normal );
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-green ) );
 	}
 
 	&-link {
