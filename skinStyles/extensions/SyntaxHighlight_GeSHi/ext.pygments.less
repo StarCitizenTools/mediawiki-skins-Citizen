@@ -282,7 +282,7 @@
 		}
 
 		.p {
-			color: var( --color-syntax-cyan );
+			color: var( --color-syntax-gray );
 		}
 
 		.n {
@@ -294,28 +294,29 @@
 		}
 
 		/* pygments.wrapper.less */
-		// MW REL1_36+
 		&-lines pre,
 		.content &-lines pre {
-			.mw-content-ltr&,
-			.mw-content-rtl& {
-				box-shadow: none; // Remove background
-			}
+			box-shadow: none;  // Remove background
 		}
 
 		.linenos {
 			margin-left: var( --border-width-base );
 			color: var( --color-subtle );
-			background-color: var( --color-surface-2 );
+			background-color: var( --color-surface-1 );
 		}
 
 		a:hover .linenos,
 		.hll a .linenos {
-			color: var( --color-emphasized );
+			color: var( --color-base );
 		}
 
 		.hll {
-			background-color: var( --background-color-warning-subtle );
+			background-color: var( --color-surface-2 );
+
+			.linenos {
+				background-color: var( --color-surface-2 );
+				border-inline-start: 2px solid var( --color-progressive );
+			}
 		}
 	}
 }
