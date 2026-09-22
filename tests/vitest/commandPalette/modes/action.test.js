@@ -6,21 +6,15 @@ const createActionCommand = require(
 );
 
 describe( 'action mode', () => {
-	let mockGet;
 	let mode;
 	let documentRef;
 
 	beforeEach( () => {
-		mockGet = vi.fn();
-		const ApiConstructor = function () {
-			this.get = mockGet;
-		};
-
 		documentRef = {
 			getElementById: vi.fn( () => null )
 		};
 
-		mode = createActionCommand( documentRef, ApiConstructor );
+		mode = createActionCommand( documentRef, [] );
 	} );
 
 	describe( 'mode definition', () => {
@@ -42,97 +36,50 @@ describe( 'action mode', () => {
 		} );
 	} );
 
-	describe( 'fetchSpecialPages via getResults', () => {
-		it( 'should fetch and adapt special pages from API', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'RecentChanges', aliases: [ 'Recent_changes', 'RC' ] },
-						{ realname: 'AllPages', aliases: [ 'All_pages' ] }
-					]
-				}
-			} );
+	describe( 'special pages via getResults', () => {
+		it( 'should list a page that has no alias under its canonical name', async () => {
+			mode = createActionCommand( documentRef, [ 'Pinyinconvert' ] );
 
 			const results = await mode.getResults( '' );
 
-			expect( mockGet ).toHaveBeenCalledWith(
-				expect.objectContaining( {
-					action: 'query',
-					meta: 'siteinfo',
-					siprop: 'specialpagealiases'
-				} )
-			);
-			const labels = results.map( ( r ) => r.label );
-			expect( labels ).toContain( 'All pages' );
-			expect( labels ).toContain( 'Recent changes' );
+			expect( results ).toHaveLength( 1 );
+			expect( results[ 0 ] ).toMatchObject( {
+				label: 'Pinyinconvert',
+				url: '/wiki/Special:Pinyinconvert'
+			} );
 		} );
 
-		it( 'should sort special pages alphabetically', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'Watchlist', aliases: [ 'Watchlist' ] },
-						{ realname: 'AllPages', aliases: [ 'All_pages' ] },
-						{ realname: 'Log', aliases: [ 'Log' ] }
-					]
-				}
-			} );
-
-			const results = await mode.getResults( '' );
-
-			const labels = results.map( ( r ) => r.label );
-			expect( labels ).toEqual( [ ...labels ].sort() );
-		} );
-
-		it( 'should replace underscores with spaces in aliases', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'RecentChanges', aliases: [ 'Recent_changes' ] }
-					]
-				}
-			} );
+		it( 'should label a page with its alias, replacing underscores with spaces', async () => {
+			mode = createActionCommand( documentRef, [ [ 'Recentchanges', 'Recent_changes' ] ] );
 
 			const results = await mode.getResults( '' );
 
 			expect( results[ 0 ].label ).toBe( 'Recent changes' );
 		} );
 
-		it( 'should cache API results on subsequent calls', async () => {
-			mockGet.mockResolvedValue( {
-				query: { specialpagealiases: [] }
-			} );
-
-			await mode.getResults( '' );
-			await mode.getResults( '' );
-
-			expect( mockGet ).toHaveBeenCalledTimes( 1 );
-		} );
-
-		it( 'should return empty array and clear cache on API error', async () => {
-			mockGet.mockRejectedValue( new Error( 'Network error' ) );
+		it( 'should sort special pages by label', async () => {
+			mode = createActionCommand( documentRef, [
+				'Watchlist',
+				[ 'Allpages', 'All_pages' ],
+				'Log'
+			] );
 
 			const results = await mode.getResults( '' );
 
-			expect( results ).toEqual( [] );
+			expect( results.map( ( r ) => r.label ) ).toEqual( [ 'All pages', 'Log', 'Watchlist' ] );
 		} );
 
 		it( 'should adapt special page items with correct shape', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'RecentChanges', aliases: [ 'Recent_changes' ] }
-					]
-				}
-			} );
+			mode = createActionCommand( documentRef, [ [ 'Recentchanges', 'RecentChanges' ] ] );
 
 			const results = await mode.getResults( '' );
 
 			expect( results[ 0 ] ).toMatchObject( {
 				id: 'special-recentchanges',
 				type: 'special-page',
-				label: 'Recent changes',
-				value: '/action:RecentChanges',
+				label: 'RecentChanges',
+				url: '/wiki/Special:Recentchanges',
+				value: '/action:Recentchanges',
 				highlightQuery: true
 			} );
 		} );
@@ -175,8 +122,6 @@ describe( 'action mode', () => {
 		}
 
 		it( 'should extract menu items from portlets', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
-
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit', title: 'Edit this page [e]' }
 			] );
@@ -187,9 +132,7 @@ describe( 'action mode', () => {
 				return null;
 			} );
 
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 
@@ -204,14 +147,11 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should carry the portlet heading as the item metadata', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
 			] );
 			documentRef.getElementById = vi.fn( ( id ) => ( id === 'p-views' ? portlet : null ) );
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 
@@ -219,14 +159,11 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should omit metadata when the portlet has no heading', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
 			const portlet = makePortlet( 'p-views', undefined, [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
 			] );
 			documentRef.getElementById = vi.fn( ( id ) => ( id === 'p-views' ? portlet : null ) );
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 
@@ -234,8 +171,6 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should deduplicate menu items by URL', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
-
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' },
 				{ liId: 'ca-edit-dup', href: '/wiki/edit', label: 'Edit Again' }
@@ -247,9 +182,7 @@ describe( 'action mode', () => {
 				return null;
 			} );
 
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 			const menuItems = results.filter( ( r ) => r.type === 'menu-item' );
@@ -258,8 +191,6 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should strip keyboard shortcut hints from title attribute', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
-
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit', title: 'Edit this page [e]' }
 			] );
@@ -270,9 +201,7 @@ describe( 'action mode', () => {
 				return null;
 			} );
 
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 			const editItem = results.find( ( r ) => r.label === 'Edit' );
@@ -281,8 +210,6 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should skip links without a label element', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
-
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-icon-only', href: '/wiki/icon-only', label: null },
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
@@ -294,9 +221,7 @@ describe( 'action mode', () => {
 				return null;
 			} );
 
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			const results = await mode.getResults( '' );
 			const menuItems = results.filter( ( r ) => r.type === 'menu-item' );
@@ -306,8 +231,6 @@ describe( 'action mode', () => {
 		} );
 
 		it( 'should cache menu items across calls', async () => {
-			mockGet.mockResolvedValue( { query: { specialpagealiases: [] } } );
-
 			const portlet = makePortlet( 'p-views', 'Views', [
 				{ liId: 'ca-edit', href: '/wiki/edit', label: 'Edit' }
 			] );
@@ -319,9 +242,7 @@ describe( 'action mode', () => {
 			} );
 			documentRef.getElementById = getElementById;
 
-			mode = createActionCommand( documentRef, function () {
-				this.get = mockGet;
-			} );
+			mode = createActionCommand( documentRef, [] );
 
 			await mode.getResults( '' );
 			await mode.getResults( '' );
@@ -332,15 +253,11 @@ describe( 'action mode', () => {
 
 	describe( 'filtering', () => {
 		it( 'should filter results by label match', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'RecentChanges', aliases: [ 'Recent_changes' ] },
-						{ realname: 'AllPages', aliases: [ 'All_pages' ] },
-						{ realname: 'Log', aliases: [ 'Log' ] }
-					]
-				}
-			} );
+			mode = createActionCommand( documentRef, [
+				[ 'Recentchanges', 'Recent_changes' ],
+				[ 'Allpages', 'All_pages' ],
+				'Log'
+			] );
 
 			const results = await mode.getResults( 'log' );
 
@@ -348,35 +265,23 @@ describe( 'action mode', () => {
 			expect( results[ 0 ].label ).toBe( 'Log' );
 		} );
 
-		it( 'should filter results by id match', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'RecentChanges', aliases: [ 'Recent_changes' ] },
-						{ realname: 'AllPages', aliases: [ 'All_pages' ] }
-					]
-				}
-			} );
+		it( 'should match the canonical name when the label is localized', async () => {
+			mode = createActionCommand( documentRef, [
+				[ 'Recentchanges', '最近更改' ],
+				[ 'Allpages', '所有页面' ]
+			] );
 
-			const results = await mode.getResults( 'recent' );
+			const results = await mode.getResults( 'recentchanges' );
 
-			const labels = results.map( ( r ) => r.label );
-			expect( labels ).toContain( 'Recent changes' );
+			expect( results.map( ( r ) => r.label ) ).toEqual( [ '最近更改' ] );
 		} );
 
 		it( 'should return all items when subQuery is empty', async () => {
-			mockGet.mockResolvedValue( {
-				query: {
-					specialpagealiases: [
-						{ realname: 'A', aliases: [ 'A' ] },
-						{ realname: 'B', aliases: [ 'B' ] }
-					]
-				}
-			} );
+			mode = createActionCommand( documentRef, [ 'A', 'B' ] );
 
 			const results = await mode.getResults( '' );
 
-			expect( results.length ).toBeGreaterThanOrEqual( 2 );
+			expect( results ).toHaveLength( 2 );
 		} );
 	} );
 } );

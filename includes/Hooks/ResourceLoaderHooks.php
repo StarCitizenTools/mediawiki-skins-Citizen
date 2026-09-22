@@ -79,6 +79,37 @@ class ResourceLoaderHooks {
 	}
 
 	/**
+	 * Lists every registered special page for the command palette's action mode.
+	 *
+	 * Each entry is the canonical name, or a [ canonical name, label ] pair when
+	 * the first content-language alias differs from it. Names come from the
+	 * special page registry rather than the siteinfo alias table, which omits
+	 * pages that declare no aliases.
+	 *
+	 * This runs on every startup module build, so it must not construct special
+	 * pages (getPage(), isListed(), getDescription()).
+	 *
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array<string|string[]>
+	 */
+	public static function getCitizenCommandPaletteSpecialPages(
+		RL\Context $context,
+		Config $config
+	): array {
+		$services = MediaWikiServices::getInstance();
+		$aliases = $services->getContentLanguage()->getSpecialPageAliases();
+		$pages = [];
+		foreach ( $services->getSpecialPageFactory()->getNames() as $name ) {
+			// array_keys() turns a numeric page name into an int
+			$name = (string)$name;
+			$label = $aliases[$name][0] ?? $name;
+			$pages[] = $label === $name ? $name : [ $name, $label ];
+		}
+		return $pages;
+	}
+
+	/**
 	 * Passes config variables to skins.citizen.share ResourceLoader module.
 	 * @param RL\Context $context
 	 * @param Config $config
