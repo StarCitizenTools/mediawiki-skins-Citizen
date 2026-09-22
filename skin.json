@@ -510,6 +510,10 @@
 					"name": "resources/skins.citizen.commandPalette/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteResourceLoaderConfig"
 				},
+				{
+					"name": "resources/skins.citizen.commandPalette/specialPages.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteSpecialPages"
+				},
 				"resources/skins.citizen.scripts/keyboardLayout.js"
 			],
 			"messages": [

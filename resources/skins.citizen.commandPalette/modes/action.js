@@ -1,5 +1,4 @@
 const { cdxIconSpecialPages, cdxIconPlay } = require( '../icons.json' );
-const config = require( '../config.json' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
 const { defineMode } = require( '../services/defineMode.js' );
 
@@ -7,48 +6,34 @@ const { defineMode } = require( '../services/defineMode.js' );
  * Creates the action command handler.
  *
  * @param {Document} documentRef The document object for DOM queries.
- * @param {typeof mw.Api} ApiConstructor The mw.Api constructor.
+ * @param {Array<string|[string, string]>} specialPages Every registered special
+ *  page, as its canonical name or a [ canonical name, label ] pair.
  * @return {Object} The command handler.
  */
-function createActionCommand( documentRef, ApiConstructor ) {
+function createActionCommand( documentRef, specialPages ) {
 	let specialPageCache = null;
 	let menuItemCache = null;
 
-	function fetchSpecialPages() {
+	function getSpecialPages() {
 		if ( specialPageCache !== null ) {
 			return specialPageCache;
 		}
 
-		specialPageCache = new ApiConstructor().get( {
-			action: 'query',
-			meta: 'siteinfo',
-			siprop: 'specialpagealiases',
-			maxage: config.wgSearchSuggestCacheExpiry,
-			smaxage: config.wgSearchSuggestCacheExpiry
-		} ).then( ( data ) => {
-			const specialPages = data.query.specialpagealiases;
-			const items = specialPages.map( ( page ) => {
-				const label = page.aliases[ 0 ].replace( /_/g, ' ' );
-				const realName = page.realname;
-				return {
-					id: 'special-' + realName.toLowerCase(),
-					type: 'special-page',
-					label: label,
-					url: mw.util.getUrl( 'Special:' + realName ),
-					thumbnailIcon: cdxIconSpecialPages,
-					value: '/action:' + realName,
-					highlightQuery: true
-				};
-			} );
-			items.sort( ( a, b ) => a.label.localeCompare( b.label ) );
-			return items;
-		} ).catch( ( error ) => {
-			mw.log.error( 'Error fetching special pages:', error );
-			specialPageCache = null;
-			return [];
+		const items = specialPages.map( ( page ) => {
+			const [ realName, alias = realName ] = typeof page === 'string' ? [ page ] : page;
+			return {
+				id: 'special-' + realName.toLowerCase(),
+				type: 'special-page',
+				label: alias.replace( /_/g, ' ' ),
+				url: mw.util.getUrl( 'Special:' + realName ),
+				thumbnailIcon: cdxIconSpecialPages,
+				value: '/action:' + realName,
+				highlightQuery: true
+			};
 		} );
-
-		return specialPageCache;
+		items.sort( ( a, b ) => a.label.localeCompare( b.label ) );
+		specialPageCache = items;
+		return items;
 	}
 
 	function fetchMenuItems() {
@@ -115,12 +100,7 @@ function createActionCommand( documentRef, ApiConstructor ) {
 	}
 
 	async function getActionResults( subQuery ) {
-		const [ specialPages, menuItems ] = await Promise.all( [
-			fetchSpecialPages(),
-			fetchMenuItems()
-		] );
-
-		const allItems = [ ...menuItems, ...specialPages ].filter( ( item ) => item );
+		const allItems = [ ...fetchMenuItems(), ...getSpecialPages() ];
 
 		if ( !subQuery ) {
 			return allItems;

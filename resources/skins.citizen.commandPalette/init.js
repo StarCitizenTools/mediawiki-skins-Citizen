@@ -1,6 +1,7 @@
 const Vue = require( 'vue' );
 const App = require( './components/App.vue' );
 const config = require( './config.json' );
+const specialPages = require( './specialPages.json' );
 
 // Services
 const createRecentItems = require( './services/recentItems.js' );
@@ -49,7 +50,7 @@ function initApp( overlayEl, options ) {
 	const paletteRegistry = createPaletteRegistry();
 
 	paletteRegistry.register( namespaceMode );
-	paletteRegistry.register( createActionMode( document, mw.Api ) );
+	paletteRegistry.register( createActionMode( document, specialPages ) );
 	paletteRegistry.register( createUserMode( mw.Api ) );
 	paletteRegistry.register( createCategoryMode( mw.Api ) );
 	paletteRegistry.register( createHistoryMode( mw.Api ) );
