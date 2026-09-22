@@ -23,6 +23,13 @@ const NEW_TAB_ACTIVATION = { modifierClick: true, newTab: true };
 const hasHighlight = ( state ) => state.highlightedIndex >= 0;
 const canQueue = ( state ) => state.highlightedIndex < 0 && state.canQueueActivation;
 
+// iOS reports every key on its `#+=` symbol layer as shifted, Return and
+// Backspace included, so a binding for either that claimed only `none` would
+// be dead on the layer `#`, `~` and `>` are typed from. Shift carries no
+// meaning of its own on those two keys here: Shift+Backspace edits a text
+// field as Backspace does, and Shift+Enter is read as Enter.
+const SHIFT_AGNOSTIC = [ 'none', 'shift' ];
+
 // Arrow keys are physical; the bindings below are logical (previous/next, and
 // input → action row). CSSJanus mirrors the inline axis for RTL interface
 // languages, so on an RTL wiki the two horizontal arrows have to be swapped
@@ -367,6 +374,7 @@ const coreBindings = [
 		id: 'input-enter-select-search',
 		zone: 'input',
 		keys: [ 'Enter' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: ( state ) => state.highlightedIndex >= 0 &&
 			Boolean( state.highlightedItem ) &&
 			state.highlightedItem.source === 'queryAction:fulltext-search',
@@ -381,6 +389,7 @@ const coreBindings = [
 		id: 'input-enter-select',
 		zone: 'input',
 		keys: [ 'Enter' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: hasHighlight,
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
@@ -395,6 +404,7 @@ const coreBindings = [
 		id: 'input-enter-queue',
 		zone: 'input',
 		keys: [ 'Enter' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: canQueue,
 		handle: ( state, event ) => {
 			event.preventDefault();
@@ -582,6 +592,7 @@ const coreBindings = [
 		id: 'input-pop-mode-context',
 		zone: 'input',
 		keys: [ 'Backspace' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: ( state ) => {
 			if ( !cursorAtStart( state ) ) {
 				return false;
@@ -604,6 +615,7 @@ const coreBindings = [
 		id: 'input-exit-mode-to-literal',
 		zone: 'input',
 		keys: [ 'Backspace' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: ( state ) => {
 			if ( !cursorAtStart( state ) ) {
 				return false;
@@ -624,6 +636,7 @@ const coreBindings = [
 		id: 'input-remove-selected-token',
 		zone: 'input',
 		keys: [ 'Backspace' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: ( state ) => {
 			if ( !cursorAtStart( state ) ) {
 				return false;
@@ -642,6 +655,7 @@ const coreBindings = [
 		id: 'input-select-last-token',
 		zone: 'input',
 		keys: [ 'Backspace' ],
+		modifiers: SHIFT_AGNOSTIC,
 		when: ( state ) => {
 			if ( !cursorAtStart( state ) ) {
 				return false;
@@ -1009,8 +1023,10 @@ function useKeyboard( options ) {
 		// Help-mode swallow: while the overlay is up, eat printable keys and
 		// Backspace so they neither modify input nor trigger modes/tokens.
 		if (
-			isTypedText && state.helpVisible &&
-			( event.key.length === 1 || event.key === 'Backspace' )
+			state.helpVisible && (
+				( isTypedText && event.key.length === 1 ) ||
+				( event.key === 'Backspace' && SHIFT_AGNOSTIC.includes( modifiers ) )
+			)
 		) {
 			event.preventDefault();
 			return;
