@@ -10,107 +10,74 @@ describe( 'createAppendQueryActions', () => {
 		vi.restoreAllMocks();
 	} );
 
-	it( 'returns items unchanged when query is empty', () => {
-		const appendQueryActions = createAppendQueryActions();
-		const items = [ { id: 'existing-item' } ];
+	it( 'builds the full-text search row from the query', () => {
+		const { leadActions } = createAppendQueryActions();
 
-		const result = appendQueryActions( items, '' );
+		const lead = leadActions( 'test query' );
 
-		expect( result ).toBe( items );
-	} );
-
-	it( 'appends fulltext search action item', () => {
-		const appendQueryActions = createAppendQueryActions();
-
-		const result = appendQueryActions( [], 'test query' );
-
-		const fulltextAction = result.find( ( item ) => item.id === 'citizen-command-palette-item-fulltext-search' );
-		expect( fulltextAction ).toBeDefined();
-		expect( fulltextAction.type ).toBe( 'action' );
-		expect( fulltextAction.label ).toBe( 'test query' );
-		expect( fulltextAction.source ).toBe( 'queryAction:fulltext-search' );
-		expect( fulltextAction.url ).toBe( '/wiki/Special:Search?search=test+query&fulltext=1' );
+		expect( lead[ 0 ] ).toMatchObject( {
+			id: 'citizen-command-palette-item-fulltext-search',
+			type: 'action',
+			label: 'test query',
+			source: 'queryAction:fulltext-search',
+			url: '/wiki/Special:Search?search=test+query&fulltext=1'
+		} );
 	} );
 
 	it( 'no longer emits the media-search action (handled by the file mode now)', () => {
-		const appendQueryActions = createAppendQueryActions();
+		const { leadActions, trailActions } = createAppendQueryActions();
 
-		const result = appendQueryActions( [], 'cat photos' );
+		const rows = leadActions( 'cat photos' ).concat( trailActions( 'cat photos' ) );
 
-		const mediaAction = result.find( ( item ) => item.id === 'citizen-command-palette-item-media-search' );
-		expect( mediaAction ).toBeUndefined();
-	} );
-
-	it( 'preserves original items at the beginning', () => {
-		const appendQueryActions = createAppendQueryActions();
-		const originalItems = [
-			{ id: 'first-item', label: 'First' },
-			{ id: 'second-item', label: 'Second' }
-		];
-
-		const result = appendQueryActions( originalItems, 'query' );
-
-		expect( result[ 0 ] ).toEqual( originalItems[ 0 ] );
-		expect( result[ 1 ] ).toEqual( originalItems[ 1 ] );
-		expect( result.length ).toBeGreaterThan( originalItems.length );
+		expect( rows.map( ( i ) => i.id ) )
+			.not.toContain( 'citizen-command-palette-item-media-search' );
 	} );
 
 	describe( 'lead/trail split', () => {
 		it( 'always performs a full-text search, never a near-match redirect', () => {
-			const appendQueryActions = createAppendQueryActions();
+			const queryActions = createAppendQueryActions();
 
 			// Without fulltext, Special:Search redirects to the page when the
 			// query is an exact title, so this row would sometimes navigate
 			// rather than search.
-			const lead = appendQueryActions.leadActions( 'Main Page' );
+			const lead = queryActions.leadActions( 'Main Page' );
 
 			expect( lead[ 0 ].url ).toContain( 'fulltext=1' );
 		} );
 
 		it( 'exposes the fulltext action on its own so it can be positioned first', () => {
-			const appendQueryActions = createAppendQueryActions();
+			const queryActions = createAppendQueryActions();
 
-			const lead = appendQueryActions.leadActions( 'test query' );
+			const lead = queryActions.leadActions( 'test query' );
 
 			expect( lead ).toHaveLength( 1 );
 			expect( lead[ 0 ].source ).toBe( 'queryAction:fulltext-search' );
 		} );
 
 		it( 'keeps the fulltext action out of the trailing set', () => {
-			const appendQueryActions = createAppendQueryActions();
+			const queryActions = createAppendQueryActions();
 
-			const trail = appendQueryActions.trailActions( 'test query' );
+			const trail = queryActions.trailActions( 'test query' );
 
 			expect( trail.every( ( i ) => i.source !== 'queryAction:fulltext-search' ) ).toBe( true );
 		} );
 
 		it( 'returns nothing for either half when the query is empty', () => {
-			const appendQueryActions = createAppendQueryActions();
+			const queryActions = createAppendQueryActions();
 
-			expect( appendQueryActions.leadActions( '' ) ).toEqual( [] );
-			expect( appendQueryActions.trailActions( '' ) ).toEqual( [] );
+			expect( queryActions.leadActions( '' ) ).toEqual( [] );
+			expect( queryActions.trailActions( '' ) ).toEqual( [] );
 		} );
 
 		it( 'produces a fresh row per call, so it always matches the current query', () => {
-			const appendQueryActions = createAppendQueryActions();
+			const queryActions = createAppendQueryActions();
 
-			const first = appendQueryActions.leadActions( 'sun' );
-			const second = appendQueryActions.leadActions( 'sunset' );
+			const first = queryActions.leadActions( 'sun' );
+			const second = queryActions.leadActions( 'sunset' );
 
 			expect( first[ 0 ].label ).toBe( 'sun' );
 			expect( second[ 0 ].label ).toBe( 'sunset' );
 			expect( second[ 0 ].url ).toBe( '/wiki/Special:Search?search=sunset&fulltext=1' );
-		} );
-
-		it( 'combined call still yields the same set as the two halves', () => {
-			const appendQueryActions = createAppendQueryActions();
-
-			const combined = appendQueryActions( [], 'q' ).map( ( i ) => i.source );
-			const split = appendQueryActions.leadActions( 'q' )
-				.concat( appendQueryActions.trailActions( 'q' ) )
-				.map( ( i ) => i.source );
-
-			expect( combined ).toEqual( split );
 		} );
 	} );
 } );

@@ -1,14 +1,10 @@
 const { cdxIconArticleSearch, cdxIconEdit } = require( '../icons.json' );
 
 /**
- * Creates a decorator function that appends query action items to search results.
+ * Creates the query actions: rows that act on the typed query as a whole
+ * rather than on one result (full-text search, page edit).
  *
- * This replaces the former QueryActionProvider by converting its logic from a
- * provider into a pure result decorator. The returned function can be applied
- * to any items array to append contextual action items (fulltext search,
- * page edit) based on the current query.
- *
- * @return {Function} A decorator function `(items, query) => decoratedItems`.
+ * @return {{leadActions: Function, trailActions: Function}}
  */
 function createAppendQueryActions() {
 	const isPageEditable = !!mw.config.get( 'wgRelevantPageIsProbablyEditable' );
@@ -86,25 +82,7 @@ function createAppendQueryActions() {
 		return buildActions( query, [ 'page-edit' ] );
 	}
 
-	/**
-	 * Appends query action items to the given results array.
-	 *
-	 * @param {Array} items The existing result items.
-	 * @param {string} query The current search query.
-	 * @return {Array} A new array with action items appended after the original items.
-	 */
-	function appendQueryActions( items, query ) {
-		if ( !query ) {
-			return items;
-		}
-
-		return [ ...items, ...leadActions( query ), ...trailActions( query ) ];
-	}
-
-	appendQueryActions.leadActions = leadActions;
-	appendQueryActions.trailActions = trailActions;
-
-	return appendQueryActions;
+	return { leadActions, trailActions };
 }
 
 module.exports = createAppendQueryActions;

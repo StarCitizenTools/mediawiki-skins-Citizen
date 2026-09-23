@@ -20,10 +20,7 @@ describe( 'useHelpInput', () => {
 
 	beforeEach( () => {
 		vi.useFakeTimers();
-		const decorator = Object.assign( ( items ) => items, {
-			leadActions: () => [],
-			trailActions: () => []
-		} );
+		const decorator = { leadActions: () => [], trailActions: () => [] };
 		orchestrator = useProviderOrchestration( [], decorator );
 		tokenInput = useTokenizedInput( () => [], orchestrator.activeMode );
 		helpInput = useHelpInput( { orchestrator, tokenInput } );
