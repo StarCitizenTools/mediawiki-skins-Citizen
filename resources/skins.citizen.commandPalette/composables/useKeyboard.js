@@ -591,7 +591,26 @@ const coreBindings = [
 		hint: { msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', order: 999 }
 	},
 
-	// --- INPUT ZONE: Backspace (4 disjoint cases) ---
+	// --- INPUT ZONE: Backspace (5 disjoint cases) ---
+	// Backing out of the overlay from an empty input returns to the mode it
+	// describes.
+	{
+		id: 'input-close-help',
+		zone: 'input',
+		keys: [ 'Backspace' ],
+		modifiers: SHIFT_AGNOSTIC,
+		when: ( state ) => state.helpVisible &&
+			!state.query &&
+			state.tokens.length === 0 &&
+			cursorAtStart( state ) &&
+			Boolean( state.onCloseHelp ),
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onCloseHelp();
+		},
+		hint: null
+	},
 	{
 		id: 'input-pop-mode-context',
 		zone: 'input',
@@ -1027,18 +1046,6 @@ function useKeyboard( options ) {
 			return;
 		}
 
-		// Help-mode swallow: while the overlay is up, eat printable keys and
-		// Backspace so they neither modify input nor trigger modes/tokens.
-		if (
-			state.helpVisible && (
-				( isTypedText && event.key.length === 1 ) ||
-				( event.key === 'Backspace' && SHIFT_AGNOSTIC.includes( modifiers ) )
-			)
-		) {
-			event.preventDefault();
-			return;
-		}
-
 		// Action-zone fallback: typing redirects to the input field.
 		if (
 			isTypedText &&
@@ -1057,9 +1064,8 @@ function useKeyboard( options ) {
 		// Mode-trigger fallback (Note C): a printable single-char with no active
 		// mode and empty query routes through findModeByTrigger. The set of
 		// trigger characters is open-ended, so it can't be enumerated as bindings.
-		// The `!state.helpVisible` guard makes the overlay's protection explicit
-		// at this fallback rather than relying on the help-swallow fallback above
-		// firing first.
+		// While help is up, a trigger character is text, so it types rather
+		// than entering its mode.
 		if (
 			isTypedText &&
 			!state.actionsFocused &&

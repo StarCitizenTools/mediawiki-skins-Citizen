@@ -252,7 +252,7 @@ describe( 'Shift never changes what Enter or Backspace does', () => {
 		'a drilled-in mode': { activeMode: { id: 'category' }, modeContext: [ { name: 'A' } ] },
 		'a chip, none selected': { tokens: [ TOKEN ] },
 		'a selected chip': { tokens: [ TOKEN ], selectedTokenIndex: 0 },
-		'the help overlay': { helpVisible: true },
+		'the help overlay': { helpVisible: true, activeMode: { id: 'category' } },
 		'text before the caret': { query: 'abc', caret: 3 }
 	};
 
