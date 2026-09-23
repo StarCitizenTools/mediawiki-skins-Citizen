@@ -47,6 +47,21 @@
 		}
 	}
 
+	// The outline's rows now take their row layout from the shared
+	// .citizen-page-aside__link class. The old class keeps its name, so the
+	// new class is the discriminator: old anchors do not carry it and new
+	// anchors are already styled by it.
+	.citizen-toc .citizen-toc-link:not( .citizen-page-aside__link ) {
+		display: flex;
+		gap: var( --space-xs );
+		align-items: center;
+		justify-content: normal;
+		max-width: none;
+		font-size: inherit;
+		font-weight: var( --font-weight-medium );
+		text-wrap: auto;
+	}
+
 	.citizen-page-sidebar .citizen-menu__heading,
 	.citizen-page-sidebar .citizen-menu .mw-list-item a {
 		padding-inline: var( --space-xs );

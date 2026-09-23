@@ -36,42 +36,29 @@
 		.mixin-citizen-font-styles( 'small' );
 	}
 
-	// A single-row link inside a panel body, sized like a menu item.
-	&__link {
+	// A quiet Codex button laid out as a row: what every link in a panel adds
+	// on top of `cdx-button--weight-quiet`. Codex keeps its padding, colour and
+	// states; this turns the centred button into a start-aligned row and gives
+	// it the roomier height a panel link stands at. Scoped under the aside for
+	// (0,2,0), which is what beats `.cdx-button`.
+	& &__link {
 		display: flex;
 		gap: var( --space-xs );
 		align-items: center;
+		justify-content: normal;
+		max-width: none;
 		min-height: 2.25rem;
-		padding-inline: var( --space-xs );
+		font-size: inherit;
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base );
-		border-radius: var( --border-radius-base );
-		transition: var( --transition-hover );
-		transition-property: background-color;
+		text-wrap: auto;
+	}
 
-		// Panel chrome, not content: the link keeps one colour whatever its
-		// state. Codex's link mixin recolours `a` per state at (0,1,1), and
-		// `:visited:hover` at (0,2,1), so these pins carry the `a` as well and
-		// win the tie by sitting later in skin.less than common/links.less.
-		a&:visited,
-		a&:hover,
-		a&:focus,
-		a&:active {
-			color: var( --color-base );
-		}
-
-		a&:hover,
-		a&:focus {
-			text-decoration: none;
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-		}
+	// A panel link without role="button" is a real link, so Citizen's link
+	// mixin still reaches it. Codex's button rules already outrank the mixin's
+	// state colours and its hover/focus underline; the one thing they leave
+	// uncovered is the underline the mixin adds while a link is pressed.
+	& a&__link:not( [ role='button' ] ):active {
+		text-decoration: none;
 	}
 
 	&__panel--lastmod {

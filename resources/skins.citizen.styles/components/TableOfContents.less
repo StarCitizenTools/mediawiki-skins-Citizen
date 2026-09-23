@@ -20,17 +20,18 @@
 		list-style: none;
 	}
 
-	// Use .citizen-toc .citizen-toc-link to beat Codex .cdx-button specificity
+	// The row layout on top of the quiet Codex button comes from
+	// .citizen-page-aside__link, which these anchors also carry. What is left
+	// here is what the indicator rail needs: a row that fills the track and
+	// meets the rail with square corners. Scoped under .citizen-toc to beat
+	// Codex .cdx-button specificity.
 	.citizen-toc-link {
-		display: flex;
 		flex-grow: 1;
-		gap: var( --space-xs );
-		align-items: center;
-		justify-content: normal;
-		max-width: none;
-		font-size: inherit; // unset CdxButton font-size
-		font-weight: var( --font-weight-medium );
-		text-wrap: auto; // unset CdxButton text-wrap
+		// The outline is a dense list, so its rows sit at the interactive
+		// minimum rather than the taller panel-link height. Same specificity as
+		// that rule, so this wins by skin.less importing this file after
+		// PageAside.less.
+		min-height: @min-size-interactive-pointer;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 
