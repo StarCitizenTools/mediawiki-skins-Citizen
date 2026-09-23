@@ -361,10 +361,8 @@ class SkinCitizen extends SkinMustache {
 		if ( $parentData['aside-enabled'] ) {
 			// This body class depends on template data so it can't move to
 			// getHtmlElementAttributes(). Safe here because getTemplateData()
-			// only runs for the active rendering skin. Its name still says
-			// "toc" because renaming a class in cached HTML needs a compat
-			// slice; its meaning is "the aside is rendered".
-			$out->addBodyClasses( 'citizen-toc-enabled' );
+			// only runs for the active rendering skin.
+			$out->addBodyClasses( 'citizen-page-aside-enabled' );
 
 			if ( $tocHasContent ) {
 				$out->addModules( [ 'skins.citizen.toc' ] );
