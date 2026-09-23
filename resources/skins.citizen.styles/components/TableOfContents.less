@@ -3,7 +3,7 @@
 
 	&-contents {
 		position: relative;
-		margin: 0 0 0 var( --space-xs );
+		margin: var( --space-xxs ) 0 var( --space-xxs ) var( --space-xs );
 		border-left: var( --border-width-thick ) solid var( --border-color-base );
 
 		// Reset padding on the direct child list since indentation is only for sublists
@@ -43,7 +43,7 @@
 			opacity: 0;
 			transition-timing-function: var( --transition-timing-function-ease-out );
 			transition-duration: var( --transition-duration-medium );
-			transition-property: opacity, height, padding;
+			transition-property: opacity, padding;
 		}
 	}
 
@@ -131,8 +131,9 @@
 // up, because below tablet that bar does not exist and the row still should.
 .citizen-below-page-title {
 	.citizen-toc .citizen-toc-top.citizen-toc-link {
-		height: 2rem; // 1rem text + 1rem padding
-		padding-block: var( --space-xs );
+		height: auto;
+		min-height: 2rem;
+		padding-block: var( --space-xxs );
 		overflow: visible;
 		opacity: 1;
 	}
@@ -235,13 +236,19 @@
 
 		// The dropdown card's closed-state styles (opacity, transform, clip-path,
 		// border and the like) have nothing to paint while these have no box,
-		// so if `contents` ever goes they need resetting here again.
+		// so if `contents` ever goes they need resetting here again. HTML cached
+		// before this generation has the old nav#mw-panel-toc here; new markup
+		// makes it a plain div, so the difference ends with the compat window.
 		.citizen-menu__card,
 		.citizen-menu__card-content {
 			display: contents;
 		}
 
 		.citizen-toc-top {
+			// A long outline overflows this scrolling column. The heading and list
+			// cannot shrink below their content, but the row's explicit min-height
+			// replaces that floor, so without this the row alone absorbs the overflow.
+			flex-shrink: 0;
 			order: -1;
 		}
 
