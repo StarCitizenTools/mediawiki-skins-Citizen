@@ -40,13 +40,18 @@ describe( 'useProviderOrchestration', () => {
 			keepStaleResults: false
 		};
 
-		// Mirrors createAppendQueryActions: the full-text row leads a search
-		// and nothing trails the results.
+		// Mirrors createAppendQueryActions: a search leads with the go row and
+		// every query gets the full-text row after the results.
 		mockDecorator = {
-			leadActions: vi.fn( ( query ) => ( query ?
-				[ { id: 'action', label: query, type: 'action', source: 'queryAction:fulltext-search' } ] :
-				[] ) ),
-			trailActions: vi.fn( () => [] )
+			queryActions: vi.fn( ( query, { leads = false } = {} ) => {
+				if ( !query ) {
+					return { lead: [], trail: [] };
+				}
+				const fulltext = { id: 'action', label: query, type: 'action', source: 'queryAction:fulltext-search' };
+				return leads ?
+					{ lead: [ { id: 'go', label: query, type: 'action', source: 'queryAction:go' } ], trail: [ fulltext ] } :
+					{ lead: [], trail: [ fulltext ] };
+			} )
 		};
 	} );
 
@@ -855,7 +860,7 @@ describe( 'useProviderOrchestration', () => {
 			keepStaleResults: false
 		};
 
-		it( 'pins the fulltext action first when the search provider matched', async () => {
+		it( 'pins the lead action first when the search provider matched', async () => {
 			const orch = useProviderOrchestration(
 				[ commandProvider, searchProvider ], mockDecorator, {}
 			);
@@ -864,8 +869,55 @@ describe( 'useProviderOrchestration', () => {
 			await vi.runAllTimersAsync();
 
 			expect( orch.flatItems.value[ 0 ].source )
-				.toBe( 'queryAction:fulltext-search' );
+				.toBe( 'queryAction:go' );
 			expect( orch.defaultHighlightIndex.value ).toBe( 0 );
+		} );
+
+		it( 'does not repeat a result the lead stands in for', async () => {
+			mockDecorator.queryActions = vi.fn( ( query, { results = [] } = {} ) => ( {
+				lead: results.filter( ( item ) => item.label === query )
+					.map( ( item ) => ( { ...item, url: 'go' } ) ),
+				trail: []
+			} ) );
+			const orch = useProviderOrchestration(
+				[ commandProvider, searchProvider ], mockDecorator, {}
+			);
+
+			orch.updateQuery( 'Page' );
+			await vi.runAllTimersAsync();
+
+			expect( orch.flatItems.value ).toEqual( [
+				{ id: 'p1', label: 'Page', source: 'search', url: 'go' }
+			] );
+			expect( orch.defaultHighlightIndex.value ).toBe( 0 );
+		} );
+
+		it( 'saves the result a lead stands in for to Recent, with the result\'s own link', async () => {
+			mockDecorator.queryActions = vi.fn( ( query, { results = [] } = {} ) => ( {
+				lead: results.filter( ( item ) => item.label === query )
+					.map( ( item ) => ( { ...item, url: 'go' } ) ),
+				trail: []
+			} ) );
+			const linkingProvider = {
+				...searchProvider,
+				getResults: () => ( {
+					items: [ { id: 'p1', label: 'Page', source: 'search', url: '/wiki/Page' } ]
+				} ),
+				onResultSelect: ( item ) => ( { action: 'navigate', payload: item.url } )
+			};
+			const recentItemsService = { saveRecentItem: vi.fn() };
+			const orch = useProviderOrchestration(
+				[ commandProvider, linkingProvider ], mockDecorator, { recentItemsService }
+			);
+			orch.updateQuery( 'Page' );
+			await vi.runAllTimersAsync();
+
+			const action = await orch.handleSelection( orch.flatItems.value[ 0 ] );
+
+			expect( action ).toEqual( { action: 'navigate', payload: 'go' } );
+			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
+				{ id: 'p1', label: 'Page', source: 'search', url: '/wiki/Page' }
+			);
 		} );
 
 		it( 'leaves a trigger-prefixed query its own results in the lead', async () => {
@@ -877,8 +929,11 @@ describe( 'useProviderOrchestration', () => {
 			await vi.runAllTimersAsync();
 
 			// Enter must not search for the literal "#cat"; the command
-			// results lead, and the action drops to the trailing set.
+			// results lead, and the actions drop to the trailing set.
 			expect( orch.flatItems.value[ 0 ].source ).toBe( 'command:cat' );
+			expect( mockDecorator.queryActions ).toHaveBeenLastCalledWith(
+				'#cat', expect.objectContaining( { leads: false } )
+			);
 			expect( orch.flatItems.value.map( ( i ) => i.source ) )
 				.toContain( 'queryAction:fulltext-search' );
 		} );
