@@ -446,6 +446,7 @@
 				"resources/skins.citizen.commandPalette/utils/providerActions.js",
 				"resources/skins.citizen.commandPalette/utils/modeHelpDetail.js",
 				"resources/skins.citizen.commandPalette/utils/appendQueryActions.js",
+				"resources/skins.citizen.commandPalette/utils/destinationKey.js",
 				"resources/skins.citizen.commandPalette/services/instantDiffs.js",
 				"resources/skins.citizen.commandPalette/services/recentItems.js",
 				"resources/skins.citizen.commandPalette/services/searchClient.js",

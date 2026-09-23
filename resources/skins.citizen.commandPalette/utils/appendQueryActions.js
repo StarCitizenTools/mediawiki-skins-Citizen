@@ -60,7 +60,8 @@ function createAppendQueryActions() {
 		return queryActionDefinitions
 			.filter( ( def ) => def.showItem && ids.includes( def.id ) )
 			.map( ( def ) => ( {
-				id: `citizen-command-palette-item-${ def.id }`,
+				// Per query, so the rows for two queries stay two entries in Recent.
+				id: `citizen-command-palette-item-${ def.id }-${ encodeURIComponent( query ) }`,
 				type: 'action',
 				label: query,
 				description: def.description,

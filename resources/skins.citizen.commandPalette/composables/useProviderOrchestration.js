@@ -1,5 +1,6 @@
 const { ref, shallowRef, computed } = require( 'vue' );
 const useOperationLifecycle = require( './useOperationLifecycle.js' );
+const destinationKey = require( '../utils/destinationKey.js' );
 const { DEFAULT_DEBOUNCE_MS } = require( '../providers/createProvider.js' );
 
 const SHOW_PENDING_DELAY_MS = 300;
@@ -132,8 +133,10 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		}
 
 		if ( isPresultsSurface.value ) {
-			const relatedUrls = new Set(
-				related.value.items.map( ( item ) => item.url ).filter( Boolean )
+			// A page Related already lists is not repeated under Recent,
+			// however each of them links to it.
+			const relatedPages = new Set(
+				related.value.items.filter( ( item ) => item.url ).map( destinationKey )
 			);
 			return [
 				section(
@@ -142,7 +145,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 				section(
 					'citizen-command-palette-heading-recent',
 					recents.value.filter(
-						( item ) => !item.url || !relatedUrls.has( item.url )
+						( item ) => !item.url || !relatedPages.has( destinationKey( item ) )
 					)
 				)
 			].filter( Boolean );

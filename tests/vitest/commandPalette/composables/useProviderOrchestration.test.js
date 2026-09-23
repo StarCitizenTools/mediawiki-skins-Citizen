@@ -1,5 +1,7 @@
+// @vitest-environment jsdom
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
+const mwTitle = require( '../../mocks/mwTitle.js' );
 
 const useTokenizedInput = require(
 	'../../../../resources/skins.citizen.commandPalette/composables/useTokenizedInput.js'
@@ -629,6 +631,27 @@ describe( 'useProviderOrchestration', () => {
 		const build = ( relatedResolver ) => useProviderOrchestration( [], mockDecorator, {
 			recentItemsProvider: { getResults: () => ( { items: recentItems } ) },
 			relatedArticlesProvider: { getResults: relatedResolver }
+		} );
+
+		it( 'does not repeat under Recent a page Related already lists', async () => {
+			vi.spyOn( mw.config, 'get' ).mockImplementation( ( key ) => ( {
+				wgArticlePath: '/wiki/$1',
+				wgScript: '/w/index.php'
+			} )[ key ] ?? null );
+			mw.Title = mwTitle;
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'go', type: 'action', url: '/w/index.php?title=Special:Search&search=akita', source: 'recent' },
+					{ id: 'r1', url: '/wiki/Other', source: 'recent' }
+				] } ) },
+				relatedArticlesProvider: {
+					getResults: () => Promise.resolve( { items: [ { id: 'a1', url: '/wiki/Akita', source: 'related' } ] } )
+				}
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'a1', 'r1' ] );
 		} );
 
 		it( 'declares related above recents before related has resolved', async () => {
