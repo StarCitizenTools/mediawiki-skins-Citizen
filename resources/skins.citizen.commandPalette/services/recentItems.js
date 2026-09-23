@@ -1,4 +1,4 @@
-const { cdxIconArticleSearch, cdxIconTrash } = require( '../icons.json' );
+const { cdxIconTrash } = require( '../icons.json' );
 const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
 const MAX_RECENT_ITEMS = 5;
 
@@ -51,22 +51,6 @@ function createRecentItems() {
 	}
 
 	/**
-	 * Saves a search query to recent history
-	 *
-	 * @param {string} query - The search query to save
-	 * @param {string} searchUrl - The URL to the search page
-	 */
-	function saveSearchQuery( query, searchUrl ) {
-		saveRecentItem( {
-			type: 'fulltext-search',
-			id: `citizen-command-palette-result-search-${ mw.util.escapeIdForAttribute( query ) }`,
-			label: query,
-			url: searchUrl,
-			thumbnailIcon: cdxIconArticleSearch
-		} );
-	}
-
-	/**
 	 * Gets recent items from history
 	 *
 	 * @return {Array<import('../types.js').CommandPaletteItem>} Recent items in the format expected by the command palette
@@ -115,7 +99,6 @@ function createRecentItems() {
 
 	return {
 		saveRecentItem,
-		saveSearchQuery,
 		getRecentItems,
 		removeRecentItem,
 		clearHistory
