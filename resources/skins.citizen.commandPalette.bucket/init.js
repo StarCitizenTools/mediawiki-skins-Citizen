@@ -522,7 +522,7 @@ function createBucketMode( ApiConstructor, namespaceId ) {
 			title, pageRows, definition
 		) );
 
-		// Leads the list as the fulltext-search row leads a search: the one
+		// Leads the list as the query-action row leads a search: the one
 		// row acting on the whole query rather than on a single result. It
 		// drops out while the user is typing, matching nothing they seek.
 		const copyRow = query ? [] : [ adaptCopyQueryItem( spec ) ];

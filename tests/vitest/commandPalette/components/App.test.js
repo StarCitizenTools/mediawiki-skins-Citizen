@@ -28,7 +28,7 @@ function mountApp() {
 			provide: {
 				providers: [],
 				recentItemsService: null,
-				resultDecorator: { leadActions: () => [], trailActions: () => [] },
+				resultDecorator: { queryActions: () => ( { lead: [], trail: [] } ) },
 				recentItemsProvider: noResults,
 				relatedArticlesProvider: noResults,
 				findModeByTrigger: () => null,

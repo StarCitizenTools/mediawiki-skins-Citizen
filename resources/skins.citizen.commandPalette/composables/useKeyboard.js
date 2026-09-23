@@ -367,9 +367,24 @@ const coreBindings = [
 	},
 
 	// --- INPUT ZONE: Enter ---
-	// Three disjoint cases, most specific first. The fulltext row and an
+	// Four disjoint cases, most specific first. The query-action rows and an
 	// ordinary result activate identically; the split exists so the footer can
 	// name which meaning Enter currently carries.
+	{
+		id: 'input-enter-select-go',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		modifiers: SHIFT_AGNOSTIC,
+		when: ( state ) => state.highlightedIndex >= 0 &&
+			Boolean( state.highlightedItem ) &&
+			state.highlightedItem.source === 'queryAction:go',
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onSelect( state.items[ state.highlightedIndex ] );
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-go', kbd: '↵', order: 10 }
+	},
 	{
 		id: 'input-enter-select-search',
 		zone: 'input',

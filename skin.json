@@ -420,7 +420,9 @@
 				"mediawiki.language",
 				"mediawiki.page.ready",
 				"mediawiki.storage",
+				"mediawiki.Title",
 				"mediawiki.util",
+				"user.options",
 				"vue"
 			],
 			"packageFiles": [
@@ -545,6 +547,7 @@
 				"citizen-command-palette-help-section-triggers",
 				"citizen-command-palette-keyhint-actions",
 				"citizen-command-palette-keyhint-back",
+				"citizen-command-palette-keyhint-enter-go",
 				"citizen-command-palette-keyhint-enter-open",
 				"citizen-command-palette-keyhint-enter-search",
 				"citizen-command-palette-keyhint-enter-select",
@@ -590,6 +593,7 @@
 				"citizen-command-palette-mode-user-noresults-title",
 				"citizen-command-palette-mode-user-placeholder",
 				"citizen-command-palette-queryaction-fulltext-search-description",
+				"citizen-command-palette-queryaction-go-description",
 				"citizen-command-palette-queryaction-page-edit-description",
 				"citizen-search-empty-desc",
 				"citizen-search-noresults-title",

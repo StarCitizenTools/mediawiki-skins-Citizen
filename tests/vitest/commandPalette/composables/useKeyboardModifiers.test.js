@@ -244,6 +244,9 @@ describe( 'Shift never changes what Enter or Backspace does', () => {
 	const TOKEN = { id: 't1', label: 'Talk', raw: 'Talk:', modeId: 'namespace' };
 	const STATES = {
 		'a highlighted result': {},
+		'the go row highlighted': {
+			items: [ { id: 'go', source: 'queryAction:go' } ]
+		},
 		'the fulltext row highlighted': {
 			items: [ { id: 'fulltext', source: 'queryAction:fulltext-search' } ]
 		},

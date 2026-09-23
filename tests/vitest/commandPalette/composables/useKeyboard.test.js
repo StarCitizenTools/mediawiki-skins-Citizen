@@ -237,6 +237,17 @@ describe( 'useKeyboard', () => {
 			expect( event.preventDefault ).toHaveBeenCalled();
 		} );
 
+		it( 'should run the go row on Shift+Enter', () => {
+			deps.items.value = [ { id: 'go', source: 'queryAction:go' } ];
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
+		} );
+
 		it( 'should run the fulltext row on Shift+Enter', () => {
 			deps.items.value = [ { id: 'fulltext', source: 'queryAction:fulltext-search' } ];
 			listNav.highlightedIndex.value = 0;
@@ -770,6 +781,23 @@ describe( 'useKeyboard', () => {
 
 			expect( hints ).toContainEqual(
 				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵', keys: [ '↵' ] }
+			);
+			expect( hints ).not.toContainEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] }
+			);
+		} );
+
+		it( 'should name Enter as Go when the go row is highlighted', () => {
+			deps.items.value = [
+				{ id: 1, type: 'action', source: 'queryAction:go' },
+				{ id: 2, type: 'page' }
+			];
+			listNav.highlightedIndex.value = 0;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toContainEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-enter-go', kbd: '↵', keys: [ '↵' ] }
 			);
 			expect( hints ).not.toContainEqual(
 				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', keys: [ '↵' ] }
