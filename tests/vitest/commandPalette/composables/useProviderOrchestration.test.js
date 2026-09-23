@@ -40,19 +40,14 @@ describe( 'useProviderOrchestration', () => {
 			keepStaleResults: false
 		};
 
-		// Mirrors createAppendQueryActions: production always attaches the
-		// lead/trail split, so a bare function here would exercise a shape the
-		// shipped code never sees.
-		mockDecorator = vi.fn( ( items, query ) => {
-			if ( query ) {
-				return items.concat( [ { id: 'action', label: query, type: 'action' } ] );
-			}
-			return items;
-		} );
-		mockDecorator.leadActions = vi.fn( ( query ) => ( query ?
-			[ { id: 'action', label: query, type: 'action', source: 'queryAction:fulltext-search' } ] :
-			[] ) );
-		mockDecorator.trailActions = vi.fn( () => [] );
+		// Mirrors createAppendQueryActions: the full-text row leads a search
+		// and nothing trails the results.
+		mockDecorator = {
+			leadActions: vi.fn( ( query ) => ( query ?
+				[ { id: 'action', label: query, type: 'action', source: 'queryAction:fulltext-search' } ] :
+				[] ) ),
+			trailActions: vi.fn( () => [] )
+		};
 	} );
 
 	afterEach( () => {

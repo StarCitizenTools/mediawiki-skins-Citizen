@@ -106,12 +106,10 @@ function initApp( overlayEl, options ) {
 		createSearchProvider( searchClient )
 	];
 
-	const appendQueryActions = createAppendQueryActions();
-
 	const app = Vue.createMwApp( App );
 	app.provide( 'providers', providers );
 	app.provide( 'recentItemsService', recentItemsService );
-	app.provide( 'resultDecorator', appendQueryActions );
+	app.provide( 'resultDecorator', createAppendQueryActions() );
 	app.provide( 'recentItemsProvider', recentItemsProvider );
 	app.provide( 'relatedArticlesProvider', relatedArticlesProvider );
 	app.provide( 'findModeByTrigger', paletteRegistry.findModeByTrigger );
