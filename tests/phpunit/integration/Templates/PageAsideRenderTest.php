@@ -64,6 +64,37 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		] );
 	}
 
+	private function tocPanel(): CitizenAsidePanel {
+		return $this->panel( 'toc', 'Contents', 20, [
+			'data-toc' => [
+				'number-section-count' => 2,
+				'citizen-is-collapse-sections-enabled' => false,
+				'array-sections' => [
+					[
+						'toclevel' => 1,
+						'number' => '1',
+						'line' => 'History',
+						'anchor' => 'History',
+						'linkAnchor' => 'History',
+						'is-top-level-section' => true,
+						'is-parent-section' => false,
+						'array-sections' => [],
+					],
+					[
+						'toclevel' => 1,
+						'number' => '2',
+						'line' => 'Care',
+						'anchor' => 'Care',
+						'linkAnchor' => 'Care',
+						'is-top-level-section' => true,
+						'is-parent-section' => false,
+						'array-sections' => [],
+					],
+				],
+			],
+		], CitizenAsidePanel::PLACEMENT_PINNED );
+	}
+
 	private function render( array $panels ): DOMXPath {
 		$parser = new TemplateParser( __DIR__ . '/../../../../templates', new HashBagOStuff() );
 		// SkinMustache renders with this on, and the table of contents needs
@@ -71,7 +102,9 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$parser->enableRecursivePartials( true );
 		$html = $parser->processTemplate( 'PageAside', [
 			'msg-citizen-page-aside-label' => 'Side column',
-			'msg-toc' => 'Contents',
+			// Differs from the ToC panel's label, so the heading assertion shows
+			// which of the two renders there.
+			'msg-toc' => 'Table of contents',
 			'msg-citizen-jumptotop' => 'Back to top',
 			'data-page-aside' => ( new CitizenComponentPageAside( $panels ) )->getTemplateData(),
 		] );
@@ -161,5 +194,58 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( '2024-03-15T10:00:00Z', $time->getAttribute( 'datetime' ) );
 		$this->assertSame( '15 March 2024', trim( $time->textContent ) );
 		$this->assertSame( [], $this->elementChildren( $time ) );
+	}
+
+	public function testTableOfContentsBuildsTheSameChrome(): void {
+		$xpath = $this->render( [ $this->lastmodPanel(), $this->tocPanel() ] );
+
+		$roots = $xpath->query( '//aside/*' );
+		$this->assertCount( 2, $roots );
+		$lastmod = $roots->item( 0 );
+		$this->assertInstanceOf( DOMElement::class, $lastmod );
+		$this->assertSame( 'citizen-page-aside-lastmod', $lastmod->getAttribute( 'id' ), 'order 10 before 20' );
+		$nav = $roots->item( 1 );
+		$this->assertInstanceOf( DOMElement::class, $nav );
+
+		$this->assertSame( 'nav', $nav->nodeName );
+		$this->assertSame( 'citizen-toc', $nav->getAttribute( 'id' ) );
+		$classes = explode( ' ', $nav->getAttribute( 'class' ) );
+		$expected = [
+			'citizen-toc',
+			'citizen-dropdown',
+			'citizen-page-aside__panel',
+			'citizen-page-aside__panel--toc',
+		];
+		foreach ( $expected as $class ) {
+			$this->assertContains( $class, $classes );
+		}
+		$this->assertNotContains( 'citizen-toc--collapse-enabled', $classes );
+		$this->assertSame( 'citizen-page-aside-toc-heading', $nav->getAttribute( 'aria-labelledby' ) );
+
+		$children = $this->elementChildren( $nav );
+		$this->assertCount( 3, $children, 'heading, the below-desktop control, body' );
+		[ $heading, $details, $body ] = $children;
+		// The root nav is the one landmark; a nav body would nest a second.
+		$this->assertSame( [ 'div', 'div' ], [ $heading->nodeName, $body->nodeName ] );
+		$this->assertSame( 'citizen-page-aside__heading', $heading->getAttribute( 'class' ) );
+		$this->assertSame( 'citizen-page-aside-toc-heading', $heading->getAttribute( 'id' ) );
+		$this->assertSame( 'Contents', trim( $heading->textContent ) );
+		// Dropdown.less opens `.citizen-dropdown-details[open] + .citizen-menu__card`,
+		// so the details must be the body's immediate previous sibling.
+		$this->assertSame( 'details', $details->nodeName );
+		$this->assertSame( 'citizen-dropdown-details', $details->getAttribute( 'class' ) );
+		$this->assertSame(
+			'mw-panel-toc',
+			$this->single( $xpath, './summary', $details )->getAttribute( 'aria-details' )
+		);
+		$this->assertSame( 'mw-panel-toc', $body->getAttribute( 'id' ) );
+		$this->assertSame(
+			'citizen-page-aside__body citizen-toc-card citizen-menu__card',
+			$body->getAttribute( 'class' )
+		);
+
+		$this->single( $xpath, './/*[@id="mw-panel-toc-list"]', $body );
+		$this->assertCount( 2, $xpath->query( './/li[contains(@class,"citizen-toc-list-item")]', $body ) );
+		$this->assertCount( 0, $xpath->query( '//*[@id="mw-panel-toc-label"]' ) );
 	}
 }

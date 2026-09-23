@@ -1,23 +1,33 @@
+{{!
+	The table of contents builds the aside panel chrome itself rather than
+	going through PageAsidePanel: its root is a nav, and below desktop it
+	carries a control between heading and body. The body doubles as the
+	dropdown card, which Dropdown.less requires to be the next sibling of the
+	details element — heading, details, body is the one order that satisfies
+	both the panel contract and the dropdown.
+	string panel-label from the aside entry, reached through the context stack
+	object data-toc
+}}
 {{#data-toc}}
-<div id="citizen-toc" class="citizen-toc citizen-dropdown citizen-page-aside__panel citizen-page-aside__panel--toc{{#citizen-is-collapse-sections-enabled}} citizen-toc--collapse-enabled{{/citizen-is-collapse-sections-enabled}}">
+<nav id="citizen-toc" class="citizen-toc citizen-dropdown citizen-page-aside__panel citizen-page-aside__panel--toc{{#citizen-is-collapse-sections-enabled}} citizen-toc--collapse-enabled{{/citizen-is-collapse-sections-enabled}}" aria-labelledby="citizen-page-aside-toc-heading">
+	<div id="citizen-page-aside-toc-heading" class="citizen-page-aside__heading">{{panel-label}}</div>
 	<details class="citizen-dropdown-details">
 		<summary
-			class="citizen-dropdown-summary" 
+			class="citizen-dropdown-summary"
 			title="{{msg-toc}}"
 			aria-details="mw-panel-toc">
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
 			<span>{{msg-toc}}</span>
 		</summary>
 	</details>
-	<nav id="mw-panel-toc" class="citizen-toc-card citizen-menu__card" aria-labelledby="mw-panel-toc-label">
+	<div id="mw-panel-toc" class="citizen-page-aside__body citizen-toc-card citizen-menu__card">
 		<div class="citizen-menu__card-content">
 			<a class="citizen-toc-top citizen-toc-link cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet" title="{{msg-citizen-jumptotop}}" href="#top" role="button">
 				<div class="citizen-ui-icon mw-ui-icon-wikimedia-arrowUp"></div>
 				<div class="citizen-toc-text">{{msg-citizen-jumptotop}}</div>
 			</a>
-			<div id="mw-panel-toc-label" class="citizen-menu__heading">{{msg-toc}}</div>
 			{{>TableOfContents__list}}
 		</div>
-	</nav>
-</div>
+	</div>
+</nav>
 {{/data-toc}}

@@ -148,6 +148,12 @@
 		left: var( --space-xs );
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
 
+		// The pill is the control at this width; the panel heading would be a
+		// second label for it, standing outside the popover.
+		> .citizen-page-aside__heading {
+			display: none;
+		}
+
 		&-card {
 			// Sits on the control with the gap stated here rather than left to
 			// .citizen-menu__card's margin, which would also offset the card
@@ -215,28 +221,27 @@
 		position: -webkit-sticky;
 		position: sticky;
 		top: var( --header-offset-block-start );
+		// The heading is the panel's first child by contract, but the "Back to
+		// top" row reads better above it. The card wrappers only exist for the
+		// below-desktop popover, so at this width they contribute no box and
+		// the row, heading and list become siblings that `order` can arrange.
+		display: flex;
+		flex-direction: column;
 		max-height: ~'calc( 100vh - var( --header-offset-block-start ) )';
 		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 
-		.citizen-menu__card {
-			position: relative;
-			min-width: auto;
-			margin: 0;
-			contain: none;
-			content-visibility: visible;
-			background: transparent;
-			border: 0;
-			border-radius: 0;
-			box-shadow: none;
-			clip-path: none;
-			transform: none;
+		// The dropdown card's closed-state styles (opacity, transform, clip-path,
+		// border and the like) have nothing to paint while these have no box,
+		// so if `contents` ever goes they need resetting here again.
+		.citizen-menu__card,
+		.citizen-menu__card-content {
+			display: contents;
+		}
 
-			.citizen-menu__card-content {
-				overflow: visible;
-				opacity: 1;
-			}
+		.citizen-toc-top {
+			order: -1;
 		}
 
 		// Hide button in desktop viewport

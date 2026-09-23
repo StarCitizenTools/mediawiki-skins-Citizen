@@ -4,19 +4,24 @@
 const { createSectionLabel } = require( '../../../resources/skins.citizen.toc/sectionLabel.js' );
 
 const FIXTURE = `
-<div id="citizen-toc" class="citizen-toc citizen-dropdown">
+<nav id="citizen-toc" class="citizen-toc citizen-dropdown citizen-page-aside__panel citizen-page-aside__panel--toc">
+	<div id="citizen-page-aside-toc-heading" class="citizen-page-aside__heading">Contents</div>
 	<details class="citizen-dropdown-details">
 		<summary class="citizen-dropdown-summary">
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
 			<span>Contents</span>
 		</summary>
 	</details>
-	<nav id="mw-panel-toc">
-		<li id="toc-History" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">History</span></a></li>
-		<li id="toc-Care" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">Care</span></a></li>
-		<li id="toc-Health" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">Health</span></a></li>
-	</nav>
-</div>`;
+	<div id="mw-panel-toc" class="citizen-page-aside__body citizen-toc-card citizen-menu__card">
+		<div class="citizen-menu__card-content">
+			<ul id="mw-panel-toc-list" class="citizen-toc-list">
+				<li id="toc-History" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">History</span></a></li>
+				<li id="toc-Care" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">Care</span></a></li>
+				<li id="toc-Health" class="citizen-toc-list-item"><a><span class="citizen-toc-heading">Health</span></a></li>
+			</ul>
+		</div>
+	</div>
+</nav>`;
 
 const win = ( reduced = false ) => ( {
 	matchMedia: () => ( { matches: reduced } )
