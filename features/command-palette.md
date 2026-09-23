@@ -29,22 +29,32 @@ The palette has two kinds of entries:
 | `/file:` | `~` | Mode | Find images, PDFs, audio, video, and other files as a gallery. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 | `/bucket:` | - | Mode | Drill into structured data stored by Bucket. Only available when Bucket is installed. |
-| `/help` | `?` | Command | Open the help overlay to browse every available mode. |
+| `/help` | `?` | Mode | Browse every available mode. |
 
 You can type the single-character aliases (`@`, `>`, `:`, `#`, `!`, `~`, `?`) directly — no `/` prefix needed.
 
-### Help overlay
+### Help
 
-Press `?` at an empty input to open the help overlay. The footer shows the `?` shortcut as a hint whenever it's available. While help is open, the header swaps to a help indicator with a back button, and Esc closes help before any other action.
+Press `?` or type `/help` on an empty input to open help mode. Every
+available mode is listed on the left, and the right pane shows the
+highlighted one's icon, name, triggers and a longer description of how it
+behaves. The footer shows the `?` shortcut as a hint whenever it's available.
 
-Help is an overlay — opening it preserves your active mode, query, and any drill-down position, so you can peek and return to where you were.
+* **Type to narrow the list.** Modes whose triggers match come first — `#`,
+  `/cat` or just `cat` all find Categories — then modes whose name matches,
+  then those whose short description does.
+* **Press ↵** to open the highlighted mode.
+* **Backspace on the empty input** leaves help and returns the `?`
+  or `/help` you typed to the input as plain text, as it does for any other
+  trigger. Esc clears what you typed, then leaves help.
 
-What you see depends on where you are:
+Inside any other mode, `?` on an empty input opens a description of that
+mode over it instead, without leaving it — your query and any drill-down
+position are kept. Typing, Backspace, Esc or the back
+button closes it.
 
-* **At root**: a list of every registered mode on the left and a detail pane on the right. As you arrow through the list, the right pane shows the highlighted mode's icon, name, short description, triggers, and a longer description. Selecting a mode enters it and closes help.
-* **Inside a mode**: the same detail pane fills the dialog, describing whichever mode you're currently in.
-
-The overlay focuses on *what each mode is for* — keyboard shortcuts live in the palette footer, where they update contextually as you move around.
+Help focuses on *what each mode is for* — keyboard shortcuts live in the
+palette footer, where they update contextually as you move around.
 
 ### Mode behavior
 
@@ -185,6 +195,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `placeholder` | `string` | No | Input placeholder when the mode is active (e.g., "Search users"). Modes only. |
 | `icon` | `Object` | No | Codex icon for the header when the mode is active. Modes only. |
 | `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Ignored in gallery layout. Modes only. |
+| `debounceMs` | `number` | No | How long to wait after a keystroke before calling `getResults`, in milliseconds. Defaults to `120`. Use `0` for a mode that filters locally and has no request to wait for. Modes only. |
 | `layout` | `'list' \| 'gallery'` | No | Result layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content like media browsers, and widens the palette to fit. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. `signal` is honoured by `mw.Api` on MediaWiki 1.44+ and ignored on 1.43. |
 | `getItemDetail` | `function` | No | `(item, signal?) => Promise<Object>` — lazy detail-pane data for the highlighted item. Use this when the detail is too heavy to compute for every item upfront (the file mode uses it for image metadata and licensing). Modes only. |
@@ -194,7 +205,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
 | `tokenPattern` | `Object \| Object[]` | No | Token detection pattern (or array of patterns) for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
 | `keybindings` | `KeyBinding[]` | No | Mode-contributed keyboard bindings, active while the mode is active. See [keybindings](#keybindings). Modes only. |
-| `help` | `Object` | No | Content surfaced by the help overlay when this entry is active. See [help content](#help-content). |
+| `help` | `Object` | No | Longer description shown in help's detail pane for this entry. See [help content](#help-content). |
 
 ### Action results
 
@@ -208,7 +219,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
 | `{ action: 'addToken', payload: token }` | Token object | Append a token chip to the input and clear the free text. Use this when picking a result should add a structured condition to the query — like the SMW mode appending `[[Property::]]` after you pick a property. |
 | `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
-| `{ action: 'toggleHelp' }` | - | Toggle the help overlay. |
+| `{ action: 'toggleHelp' }` | - | At root, open help mode; inside help mode, leave it. Inside any other mode, toggle the description of that mode over it. |
 
 ### Token patterns
 
@@ -229,7 +240,7 @@ Modes that need multiple tokenization rules — like SMW, which tokenizes both `
 
 ### Help content
 
-The optional `help` field declares the long-form description shown in the help overlay's detail pane, below the triggers.
+The optional `help` field declares the long-form description shown in help's detail pane, below the triggers.
 
 ```js
 help: {
@@ -243,7 +254,7 @@ help: {
 
 The mode's existing one-line `description` still appears beside the icon at the top of the help summary; `help.description` is the longer prose continuation that explains how the mode actually behaves — drill-down rules, chip behaviour, anything a user can't infer from the short label.
 
-Keyboard shortcuts live in the palette footer rather than here, so the help overlay can stay focused on what a mode is *for*.
+Keyboard shortcuts live in the palette footer rather than here, so help can stay focused on what a mode is *for*.
 
 ### Mode context
 
@@ -320,7 +331,7 @@ keybindings: [
 | `modifiers` | `string \| string[]` | Which modifier state the binding claims: `none` (the default), `shift`, `accel` (Ctrl, or Command on a Mac), `accel+shift`, or `any`. An array accepts several. A character composed with AltGr and a capital typed with Shift both count as `none` — they are typed text, not chords — so a binding on `?` or `@` needs nothing special. Anything not named stays with the browser. |
 | `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
 | `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
-| `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
+| `worksDuringHelp` | `boolean` | When true, the binding also fires while help is open over a mode. Defaults to false. |
 | `hint` | `Object \| null` | Footer hint to surface, or `null` to omit one. |
 
 Hint shape:
