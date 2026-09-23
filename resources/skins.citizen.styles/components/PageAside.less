@@ -1,16 +1,10 @@
-// The component is the page aside; the class is still `citizen-page-sidebar`.
-// Renaming a class that lives in cached HTML needs a compat slice, and a
-// rename on its own is not worth one. It rides the next change to this
-// component that needs a slice anyway — a pinned-group wrapper for a second
-// pinned panel, or the 4.0 flip, whichever comes first.
-
-.citizen-page-sidebar {
+.citizen-page-aside {
 	--size-icon: 1rem;
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		display: flex;
 		flex-direction: column;
-		grid-area: sidebar;
+		grid-area: aside;
 		gap: var( --space-sm );
 		margin-top: var( --space-sm ); // align with first paragraph
 		contain: paint style;
@@ -29,39 +23,9 @@
 		}
 	}
 
-	.citizen-menu__heading,
-	.citizen-menu .mw-list-item a {
-		padding-inline: var( --space-xs );
-	}
-
-	.citizen-menu .mw-list-item a {
-		gap: var( --space-xs );
-		border-radius: var( --border-radius-base );
-	}
-}
-
-#citizen-sidebar-lastmod {
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		// Duplicated with footer already
-		display: none;
-	}
-}
-
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	// Last modified is hidden just above and the outline is the only other
-	// panel, so a rail without an outline holds nothing perceivable at this
-	// width — a named `complementary` landmark with no content in it. Old HTML
-	// only ever rendered the rail alongside `.citizen-toc`, so `:not( :has() )`
-	// never matches a cached page.
-	.citizen-page-sidebar:not( :has( .citizen-toc ) ) {
-		display: none;
-	}
-}
-
-// Panel chrome: root, heading, body — the shape every panel shares whether
-// PHP or a registered script renders it. What a body contains is the panel's
-// own; nothing here reaches into it.
-.citizen-page-aside {
+	// Panel chrome: root, heading, body — the shape every panel shares whether
+	// PHP or a registered script renders it. What a body contains is the
+	// panel's own; nothing here reaches into it.
 	&__heading {
 		padding: var( --space-xs ) var( --space-xs ) var( --space-xxs );
 		color: var( --color-subtle );
@@ -115,5 +79,14 @@
 			// Duplicated with footer already
 			display: none;
 		}
+	}
+}
+
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	// Last modified is hidden at this width and the outline is the only other
+	// panel, so a rail without an outline holds nothing perceivable — a named
+	// `complementary` landmark with no content in it.
+	.citizen-page-aside:not( :has( .citizen-toc ) ) {
+		display: none;
 	}
 }

@@ -345,7 +345,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$data = $skin->getTemplateData();
 
 		$this->assertFalse( $data['aside-enabled'] );
-		$this->assertNotContains( 'citizen-toc-enabled', $this->getAddedBodyClasses( $skin ) );
+		$this->assertNotContains( 'citizen-page-aside-enabled', $this->getAddedBodyClasses( $skin ) );
 	}
 
 	/**
@@ -360,7 +360,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$data = $skin->getTemplateData();
 
 		$this->assertTrue( $data['aside-enabled'] );
-		$this->assertContains( 'citizen-toc-enabled', $this->getAddedBodyClasses( $skin ) );
+		$this->assertContains( 'citizen-page-aside-enabled', $this->getAddedBodyClasses( $skin ) );
 	}
 
 	/**

@@ -144,6 +144,7 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 
 		$aside = $this->single( $xpath, '//aside' );
 
+		$this->assertSame( 'citizen-page-aside', $aside->getAttribute( 'class' ) );
 		$this->assertSame( 'Side column', $aside->getAttribute( 'aria-label' ) );
 	}
 

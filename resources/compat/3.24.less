@@ -1,0 +1,76 @@
+@import ( reference ) '../variables.less';
+@import ( reference ) '../mixins.less';
+
+// Page aside panels unified and the aside renamed (3.24). HTML from before
+// this generation still carries `.citizen-page-sidebar`,
+// `#citizen-sidebar-lastmod`, the `citizen-toc-enabled` body class, and panel
+// headings and links built as menus. Every selector here names an old-only
+// class or id, so none can match new HTML and no generation gate is needed.
+@media screen {
+	.citizen-page-sidebar {
+		--size-icon: 1rem;
+	}
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		.citizen-page-sidebar {
+			display: flex;
+			flex-direction: column;
+			// The area the new grid template names; `sidebar` no longer exists.
+			grid-area: aside;
+			gap: var( --space-sm );
+			margin-top: var( --space-sm );
+			contain: paint style;
+		}
+
+		.citizen-page-sidebar:has( .citizen-toc ) {
+			contain: size paint style;
+		}
+
+		// `:where()` keeps this at zero specificity so the later `.ns-6` /
+		// `.ns-14` / `.ns--1` declaration in layout.less still wins the way it
+		// did when both lived in the same file.
+		:where( .citizen-toc-enabled ) {
+			--width-page: calc( var( --width-layout ) + var( --width-page-aside ) + var( --space-lg ) );
+		}
+
+		.citizen-toc-enabled .citizen-body-container {
+			// stylelint-disable
+			grid-template-areas:
+				'content aside'
+				'footer footer';
+			// stylelint-enable
+			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-page-aside );
+		}
+
+		.citizen-toc-enabled .citizen-page-header-inner {
+			max-width: var( --width-page );
+		}
+	}
+
+	.citizen-page-sidebar .citizen-menu__heading,
+	.citizen-page-sidebar .citizen-menu .mw-list-item a {
+		padding-inline: var( --space-xs );
+	}
+
+	.citizen-page-sidebar .citizen-menu .mw-list-item a {
+		gap: var( --space-xs );
+		border-radius: var( --border-radius-base );
+	}
+
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		#citizen-sidebar-lastmod,
+		.citizen-page-sidebar:not( :has( .citizen-toc ) ) {
+			display: none;
+		}
+
+		.citizen-toc-enabled:has( #citizen-toc ) .citizen-page-actions {
+			max-inline-size: ~'calc( 100% - var( --toolbar-size ) - var( --space-xs ) * 3 )';
+		}
+	}
+}
+
+@media print {
+	.citizen-page-sidebar {
+		display: none !important;
+	}
+}
