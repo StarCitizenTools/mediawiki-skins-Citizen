@@ -94,30 +94,27 @@
 }
 
 // VE styles shouldn't be core but it is just a few lines :/
-#ca-ve-edit {
-	order: 98; // Before source edit
-}
-
+// Both edit tabs go last, in the order $wgVisualEditorTabPosition gave them.
+#ca-ve-edit,
 #ca-edit {
-	order: 99; // Align to last
+	order: 99;
 }
 
-// Merge two buttons together
-.client-js .citizen-ve-edit-merged {
-	// Additional check to check if there are actually source edit button (#929)
-	&#ca-ve-edit:has( + #ca-edit:not( .selected ) ) {
-		> a {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-		}
+// Merge the two edit tabs into one button: the first keeps its label and the
+// second joins it as an icon. The tab of the editor already open is selected
+// and hidden, which leaves the other one whole (#929).
+.client-js {
+	.citizen-ve-edit-merged:not( .selected ):has( + .citizen-ve-edit-merged:not( .selected ) ) > a {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 
-	&#ca-edit {
+	.citizen-ve-edit-merged:not( .selected ) + .citizen-ve-edit-merged:not( .selected ) {
 		margin-left: ~'calc( var( --space-xxs ) * -1 )';
 
 		> a {
 			gap: 0;
-			font-size: 0; // hide edit source text
+			font-size: 0; // Hide the label
 			border-left: var( --border-subtle );
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
