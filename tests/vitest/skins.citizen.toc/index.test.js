@@ -12,19 +12,22 @@ const mw = require( '../mocks/mw.js' );
  */
 function createFixture() {
 	document.body.innerHTML = `
-		<div id="citizen-toc">
-			<div class="citizen-toc-indicator"></div>
-			<ul id="mw-panel-toc-list">
-				<li id="toc-s1" class="citizen-toc-list-item citizen-toc-level-1">
-					<a class="citizen-toc-link" href="#s1">Section 1</a>
-					<button class="citizen-toc-toggle"></button>
-				</li>
-				<li id="toc-s2" class="citizen-toc-list-item citizen-toc-level-1">
-					<a class="citizen-toc-link" href="#s2">Section 2</a>
-					<button class="citizen-toc-toggle"></button>
-				</li>
-			</ul>
-		</div>
+		<nav id="citizen-toc" class="citizen-toc citizen-page-aside__panel citizen-page-aside__panel--toc">
+			<div class="citizen-page-aside__heading">Contents</div>
+			<div id="mw-panel-toc" class="citizen-page-aside__body">
+				<div class="citizen-toc-indicator"></div>
+				<ul id="mw-panel-toc-list">
+					<li id="toc-s1" class="citizen-toc-list-item citizen-toc-level-1">
+						<a class="citizen-toc-link" href="#s1">Section 1</a>
+						<button class="citizen-toc-toggle"></button>
+					</li>
+					<li id="toc-s2" class="citizen-toc-list-item citizen-toc-level-1">
+						<a class="citizen-toc-link" href="#s2">Section 2</a>
+						<button class="citizen-toc-toggle"></button>
+					</li>
+				</ul>
+			</div>
+		</nav>
 		<div id="bodyContent">
 			<div class="mw-parser-output">
 				<div class="mw-heading"><h2 id="s1">Section 1</h2></div>
