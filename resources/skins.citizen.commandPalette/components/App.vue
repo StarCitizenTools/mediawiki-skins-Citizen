@@ -420,10 +420,13 @@ module.exports = exports = defineComponent( {
 		};
 
 		const handleFreeTextUpdate = ( text ) => {
-			tokenInput.setFreeText( text );
-			// When detection consumed part of the text (creating tokens),
-			// the DOM input still holds the old value until Vue flushes.
-			// Force-sync it so the next keystroke event carries the correct value.
+			if ( !helpInput.handleText( text ) ) {
+				tokenInput.setFreeText( text );
+			}
+			// When the text was consumed (by the help toggle, or by detection
+			// creating tokens), the DOM input still holds the old value until
+			// Vue flushes. Force-sync it so the next keystroke event carries
+			// the correct value.
 			if ( tokenInput.freeText.value !== text ) {
 				nextTick( () => {
 					const el = searchHeader.value?.getInputElement?.();

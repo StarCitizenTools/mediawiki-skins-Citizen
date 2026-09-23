@@ -676,15 +676,23 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	}
 
 	/**
-	 * Closes the help overlay and re-runs the mode for the query it left, so
-	 * the list hidden under help comes back.
+	 * Closes the help overlay. By default it re-runs the mode for the query the
+	 * overlay left, so the list hidden under help comes back.
+	 *
+	 * A caller about to send a new query through `updateQuery` passes
+	 * `{ rerun: false }`, since that query refills the list and a re-run would
+	 * only fetch results it replaces. Without such a query nothing refills the
+	 * list, so every other caller keeps the default.
+	 *
+	 * @param {Object} [options]
+	 * @param {boolean} [options.rerun=true] Whether to re-run the mode.
 	 */
-	function closeHelp() {
+	function closeHelp( { rerun = true } = {} ) {
 		if ( !helpVisible.value ) {
 			return;
 		}
 		helpVisible.value = false;
-		if ( activeMode.value ) {
+		if ( rerun && activeMode.value ) {
 			handleModeQuery( activeMode.value, query.value );
 		}
 	}

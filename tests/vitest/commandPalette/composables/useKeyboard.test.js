@@ -1442,10 +1442,18 @@ describe( 'useKeyboard', () => {
 			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
 		} );
 
-		it( 'mode-trigger keys are swallowed while help is visible', () => {
-			setupHelp( { helpVisible: true } );
-			const mode = { id: 'user', triggers: [ '@' ] };
-			deps.findModeByTrigger = vi.fn( () => mode );
+		it( 'lets a letter through to the input while help is visible', () => {
+			setupHelp( { helpVisible: true, activeMode: { id: 'category' } } );
+			const event = createKeyEvent( 'a' );
+
+			keyboard.handleKeydown( event );
+
+			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		it( 'types a mode trigger as text while help is visible', () => {
+			setupHelp( { helpVisible: true, activeMode: { id: 'category' } } );
+			deps.findModeByTrigger = vi.fn( () => ( { id: 'user', triggers: [ '@' ] } ) );
 			deps.onEnterMode = vi.fn();
 			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
@@ -1453,28 +1461,11 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( event );
 
 			expect( deps.onEnterMode ).not.toHaveBeenCalled();
-			expect( event.preventDefault ).toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
 		} );
 
-		it( 'Backspace is swallowed while help is visible (does not pop mode context)', () => {
-			setupHelp( { helpVisible: true } );
-			deps.activeModeContext = ref( [ { name: 'A' } ] );
-			deps.onPopModeContext = vi.fn();
-			keyboard = useKeyboard( toGrouped( deps ) );
-			const event = createKeyEvent( 'Backspace' );
-
-			keyboard.handleKeydown( event );
-
-			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
-			expect( event.preventDefault ).toHaveBeenCalled();
-		} );
-
-		it( 'Backspace is swallowed while help is visible (does not remove or select tokens)', () => {
-			setupHelp( { helpVisible: true } );
-			deps.tokens = ref( [ { id: 't1', label: 'Talk:' } ] );
-			deps.selectedTokenIndex = ref( 0 );
-			deps.onRemoveToken = vi.fn();
-			deps.onSelectToken = vi.fn();
+		it( 'Backspace on the empty input closes help', () => {
+			setupHelp( { helpVisible: true, activeMode: { id: 'category' } } );
 			deps.inputRef.value.getInputElement = vi.fn( () => ( {
 				selectionStart: 0,
 				selectionEnd: 0,
@@ -1482,14 +1473,29 @@ describe( 'useKeyboard', () => {
 				focus: vi.fn(),
 				closest: vi.fn( () => null )
 			} ) );
-			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Backspace' );
 
 			keyboard.handleKeydown( event );
 
-			expect( deps.onRemoveToken ).not.toHaveBeenCalled();
-			expect( deps.onSelectToken ).not.toHaveBeenCalled();
+			expect( deps.onCloseHelp ).toHaveBeenCalledTimes( 1 );
 			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'Backspace with text before the caret edits the text', () => {
+			setupHelp( { helpVisible: true, activeMode: { id: 'category' }, query: 'ab' } );
+			deps.inputRef.value.getInputElement = vi.fn( () => ( {
+				selectionStart: 2,
+				selectionEnd: 2,
+				value: 'ab',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			} ) );
+			const event = createKeyEvent( 'Backspace' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onCloseHelp ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
 		} );
 
 		it( 'escHintMsgKey is "close" while help is visible, even with non-empty query', () => {
