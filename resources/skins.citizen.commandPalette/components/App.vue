@@ -17,6 +17,7 @@
 			role="search"
 			:aria-label="$i18n( 'citizen-command-palette-label' ).text()"
 			:data-palette-layout="paletteLayout"
+			tabindex="-1"
 			@keydown="keyboard.handleKeydown"
 		>
 			<command-palette-header

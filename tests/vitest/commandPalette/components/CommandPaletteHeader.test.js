@@ -84,6 +84,21 @@ describe( 'CommandPaletteHeader combobox wiring', () => {
 	} );
 } );
 
+describe( 'CommandPaletteHeader back button', () => {
+	it.each( [
+		[ 'leaving a mode', { activeMode: { id: 'user' } }, 'exit-mode' ],
+		[ 'closing help', { helpVisible: true }, 'close-help' ]
+	] )( 'returns focus to the input after %s', async ( _label, props, emitted ) => {
+		const wrapper = mountHeader( props );
+		const focus = vi.spyOn( wrapper.get( 'input' ).element, 'focus' );
+
+		await wrapper.get( 'button' ).trigger( 'click' );
+
+		expect( wrapper.emitted( emitted ) ).toHaveLength( 1 );
+		expect( focus ).toHaveBeenCalled();
+	} );
+} );
+
 describe( 'CommandPaletteHeader placeholder', () => {
 	it( 'keeps the mode\'s own placeholder while the help overlay describes it', () => {
 		const wrapper = mountHeader( {
