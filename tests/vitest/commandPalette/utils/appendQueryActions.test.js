@@ -3,19 +3,9 @@
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
-const createAppendQueryActions = require( '../../../../resources/skins.citizen.commandPalette/utils/appendQueryActions.js' );
+const mwTitle = require( '../../mocks/mwTitle.js' );
 
-// Enough of mw.Title for the decorator: underscores read as spaces and the
-// first letter is capitalised, as on a wiki with $wgCapitalLinks.
-function stubTitle( text ) {
-	const normalized = text.replace( /_/g, ' ' ).trim();
-	if ( !normalized || /[{}[\]]/.test( normalized ) ) {
-		return null;
-	}
-	return {
-		getPrefixedText: () => normalized.charAt( 0 ).toUpperCase() + normalized.slice( 1 )
-	};
-}
+const createAppendQueryActions = require( '../../../../resources/skins.citizen.commandPalette/utils/appendQueryActions.js' );
 
 function pageResult( id, title, linkedTitle ) {
 	return {
@@ -34,7 +24,7 @@ describe( 'createAppendQueryActions', () => {
 		vi.restoreAllMocks();
 		mw.config.get = vi.fn( () => null );
 		mw.user = { options: { get: vi.fn( () => true ) } };
-		mw.Title = { newFromText: vi.fn( stubTitle ) };
+		mw.Title = mwTitle;
 	} );
 
 	describe( 'queryActions', () => {
@@ -44,12 +34,32 @@ describe( 'createAppendQueryActions', () => {
 			const { trail } = queryActions( 'test query' );
 
 			expect( trail[ 0 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-fulltext-search',
+				id: 'citizen-command-palette-item-fulltext-search-test%20query',
 				type: 'action',
 				label: 'test query',
 				source: 'queryAction:fulltext-search',
 				url: '/wiki/Special:Search?search=test+query&fulltext=1'
 			} );
+		} );
+
+		it( 'gives each query its own rows, so Recent can keep more than one', () => {
+			const { queryActions } = createAppendQueryActions();
+
+			const sun = queryActions( 'sun', { leads: true } );
+			const moon = queryActions( 'moon', { leads: true } );
+
+			expect( sun.lead[ 0 ].id ).not.toBe( moon.lead[ 0 ].id );
+			expect( sun.trail[ 0 ].id ).not.toBe( moon.trail[ 0 ].id );
+		} );
+
+		it( 'keeps apart queries that differ only by a space or an underscore', () => {
+			const { queryActions } = createAppendQueryActions();
+
+			const spaced = queryActions( 'sun cat' ).trail[ 0 ];
+			const joined = queryActions( 'sun_cat' ).trail[ 0 ];
+
+			expect( spaced.id ).not.toBe( joined.id );
+			expect( spaced.id ).not.toMatch( /\s/ );
 		} );
 
 		it( 'no longer emits the media-search action (handled by the file mode now)', () => {
