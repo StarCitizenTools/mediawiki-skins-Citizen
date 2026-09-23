@@ -178,7 +178,21 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$link = $this->single( $xpath, '//div[@class="citizen-page-aside__body"]/*' );
 
 		$this->assertSame( 'a', $link->nodeName );
-		$this->assertSame( 'citizen-page-aside__link', $link->getAttribute( 'class' ) );
+		$classes = explode( ' ', $link->getAttribute( 'class' ) );
+		foreach ( [
+			'citizen-page-aside__link',
+			'cdx-button',
+			'cdx-button--fake-button',
+			// Codex hangs the quiet button's hover, active and focus states on it.
+			'cdx-button--fake-button--enabled',
+			'cdx-button--weight-quiet',
+		] as $class ) {
+			$this->assertContains( $class, $classes );
+		}
+		// It looks like a button but it is a link, and it is announced as one.
+		// The link mixin matches `a:where( :not( [ role='button' ] ) )`, so
+		// PageAside.less removes the underline it adds while the link is pressed.
+		$this->assertFalse( $link->hasAttribute( 'role' ) );
 		$this->assertSame( '/w/index.php?title=Akita&diff=', $link->getAttribute( 'href' ) );
 		$this->assertSame(
 			'This page was last edited on 15 March 2024, at 10:00.',
@@ -248,5 +262,16 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$this->single( $xpath, './/*[@id="mw-panel-toc-list"]', $body );
 		$this->assertCount( 2, $xpath->query( './/li[contains(@class,"citizen-toc-list-item")]', $body ) );
 		$this->assertCount( 0, $xpath->query( '//*[@id="mw-panel-toc-label"]' ) );
+
+		// Outline rows get their row layout from the shared panel link class,
+		// so every anchor has to carry it alongside its own.
+		$linkClasses = [];
+		foreach ( $xpath->query( './/a[contains(@class,"citizen-toc-link")]/@class', $body ) as $attribute ) {
+			$linkClasses[] = $attribute->nodeValue;
+		}
+		$this->assertCount( 3, $linkClasses, 'back to top and one link per section' );
+		foreach ( $linkClasses as $class ) {
+			$this->assertContains( 'citizen-page-aside__link', explode( ' ', $class ) );
+		}
 	}
 }
