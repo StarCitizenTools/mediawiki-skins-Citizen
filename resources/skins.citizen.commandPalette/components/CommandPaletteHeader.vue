@@ -153,21 +153,23 @@ module.exports = exports = defineComponent( {
 			return mw.message( 'searchsuggest-search' ).text();
 		} );
 
+		const getInputElement = () => searchInputRef.value?.$el?.querySelector( 'input' ) || null;
+
+		const focus = () => {
+			getInputElement()?.focus();
+		};
+
 		// Help is layered on top of the active mode, so the back button
 		// closes help first; the underlying mode's back affordance reappears
-		// once help dismisses.
+		// once help dismisses. Focus returns to the input either way: leaving
+		// a mode unmounts the button, which would drop focus to the page body.
 		const onBackClick = () => {
 			if ( props.helpVisible ) {
 				emit( 'close-help' );
 			} else {
 				emit( 'exit-mode' );
 			}
-		};
-
-		const getInputElement = () => searchInputRef.value?.$el?.querySelector( 'input' ) || null;
-
-		const focus = () => {
-			getInputElement()?.focus();
+			focus();
 		};
 
 		expose( {
