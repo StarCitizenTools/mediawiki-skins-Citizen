@@ -255,4 +255,36 @@
 		border-radius: var( --border-radius-base );
 		.mixin-citizen-button-progressive();
 	}
+
+	// The warning form offers its choices beside the submit button.
+	.mw-htmlform-submit-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var( --space-sm );
+
+		> :not( [ name='wpUpload' ] ) {
+			flex: 1 1 0;
+			min-width: fit-content;
+			min-height: @min-size-interactive-touch;
+			padding-inline: @spacing-horizontal-button;
+			font-family: inherit;
+			font-size: var( --font-size-medium );
+			font-weight: var( --font-weight-semi-bold );
+			color: var( --color-base );
+			cursor: pointer;
+			background-color: var( --background-color-interactive-subtle );
+			border: var( --border-width-base ) solid var( --border-color-interactive );
+			border-radius: var( --border-radius-base );
+
+			&:hover {
+				background-color: var( --background-color-interactive-subtle--hover );
+				border-color: var( --border-color-interactive--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-interactive-subtle--active );
+				border-color: var( --border-color-interactive--active );
+			}
+		}
+	}
 }
