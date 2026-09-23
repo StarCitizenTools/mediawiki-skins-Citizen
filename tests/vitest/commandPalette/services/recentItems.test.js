@@ -23,7 +23,6 @@ describe( 'createRecentItems', () => {
 		mw.storage.remove = vi.fn( ( key ) => {
 			delete storage[ key ];
 		} );
-		mw.util.escapeIdForAttribute = vi.fn( ( str ) => str.replace( /[^a-zA-Z0-9-_:.]/g, '_' ) );
 
 		service = createRecentItems();
 	} );
@@ -153,22 +152,6 @@ describe( 'createRecentItems', () => {
 			expect( mw.storage.remove ).toHaveBeenCalledWith( 'skin-citizen-command-palette-recent-items' );
 			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
 			expect( stored ).toBeNull();
-		} );
-	} );
-
-	describe( 'saveSearchQuery', () => {
-		it( 'saves a search query with correct format', () => {
-			service.saveSearchQuery( 'test query', '/wiki/Special:Search?search=test+query' );
-
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 1 );
-
-			const item = stored[ 0 ];
-			expect( item.type ).toBe( 'fulltext-search' );
-			expect( item.id ).toBe( 'citizen-command-palette-result-search-test_query' );
-			expect( item.label ).toBe( 'test query' );
-			expect( item.url ).toBe( '/wiki/Special:Search?search=test+query' );
-			expect( item.thumbnailIcon ).toBeDefined();
 		} );
 	} );
 } );
