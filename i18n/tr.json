@@ -159,7 +159,6 @@
 	"citizen-command-palette-command-user-description": "Bir kullanıcı arayın",
 	"citizen-command-palette-command-user-label": "Kullanıcılar",
 	"citizen-command-palette-help-section-description": "Açıklama",
-	"citizen-command-palette-help-section-modes": "Modlar",
 	"citizen-command-palette-help-section-triggers": "Tetikleyiciler",
 	"citizen-command-palette-mode-action-description-help": "Sayfa menülerinden çekilen yönetici eylemlerini, özel sayfaları ve bağlantıları bulun.",
 	"citizen-command-palette-mode-action-placeholder": "Eylem ara",

@@ -153,7 +153,6 @@
 	"citizen-command-palette-command-user-description": "사용자를 검색",
 	"citizen-command-palette-command-user-label": "사용자",
 	"citizen-command-palette-help-section-description": "설명",
-	"citizen-command-palette-help-section-modes": "모드",
 	"citizen-command-palette-help-section-triggers": "트리거",
 	"citizen-command-palette-mode-action-description-help": "문서 메뉴에서 가져온 관리자 작업, 특수 문서 및 링크 찾기",
 	"citizen-command-palette-mode-action-placeholder": "작업 검색",

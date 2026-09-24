@@ -98,7 +98,6 @@
 	"citizen-command-palette-command-user-description": "No engem Benotzer sichen",
 	"citizen-command-palette-command-user-label": "Benotzer",
 	"citizen-command-palette-help-section-description": "Beschreiwung",
-	"citizen-command-palette-help-section-modes": "Modussen",
 	"citizen-command-palette-mode-bucket-copy-query-label": "Offro als Lua kopéieren",
 	"citizen-command-palette-mode-bucket-field-count": "$1 {{PLURAL:$1|Feld|Felder}}",
 	"citizen-command-palette-mode-bucket-field-detail-type": "Typ",

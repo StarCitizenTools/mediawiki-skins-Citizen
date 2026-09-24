@@ -130,7 +130,6 @@
 	"citizen-command-palette-command-user-description": "Cercar un usator",
 	"citizen-command-palette-command-user-label": "Usatores",
 	"citizen-command-palette-help-section-description": "Description",
-	"citizen-command-palette-help-section-modes": "Modos",
 	"citizen-command-palette-help-section-triggers": "Activatores",
 	"citizen-command-palette-mode-action-description-help": "Cercar actiones administrative, paginas special, e ligamines extrahite del menus de pagina.",
 	"citizen-command-palette-mode-action-placeholder": "Actiones de recerca",

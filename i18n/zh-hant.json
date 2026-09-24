@@ -145,7 +145,6 @@
 	"citizen-command-palette-command-user-description": "搜尋使用者",
 	"citizen-command-palette-command-user-label": "使用者",
 	"citizen-command-palette-help-section-description": "描述",
-	"citizen-command-palette-help-section-modes": "模式",
 	"citizen-command-palette-help-section-triggers": "觸發器",
 	"citizen-command-palette-mode-action-description-help": "尋找從頁面選單中提取的管理員操作、特殊頁面、以及連結。",
 	"citizen-command-palette-mode-action-placeholder": "搜尋操作",
