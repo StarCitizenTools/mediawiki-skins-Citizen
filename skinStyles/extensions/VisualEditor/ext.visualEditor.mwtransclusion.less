@@ -6,14 +6,70 @@
  * Version: REL1_43
 */
 
+@import 'mediawiki.skin.variables.less';
+
 /* ve.ui.MWTransclusionDialog.less */
 .ve-ui-mwTemplateDialog .mw-widget-titleWidget-menu-withDescriptions .mw-widget-titleOptionWidget .oo-ui-labelElement-label {
 	font-weight: var( --font-weight-semi-bold );
 }
 
 /* ve.ui.MWParameterPage.less */
-.ve-ui-mwParameterPage-label {
-	font-weight: var( --font-weight-semi-bold );
+.ve-ui-mwParameterPage {
+	&-label {
+		font-weight: var( --font-weight-semi-bold );
+	}
+
+	&-doc-required,
+	&-doc-deprecated,
+	&-inlineDescription &-doc-example,
+	&-doc-default {
+		display: flex;
+		gap: var( --space-xs );
+		align-items: flex-start;
+		font-style: normal;
+
+		&::before {
+			flex: none;
+			/* Centres the icon on the first line at VE's 1.3em line-height */
+			margin-top: 0.15em;
+			content: '';
+			.cdx-mixin-css-icon-background( 1em );
+			.cdx-mixin-css-icon-size( 1em );
+		}
+	}
+
+	&-doc-required {
+		font-weight: var( --font-weight-semi-bold );
+		color: var( --color-emphasized );
+
+		&::before {
+			.cdx-mixin-css-icon-background-image( @cdx-icon-info-filled, currentcolor );
+		}
+	}
+
+	&-doc-deprecated {
+		&::before {
+			.cdx-mixin-css-icon-background-image( @cdx-icon-alert, var( --color-icon-warning ) );
+		}
+
+		/* Only the v4 warning token is dark enough to set text in */
+		:root.citizen-v4 & {
+			color: var( --color-warning );
+
+			&::before {
+				background-color: currentcolor;
+			}
+		}
+	}
+
+	&-inlineDescription &-doc-example,
+	&-doc-default {
+		color: var( --color-subtle );
+
+		&::before {
+			.cdx-mixin-css-icon-background-image( @cdx-icon-info-filled, currentcolor );
+		}
+	}
 }
 
 /* ve.ui.MWTransclusionOutlineWidget.less */
