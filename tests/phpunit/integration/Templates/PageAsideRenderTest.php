@@ -159,6 +159,7 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 			'citizen-page-aside__panel citizen-page-aside__panel--lastmod',
 			$root->getAttribute( 'class' )
 		);
+		$this->assertSame( '10', $root->getAttribute( 'data-order' ) );
 
 		$children = $this->elementChildren( $root );
 		$this->assertCount( 2, $children, 'heading and body, nothing else' );
@@ -224,6 +225,7 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertSame( 'nav', $nav->nodeName );
 		$this->assertSame( 'citizen-toc', $nav->getAttribute( 'id' ) );
+		$this->assertSame( '20', $nav->getAttribute( 'data-order' ) );
 		$classes = explode( ' ', $nav->getAttribute( 'class' ) );
 		$expected = [
 			'citizen-toc',

@@ -6,10 +6,11 @@
 	details element — heading, details, body is the one order that satisfies
 	both the panel contract and the dropdown.
 	string panel-label from the aside entry, reached through the context stack
+	number panel-order from the aside entry, like panel-label
 	object data-toc
 }}
 {{#data-toc}}
-<nav id="citizen-toc" class="citizen-toc citizen-dropdown citizen-page-aside__panel citizen-page-aside__panel--toc{{#citizen-is-collapse-sections-enabled}} citizen-toc--collapse-enabled{{/citizen-is-collapse-sections-enabled}}" aria-labelledby="citizen-page-aside-toc-heading">
+<nav id="citizen-toc" class="citizen-toc citizen-dropdown citizen-page-aside__panel citizen-page-aside__panel--toc{{#citizen-is-collapse-sections-enabled}} citizen-toc--collapse-enabled{{/citizen-is-collapse-sections-enabled}}" aria-labelledby="citizen-page-aside-toc-heading" data-order="{{panel-order}}">
 	<div id="citizen-page-aside-toc-heading" class="citizen-page-aside__heading">{{panel-label}}</div>
 	<details class="citizen-dropdown-details">
 		<summary

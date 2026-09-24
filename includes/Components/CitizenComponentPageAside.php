@@ -38,6 +38,7 @@ class CitizenComponentPageAside implements CitizenComponent {
 				static fn ( CitizenAsidePanel $panel ): array => [
 					'panel-id' => $panel->getId(),
 					'panel-label' => $panel->getLabel(),
+					'panel-order' => $panel->getOrder(),
 					'panel-placement' => $panel->getPlacement(),
 					// The template dispatches on this rather than on a partial
 					// name, because MediaWiki's TemplateParser cannot resolve a

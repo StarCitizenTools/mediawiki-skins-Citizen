@@ -6,10 +6,11 @@
 	name from data, so a new panel costs one line inside the body.
 	string panel-id
 	string panel-label
+	number panel-order position among panels; scripts place their own against it
 	bool is-<panel-id>
 	object body the panel's own template data
 }}
-<div id="citizen-page-aside-{{panel-id}}" class="citizen-page-aside__panel citizen-page-aside__panel--{{panel-id}}">
+<div id="citizen-page-aside-{{panel-id}}" class="citizen-page-aside__panel citizen-page-aside__panel--{{panel-id}}" data-order="{{panel-order}}">
 	<div id="citizen-page-aside-{{panel-id}}-heading" class="citizen-page-aside__heading">{{panel-label}}</div>
 	<div class="citizen-page-aside__body">
 		{{#is-lastmod}}{{#body}}{{>PageAsidePanel__lastmod}}{{/body}}{{/is-lastmod}}

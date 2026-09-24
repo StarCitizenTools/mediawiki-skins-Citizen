@@ -63,6 +63,10 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$this->assertSame( 'Lastmod', $panels[0]['panel-label'] );
 		$this->assertSame( 'Toc', $panels[1]['panel-label'] );
 
+		// Scripts place their own panels against these.
+		$this->assertSame( 10, $panels[0]['panel-order'] );
+		$this->assertSame( 20, $panels[1]['panel-order'] );
+
 		// PageAside.mustache dispatches on these; without them every panel
 		// section is falsy and the aside renders empty.
 		$this->assertTrue( $panels[0]['is-lastmod'] );
@@ -117,6 +121,7 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 				'href' => 'mock-url',
 				'panel-id' => 'from-panel',
 				'panel-label' => 'from-panel',
+				'panel-order' => 99,
 				'panel-placement' => CitizenAsidePanel::PLACEMENT_PINNED,
 				'is-lastmod' => false,
 			] ),
@@ -126,11 +131,13 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 
 		$this->assertSame( 'lastmod', $panel['panel-id'] );
 		$this->assertSame( 'Lastmod', $panel['panel-label'] );
+		$this->assertSame( 10, $panel['panel-order'] );
 		$this->assertSame( CitizenAsidePanel::PLACEMENT_FLOW, $panel['panel-placement'] );
 		$this->assertTrue( $panel['is-lastmod'] );
 
 		$this->assertSame( 'mock-url', $panel['body']['href'] );
 		$this->assertSame( 'from-panel', $panel['body']['panel-label'] );
+		$this->assertSame( 99, $panel['body']['panel-order'] );
 		$this->assertSame( 'from-panel', $panel['body']['panel-id'] );
 		$this->assertFalse( $panel['body']['is-lastmod'] );
 		$this->assertArrayNotHasKey( 'href', $panel );
