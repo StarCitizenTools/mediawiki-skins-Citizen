@@ -144,14 +144,22 @@ For every cache-breaking change, in the **same commit**:
    not delete assets those rules reference — assets referenced by a live slice
    stay in place for the window.
 
-   **One slice per breaking change — never append to an existing one.** If
-   `<next-version>.less` is already there (a second breaking change in the same
-   cycle), take the next free patch-level name: `3.22.less`, then
-   `3.22.1.less`, then `3.22.2.less`. The suffix is a sequence number within
-   the cycle, not a release. Appending instead would leave the HTML that
-   continuous-deployment wikis served *between* the two merges carrying a
-   marker no gate can distinguish from post-second-merge HTML. Discovery,
-   sorting, the marker and `npm run lint:compat` all handle patch-level names.
+   **One slice per breaking change.** If `<next-version>.less` is already
+   there (a second breaking change in the same cycle), take the next free
+   patch-level name: `3.22.less`, then `3.22.1.less`, then `3.22.2.less`. The
+   suffix is a sequence number within the cycle, not a release. Appending
+   instead would leave the HTML that continuous-deployment wikis served
+   *between* the two merges carrying a marker no gate can distinguish from
+   post-second-merge HTML. Discovery, sorting, the marker and
+   `npm run lint:compat` all handle patch-level names.
+
+   **Append to the cycle's slice only when none of the new rules needs a
+   gate** — every added selector names an old-only class or id, or uses a
+   structural combinator the new markup cannot match (a child combinator
+   once the element moved into a wrapper). Such rules are also correct on the
+   in-between generation, so the marker it shares with later HTML costs
+   nothing. The moment one rule in the second change gates on the marker or
+   on a discriminator, the whole change takes its own patch-level slice.
 
    **A slice is a standalone stylesheet, not a fragment of `skin.less`.**
    ResourceLoader compiles every style file as its own LESS entry point, and

@@ -1,18 +1,28 @@
 {{!
 	object data-page-aside
-		array array-panels one entry per panel with content, ordered. Each carries
-			panel-id, panel-label, panel-placement, is-<id>, and body — the
-			panel's own template data. Flow panels render through the shared
-			chrome in PageAsidePanel. The table of contents is the one panel
-			that builds that chrome itself: its root is a nav and it carries a
-			below-desktop control between heading and body.
+		array array-flow-panels panels that scroll with the page, ordered
+		array array-sticky-panels panels that ride in one sticky block, ordered
+		bool has-sticky-panels whether to open that block
+		Each entry carries panel-id, panel-label, panel-order, panel-placement,
+		is-<id>, and body — the panel's own template data. Panels in either
+		zone render through the shared chrome in PageAsidePanel. The table of
+		contents is the one panel that builds that chrome itself: its root is a
+		nav and it carries a below-desktop control between heading and body.
 	string msg-citizen-page-aside-label accessible name for the landmark
 }}
 <aside class="citizen-page-aside" aria-label="{{msg-citizen-page-aside-label}}">
 	{{#data-page-aside}}
-		{{#array-panels}}
+		{{#array-flow-panels}}
 			{{#is-toc}}{{#body}}{{>TableOfContents}}{{/body}}{{/is-toc}}
 			{{^is-toc}}{{>PageAsidePanel}}{{/is-toc}}
-		{{/array-panels}}
+		{{/array-flow-panels}}
+		{{#has-sticky-panels}}
+		<div class="citizen-page-aside__sticky">
+			{{#array-sticky-panels}}
+				{{#is-toc}}{{#body}}{{>TableOfContents}}{{/body}}{{/is-toc}}
+				{{^is-toc}}{{>PageAsidePanel}}{{/is-toc}}
+			{{/array-sticky-panels}}
+		</div>
+		{{/has-sticky-panels}}
 	{{/data-page-aside}}
 </aside>

@@ -42,7 +42,7 @@ class CitizenAsidePanelTableOfContents implements CitizenAsidePanel {
 	}
 
 	public function getPlacement(): string {
-		return self::PLACEMENT_PINNED;
+		return self::PLACEMENT_STICKY;
 	}
 
 	public function getTemplateData(): array {

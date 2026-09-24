@@ -4,8 +4,9 @@
 // Page aside panels unified and the aside renamed (3.24). HTML from before
 // this generation still carries `.citizen-page-sidebar`,
 // `#citizen-sidebar-lastmod`, the `citizen-toc-enabled` body class, and panel
-// headings and links built as menus. Every selector here names an old-only
-// class or id, so none can match new HTML and no generation gate is needed.
+// headings and links built as menus. No rule needs a generation gate: most
+// name an old-only class or id, the outline's direct-child rule relies on the
+// child combinator instead, and the outline link rule on a discriminator class.
 @media screen {
 	.citizen-page-sidebar {
 		--size-icon: 1rem;
@@ -24,6 +25,20 @@
 
 		.citizen-page-sidebar:has( .citizen-toc ) {
 			contain: size paint style;
+		}
+
+		// The outline used to be the sticky element itself; it now rides inside
+		// .citizen-page-aside__sticky, which carries these. Direct-child
+		// selectors match only the older shapes (3.23's container, and the
+		// `.citizen-page-aside` shape from before the sticky block), so no
+		// generation gate is needed.
+		.citizen-page-sidebar > .citizen-toc,
+		.citizen-page-aside > .citizen-toc {
+			.mixin-citizen-header-offset-block-start();
+			position: -webkit-sticky;
+			position: sticky;
+			top: var( --header-offset-block-start );
+			max-height: ~'calc( 100vh - var( --header-offset-block-start ) )';
 		}
 
 		// `:where()` keeps this at zero specificity so the later `.ns-6` /

@@ -11,9 +11,8 @@ namespace MediaWiki\Skins\Citizen\Components;
  * renders from, so the container can order, filter and render it without
  * knowing what it is.
  *
- * Placement describes behaviour the container does not implement yet. It is
- * declared here because the interface is not cached HTML — extending it later
- * is free, whereas finding that the markup cannot express it is not.
+ * Placement picks the panel's zone: flow panels are the aside's own children,
+ * and sticky panels share one block after them that stays in view.
  *
  * How a panel collapses is deliberately not part of this contract while that
  * design is unsettled; a panel that needs to say something about it must wait
@@ -26,8 +25,8 @@ interface CitizenAsidePanel {
 	/** Scrolls away with the article. */
 	public const PLACEMENT_FLOW = 'flow';
 
-	/** Stays in view. At most one panel may claim this. */
-	public const PLACEMENT_PINNED = 'pinned';
+	/** Stays in view, in the block every sticky panel shares. */
+	public const PLACEMENT_STICKY = 'sticky';
 
 	/** Stable identity: ordering, styling hook, and per-panel state. */
 	public function getId(): string;
@@ -38,7 +37,7 @@ interface CitizenAsidePanel {
 	/** Codex icon name. */
 	public function getIcon(): string;
 
-	/** Position in the stack, ascending. */
+	/** Position within its placement zone, ascending. */
 	public function getOrder(): int;
 
 	/** Whether the panel has anything to show on this page. */

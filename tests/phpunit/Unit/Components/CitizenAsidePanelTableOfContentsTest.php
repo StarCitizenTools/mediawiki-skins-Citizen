@@ -295,7 +295,7 @@ class CitizenAsidePanelTableOfContentsTest extends MediaWikiUnitTestCase {
 		$this->assertSame( 'toc', $component->getId() );
 		$this->assertSame( 'Contents', $component->getLabel() );
 		$this->assertSame( 'listBullet', $component->getIcon() );
-		$this->assertSame( CitizenAsidePanel::PLACEMENT_PINNED, $component->getPlacement() );
+		$this->assertSame( CitizenAsidePanel::PLACEMENT_STICKY, $component->getPlacement() );
 		$this->assertIsInt( $component->getOrder() );
 	}
 
