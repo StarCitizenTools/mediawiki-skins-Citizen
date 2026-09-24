@@ -12,6 +12,7 @@ Citizen fires several [`mw.hook`](https://doc.wikimedia.org/mediawiki-core/maste
 | Hook | Parameters | Description |
 | :--- | :--- | :--- |
 | `citizen.commandPalette.register` | `{ register }` | Register custom modes and commands in the [command palette](/features/command-palette#extending-the-command-palette). `register( entry )` accepts a mode or command object. |
+| `citizen.pageAside.register` | `{ register }` | Add a panel to the [side column](/features/side-column#javascript-api). `register( definition )` takes `{ id, label, placement, order }`, where `placement` is `'flow'` (default) or `'sticky'`, and returns the panel's body element, or `null`. |
 | `citizen.preferences.register` | `register` | Register custom sections and preferences in the [preferences panel](/features/preferences#javascript-api). `register( config )` accepts a config object with `sections` and `preferences`. |
 | `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/features/preferences#reacting-to-a-preference) in real time. |
 
@@ -35,6 +36,15 @@ mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
 mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
     if ( featureName === 'my-feature' ) {
         // React to the change
+    }
+} );
+```
+
+```js
+mw.hook( 'citizen.pageAside.register' ).add( function ( data ) {
+    var body = data.register( { id: 'my-panel', label: 'My panel' } );
+    if ( body ) {
+        body.appendChild( myContent );
     }
 } );
 ```
