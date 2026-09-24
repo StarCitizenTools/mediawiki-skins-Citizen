@@ -219,17 +219,12 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
-		.mixin-citizen-header-offset-block-start();
-		position: -webkit-sticky;
-		position: sticky;
-		top: var( --header-offset-block-start );
 		// The heading is the panel's first child by contract, but the "Back to
 		// top" row reads better above it. The card wrappers only exist for the
 		// below-desktop popover, so at this width they contribute no box and
 		// the row, heading and list become siblings that `order` can arrange.
 		display: flex;
 		flex-direction: column;
-		max-height: ~'calc( 100vh - var( --header-offset-block-start ) )';
 		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;

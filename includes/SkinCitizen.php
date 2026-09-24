@@ -320,7 +320,7 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// The outline panel returns core's data enriched, nested under its own
-		// `data-toc` key inside `array-panels`. Removed so core's un-enriched
+		// `data-toc` key in the aside's panel entries. Removed so core's un-enriched
 		// copy cannot survive at root, where a future partial opening
 		// `{{#data-toc}}` outside `{{#is-toc}}` would silently render it in
 		// place of the enriched one.
@@ -355,8 +355,9 @@ class SkinCitizen extends SkinMustache {
 				$this->msg( 'citizen-page-associated-pages' )->text();
 		}
 
+		$aside = $parentData['data-page-aside'];
 		$parentData['aside-enabled'] = !$isMainPageView
-			&& $parentData['data-page-aside']['array-panels'] !== [];
+			&& ( $aside['array-flow-panels'] !== [] || $aside['array-sticky-panels'] !== [] );
 
 		if ( $parentData['aside-enabled'] ) {
 			// This body class depends on template data so it can't move to

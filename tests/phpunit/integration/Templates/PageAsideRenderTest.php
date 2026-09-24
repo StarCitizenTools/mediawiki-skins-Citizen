@@ -64,7 +64,7 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		] );
 	}
 
-	private function tocPanel(): CitizenAsidePanel {
+	private function tocPanel( string $placement = CitizenAsidePanel::PLACEMENT_STICKY ): CitizenAsidePanel {
 		return $this->panel( 'toc', 'Contents', 20, [
 			'data-toc' => [
 				'number-section-count' => 2,
@@ -92,7 +92,7 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 					],
 				],
 			],
-		], CitizenAsidePanel::PLACEMENT_PINNED );
+		], $placement );
 	}
 
 	private function render( array $panels ): DOMXPath {
@@ -171,6 +171,9 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( 'citizen-page-aside-lastmod-heading', $heading->getAttribute( 'id' ) );
 		$this->assertSame( 'Last modified', trim( $heading->textContent ) );
 		$this->assertSame( 'citizen-page-aside__body', $body->getAttribute( 'class' ) );
+
+		// With no sticky panel, the sticky block is not opened at all.
+		$this->assertCount( 0, $xpath->query( '//*[contains(@class,"citizen-page-aside__sticky")]' ) );
 	}
 
 	public function testLastModifiedBodyIsOneTimedLink(): void {
@@ -215,13 +218,18 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 	public function testTableOfContentsBuildsTheSameChrome(): void {
 		$xpath = $this->render( [ $this->lastmodPanel(), $this->tocPanel() ] );
 
+		// Flow panels are the aside's own children; the sticky zone is one
+		// block after them, holding the outline.
 		$roots = $xpath->query( '//aside/*' );
 		$this->assertCount( 2, $roots );
 		$lastmod = $roots->item( 0 );
 		$this->assertInstanceOf( DOMElement::class, $lastmod );
-		$this->assertSame( 'citizen-page-aside-lastmod', $lastmod->getAttribute( 'id' ), 'order 10 before 20' );
-		$nav = $roots->item( 1 );
-		$this->assertInstanceOf( DOMElement::class, $nav );
+		$this->assertSame( 'citizen-page-aside-lastmod', $lastmod->getAttribute( 'id' ) );
+		$block = $roots->item( 1 );
+		$this->assertInstanceOf( DOMElement::class, $block );
+		$this->assertSame( 'div', $block->nodeName );
+		$this->assertSame( 'citizen-page-aside__sticky', $block->getAttribute( 'class' ) );
+		$nav = $this->single( $xpath, '//aside/div[@class="citizen-page-aside__sticky"]/*' );
 
 		$this->assertSame( 'nav', $nav->nodeName );
 		$this->assertSame( 'citizen-toc', $nav->getAttribute( 'id' ) );
@@ -275,5 +283,15 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		foreach ( $linkClasses as $class ) {
 			$this->assertContains( 'citizen-page-aside__link', explode( ' ', $class ) );
 		}
+	}
+
+	public function testTableOfContentsKeepsItsOwnChromeInTheFlowZone(): void {
+		$xpath = $this->render( [ $this->tocPanel( CitizenAsidePanel::PLACEMENT_FLOW ) ] );
+
+		$root = $this->single( $xpath, '//aside/*' );
+
+		$this->assertSame( 'nav', $root->nodeName );
+		$this->assertSame( 'citizen-toc', $root->getAttribute( 'id' ) );
+		$this->assertCount( 0, $xpath->query( '//*[@id="citizen-page-aside-toc"]' ) );
 	}
 }

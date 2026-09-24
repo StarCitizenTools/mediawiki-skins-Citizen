@@ -14,12 +14,40 @@
 		// of its own, so the row is sized by the article alone and paint
 		// containment clips any rail taller than it. A heading-less article has
 		// no outline, is shorter than its own rail, and would be clipped — so
-		// the size half only applies where the outline is.
+		// the size half only applies where the outline is. Not wherever there
+		// is a sticky block: a script can create one on a page with no outline.
 		// Not `strict`: pairing `layout` with `size` makes this a reflow root
 		// in Firefox, which strands the sticky ToC at its static position
 		// mid-scroll (#1175). Do not add `layout` back.
 		&:has( .citizen-toc ) {
 			contain: size paint style;
+		}
+	}
+
+	// Sticky panels ride along in one block. The outline inside it is the
+	// block's scroller and yields height to its siblings, so a panel below
+	// the outline stays on screen instead of sliding under it.
+	&__sticky {
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.mixin-citizen-header-offset-block-start();
+			position: sticky;
+			top: var( --header-offset-block-start );
+			display: flex;
+			flex-direction: column;
+			gap: var( --space-sm );
+			// Must shrink below its content so the outline stays the scroller; at
+			// its content height it overflows the size-contained aside and is clipped.
+			min-height: 0;
+			max-height: ~'calc( 100vh - var( --header-offset-block-start ) - var( --header-offset-block-end ) )';
+
+			> .citizen-page-aside__panel {
+				flex-shrink: 0;
+			}
+
+			> .citizen-toc {
+				flex-shrink: 1;
+				min-height: 0;
+			}
 		}
 	}
 
@@ -60,19 +88,18 @@
 	& a&__link:not( [ role='button' ] ):active {
 		text-decoration: none;
 	}
-
-	&__panel--lastmod {
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			// Duplicated with footer already
-			display: none;
-		}
-	}
 }
 
 @media ( max-width: @max-width-breakpoint-tablet ) {
-	// Last modified is hidden at this width and the outline is the only other
-	// panel, so a rail without an outline holds nothing perceivable — a named
-	// `complementary` landmark with no content in it.
+	// Only the outline's control survives below tablet; every other panel,
+	// built-in or registered, is desktop-column content until the column has
+	// a presentation for small screens.
+	.citizen-page-aside__panel:not( .citizen-toc ) {
+		display: none;
+	}
+
+	// With every other panel hidden, a rail without an outline holds nothing
+	// perceivable — a named `complementary` landmark with no content in it.
 	.citizen-page-aside:not( :has( .citizen-toc ) ) {
 		display: none;
 	}

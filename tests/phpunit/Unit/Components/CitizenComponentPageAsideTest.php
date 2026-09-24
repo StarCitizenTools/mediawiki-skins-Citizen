@@ -40,73 +40,67 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers ::getTemplateData
 	 */
-	public function testPanelsAreSortedByOrder(): void {
+	public function testPanelsAreSplitByPlacementAndSortedByOrder(): void {
 		$component = new CitizenComponentPageAside( [
 			$this->panel(
 				'toc',
 				20,
 				true,
 				[ 'data-toc' => [ 'array-sections' => [] ] ],
-				CitizenAsidePanel::PLACEMENT_PINNED
+				CitizenAsidePanel::PLACEMENT_STICKY
 			),
+			$this->panel( 'notes', 30, true, [ 'href' => 'n' ] ),
 			$this->panel( 'lastmod', 10, true, [ 'href' => 'mock-url' ] ),
 		] );
 
-		$panels = $component->getTemplateData()['array-panels'];
+		$data = $component->getTemplateData();
 
-		$this->assertCount( 2, $panels );
-		$this->assertSame( 'lastmod', $panels[0]['panel-id'] );
-		$this->assertSame( 'toc', $panels[1]['panel-id'] );
+		$this->assertSame( [ 'lastmod', 'notes' ], array_column( $data['array-flow-panels'], 'panel-id' ) );
+		$this->assertSame( [ 'toc' ], array_column( $data['array-sticky-panels'], 'panel-id' ) );
+		$this->assertTrue( $data['has-sticky-panels'] );
+		$this->assertTrue( array_is_list( $data['array-flow-panels'] ) );
+		$this->assertTrue( array_is_list( $data['array-sticky-panels'] ) );
 
-		// The chrome partial renders the heading from this; the panel no
-		// longer carries its own label.
-		$this->assertSame( 'Lastmod', $panels[0]['panel-label'] );
-		$this->assertSame( 'Toc', $panels[1]['panel-label'] );
-
-		// Scripts place their own panels against these.
-		$this->assertSame( 10, $panels[0]['panel-order'] );
-		$this->assertSame( 20, $panels[1]['panel-order'] );
-
-		// PageAside.mustache dispatches on these; without them every panel
-		// section is falsy and the aside renders empty.
-		$this->assertTrue( $panels[0]['is-lastmod'] );
-		$this->assertTrue( $panels[1]['is-toc'] );
-
-		$this->assertSame( CitizenAsidePanel::PLACEMENT_FLOW, $panels[0]['panel-placement'] );
-		$this->assertSame( CitizenAsidePanel::PLACEMENT_PINNED, $panels[1]['panel-placement'] );
-
-		// The panel's own data is what its partial renders from, unchanged.
-		$this->assertSame( [ 'href' => 'mock-url' ], $panels[0]['body'] );
-		$this->assertSame( [ 'data-toc' => [ 'array-sections' => [] ] ], $panels[1]['body'] );
+		$lastmod = $data['array-flow-panels'][0];
+		$this->assertSame( 'Lastmod', $lastmod['panel-label'] );
+		$this->assertSame( 10, $lastmod['panel-order'] );
+		$this->assertSame( CitizenAsidePanel::PLACEMENT_FLOW, $lastmod['panel-placement'] );
+		$this->assertTrue( $lastmod['is-lastmod'] );
+		$this->assertSame( [ 'href' => 'mock-url' ], $lastmod['body'] );
 	}
 
 	/**
 	 * @covers ::getTemplateData
 	 */
 	public function testEmptyPanelsAreDropped(): void {
-		// The dropped panel is the first one, so the survivor's key only lands
-		// at 0 because usort reindexes what array_filter key-preserves — the
-		// list-ness Mustache needs to iterate at all.
 		$component = new CitizenComponentPageAside( [
 			$this->panel( 'lastmod', 10, false ),
-			$this->panel( 'toc', 20, true, [ 'data-toc' => [ 'array-sections' => [] ] ] ),
+			$this->panel(
+				'toc',
+				20,
+				true,
+				[ 'data-toc' => [ 'array-sections' => [] ] ],
+				CitizenAsidePanel::PLACEMENT_STICKY
+			),
 		] );
 
-		$panels = $component->getTemplateData()['array-panels'];
+		$data = $component->getTemplateData();
 
-		$this->assertCount( 1, $panels );
-		$this->assertTrue( array_is_list( $panels ) );
-		$this->assertSame( 'toc', $panels[0]['panel-id'] );
+		$this->assertSame( [], $data['array-flow-panels'] );
+		$this->assertSame( [ 'toc' ], array_column( $data['array-sticky-panels'], 'panel-id' ) );
 	}
 
 	/**
 	 * @covers ::getTemplateData
 	 */
-	public function testNoPanelsYieldsEmptyList(): void {
-		$this->assertSame( [], ( new CitizenComponentPageAside( [] ) )->getTemplateData()['array-panels'] );
+	public function testNoPanelsYieldsEmptyZones(): void {
+		$expected = [ 'array-flow-panels' => [], 'array-sticky-panels' => [], 'has-sticky-panels' => false ];
 
-		$component = new CitizenComponentPageAside( [ $this->panel( 'toc', 20, false ) ] );
-		$this->assertSame( [], $component->getTemplateData()['array-panels'] );
+		$this->assertSame( $expected, ( new CitizenComponentPageAside( [] ) )->getTemplateData() );
+		$this->assertSame(
+			$expected,
+			( new CitizenComponentPageAside( [ $this->panel( 'toc', 20, false ) ] ) )->getTemplateData()
+		);
 	}
 
 	/**
@@ -122,12 +116,12 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 				'panel-id' => 'from-panel',
 				'panel-label' => 'from-panel',
 				'panel-order' => 99,
-				'panel-placement' => CitizenAsidePanel::PLACEMENT_PINNED,
+				'panel-placement' => CitizenAsidePanel::PLACEMENT_STICKY,
 				'is-lastmod' => false,
 			] ),
 		] );
 
-		$panel = $component->getTemplateData()['array-panels'][0];
+		$panel = $component->getTemplateData()['array-flow-panels'][0];
 
 		$this->assertSame( 'lastmod', $panel['panel-id'] );
 		$this->assertSame( 'Lastmod', $panel['panel-label'] );
