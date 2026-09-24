@@ -127,6 +127,10 @@ export default defineConfig({
 						text: "Share",
 						link: "/features/share",
 					},
+					{
+						text: "Side column",
+						link: "/features/side-column",
+					},
 				],
 			},
 			{
