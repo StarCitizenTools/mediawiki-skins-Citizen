@@ -10,10 +10,13 @@ first.
 - Creating a slice **is** the generation bump — no constant to update. The
   marker is stamped whether or not `$wgCitizenCompat` is on, so its absence
   always means "older than the framework".
-- **One slice per breaking change, never an append.** A second breaking change
-  in the same cycle takes the next free patch-level name (`3.22.less`, then
-  `3.22.1.less`) — appending would leave the HTML a continuous-deployment wiki
-  served between the two merges indistinguishable from post-merge HTML.
+- **One slice per breaking change.** A second breaking change in the same
+  cycle takes the next free patch-level name (`3.22.less`, then `3.22.1.less`)
+  — appending would leave the HTML a continuous-deployment wiki served between
+  the two merges indistinguishable from post-merge HTML. Appending is allowed
+  only when none of the new rules needs a gate (old-only selectors, or a
+  structural combinator the new markup cannot match): those are correct on
+  the in-between generation too.
 - Slices are spliced into `skins.citizen.styles` (never a new module name).
 - A slice is a **standalone stylesheet**, compiled as its own LESS entry point
   and appended after all base styles — never a verbatim copy-paste out of
