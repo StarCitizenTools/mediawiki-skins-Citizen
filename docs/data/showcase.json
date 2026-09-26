@@ -16,6 +16,12 @@
   { "name": "Industrialist Wiki", "url": "https://industrialist.miraheze.org", "tags": ["games"] },
   { "name": "Prism Party", "url": "https://www.prismparty.net", "tags": ["games"] },
   { "name": "Outlaster Wiki", "url": "https://outlaster.miraheze.org", "tags": ["games"] },
+  { "name": "DSP Wiki", "url": "https://dsp-wiki.com", "tags": ["games"] },
+  { "name": "PZwiki", "url": "https://pzwiki.net", "tags": ["games"], "expectUnreachable": true },
+  { "name": "The Battle Cats Wiki", "url": "https://battlecats.miraheze.org", "tags": ["games"] },
+  { "name": "Sekaipedia", "url": "https://www.sekaipedia.org", "tags": ["games"] },
+  { "name": "GameBrew", "url": "https://www.gamebrew.org", "tags": ["games"] },
+  { "name": "THE FINALS Wiki", "url": "https://www.thefinals.wiki", "tags": ["games"] },
   { "name": "Tolkien Gateway", "url": "https://tolkiengateway.net", "tags": ["media"], "expectUnreachable": true },
   { "name": "Battlestar Wiki", "url": "https://en.battlestarwiki.org", "tags": ["media"] },
   { "name": "Vocawiki", "url": "https://voca.wiki", "tags": ["media"] },
@@ -23,5 +29,6 @@
   { "name": "Pleasant Goat Wiki", "url": "https://xyy.miraheze.org", "tags": ["media"] },
   { "name": "The Apple Wiki", "url": "https://theapplewiki.com", "tags": ["technology"] },
   { "name": "NITC Wiki", "url": "https://wiki.fosscell.org", "tags": ["technology"] },
+  { "name": "The Linux Mint Community Wiki", "url": "https://mintwiki.org", "tags": ["technology"] },
   { "name": "Wikven Static Site Generator", "url": "https://chaotic-ground.github.io/wikven/citizen/index.html", "tags": ["technology"], "expectUnreachable": true }
 ]
