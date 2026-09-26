@@ -6,9 +6,9 @@
  * while a capture PR is open both the old images (served by main) and the new
  * ones (served by the preview) must stay live.
  *
- * wrangler is invoked off PATH, installed at a pinned version by the workflow,
- * so this job cannot resolve a different CLI at run time while holding a token
- * that can permanently delete published objects.
+ * wrangler is invoked off PATH, where the installed CLI is one pinned version,
+ * so this cannot resolve a different one while holding a token that can
+ * permanently delete published objects.
  */
 import { execFileSync } from "node:child_process";
 import { supersededKeys } from "./lib.js";
@@ -34,24 +34,21 @@ function manifestAt(ref) {
 	}
 }
 
-/** The all-zero "nothing was here" SHA a branch-creating push sends as `before`. */
-const NULL_SHA = "0".repeat(40);
-
 /**
- * The commit main was at before this push.
+ * The commit to diff the manifest from.
  *
- * A push can carry several manifest commits, and HEAD~1 would only ever see the
- * last one's deletions. The push event's `before` SHA spans the whole range.
- * HEAD~1 is the fallback for a run with no push event behind it.
+ * HEAD~1 assumes one manifest commit since the last collection, which is what a
+ * squash-merged refresh leaves. `GC_BEFORE_SHA` is for when that does not hold —
+ * two refreshes merged before anyone ran this, say, where HEAD~1 would see only
+ * the later one's deletions and leak the earlier one's objects.
  */
-const pushed = process.env.GC_BEFORE_SHA ?? "";
-const beforeRef = pushed && pushed !== NULL_SHA ? pushed : "HEAD~1";
+const beforeRef = process.env.GC_BEFORE_SHA || "HEAD~1";
 
 /**
- * A ref that cannot be read — the null SHA, a force-pushed-away commit, a clone
- * too shallow to reach it, the first run of all — means there is no predecessor
- * to have dropped anything, so nothing is deleted. The error direction on this
- * side is always a leaked object, never a deleted one still in use.
+ * A ref that cannot be read — a mistyped override, a force-pushed-away commit,
+ * the first run of all — means there is no predecessor to have dropped
+ * anything, so nothing is deleted. The error direction on this side is always a
+ * leaked object, never a deleted one still in use.
  */
 const before = manifestAt(beforeRef) ?? "{}";
 

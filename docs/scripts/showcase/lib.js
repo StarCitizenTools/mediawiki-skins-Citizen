@@ -3,7 +3,7 @@
  * filesystem calls so it can be unit-tested; the entry points do the I/O.
  */
 
-/** A month of weekly runs. Distinguishes genuinely dead from transiently blocked. */
+/** Several runs deep, so a wiki that is merely blocked today doesn't read as dead. */
 export const FAILURE_ALERT_THRESHOLD = 4;
 
 /**

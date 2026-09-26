@@ -57,6 +57,7 @@ Available skills:
 | Skill | Use when |
 | --- | --- |
 | `finalize-release` | A Release Please PR has been merged and the GitHub release needs author tags, highlights, new contributors, and a docs CI rebuild |
+| `refresh-showcase` | The showcase page's article counts or screenshots need refreshing, or a newly listed wiki needs its first capture |
 
 To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`name`, `description`) and a body that describes the workflow. Add a row to the table above so it is discoverable.
 
