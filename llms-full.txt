@@ -2836,22 +2836,18 @@ The [showcase](../community/showcase.md) is built from `docs/data/showcase.json`
 
 An unknown tag fails the build on purpose: a handful of broad topics is what makes the filter worth using, and a vocabulary that grows with every submission would sort nothing.
 
-Everything else fills in by itself. A weekly job refreshes the article counts from each wiki's own API, and a monthly job takes the screenshots and uploads them to Cloudflare R2. The two are independent: separate files, separate pull requests, so they can't conflict. Until the first capture runs, a new wiki shows a monogram tile made from its initials — that's the intended look rather than a missing image, and it's also what you see if a screenshot ever fails to load.
+Everything else is filled in for you. A maintainer periodically refreshes the article counts from each wiki's own API and retakes the screenshots, which are published to Cloudflare R2 rather than committed here. Counts and screenshots are written to separate files, so either can be refreshed without touching the other. Until the first capture, a new wiki shows a monogram tile made from its initials — that's the intended look rather than a missing image, and it's also what you see if a screenshot ever fails to load.
 
 Counts are rounded down and shown with a `+`, as in `1.1M+ articles`. That's why the page carries no "last updated" date: a rounded-down figure only gets truer as the wiki grows.
 
-If a wiki's API can't be reached at all — a firewall that turns bots away, say, or a static site with no API — add `"expectUnreachable": true` to its entry so the weekly job stops opening an issue about it every week. It only quiets the alert: the monthly job still captures a screenshot as usual.
+If a wiki's API can't be reached at all — a firewall that turns bots away, say, or a static site with no API — add `"expectUnreachable": true` to its entry so the refresh stops flagging it every time. It only quiets the alert: the screenshot is still captured as usual.
 
-::: tip Maintainer note: what the showcase jobs need
-Three workflows keep the showcase current, and each one needs something set up outside the repository.
+::: tip Maintainer note: how the refresh runs
+The three scripts under `docs/scripts/showcase/` are run by hand from a maintainer's machine, not on a schedule. They used to be scheduled workflows, and that failed: from a GitHub-hosted runner, 13 of the 24 wikis listed at the time answered HTTP 403 to every request, and a real browser driven by Playwright reached only two more. The same requests succeed from an ordinary connection, so it's the runner's address range rather than anything about the client — mostly Miraheze-hosted and Cloudflare-fronted sites turning it away. Half a refresh reads as a dozen dead wikis, which is worse than no refresh at all.
 
-**The refresh pull requests.** Both jobs open their pull request as the Actions bot, so the docs CI run on it is created but held for approval — and that's the run that builds the Cloudflare preview the capture pull request asks you to look at, so the link goes nowhere until you hit **Approve and run** on the pull request. Adding a `SHOWCASE_PAT` repository secret for the jobs to use removes the click. It's optional; nothing else depends on it, and `release-please.yml` already uses a `WORKFLOW_TOKEN` personal access token for exactly the same reason — so check that one first rather than creating a second secret that does the same job.
+The step-by-step runbook — including the one ordering constraint that matters, cleaning up superseded images only after the pull request has merged — lives in `.agents/skills/refresh-showcase/SKILL.md`.
 
-Without a token, both jobs fall back to `GITHUB_TOKEN`, and no workflow here has ever opened a pull request that way. That path needs **Allow GitHub Actions to create and approve pull requests** turned on under **Settings ▸ Actions ▸ General**. If it's off, both jobs fail at the pull request step on their very first run.
-
-**The screenshots.** They live under the `shots/` prefix of `mwcitizen-media`, the Cloudflare R2 bucket that holds the docs site's media, published through the custom domain `media.mwcitizen.skin` bound to that bucket. Two repository secrets reach it: `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token needs R2 **write and delete** permission — write alone publishes fine but can't clean up, and the cleanup job then fails on every run. Both jobs install their own `wrangler` from `.github/actions/setup-wrangler`, which pins the exact version; that file is the only place to bump it.
-
-**The cleanup.** `showcase-gc.yml` runs on every push to `main` that touches `docs/data/showcase-shots.json` and permanently deletes the R2 objects that push dropped from the manifest. It runs after merge on purpose: while a capture pull request is open, `main` still serves the old screenshots and the preview serves the new ones, so both sets have to stay alive. Nothing lists the bucket, so the manifest diff is the only record of what's in it — a deleted screenshot can't be restored, only recaptured.
+The screenshots live under the `shots/` prefix of `mwcitizen-media`, the Cloudflare R2 bucket that holds the docs site's media, published through the custom domain `media.mwcitizen.skin` bound to that bucket. `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` reach it, read from a gitignored `docs/.env`. The token needs R2 **write and delete** permission — write alone publishes fine but can't clean up.
 :::
 
 ## Contributors
@@ -2928,7 +2924,189 @@ description: Changelog of the latest version of Citizen.
 ---
 
 ---
-url: /changelogs/v2.0.0-beta.2.md
+url: /changelogs/v2.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.13.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.10.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.2.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.15.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.16.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.20.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.21.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.22.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.7.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.9.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.9.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.22.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-alpha.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0-beta.0.md
 ---
 
 
@@ -2942,42 +3120,21 @@ url: /changelogs/v2.0.0-beta.1.md
 ---
 
 ---
-url: /changelogs/v2.0.0-beta.4.md
+url: /changelogs/v2.0.0-alpha.2.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.14.1.md
+url: /changelogs/v2.23.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.0.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.0.md
----
-
-
----
-
----
-url: /changelogs/v2.10.0.md
----
-
-
----
-
----
-url: /changelogs/v2.1.0.md
+url: /changelogs/v2.0.0-beta.2.md
 ---
 
 
@@ -2991,7 +3148,35 @@ url: /changelogs/v2.0.0-beta.3.md
 ---
 
 ---
-url: /changelogs/v2.3.3.md
+url: /changelogs/v2.0.0-beta.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.0.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.1.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.10.0.md
 ---
 
 
@@ -2999,6 +3184,13 @@ url: /changelogs/v2.3.3.md
 
 ---
 url: /changelogs/v2.10.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.25.0.md
 ---
 
 
@@ -3013,13 +3205,6 @@ url: /changelogs/v2.11.0.md
 
 ---
 url: /changelogs/v2.11.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.1.md
 ---
 
 
@@ -3047,13 +3232,6 @@ url: /changelogs/v2.13.1.md
 ---
 
 ---
-url: /changelogs/v2.3.4.md
----
-
-
----
-
----
 url: /changelogs/v2.13.2.md
 ---
 
@@ -3075,13 +3253,6 @@ url: /changelogs/v2.13.4.md
 ---
 
 ---
-url: /changelogs/v2.3.5.md
----
-
-
----
-
----
 url: /changelogs/v2.13.5.md
 ---
 
@@ -3096,14 +3267,7 @@ url: /changelogs/v2.14.0.md
 ---
 
 ---
-url: /changelogs/v2.25.0.md
----
-
-
----
-
----
-url: /changelogs/v2.39.2.md
+url: /changelogs/v2.32.0.md
 ---
 
 
@@ -3131,13 +3295,6 @@ url: /changelogs/v2.16.0.md
 ---
 
 ---
-url: /changelogs/v2.3.6.md
----
-
-
----
-
----
 url: /changelogs/v2.16.1.md
 ---
 
@@ -3153,13 +3310,6 @@ url: /changelogs/v2.17.0.md
 
 ---
 url: /changelogs/v2.17.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.3.md
 ---
 
 
@@ -3187,70 +3337,7 @@ url: /changelogs/v2.18.1.md
 ---
 
 ---
-url: /changelogs/v2.30.0.md
----
-
-
----
-
----
 url: /changelogs/v2.19.0.md
----
-
-
----
-
----
-url: /changelogs/v2.2.0.md
----
-
-
----
-
----
-url: /changelogs/v2.20.0.md
----
-
-
----
-
----
-url: /changelogs/v2.31.0.md
----
-
-
----
-
----
-url: /changelogs/v2.21.0.md
----
-
-
----
-
----
-url: /changelogs/v2.22.0.md
----
-
-
----
-
----
-url: /changelogs/v2.22.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.4.md
----
-
-
----
-
----
-url: /changelogs/v2.23.0.md
 ---
 
 
@@ -3271,20 +3358,6 @@ url: /changelogs/v2.26.0.md
 ---
 
 ---
-url: /changelogs/v2.32.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.2.md
----
-
-
----
-
----
 url: /changelogs/v2.27.0.md
 ---
 
@@ -3299,13 +3372,6 @@ url: /changelogs/v2.28.0.md
 ---
 
 ---
-url: /changelogs/v2.4.0.md
----
-
-
----
-
----
 url: /changelogs/v2.29.0.md
 ---
 
@@ -3313,35 +3379,7 @@ url: /changelogs/v2.29.0.md
 ---
 
 ---
-url: /changelogs/v2.40.1.md
----
-
-
----
-
----
 url: /changelogs/v2.3.0.md
----
-
-
----
-
----
-url: /changelogs/v2.4.1.md
----
-
-
----
-
----
-url: /changelogs/v2.33.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.3.md
 ---
 
 
@@ -3362,42 +3400,56 @@ url: /changelogs/v2.3.2.md
 ---
 
 ---
-url: /changelogs/v2.34.0.md
+url: /changelogs/v2.3.3.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.4.2.md
+url: /changelogs/v2.3.4.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.35.0.md
+url: /changelogs/v2.3.5.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.4.3.md
+url: /changelogs/v2.3.6.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.6.6.md
+url: /changelogs/v2.30.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.36.0.md
+url: /changelogs/v2.31.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.33.0.md
 ---
 
 
@@ -3411,21 +3463,28 @@ url: /changelogs/v2.4.4.md
 ---
 
 ---
+url: /changelogs/v2.34.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.35.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.36.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.37.0.md
----
-
-
----
-
----
-url: /changelogs/v2.7.0.md
----
-
-
----
-
----
-url: /changelogs/v2.40.0.md
 ---
 
 
@@ -3446,154 +3505,91 @@ url: /changelogs/v2.38.1.md
 ---
 
 ---
-url: /changelogs/v2.6.3.md
+url: /changelogs/v2.38.2.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.8.0.md
+url: /changelogs/v2.39.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.2.md
+url: /changelogs/v2.38.3.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.3.md
+url: /changelogs/v2.39.1.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.6.4.md
+url: /changelogs/v2.39.2.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.40.2.md
+url: /changelogs/v2.39.4.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.4.md
+url: /changelogs/v2.39.3.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.5.0.md
+url: /changelogs/v2.4.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.6.2.md
+url: /changelogs/v2.4.1.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.5.md
+url: /changelogs/v2.4.2.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.5.1.md
+url: /changelogs/v2.4.3.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.6.md
+url: /changelogs/v2.40.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.7.1.md
----
-
-
----
-
----
-url: /changelogs/v2.5.2.md
----
-
-
----
-
----
-url: /changelogs/v2.6.0.md
----
-
-
----
-
----
-url: /changelogs/v2.7.8.md
----
-
-
----
-
----
-url: /changelogs/v2.7.7.md
----
-
-
----
-
----
-url: /changelogs/v2.6.1.md
----
-
-
----
-
----
-url: /changelogs/v2.7.9.md
----
-
-
----
-
----
-url: /changelogs/v2.7.10.md
----
-
-
----
-
----
-url: /changelogs/v3.13.0.md
----
-
-
----
-
----
-url: /changelogs/v2.8.1.md
+url: /changelogs/v2.40.1.md
 ---
 
 
@@ -3607,21 +3603,42 @@ url: /changelogs/v2.7.11.md
 ---
 
 ---
-url: /changelogs/v2.9.1.md
+url: /changelogs/v2.5.1.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.0.0.md
+url: /changelogs/v2.6.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.1.0.md
+url: /changelogs/v2.5.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.2.md
 ---
 
 
@@ -3635,6 +3652,90 @@ url: /changelogs/v2.6.5.md
 ---
 
 ---
+url: /changelogs/v2.6.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.10.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.2.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.8.3.md
 ---
 
@@ -3642,28 +3743,14 @@ url: /changelogs/v2.8.3.md
 ---
 
 ---
-url: /changelogs/v3.11.0.md
+url: /changelogs/v2.7.5.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.12.0.md
----
-
-
----
-
----
-url: /changelogs/v3.10.0.md
----
-
-
----
-
----
-url: /changelogs/v2.8.4.md
+url: /changelogs/v2.7.4.md
 ---
 
 
@@ -3677,21 +3764,14 @@ url: /changelogs/v2.8.2.md
 ---
 
 ---
-url: /changelogs/v3.20.0.md
+url: /changelogs/v2.8.4.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v2.8.5.md
----
-
-
----
-
----
-url: /changelogs/v3.14.0.md
+url: /changelogs/v2.7.6.md
 ---
 
 
@@ -3705,14 +3785,56 @@ url: /changelogs/v2.9.0.md
 ---
 
 ---
-url: /changelogs/v3.15.0.md
+url: /changelogs/v2.8.5.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.4.0.md
+url: /changelogs/v3.12.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.9.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.7.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.1.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.0.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.13.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.10.0.md
 ---
 
 
@@ -3726,21 +3848,28 @@ url: /changelogs/v3.15.1.md
 ---
 
 ---
-url: /changelogs/v3.16.1.md
+url: /changelogs/v3.11.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.21.0.md
+url: /changelogs/v3.14.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.22.0.md
+url: /changelogs/v3.15.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.17.0.md
 ---
 
 
@@ -3754,7 +3883,28 @@ url: /changelogs/v3.16.0.md
 ---
 
 ---
-url: /changelogs/v3.17.0.md
+url: /changelogs/v3.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.18.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.19.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.22.0.md
 ---
 
 
@@ -3775,7 +3925,14 @@ url: /changelogs/v3.23.0.md
 ---
 
 ---
-url: /changelogs/v3.18.0.md
+url: /changelogs/v3.20.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.2.0.md
 ---
 
 
@@ -3789,6 +3946,13 @@ url: /changelogs/v3.3.0.md
 ---
 
 ---
+url: /changelogs/v3.4.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.3.1.md
 ---
 
@@ -3796,7 +3960,14 @@ url: /changelogs/v3.3.1.md
 ---
 
 ---
-url: /changelogs/v3.2.0.md
+url: /changelogs/v3.21.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.8.0.md
 ---
 
 
@@ -3817,7 +3988,7 @@ url: /changelogs/v3.5.0.md
 ---
 
 ---
-url: /changelogs/v3.19.0.md
+url: /changelogs/v3.7.0.md
 ---
 
 
@@ -3831,181 +4002,6 @@ url: /changelogs/v3.6.0.md
 ---
 
 ---
-url: /changelogs/v3.7.0.md
----
-
-
----
-
----
-url: /changelogs/v3.8.0.md
----
-
-
----
-
----
 url: /changelogs/v3.9.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.2.md
----
-
-
----
-
----
-url: /changelogs/v1.13.0.md
----
-
-
----
-
----
-url: /changelogs/v1.15.0.md
----
-
-
----
-
----
-url: /changelogs/v1.10.0.md
----
-
-
----
-
----
-url: /changelogs/v1.14.0.md
----
-
-
----
-
----
-url: /changelogs/v1.14.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.7.md
----
-
-
----
-
----
-url: /changelogs/v1.16.0.md
----
-
-
----
-
----
-url: /changelogs/v1.16.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.1.md
----
-
-
----
-
----
-url: /changelogs/v1.17.8.md
----
-
-
----
-
----
-url: /changelogs/v1.17.3.md
----
-
-
----
-
----
-url: /changelogs/v1.17.6.md
----
-
-
----
-
----
-url: /changelogs/v1.17.5.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0.md
----
-
-
----
-
----
-url: /changelogs/v1.17.4.md
----
-
-
----
-
----
-url: /changelogs/v1.9.5.md
----
-
-
----
-
----
-url: /changelogs/v1.17.9.md
----
-
-
----
-
----
-url: /changelogs/v1.9.4.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-alpha.2.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-alpha.1.md
----
-
-
----
-
----
-url: /changelogs/v2.0.0-beta.0.md
 ---
 
