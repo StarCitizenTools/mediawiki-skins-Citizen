@@ -1,170 +1,177 @@
 {
 	"https://www.qiuwenbaike.cn": {
-		"shot": "shots/abe4070bf7235d5e.webp",
+		"shot": "shots/a55b3e84a102cbd4.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://coasterpedia.net": {
-		"shot": "shots/9bbed055216eb255.webp",
+		"shot": "shots/a7a3d7b13d456fcd.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://capoeirawiki.org": {
-		"shot": "shots/920845e4231a202d.webp",
+		"shot": "shots/413a1c406bd43e62.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://starcitizen.tools": {
-		"shot": "shots/376b4045bc7a3abf.webp",
+		"shot": "shots/876d356e708a1c2d.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://dustloop.com": {
-		"shot": "shots/25eb45fa7a71c072.webp",
+		"shot": "shots/5fc451425b659eb7.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
+		"consecutiveFailures": 0
+	},
+	"https://dragdown.wiki": {
+		"shot": "shots/c871242ff1dddeb2.webp",
+		"shotW": 1440,
+		"shotH": 900,
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.avakot.org": {
-		"shot": "shots/c794c4e9eace84df.webp",
+		"shot": "shots/1c99e543b14bf14a.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://stellasora.miraheze.org": {
-		"shot": "shots/e4060cf970cd9a6c.webp",
+		"shot": "shots/47b0c63b1e879abe.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://doorsgame.wiki": {
-		"shot": "shots/15f38d0aa00dd528.webp",
+		"shot": "shots/58e537a8561fcb76.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://obby.wiki": {
-		"shot": "shots/5cfd2bc0820cffa3.webp",
+		"shot": "shots/d015e6eb5f6c90f0.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://utg.miraheze.org": {
-		"shot": "shots/8469ed4ff9016ab3.webp",
+		"shot": "shots/9fe6995350a73884.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://wordles.miraheze.org": {
-		"shot": "shots/7132c689b539520b.webp",
+		"shot": "shots/afd94031130e02fa.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://sorrywereclosed.wiki": {
-		"shot": "shots/2b95aba112d69945.webp",
+		"shot": "shots/dbac0bc7cb7064a3.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://sr.conecorp.cc": {
-		"shot": "shots/5e040ab53f5d6004.webp",
+		"shot": "shots/126c2c338503b8d7.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://industrialist.miraheze.org": {
-		"shot": "shots/d1431e29dbc585c6.webp",
+		"shot": "shots/5d7df50147e74c0a.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.prismparty.net": {
 		"shot": "shots/82781f9e2daef437.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://outlaster.miraheze.org": {
-		"shot": "shots/847ef2f28f86e271.webp",
+		"shot": "shots/01219897f1c16020.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://tolkiengateway.net": {
-		"shot": "shots/b171ab943907e0bf.webp",
+		"shot": "shots/5d8cd15f105ff522.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://en.battlestarwiki.org": {
-		"shot": "shots/adf69b299cc621f0.webp",
+		"shot": "shots/75080b6fd1c85451.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://voca.wiki": {
-		"shot": "shots/6c52b1ab0e25dffb.webp",
+		"shot": "shots/24664030f6892bfe.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://otomad.wiki": {
-		"shot": "shots/bb1585a030799448.webp",
+		"shot": "shots/76a3ae9993d1d45c.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://xyy.miraheze.org": {
-		"shot": "shots/91ba410edff8a3be.webp",
+		"shot": "shots/9a663b7b84fbfb75.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://theapplewiki.com": {
-		"shot": "shots/7bb8b7f584894613.webp",
+		"shot": "shots/41ad8d54cfc6dfcd.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.fosscell.org": {
-		"shot": "shots/0727805841a492b4.webp",
+		"shot": "shots/20afe3989a216b49.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	},
 	"https://chaotic-ground.github.io/wikven/citizen/index.html": {
 		"shot": "shots/7b099b21b6788f65.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-09-19T21:30:31.153Z",
+		"checkedAt": "2026-09-26T00:51:59.890Z",
 		"consecutiveFailures": 0
 	}
 }
