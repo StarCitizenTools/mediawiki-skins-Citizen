@@ -3,7 +3,10 @@
 
 	&-contents {
 		position: relative;
-		margin: var( --space-xxs ) 0 var( --space-xxs ) var( --space-xs );
+		margin-block: var( --space-xxs );
+		// Longhand, as CSSJanus does not mirror a shorthand of var() calls.
+		// The extra rail width gives the toggle's target a full 24px.
+		margin-left: ~'calc( var( --space-xs ) + var( --border-width-thick ) )';
 		border-left: var( --border-width-thick ) solid var( --border-color-base );
 
 		// Reset padding on the direct child list since indentation is only for sublists
@@ -32,6 +35,10 @@
 		// that rule, so this wins by skin.less importing this file after
 		// PageAside.less.
 		min-height: @min-size-interactive-pointer;
+		// Keeps a wrapped label clear of the next row, with its first line
+		// level with the toggle
+		padding-block: var( --space-xxs );
+		text-wrap: balance;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 
@@ -99,6 +106,11 @@
 
 // Collapse ToC sections when enabled via CitizenTableOfContentsCollapseAtCount, excluding no-js
 .client-js .citizen-toc--collapse-enabled {
+	// Small enough that its focus ring clears the panel's clipped edge
+	@size-toc-node: 1.125rem;
+	// Centres the node on the row's first line
+	@offset-toc-node: ~'calc( ( @{min-size-interactive-pointer} - @{size-toc-node} ) / 2 )';
+
 	.citizen-toc-level-1 .citizen-toc-list-item {
 		display: none;
 	}
@@ -107,22 +119,79 @@
 		display: flex;
 	}
 
+	// A node on the rail, out of the row's flow so it takes no width from the label
 	.citizen-toc-toggle {
 		--size-icon: var( --font-size-x-small );
+		position: absolute;
+		top: @offset-toc-node;
+		left: ~'calc( var( --border-width-thick ) / -2 - @{size-toc-node} / 2 )';
+		// Above the rail gap and the indicator
+		z-index: 3;
 		display: grid;
 		place-content: center;
+		width: @size-toc-node;
+		min-width: 0;
+		height: @size-toc-node;
+		min-height: 0;
+		// Codex clips buttons, which would cut off the enlarged target
+		overflow: visible;
+		border-radius: 50%;
+
+		// Enlarges the target to the row's height and the label's text.
+		// Insets count from inside the border.
+		&::after {
+			position: absolute;
+			inset: ~'calc( var( --border-width-base ) * -1 - @{offset-toc-node} )' ~'calc( @{size-toc-node} / 2 - var( --border-width-thick ) / 2 - var( --border-width-base ) - @{spacing-75} )';
+			content: '';
+		}
 
 		.citizen-ui-icon {
 			&::before {
-				transform: rotate3d( 1, 0, 0, 180deg );
+				// Points at the label when closed, down when open
+				transform: rotate( 90deg );
 				transition: var( --transition-hover );
 				transition-property: transform;
+			}
+
+			// CSSJanus does not mirror rotations
+			&:dir( rtl )::before {
+				transform: rotate( -90deg );
 			}
 		}
 	}
 
-	.citizen-toc-level-1.citizen-toc-list-item--expanded .citizen-toc-toggle .citizen-ui-icon::before {
-		transform: none;
+	.citizen-toc-level-1.citizen-toc-list-item--expanded .citizen-toc-toggle .citizen-ui-icon {
+		&::before {
+			transform: rotate( 180deg );
+		}
+
+		// Negative, so the turn is a quarter rather than three quarters
+		&:dir( rtl )::before {
+			transform: rotate( -180deg );
+		}
+	}
+
+	// Parts the rail by painting over it in the background colour. Drawn by
+	// the row rather than the toggle, so the toggle's hover tint lands on top.
+	.citizen-toc-level-1:has( > .citizen-toc-toggle )::before {
+		position: absolute;
+		top: @offset-toc-node;
+		left: ~'calc( var( --border-width-thick ) * -1 )';
+		z-index: 2;
+		width: var( --border-width-thick );
+		height: @size-toc-node;
+		content: '';
+		background-color: var( --color-surface-0 );
+
+		// The contents card's surface
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			.mixin-citizen-opaque-background( 1 );
+		}
+	}
+
+	// Matches the indicator running through it
+	.citizen-toc-list-item--active > .citizen-toc-toggle {
+		color: var( --color-progressive );
 	}
 }
 
