@@ -27,6 +27,7 @@
   { "name": "Vocawiki", "url": "https://voca.wiki", "tags": ["media"] },
   { "name": "中文音MAD维基", "url": "https://otomad.wiki", "tags": ["media"] },
   { "name": "Pleasant Goat Wiki", "url": "https://xyy.miraheze.org", "tags": ["media"] },
+  { "name": "后室中文数据库", "url": "https://wiki.backroomszh.org", "tags": ["media"] },
   { "name": "The Apple Wiki", "url": "https://theapplewiki.com", "tags": ["technology"] },
   { "name": "NITC Wiki", "url": "https://wiki.fosscell.org", "tags": ["technology"] },
   { "name": "The Linux Mint Community Wiki", "url": "https://mintwiki.org", "tags": ["technology"] },
