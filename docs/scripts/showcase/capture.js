@@ -63,10 +63,9 @@ const R2_BUCKET = process.env.R2_BUCKET ?? "mwcitizen-media";
  * Immutable caching is safe because the key is the content hash, so a changed
  * screenshot is always a different URL.
  *
- * Invokes wrangler off PATH, not through npx: the workflow installs one pinned
- * version, so the job cannot resolve a different CLI at run time while holding
- * a token that can write and delete published objects. Absent, this throws
- * rather than fetching one.
+ * Invokes wrangler off PATH, not through npx: the installed CLI is one pinned
+ * version, so a run holding a token that can write and delete published objects
+ * cannot resolve a different one. Absent, this throws rather than fetching it.
  *
  * @param {string} key
  * @param {string} file
@@ -143,7 +142,7 @@ async function main() {
 	});
 
 	const dataDir = resolve(import.meta.dirname, "../../data");
-	/** Scratch, read by the workflow into the pull request body and then removed. */
+	/** Scratch. Gitignored; outlives the run's console output, which wrangler floods. */
 	const failuresPath = resolve(import.meta.dirname, "../../showcase-failures.json");
 	const sources = JSON.parse(readFileSync(resolve(dataDir, "showcase.json"), "utf8"));
 	const previous = JSON.parse(readFileSync(resolve(dataDir, "showcase-shots.json"), "utf8"));

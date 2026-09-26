@@ -93,7 +93,7 @@ const alerts = [];
 
 /**
  * Sequential on purpose: 24 requests is nothing, and hammering two dozen
- * community wikis in parallel from CI is rude.
+ * community wikis in parallel is rude.
  */
 for (const entry of sources) {
 	let fresh = null;
