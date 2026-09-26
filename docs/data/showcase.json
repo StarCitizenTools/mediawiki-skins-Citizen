@@ -4,6 +4,7 @@
   { "name": "CapoeiraWiki", "url": "https://capoeirawiki.org", "tags": ["real-world"] },
   { "name": "Star Citizen Wiki", "url": "https://starcitizen.tools", "tags": ["games"] },
   { "name": "Dustloop Wiki", "url": "https://dustloop.com", "tags": ["games"] },
+  { "name": "Dragdown Wiki", "url": "https://dragdown.wiki", "tags": ["games"] },
   { "name": "Soulframe Wiki", "url": "https://wiki.avakot.org", "tags": ["games"] },
   { "name": "Stella Sora Wiki", "url": "https://stellasora.miraheze.org", "tags": ["games"] },
   { "name": "Official DOORS Wiki", "url": "https://doorsgame.wiki", "tags": ["games"] },
