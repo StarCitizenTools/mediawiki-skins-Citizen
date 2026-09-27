@@ -128,6 +128,8 @@
 	"citizen-command-palette-label": "Command palette",
 	"citizen-command-palette-results": "Results",
 	"citizen-command-palette-heading-recent": "Recent",
+	"citizen-command-palette-clear-recent": "Clear all",
+	"citizen-command-palette-clear-recent-description": "Remove every item from Recent",
 	"citizen-command-palette-heading-related": "Related",
 
 	"citizen-command-palette-load-error": "The command palette couldn't be loaded. Please try again.",

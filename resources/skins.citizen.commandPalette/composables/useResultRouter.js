@@ -190,6 +190,9 @@ function useResultRouter( {
 				nextTick( focusInput );
 				break;
 			}
+			case 'clearRecent':
+				orchestrator.clearSearch();
+				break;
 			case 'none':
 			default:
 				break;

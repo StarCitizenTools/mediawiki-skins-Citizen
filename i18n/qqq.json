@@ -123,6 +123,8 @@
 	"citizen-command-palette-label": "Accessible name of the command palette overlay, announced when a screen reader user enters it. Not visible on screen.",
 	"citizen-command-palette-results": "Accessible name of the list of results inside the command palette. Not visible on screen.\n{{Identical|Result}}",
 	"citizen-command-palette-heading-recent": "Label for the recently searched results in the command palette",
+	"citizen-command-palette-clear-recent": "Label for the row shown at the end of the command palette's recent items list that clears the entire history. Only shown when the list has at least one entry.",
+	"citizen-command-palette-clear-recent-description": "Description shown under the clear-all row at the end of the command palette's recent items list.",
 	"citizen-command-palette-heading-related": "Label for the related results in the command palette",
 	"citizen-command-palette-load-error": "Toast notification surfaced via mw.notify when the command palette module fails to load.",
 	"citizen-command-palette-keyhint-enter-select": "Keyboard hint for the key to select an item in the command palette",

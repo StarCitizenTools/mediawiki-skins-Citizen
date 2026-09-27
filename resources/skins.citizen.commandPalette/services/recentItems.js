@@ -93,7 +93,7 @@ function createRecentItems() {
 		};
 
 		// An earlier version kept one entry per row rather than per destination.
-		return collapse( items ).map( ( item ) => {
+		const recentItems = collapse( items ).map( ( item ) => {
 			const actions = Array.isArray( item.actions ) ? [ ...item.actions ] : [];
 			if ( !actions.some( ( action ) => action.id === 'dismiss' ) ) {
 				actions.push( dismissAction );
@@ -104,6 +104,22 @@ function createRecentItems() {
 				actions
 			};
 		} );
+
+		if ( recentItems.length === 0 ) {
+			return recentItems;
+		}
+
+		// A trailing row rather than a stored entry: it clears history instead
+		// of opening anything, so it carries no url and is routed by its own
+		// type instead of one of the destination types above.
+		return [ ...recentItems, {
+			id: 'clear-recent',
+			type: 'clear-recent',
+			label: mw.msg( 'citizen-command-palette-clear-recent' ),
+			description: mw.msg( 'citizen-command-palette-clear-recent-description' ),
+			thumbnailIcon: cdxIconTrash,
+			actions: []
+		} ];
 	}
 
 	/**

@@ -119,6 +119,8 @@
 	"citizen-command-palette-label": "Палитра команд",
 	"citizen-command-palette-results": "Результаты",
 	"citizen-command-palette-heading-recent": "Недавние",
+	"citizen-command-palette-clear-recent": "Очистить всё",
+	"citizen-command-palette-clear-recent-description": "Удалить все элементы из раздела «Недавние»",
 	"citizen-command-palette-heading-related": "Связанное",
 	"citizen-command-palette-load-error": "Не удалось загрузить палитру команд. Попробуйте ещё раз.",
 	"citizen-command-palette-keyhint-enter-select": "Выбрать",

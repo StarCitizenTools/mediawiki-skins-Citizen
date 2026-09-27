@@ -575,6 +575,11 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 			return { action: 'none' };
 		}
 
+		if ( result.type === 'clear-recent' && deps.recentItemsService ) {
+			deps.recentItemsService.clearHistory();
+			return { action: 'clearRecent' };
+		}
+
 		// If in a mode, delegate to the mode's onResultSelect
 		if ( activeMode.value &&
 			typeof activeMode.value.onResultSelect === 'function' ) {

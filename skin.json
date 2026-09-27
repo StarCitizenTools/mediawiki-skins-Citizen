@@ -543,6 +543,8 @@
 				"citizen-command-palette-detail-copy-action",
 				"citizen-command-palette-detail-copy-feedback",
 				"citizen-command-palette-heading-recent",
+				"citizen-command-palette-clear-recent",
+				"citizen-command-palette-clear-recent-description",
 				"citizen-command-palette-heading-related",
 				"citizen-command-palette-help-placeholder",
 				"citizen-command-palette-help-section-description",
