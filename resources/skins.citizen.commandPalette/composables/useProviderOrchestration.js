@@ -575,7 +575,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 			return { action: 'none' };
 		}
 
-		if ( result.type === 'clear-recent' && deps.recentItemsService ) {
+		if ( result.type === 'clear-recent' && result.source === 'recent' && deps.recentItemsService ) {
 			deps.recentItemsService.clearHistory();
 			return { action: 'clearRecent' };
 		}
