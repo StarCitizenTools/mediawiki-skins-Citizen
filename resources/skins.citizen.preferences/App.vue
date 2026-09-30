@@ -15,23 +15,31 @@
 					v-for="pref in section.preferences"
 					:key="pref.featureName"
 				>
-					<cdx-toggle-switch
+					<!--
+						The id names the group, as it does on the fields below.
+						CdxToggleSwitch would pass it to its input, away from the
+						id its label points at, and the label would stop toggling.
+					-->
+					<div
 						v-if="pref.type === 'switch'"
 						v-show="visibilities[ pref.featureName ]"
 						:id="'skin-client-prefs-' + pref.featureName"
-						:model-value="values[ pref.featureName ] === '1'"
-						:align-switch="true"
-						class="citizen-preferences-group"
-						@update:model-value="setValue( pref.featureName, $event ? '1' : '0' )"
 					>
-						{{ pref.heading }}
-						<template
-							v-if="pref.description"
-							#description
+						<cdx-toggle-switch
+							:model-value="values[ pref.featureName ] === '1'"
+							:align-switch="true"
+							class="citizen-preferences-group"
+							@update:model-value="setValue( pref.featureName, $event ? '1' : '0' )"
 						>
-							{{ pref.description }}
-						</template>
-					</cdx-toggle-switch>
+							{{ pref.heading }}
+							<template
+								v-if="pref.description"
+								#description
+							>
+								{{ pref.description }}
+							</template>
+						</cdx-toggle-switch>
+					</div>
 					<cdx-field
 						v-else
 						v-show="visibilities[ pref.featureName ]"

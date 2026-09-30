@@ -6,6 +6,8 @@ const mw = require( '../mocks/mw.js' );
 const { setCodexStubs } = require( '../mocks/codex.js' );
 globalThis.mw = mw;
 
+let toggleSwitchCount = 0;
+
 // Stub Codex components before loading App.vue
 setCodexStubs( {
 	CdxField: {
@@ -32,9 +34,26 @@ setCodexStubs( {
 	},
 	CdxToggleSwitch: {
 		name: 'CdxToggleSwitch',
-		template: '<span :id="id" class="cdx-toggle-switch citizen-preferences-group"><input type="checkbox" /><span class="cdx-label__label__text"><slot /></span><span class="cdx-label__description"><slot name="description" /></span></span>',
-		props: [ 'id', 'modelValue' ],
-		emits: [ 'update:modelValue' ]
+		// Modelled on the real component: the label targets an id Codex
+		// generates, class and style land on the root, and every other
+		// attribute lands on the input, where an `id` replaces the generated
+		// one and leaves the label pointing at nothing.
+		inheritAttrs: false,
+		props: [ 'modelValue', 'alignSwitch' ],
+		emits: [ 'update:modelValue' ],
+		data: () => ( { inputId: `cdx-toggle-switch-${ ++toggleSwitchCount }` } ),
+		computed: {
+			inputAttrs() {
+				const attrs = { id: this.inputId };
+				for ( const [ key, value ] of Object.entries( this.$attrs ) ) {
+					if ( key !== 'class' && key !== 'style' ) {
+						attrs[ key ] = value;
+					}
+				}
+				return attrs;
+			}
+		},
+		template: '<span class="cdx-toggle-switch" :class="$attrs.class" :style="$attrs.style"><input type="checkbox" v-bind="inputAttrs" /><label class="cdx-label" :for="inputId"><span class="cdx-label__label__text"><slot /></span><span class="cdx-label__description"><slot name="description" /></span></label></span>'
 	}
 } );
 
@@ -251,6 +270,26 @@ describe( 'App', () => {
 			expect( groups ).toHaveLength( 7 );
 		} );
 
+		it( 'should point each switch label at its input', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES );
+			const switches = wrapper.findAll( '.cdx-toggle-switch' );
+
+			expect( switches.length ).toBeGreaterThan( 0 );
+			switches.forEach( ( toggle ) => {
+				expect( toggle.find( 'label' ).attributes( 'for' ) )
+					.toBe( toggle.find( 'input' ).attributes( 'id' ) );
+			} );
+		} );
+
+		it( 'should keep the preference id on the group around a switch', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES );
+
+			const group = wrapper.find( '#skin-client-prefs-citizen-feature-performance-mode' );
+
+			expect( group.element.tagName ).not.toBe( 'INPUT' );
+			expect( group.find( '.cdx-toggle-switch' ).exists() ).toBe( true );
+		} );
+
 		it( 'should render CdxToggleSwitch for switch-type preferences', async () => {
 			// Enable matchMedia so tablet-viewport condition passes for autohide-navigation
 			const savedMatchMedia = globalThis.matchMedia;
@@ -448,16 +487,14 @@ describe( 'App', () => {
 
 	describe( 'setValue', () => {
 		/**
-		 * Find a CdxToggleSwitch component by its rendered id attribute.
+		 * Find the CdxToggleSwitch inside the preference group with this id.
 		 *
 		 * @param {import('@vue/test-utils').VueWrapper} wrapper
 		 * @param {string} id
 		 * @return {import('@vue/test-utils').VueWrapper}
 		 */
 		function findToggleById( wrapper, id ) {
-			return wrapper
-				.findAllComponents( { name: 'CdxToggleSwitch' } )
-				.find( ( c ) => c.props( 'id' ) === id );
+			return wrapper.find( `#${ id }` ).findComponent( { name: 'CdxToggleSwitch' } );
 		}
 
 		it( 'should call clientPrefs.set when a value changes', async () => {
@@ -632,8 +669,8 @@ describe( 'App', () => {
 		 */
 		function findGadgetToggle( wrapper ) {
 			return wrapper
-				.findAllComponents( { name: 'CdxToggleSwitch' } )
-				.find( ( c ) => c.props( 'id' ) === 'skin-client-prefs-gadget-toggle' );
+				.find( '#skin-client-prefs-gadget-toggle' )
+				.findComponent( { name: 'CdxToggleSwitch' } );
 		}
 
 		it( 'should fall back to the declared default when no value is stored', () => {
