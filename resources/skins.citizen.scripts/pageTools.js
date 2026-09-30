@@ -1,7 +1,6 @@
 const
 	MOBILE_QUERY = '( max-width: 1119.98px )',
 	BAR_SELECTOR = '.citizen-page-actions',
-	COLLAPSED_CLASS = 'citizen-page-actions--collapsed',
 	CARD_SELECTOR = '#citizen-page-actions-more__card .citizen-menu__card-content',
 	VIEWS_ID = 'p-views',
 	ASSOCIATED_ID = 'p-associated-pages',
@@ -165,10 +164,11 @@ class PageTools {
 			return;
 		}
 		this.isCollapsed = true;
-		bar.classList.add( COLLAPSED_CLASS );
 
+		// Rendered inside the tabs strip, but directly in the bar in markup a
+		// full-page cache kept from before the strip existed.
 		const associated = this.document.getElementById( ASSOCIATED_ID );
-		if ( associated && associated.parentElement === bar ) {
+		if ( associated && bar.contains( associated ) && !card.contains( associated ) ) {
 			this.moveNode( associated, card, card.firstChild );
 			this.undress( associated );
 		}
@@ -202,10 +202,6 @@ class PageTools {
 			return;
 		}
 		this.isCollapsed = false;
-		const bar = this.document.querySelector( BAR_SELECTOR );
-		if ( bar ) {
-			bar.classList.remove( COLLAPSED_CLASS );
-		}
 		// Reverse order, so each node's remembered next sibling is back in
 		// place before it is reinserted.
 		this.moves.reverse().forEach( ( { node, parent, next } ) => {

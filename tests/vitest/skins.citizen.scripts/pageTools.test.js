@@ -3,8 +3,7 @@
 
 const { createPageTools } = require( '../../../resources/skins.citizen.scripts/pageTools.js' );
 
-const BAR = `
-<div class="citizen-page-actions">
+const TABS = `
 	<nav id="p-views" class="citizen-menu mw-portlet mw-portlet-views" aria-label="Views">
 		<div class="citizen-menu__heading">Views</div>
 		<div class="citizen-menu__content">
@@ -22,13 +21,25 @@ const BAR = `
 			</ul>
 		</div>
 	</nav>
+`;
+
+const MORE = `
 	<div id="citizen-page-more-dropdown">
 		<div id="citizen-page-actions-more__card" class="citizen-menu__card">
 			<div class="citizen-menu__card-content">
 				<nav id="p-cactions"><ul class="citizen-menu__content-list"><li id="ca-move"></li></ul></nav>
 			</div>
 		</div>
-	</div>
+	</div>`;
+
+const BAR = `
+<div class="citizen-page-actions">
+	<div class="citizen-page-actions__tabs">${ TABS }</div>${ MORE }
+</div>`;
+
+// Full-page caches keep serving markup from before the tabs wrapper existed.
+const CACHED_BAR = `
+<div class="citizen-page-actions">${ TABS }${ MORE }
 </div>`;
 
 function makeWindow( matches ) {
@@ -42,7 +53,9 @@ function makeWindow( matches ) {
 }
 
 const card = () => document.querySelector( '#citizen-page-actions-more__card .citizen-menu__card-content' );
-const barIds = () => Array.from( document.querySelectorAll( '.citizen-page-actions > *' ) ).map( ( n ) => n.id );
+const barIds = () => Array.from(
+	document.querySelectorAll( '.citizen-page-actions > [id], .citizen-page-actions__tabs > [id]' )
+).map( ( n ) => n.id );
 const cardViewIds = () => Array.from( card().querySelectorAll( 'li' ) ).map( ( n ) => n.id );
 
 describe( 'pageTools', () => {
@@ -79,6 +92,15 @@ describe( 'pageTools', () => {
 		expect( document.getElementById( 'p-associated-pages' ).closest( '.citizen-menu__card' ) ).not.toBeNull();
 	} );
 
+	it( 'moves the associated pages out of a cached bar without the tabs wrapper', () => {
+		document.body.innerHTML = CACHED_BAR;
+		const tools = createPageTools( { document, window: makeWindow( true ) } );
+
+		tools.init();
+
+		expect( document.getElementById( 'p-associated-pages' ).closest( '.citizen-menu__card' ) ).not.toBeNull();
+	} );
+
 	it( 'gives the displaced views the portlet chrome, without repeating its id', () => {
 		const tools = createPageTools( { document, window: makeWindow( true ) } );
 
@@ -110,25 +132,6 @@ describe( 'pageTools', () => {
 		).map( ( n ) => n.id );
 		expect( views ).toEqual( [ 'ca-view', 'ca-ve-edit', 'ca-history' ] );
 		expect( cardViewIds() ).toEqual( [ 'ca-move' ] );
-	} );
-
-	it( 'marks the bar collapsed so the scroll fade can stand down', () => {
-		const query = { matches: true, addEventListener: () => {} };
-		const tools = createPageTools( {
-			document,
-			window: { matchMedia: () => query, MutationObserver: class {
-				observe() {}
-			} }
-		} );
-		tools.init();
-		const bar = document.querySelector( '.citizen-page-actions' );
-
-		expect( bar.classList.contains( 'citizen-page-actions--collapsed' ) ).toBe( true );
-
-		query.matches = false;
-		tools.sync();
-
-		expect( bar.classList.contains( 'citizen-page-actions--collapsed' ) ).toBe( false );
 	} );
 
 	it( 'builds no shell when the editor is the only view', () => {
