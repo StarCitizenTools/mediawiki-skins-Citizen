@@ -9,6 +9,12 @@
 		display: flex;
 	}
 
+	&__tabs {
+		display: flex;
+		gap: var( --space-xxs );
+		align-items: center;
+	}
+
 	.citizen-menu {
 		&__card {
 			right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
@@ -37,7 +43,7 @@
 	}
 
 	// Visible page tools styles
-	> .mw-portlet {
+	&__tabs > .mw-portlet {
 		ul {
 			display: flex;
 			gap: var( --space-xxs );
@@ -69,7 +75,7 @@
 	}
 
 	// Hide menu labels
-	> .citizen-menu > .citizen-menu__heading {
+	&__tabs > .citizen-menu > .citizen-menu__heading {
 		.mixin-citizen-screen-reader-only;
 	}
 }
@@ -140,36 +146,42 @@
 		// one.
 		right: var( --space-xs );
 		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
-		// `safe`: plain flex-end leaves a scroller's start-edge overflow unreachable.
-		justify-content: safe flex-end;
 		// Cap, don't pin: pinning both edges destroys the shrink-to-fit, and
 		// uncapped the start edge lands off the viewport with no way back.
 		max-inline-size: ~'calc( 100% - var( --space-xs ) * 2 )';
 		// Border-box: a bare --toolbar-size leaves 38px against 40px buttons.
 		height: ~'calc( var( --toolbar-size ) + var( --border-width-base ) * 2 )';
-		overflow: auto hidden;
-		// Must not chain into browser back-navigation.
-		overscroll-behavior: contain;
-		scrollbar-width: none;
 		background: var( --color-surface-1 );
 		border: 1px solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-large );
 
-		&::-webkit-scrollbar {
-			display: none;
-		}
-
 		:not( .citizen-menu__card ) .mw-list-item {
 			--size-icon: 1rem;
 		}
 
-		> .mw-portlet li > a {
+		&__tabs > .mw-portlet li > a {
 			height: var( --toolbar-size );
 		}
 
 		&__item {
 			position: unset;
+		}
+
+		// The strip scrolls, never the bar. The card below is fixed, and WebKit's
+		// compositor clips a fixed element to a scrolling ancestor, leaving the
+		// card tappable but unpainted (#1892). Sitting outside the strip is also
+		// what keeps the controls around it in place.
+		&__tabs {
+			min-width: 0;
+			overflow: auto hidden;
+			// Must not chain into browser back-navigation.
+			overscroll-behavior: contain;
+			scrollbar-width: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
 		}
 	}
 
@@ -181,64 +193,32 @@
 		max-inline-size: ~'calc( 100% - var( --toolbar-size ) - var( --space-xs ) * 3 )';
 	}
 
-	// The way out of the bar must not scroll out of it. By id, not
-	// `> .citizen-dropdown`: languages sits near the start of the template, so a
-	// shared trailing offset would land it on top of the more button.
-	#citizen-page-more-dropdown {
-		position: sticky;
-		inset-inline-end: 0;
-		z-index: @z-index-stacking-1;
-		background: var( --color-surface-1 );
-	}
+	// Fade whichever edge the strip can still scroll towards. A strip with
+	// nothing to scroll has no active timeline and so no fade; without
+	// scroll-driven animations the edges stay hard.
+	@supports ( animation-timeline: scroll() ) {
+		.citizen-page-actions__tabs {
+			.mixin-citizen-mask-gradient(90deg, transparent, #000 var( --citizen-page-actions-fade-start ), #000 ~'calc( 100% - var( --citizen-page-actions-fade-end ) )', transparent);
+			animation: citizen-page-actions-fade linear both;
+			animation-timeline: scroll( self inline );
+			// Performance mode and the reduced-motion rules force the timing of
+			// every animation, which pins this one to its last frame and fades
+			// the wrong edge. The fade follows the reader's scrolling, not a
+			// clock, so it keeps its own: `auto` spans the whole scroll range.
+			// stylelint-disable-next-line plugin/use-baseline
+			animation-duration: auto !important;
+			animation-delay: 0s !important;
 
-	#citizen-page-languages-dropdown {
-		position: sticky;
-		inset-inline-start: 0;
-		z-index: @z-index-stacking-1;
-		background: var( --color-surface-1 );
-	}
-
-	// Let a tab dissolve into the pinned button so the bar reads as scrollable.
-	// The gradient ends in the bar's own background, so it is invisible over
-	// empty bar and needs no scroll position. It reaches back over the button's
-	// padding and the gap; the end that meets a neighbour is the transparent
-	// one, so a stray overlap is imperceptible — but only over a quiet control,
-	// which is why the collapsed bar opts out below.
-	#citizen-page-more-dropdown,
-	#citizen-page-languages-dropdown {
-		&::before {
-			position: absolute;
-			inset-block: 0;
-			inline-size: var( --space-md );
-			pointer-events: none;
-			content: '';
+			// Angles are never mirrored for RTL, so the gradient is pointed at
+			// the inline start by hand.
+			&:dir( rtl ) {
+				.mixin-citizen-mask-gradient(270deg, transparent, #000 var( --citizen-page-actions-fade-start ), #000 ~'calc( 100% - var( --citizen-page-actions-fade-end ) )', transparent);
+			}
 		}
 	}
 
-	#citizen-page-more-dropdown::before {
-		inset-inline-start: ~'calc( var( --space-md ) * -1 )';
-		background: linear-gradient( to right, transparent, var( --color-surface-1 ) );
-	}
-
-	#citizen-page-languages-dropdown::before {
-		inset-inline-end: ~'calc( var( --space-md ) * -1 )';
-		background: linear-gradient( to left, transparent, var( --color-surface-1 ) );
-	}
-
-	// A collapsed bar holds two controls and cannot scroll, so the fade has
-	// nothing to soften and only tints whatever sits next to the sink — which
-	// after the collapse is the filled edit button, not a quiet tab. The class
-	// is set by script, so a bar with no script keeps both the scrolling and
-	// the affordance for it.
-	.citizen-page-actions--collapsed {
-		#citizen-page-more-dropdown::before,
-		#citizen-page-languages-dropdown::before {
-			content: none;
-		}
-	}
-
-	// The bar is a scroll container and, with `__item` unset, also the card's
-	// containing block, so it would clip its own dropdown. Promote the card out,
+	// With `__item` unset the bar is the card's containing block, and the bar
+	// shrinks to its controls. Place the card against the viewport instead,
 	// repeating the bar's safe-area term so it still clears a home indicator.
 	.citizen-page-actions .citizen-menu__card {
 		position: fixed;
@@ -268,7 +248,7 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-page-actions {
-		> .mw-portlet {
+		&__tabs > .mw-portlet {
 			li > a {
 				gap: var( --space-xs );
 
@@ -284,5 +264,35 @@
 		.citizen-menu__card {
 			white-space: nowrap; // Expand the width on narrow screens might overflow the page
 		}
+	}
+}
+
+// Registered so the fade widths ease between keyframes; unregistered custom
+// properties would snap from one to the next.
+@property --citizen-page-actions-fade-start {
+	syntax: '<length>';
+	inherits: false;
+	initial-value: 0;
+}
+
+@property --citizen-page-actions-fade-end {
+	syntax: '<length>';
+	inherits: false;
+	initial-value: 0;
+}
+
+@keyframes citizen-page-actions-fade {
+	from {
+		--citizen-page-actions-fade-end: var( --space-md );
+	}
+
+	10%,
+	90% {
+		--citizen-page-actions-fade-start: var( --space-md );
+		--citizen-page-actions-fade-end: var( --space-md );
+	}
+
+	to {
+		--citizen-page-actions-fade-start: var( --space-md );
 	}
 }

@@ -104,3 +104,46 @@
 		display: none !important;
 	}
 }
+
+// Page tools tab groups moved into `.citizen-page-actions__tabs` (3.24,
+// #1892). HTML from before this generation has them directly in the bar. No
+// rule needs a generation gate: each reaches a group through a child
+// combinator from the bar, which the new markup cannot match.
+@media screen {
+	.citizen-page-actions > .mw-portlet ul {
+		display: flex;
+		gap: var( --space-xxs );
+	}
+
+	.citizen-page-actions > .mw-portlet li > a {
+		gap: 0;
+		padding-right: var( --space-sm );
+		padding-left: var( --space-sm );
+		font-size: inherit;
+		border-radius: var( --border-radius-medium );
+	}
+
+	.citizen-page-actions > .mw-portlet li > a > .citizen-ui-icon + span {
+		font-size: 0;
+	}
+
+	.citizen-page-actions > .citizen-menu > .citizen-menu__heading {
+		.mixin-citizen-screen-reader-only();
+	}
+
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-page-actions > .mw-portlet li > a {
+			height: var( --toolbar-size );
+		}
+	}
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		.citizen-page-actions > .mw-portlet li > a {
+			gap: var( --space-xs );
+		}
+
+		.citizen-page-actions > .mw-portlet li > a > .citizen-ui-icon + span {
+			font-size: inherit;
+		}
+	}
+}
