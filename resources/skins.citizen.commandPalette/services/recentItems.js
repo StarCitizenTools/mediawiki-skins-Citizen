@@ -1,7 +1,11 @@
 const { cdxIconTrash } = require( '../icons.json' );
 const destinationKey = require( '../utils/destinationKey.js' );
 const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
-const MAX_RECENT_ITEMS = 5;
+// Exceeds RECENT_ITEMS_SHOWN (useProviderOrchestration.js) by the most the
+// empty palette leaves out of Recent: the view you are on, the redirect
+// that led to it, and each page Related lists. Leaving those out then
+// never shortens the list.
+const MAX_RECENT_ITEMS = 13;
 
 // How a row was activated, not what the row is. Remembering one makes the
 // saved row replay that activation for good: `isMouseClick` tells the router

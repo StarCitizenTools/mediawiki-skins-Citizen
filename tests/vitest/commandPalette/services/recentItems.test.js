@@ -87,15 +87,15 @@ describe( 'createRecentItems', () => {
 			expect( stored[ 0 ] ).toEqual( { id: 'item-1', label: 'Test Page' } );
 		} );
 
-		it( 'enforces maximum of 5 items', () => {
-			for ( let i = 1; i <= 7; i++ ) {
+		it( 'enforces maximum of 13 items', () => {
+			for ( let i = 1; i <= 15; i++ ) {
 				service.saveRecentItem( { id: `item-${ i }`, label: `Page ${ i }` } );
 			}
 
 			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 5 );
-			expect( stored[ 0 ].id ).toBe( 'item-7' );
-			expect( stored[ 4 ].id ).toBe( 'item-3' );
+			expect( stored ).toHaveLength( 13 );
+			expect( stored[ 0 ].id ).toBe( 'item-15' );
+			expect( stored[ 12 ].id ).toBe( 'item-3' );
 		} );
 	} );
 

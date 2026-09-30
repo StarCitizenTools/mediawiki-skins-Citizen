@@ -5,6 +5,8 @@ const { DEFAULT_DEBOUNCE_MS } = require( '../providers/createProvider.js' );
 
 const SHOW_PENDING_DELAY_MS = 300;
 
+const RECENT_ITEMS_SHOWN = 8;
+
 // Per-item detail fetches fire on focus changes (arrow keys, hover).
 // Lower than the query debounce because the user expects detail to settle
 // faster than they expect search results, and aborts handle rapid
@@ -160,9 +162,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 				),
 				section(
 					'citizen-command-palette-heading-recent',
-					recents.value.filter(
-						( item ) => !item.url || !leftOut.has( destinationKey( item ) )
-					)
+					recents.value
+						.filter( ( item ) => !item.url || !leftOut.has( destinationKey( item ) ) )
+						.slice( 0, RECENT_ITEMS_SHOWN )
 				)
 			].filter( Boolean );
 		}

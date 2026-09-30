@@ -711,6 +711,27 @@ describe( 'useProviderOrchestration', () => {
 			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r1' ] );
 		} );
 
+		it( 'shows eight Recent entries after leaving some out', async () => {
+			useWikiPaths( { wgPageName: 'P1' } );
+			window.history.replaceState( null, '', '/wiki/P1' );
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( {
+					items: Array.from( { length: 11 }, ( _, i ) => (
+						{ id: `r${ i + 1 }`, url: `/wiki/P${ i + 1 }`, source: 'recent' }
+					) )
+				} ) },
+				relatedArticlesProvider: {
+					getResults: () => Promise.resolve( { items: [ { id: 'a1', url: '/wiki/P2', source: 'related' } ] } )
+				}
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual(
+				[ 'a1', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10' ]
+			);
+		} );
+
 		it( 'declares related above recents before related has resolved', async () => {
 			let resolveRelated;
 			const orch = build( () => new Promise( ( resolve ) => {
