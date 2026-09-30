@@ -1,6 +1,6 @@
 /**
- * Keyboard-layout helpers shared by the global search shortcuts and the
- * command palette dispatcher.
+ * Keyboard-layout helpers shared by the global search shortcuts, the access-key
+ * fallback and the command palette dispatcher.
  *
  * `event.code` names a position on a US QWERTY reference layout, not the
  * character that was typed, so matching on it fires a shortcut from whatever key

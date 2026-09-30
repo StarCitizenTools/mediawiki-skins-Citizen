@@ -73,6 +73,7 @@ function main( window ) {
 		config = require( './config.json' ),
 		{ createNotifications } = require( './notifications.js' ),
 		search = require( './search.js' ),
+		accessKeyFallback = require( './accessKeyFallback.js' ),
 		dropdown = require( './dropdown.js' ),
 		{ createLastModified } = require( './lastModified.js' ),
 		{ createPageAside } = require( './pageAside.js' ),
@@ -87,6 +88,7 @@ function main( window ) {
 	commandPalette.init();
 
 	search.init( { window, document, triggerOpen: commandPalette.triggerOpen } );
+	accessKeyFallback.init( { window, document } );
 	createNotifications( { document, mw } ).init();
 	// Observer setup reads geometry (getComputedStyle, full heading sweep).
 	// Wait two frames so the reads hit the clean layout left by the first
