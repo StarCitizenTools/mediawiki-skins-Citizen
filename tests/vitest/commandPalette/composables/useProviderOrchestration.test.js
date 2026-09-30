@@ -633,12 +633,25 @@ describe( 'useProviderOrchestration', () => {
 			relatedArticlesProvider: { getResults: relatedResolver }
 		} );
 
-		it( 'does not repeat under Recent a page Related already lists', async () => {
+		// Takes the view's own config too, wgPageName included, so a test
+		// fails if Recent compares by title rather than by the view.
+		const useWikiPaths = ( view = {} ) => {
 			vi.spyOn( mw.config, 'get' ).mockImplementation( ( key ) => ( {
 				wgArticlePath: '/wiki/$1',
-				wgScript: '/w/index.php'
+				wgScript: '/w/index.php',
+				...view
 			} )[ key ] ?? null );
 			mw.Title = mwTitle;
+		};
+
+		const { Title } = mw;
+		afterEach( () => {
+			mw.Title = Title;
+			window.history.replaceState( null, '', '/' );
+		} );
+
+		it( 'does not repeat under Recent a page Related already lists', async () => {
+			useWikiPaths();
 			const orch = useProviderOrchestration( [], mockDecorator, {
 				recentItemsProvider: { getResults: () => ( { items: [
 					{ id: 'go', type: 'action', url: '/w/index.php?title=Special:Search&search=akita', source: 'recent' },
@@ -652,6 +665,50 @@ describe( 'useProviderOrchestration', () => {
 			await orch.clearSearch();
 
 			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'a1', 'r1' ] );
+		} );
+
+		it( 'leaves the page you are on out of Recent', async () => {
+			useWikiPaths( { wgPageName: 'Akita' } );
+			window.history.replaceState( null, '', '/wiki/Akita#History' );
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'r1', url: '/w/index.php?title=Akita', source: 'recent' },
+					{ id: 'r2', url: '/wiki/Other', source: 'recent' }
+				] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
+		} );
+
+		it( 'leaves out the redirect that brought you to the page', async () => {
+			useWikiPaths( { wgPageName: 'Dog', wgRedirectedFrom: 'Doggo' } );
+			window.history.replaceState( null, '', '/wiki/Dog' );
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'r1', url: '/wiki/Doggo', source: 'recent' },
+					{ id: 'r2', url: '/wiki/Other', source: 'recent' }
+				] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
+		} );
+
+		it( 'keeps a page under Recent while you view its history', async () => {
+			useWikiPaths( { wgPageName: 'Akita' } );
+			window.history.replaceState( null, '', '/w/index.php?title=Akita&action=history' );
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'r1', url: '/wiki/Akita', source: 'recent' }
+				] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r1' ] );
 		} );
 
 		it( 'declares related above recents before related has resolved', async () => {

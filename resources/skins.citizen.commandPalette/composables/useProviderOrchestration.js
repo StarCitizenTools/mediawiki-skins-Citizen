@@ -42,6 +42,21 @@ function normalizeProviderResult( result ) {
 }
 
 /**
+ * What opening a row would only reload: the view you are on and, when a
+ * redirect led here, the redirect, whose own link opens this view again.
+ *
+ * @return {string[]} Destination keys.
+ */
+function currentViewKeys() {
+	const keys = [ destinationKey( { id: '', url: window.location.href } ) ];
+	const redirectedFrom = mw.config.get( 'wgRedirectedFrom' );
+	if ( redirectedFrom ) {
+		keys.push( destinationKey( { id: '', url: mw.util.getUrl( redirectedFrom ) } ) );
+	}
+	return keys;
+}
+
+/**
  * Composable that orchestrates provider selection, dispatching, debouncing,
  * abort coordination, and result assembly.
  *
@@ -133,11 +148,12 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		}
 
 		if ( isPresultsSurface.value ) {
-			// A page Related already lists is not repeated under Recent,
-			// however each of them links to it.
-			const relatedPages = new Set(
-				related.value.items.filter( ( item ) => item.url ).map( destinationKey )
-			);
+			// Recent leaves out what its row would only reload, and any page
+			// Related already lists, however each of them links to it.
+			const leftOut = new Set( [
+				...currentViewKeys(),
+				...related.value.items.filter( ( item ) => item.url ).map( destinationKey )
+			] );
 			return [
 				section(
 					'citizen-command-palette-heading-related', related.value.items
@@ -145,7 +161,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 				section(
 					'citizen-command-palette-heading-recent',
 					recents.value.filter(
-						( item ) => !item.url || !relatedPages.has( destinationKey( item ) )
+						( item ) => !item.url || !leftOut.has( destinationKey( item ) )
 					)
 				)
 			].filter( Boolean );
