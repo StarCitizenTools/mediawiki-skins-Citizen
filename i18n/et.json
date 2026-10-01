@@ -63,7 +63,7 @@
 	"citizen-user-info-text-anon": "Sinu IP-aadress on avalikult nähtav, kui teed muudatusi.",
 	"citizen-user-info-text-temp": "See ajutine konto loodi pärast seda, kui selles brauseris ja seadmes tehti muudatus ilma kontota.",
 	"citizen-user-info-edits-label": "Muudatused",
-	"citizen-user-info-joined-label": "Liitunud",
+	"citizen-user-info-joined-label": "Liige alates",
 	"citizen-command-palette-back": "Tagasi",
 	"citizen-command-palette-heading-recent": "Hiljutised",
 	"citizen-command-palette-heading-related": "Seotud",

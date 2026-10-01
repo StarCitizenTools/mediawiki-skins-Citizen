@@ -3,7 +3,8 @@
 		"authors": [
 			"Agam Riyandana",
 			"Leapofod",
-			"Penyuwangi"
+			"Penyuwangi",
+			"Veracious"
 		]
 	},
 	"citizen-skin-desc": "Kulit MediaWiki yang indah, mudah digunakan, dan responsif yang membuat ekstensi menjadi bagian dari pengalaman kohesif. Awalnya dibuat untuk [https://starcitizen.tools/ Star Citizen Wiki].",
@@ -54,5 +55,9 @@
 	"citizen-feature-custom-width-wide-label": "Lebar",
 	"citizen-feature-custom-width-full-label": "Penuh",
 	"citizen-user-info-text-anon": "Alamat IP anda akan terlihat secara publik jika Anda membuat penyuntingan.",
-	"citizen-user-info-text-temp": "Akun sementara ini dibuat setelah terjadi penyuntingan tanpa akun di peramban dan perangkat ini."
+	"citizen-user-info-text-temp": "Akun sementara ini dibuat setelah terjadi penyuntingan tanpa akun di peramban dan perangkat ini.",
+	"citizen-command-palette-keyhint-exit-literal": "Cari sebagai teks",
+	"citizen-command-palette-help-placeholder": "Mode pencarian",
+	"citizen-command-palette-mode-bucket-copy-query-done": "Kueri disalin",
+	"citizen-command-palette-mode-bucket-field-detail-indexed": "Terindeks"
 }
