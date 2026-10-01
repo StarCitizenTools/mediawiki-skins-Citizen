@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.24.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.23.0...v3.24.0) (2026-10-01)
+
+
+### Features
+
+* **commandPalette:** ✨ go straight to the page you typed when you press Enter ([ed9fece](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ed9feceac6e5cf19c3541653d11031240b197c92))
+* **commandPalette:** ✨ leave the page you are on out of Recent ([a683f5e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a683f5eee9f0d8210c2094ae1993f12f79e80c99))
+* **commandPalette:** ✨ open help as a mode you can search ([8c1d86f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c1d86f1e80e289dd9d9d64f6480968639abc5c4)), closes [#1943](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1943) [#1942](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1942)
+* **commandPalette:** ✨ show each page once in Recent, however you opened it ([c93ec15](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c93ec15ea433f9d3ad93f934b89eab480102bb19)), closes [#1952](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1952)
+* **commandPalette:** ✨ show up to eight entries in Recent ([affb167](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/affb1674ee6915af675c14cf3451a1b628f78565))
+* **pageAside:** ✨ let scripts add panels to the side column ([#1959](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1959)) ([0ad04df](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0ad04dfa193e3ca7fcbfb2780dca58724b6fdbf8))
+* **pageAside:** ✨ let wikis declare side column panels ([e365f1e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e365f1ecd2084e74725e56140f41e2b1503ffb16))
+* **tableOfContents:** ✨ put the section toggle on the outline's rail ([a02bf4c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a02bf4c0f0d4756c62ba9a669eabf4deb57bbf78))
+* **tokens:** ✨ revamp the code block colors for readability ([0ca92c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0ca92c7fd5c7235203b861e03a09f835f8db7021)), closes [#1926](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1926)
+* **VisualEditor:** ✨ distinguish parameter notices in the template dialog ([#1958](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1958)) ([58f5190](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/58f51905e41a1472a166078a089bbdfc5565ea47))
+
+
+### Bug Fixes
+
+* **CodeEditor:** 🐛 keep the skin's colors when the editor changes theme ([03972bd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/03972bdec7f42d810d2d8b9c7140463612f8ad26))
+* **CodeEditor:** 🐛 theme the editor colors that were leaking through ([2236f9e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2236f9eed64e4bd9149f3b0005f67f6500ec6b20))
+* **CodeMirror:** 🐛 color the syntax MediaWiki 1.46 added ([a1187c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1187c567166ff21f20bc430c3d058ea1a08c694))
+* **CodeMirror:** 🐛 restore the editor styles on MediaWiki 1.46 ([c97caf0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c97caf095583e6459b56f763ae630e53d31c2a26))
+* **commandPalette:** 🐛 hide the edit button on pages that cannot be edited ([4b77353](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b77353a0dc1ac57622d06fd6a424e22850868f6)), closes [#1930](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1930)
+* **commandPalette:** 🐛 keep keyboard focus in the palette when clicking inside it ([befe4e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/befe4e7681a370acd020275d956d55fbb8c8a2ec)), closes [#1944](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1944)
+* **commandPalette:** 🐛 let Backspace and Return work on the iOS symbol keyboard ([898f6cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/898f6cc85ebcdeb66531a314094940b26e0ab4a7)), closes [#1945](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1945)
+* **commandPalette:** 🐛 let typing and Backspace work while help describes a mode ([736748b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/736748b09ff82ec58947e160e575de9235d14b3d)), closes [#1941](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1941)
+* **commandPalette:** 🐛 list every special page in action mode ([b5db70a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b5db70ad55d7df9126f92b9789952c9a6ee15942))
+* **commandPalette:** 🐛 treat every name of a special page as the same page ([19e1a60](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19e1a60c5c2dd3b492e21b123f44a3bd5ba14d02)), closes [#1992](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1992) [#1993](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1993) [#1994](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1994)
+* **core:** 🐛 keep the Special:Upload file description within narrow screens ([459ecfb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/459ecfb20351d04d2c255446c5e6101a74aa6ba4))
+* **core:** 🐛 show the Special:Upload summary in the wikitext editor font ([6cba5d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6cba5d715ff30b532bac2d0bfec12caf644f244a))
+* **core:** 🐛 show the URL upload source on Special:Upload as tabs ([bb5ee64](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bb5ee64581270f94cb9a3e7f920c82eae28c5c3a))
+* **core:** 🐛 style the choices and warning on the Special:Upload warning form ([5834b95](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5834b958610dec794203a38a2b44f6223b5b7ef4))
+* **fonts:** 🐛 add Cyrillic subsets for the Roboto Mono webfont ([957d363](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/957d363148492d27d76b8fa76fce204801574af7))
+* **overflowElements:** 🐛 clip sticky table header to the wrapper's rounded corners ([3cc24a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3cc24a73d3b39b71e3db54ab832b1db37b32bb2c))
+* **pageAside:** 🐛 stop showing the side column just for Last modified ([550005f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/550005f127f362cf8bd56176ac79e510db7f01e6))
+* **pageTools:** 🐛 follow the wiki's editor tab order in the merged edit button ([463087a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/463087a1b61019a0b7d3d599555a0f5c6307474d))
+* **pageTools:** 🐛 show the page actions menu in Safari on phones ([30b35df](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/30b35df9561bd963b819ba8c11665dc93a5b87cc)), closes [#1892](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1892)
+* **preferences:** 🐛 toggle a switch when its label is clicked ([8e48bc3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e48bc3da1524710ebca3e3d0550dfcd151b7986)), closes [#1987](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1987)
+* **tests:** 🐛 make the codex.js mock resolver work on Windows ([e51fd28](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e51fd282859fe4afe10c8b6358d1660ffde9f250))
+
+
+### Miscellaneous Chores
+
+* **showcase:** 🔧 refresh wiki article counts and screenshots ([813870f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/813870f7da6b47fd90cad5c51135b17655e6ab7f))
+
 ## [3.23.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.22.0...v3.23.0) (2026-09-21)
 
 
