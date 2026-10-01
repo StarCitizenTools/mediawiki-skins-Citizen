@@ -360,9 +360,11 @@ class SkinCitizen extends SkinMustache {
 				$this->msg( 'citizen-page-associated-pages' )->text();
 		}
 
-		$aside = $parentData['data-page-aside'];
+		// The column is worth its width only when something in it stays in
+		// view: a column of flow panels alone is blank below the first screen.
+		// The main page is a single-column layout of its own.
 		$parentData['aside-enabled'] = !$isMainPageView
-			&& ( $aside['array-flow-panels'] !== [] || $aside['array-sticky-panels'] !== [] );
+			&& $parentData['data-page-aside']['has-sticky-panels'];
 
 		if ( $parentData['aside-enabled'] ) {
 			// This body class depends on template data so it can't move to

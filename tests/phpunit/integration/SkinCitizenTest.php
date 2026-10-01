@@ -303,8 +303,8 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * A skin rendering $title for $queryParams, with a last-modified timestamp on the
-	 * output — that timestamp is what gives the aside a panel with content, so it is
-	 * the aside's own gate, not an empty panel list, that the tests below observe.
+	 * output, so Last modified always has content: what the tests below observe is
+	 * whether that flow panel is joined by anything that opens the column.
 	 */
 	private function createSkinForRequest( Title $title, array $queryParams = [] ): SkinCitizen {
 		RequestContext::resetMain();
@@ -376,6 +376,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testAsideIsNotRenderedOnTheMainPageView(): void {
 		$skin = $this->createSkinForRequest( Title::newMainPage() );
+		$this->addOutline( $skin );
 
 		$data = $skin->getTemplateData();
 
@@ -389,8 +390,9 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	 *
 	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
 	 */
-	public function testAsideIsRenderedOnAnOrdinaryPageWithATimestamp(): void {
+	public function testAsideIsRenderedOnAnOrdinaryPageWithAnOutline(): void {
 		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+		$this->addOutline( $skin );
 
 		$data = $skin->getTemplateData();
 
@@ -406,10 +408,26 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testAsideIsRenderedOnANonViewActionOfTheMainPage(): void {
 		$skin = $this->createSkinForRequest( Title::newMainPage(), [ 'action' => 'history' ] );
+		$this->addOutline( $skin );
 
 		$data = $skin->getTemplateData();
 
 		$this->assertTrue( $data['aside-enabled'] );
+	}
+
+	/**
+	 * Last modified has content on almost every page, and a column of flow panels
+	 * is blank below the first screen, so it does not open the column on its own.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testATimestampAloneDoesNotOpenTheAside(): void {
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertFalse( $data['aside-enabled'] );
+		$this->assertNotContains( 'citizen-page-aside-enabled', $this->getAddedBodyClasses( $skin ) );
 	}
 
 	/**
@@ -462,6 +480,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 
 		$data = $skin->getTemplateData();
 
+		$this->assertFalse( $data['aside-enabled'] );
 		$this->assertSame( [], $this->stickyPanelIds( $data ) );
 	}
 
@@ -478,5 +497,24 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$data = $skin->getTemplateData();
 
 		$this->assertSame( [], $this->stickyPanelIds( $data ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testADeclaredFlowPanelDoesNotOpenTheAsideOnItsOwn(): void {
+		$this->declarePanels( [
+			'mygadget-notes' => [ 'module' => 'site', 'label' => 'Notes' ],
+		] );
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+		$skin->getOutput()->addModules( 'site' );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertFalse( $data['aside-enabled'] );
+		$this->assertContains(
+			'mygadget-notes',
+			array_column( $data['data-page-aside']['array-flow-panels'], 'panel-id' )
+		);
 	}
 }
