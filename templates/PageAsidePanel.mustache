@@ -8,12 +8,15 @@
 	string panel-id
 	string panel-label
 	number panel-order position within its zone; scripts place their own against it
+	bool has-panel-module whether a script fills the body
+	string panel-module the ResourceLoader module that fills it; the client
+		registry reads it to drop the frame if that module fails
 	bool is-<panel-id>
 	object body the panel's own template data
+	The body holds no whitespace, so a body no partial fills is :empty — the
+	hook a wiki styles a declared panel's placeholder on.
 }}
-<div id="citizen-page-aside-{{panel-id}}" class="citizen-page-aside__panel citizen-page-aside__panel--{{panel-id}}" data-order="{{panel-order}}">
+<div id="citizen-page-aside-{{panel-id}}" class="citizen-page-aside__panel citizen-page-aside__panel--{{panel-id}}" data-order="{{panel-order}}"{{#has-panel-module}} data-module="{{panel-module}}"{{/has-panel-module}}>
 	<div id="citizen-page-aside-{{panel-id}}-heading" class="citizen-page-aside__heading">{{panel-label}}</div>
-	<div class="citizen-page-aside__body">
-		{{#is-lastmod}}{{#body}}{{>PageAsidePanel__lastmod}}{{/body}}{{/is-lastmod}}
-	</div>
+	<div class="citizen-page-aside__body">{{#is-lastmod}}{{#body}}{{>PageAsidePanel__lastmod}}{{/body}}{{/is-lastmod}}</div>
 </div>

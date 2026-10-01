@@ -5,11 +5,11 @@ description: The column beside the article that holds Last modified, the table o
 
 # Side column
 
-Citizen renders a column beside the article (`citizen-page-aside` in markup) on every page that has a last-modified timestamp or headings, except the main page. It holds the **Last modified** panel when the page has a timestamp and the **Contents** panel when it has headings, so some special pages, such as Special:Version, show Contents alone. Below the desktop breakpoint only the Contents control is shown; every other panel is desktop-only.
+Citizen renders a column beside the article (`citizen-page-aside` in markup) on every page that has a last-modified timestamp, headings or a [declared](#declaring-a-panel) panel, except the main page. It holds the **Last modified** panel when the page has a timestamp and the **Contents** panel when it has headings, so some special pages, such as Special:Version, show Contents alone. Below the desktop breakpoint only the Contents control is shown; every other panel is desktop-only.
 
 The column has two zones. Flow panels, such as Last modified, scroll with the page; sticky panels, such as Contents, ride together in one sticky block, where the outline shrinks to make room for the other panels in it.
 
-Wikis and extensions can add their own panels from JavaScript. Citizen builds the panel's frame; you fill its body.
+Wikis and extensions can add their own panels from JavaScript. Citizen builds the panel's frame; you fill its body. [Declare the panel](#declaring-a-panel) as well to have its frame in place from the first paint, on every page that loads your script's module.
 
 ## JavaScript API
 
@@ -37,7 +37,7 @@ mw.hook( 'citizen.pageAside.register' ).add( function ( data ) {
 
 Keep sticky panels short. The outline gives up height to the panels beside it, so a tall sticky panel shrinks Contents and can push its own bottom past the viewport. A sticky panel with an `order` below `20` sits above Contents.
 
-On any page, `register()` returns `null` and logs a warning through `mw.log.warn` when the definition is not an object, `id` or `label` is missing or invalid, `placement` is neither `'flow'` nor `'sticky'`, `order` is not a finite number, or a panel with that id already exists. On pages where the side column is not rendered — the main page, and pages with neither a last-modified timestamp nor headings — a valid definition returns `null` without a warning. Check the return value before using it.
+On any page, `register()` returns `null` and logs a warning through `mw.log.warn` when the definition is not an object, `id` or `label` is missing or invalid, `placement` is neither `'flow'` nor `'sticky'`, `order` is not a finite number, or a panel with that id already exists, other than a [declared](#declaring-a-panel) frame waiting to be claimed. On pages where the side column is not rendered — the main page, and pages with no panel of their own — a valid definition returns `null` without a warning. Check the return value before using it.
 
 ### Timing
 
@@ -67,6 +67,54 @@ The duplicate-id check looks at the page itself, so once the panel is removed it
 
 Target your panel through its modifier class, for example `.citizen-page-aside__panel--mygadget-notes`. The heading is `.citizen-page-aside__heading` and the body `.citizen-page-aside__body`; do not restyle those classes globally — they belong to every panel.
 
+## Declaring a panel
+
+A panel registered from JavaScript is added after the page has rendered, and only where the column already is. Declaring it on-wiki lets Citizen render the panel's frame with the page instead: in its place from the first paint, and, for a sticky panel, on pages that would otherwise have no column.
+
+Interface administrators declare panels in `MediaWiki:Citizen-page-aside.json`:
+
+```json
+{
+    "panels": {
+        "mygadget-recent": {
+            "module": "ext.gadget.RecentChangesPanel",
+            "labelMsg": "mygadget-recent-label",
+            "placement": "sticky",
+            "order": 30
+        }
+    }
+}
+```
+
+Each key under `panels` is a panel id, with the same rules as the `id` passed to `register()`.
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `module` | string | Required. The ResourceLoader module whose script fills the panel. |
+| `labelMsg` / `label` | string | One is required. An i18n message key, or literal text, for the panel's heading. Prefer `labelMsg` on a multilingual wiki; it wins when both are set. |
+| `placement` | string | Optional, `"flow"` (default) or `"sticky"`, as for `register()`. |
+| `order` | integer | Optional, default `100`. Sorts the panel within its zone, against the same values as `register()`'s `order`. |
+
+A declared panel's frame renders on every page that loads its module, except the main page, and opens the column there. The module must be one the page loads itself, as it does for an enabled gadget; a module that another script loads later does not count. Where the module is not loaded, nothing renders, so a gadget's own settings decide where its panel appears. An entry with an invalid id or field is ignored, and the rest of the page still applies.
+
+Your script fills the frame with the same [`register()`](#javascript-api) call it would make without a declaration. With a declared id, `register()` returns the declared frame's body instead of building a panel. The declaration's label, placement and order stand; the ones in the definition apply only on a wiki that does not declare the panel, where the same code builds the panel itself. Register the id once: a second call is refused as a duplicate.
+
+If the module fails to load before its script claims the frame, Citizen removes the frame. A module that loads but never registers the declared id leaves an empty frame, so check that the two ids match. A script that decides not to show its panel on a page should still register it and then [remove it](#removing-a-panel). Without JavaScript, declared panels are hidden.
+
+### Reserving space
+
+A declared panel's body is empty until your script fills it. Reserve its height in `MediaWiki:Citizen.css`, so the content below does not move when the body fills:
+
+```css
+.citizen-page-aside__panel--mygadget-recent .citizen-page-aside__body:empty {
+    min-height: 12rem;
+}
+```
+
+### Caching
+
+The frames are part of each page's HTML. A logged-in reader sees a change to `MediaWiki:Citizen-page-aside.json` on their next page view; a page served from a cache keeps its old frames until that cache expires or the page is purged, as it does for any interface message.
+
 ## Panel markup
 
 Every panel, built-in or registered, has the same shape:
@@ -78,7 +126,9 @@ Every panel, built-in or registered, has the same shape:
 </div>
 ```
 
-Flow panels are direct children of the column. Sticky panels sit inside one `div.citizen-page-aside__sticky` after the flow panels; the server renders that block only when the page has Contents, and registering a sticky panel creates the block when the page has none. A page with both built-in panels looks like this:
+A declared frame also carries `data-module`, naming its module, until a registration claims it.
+
+Flow panels are direct children of the column. Sticky panels sit inside one `div.citizen-page-aside__sticky` after the flow panels; the server renders that block only when the page has a sticky panel, Contents or a declared one, and registering a sticky panel creates the block when the page has none. A page with both built-in panels looks like this:
 
 ```html
 <aside class="citizen-page-aside" aria-label="Side column">

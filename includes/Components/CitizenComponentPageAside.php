@@ -7,10 +7,10 @@ namespace MediaWiki\Skins\Citizen\Components;
 /**
  * The page aside: a container of panels beside the article.
  *
- * The container knows nothing about any particular panel. It drops the ones
- * with nothing to show, orders the rest, splits them by placement, and marks
- * each one so the template can render it without the container branching on
- * what it is.
+ * The container knows nothing about any particular panel. It keeps one panel
+ * per id, drops the ones with nothing to show, orders the rest, splits them by
+ * placement, and marks each one so the template can render it without the
+ * container branching on what it is.
  */
 class CitizenComponentPageAside implements CitizenComponent {
 
@@ -23,10 +23,19 @@ class CitizenComponentPageAside implements CitizenComponent {
 	}
 
 	public function getTemplateData(): array {
-		$panels = array_filter(
-			$this->panels,
+		// The id becomes the root's element id and the template's dispatch
+		// flag, so only one panel may carry it: the first passed, which puts
+		// the built-ins ahead of any later panel with the same id. An empty
+		// panel keeps its id too, or a later one would render through its
+		// partial.
+		$owners = [];
+		foreach ( $this->panels as $panel ) {
+			$owners[$panel->getId()] ??= $panel;
+		}
+		$panels = array_values( array_filter(
+			$owners,
 			static fn ( CitizenAsidePanel $panel ): bool => $panel->hasContent()
-		);
+		) );
 
 		usort(
 			$panels,
@@ -40,6 +49,10 @@ class CitizenComponentPageAside implements CitizenComponent {
 				'panel-label' => $panel->getLabel(),
 				'panel-order' => $panel->getOrder(),
 				'panel-placement' => $panel->getPlacement(),
+				// A flag beside the string, because a string section loses its
+				// parent context in MediaWiki's TemplateParser.
+				'has-panel-module' => $panel->getModule() !== null,
+				'panel-module' => $panel->getModule() ?? '',
 				// The template dispatches on this rather than on a partial
 				// name, because MediaWiki's TemplateParser cannot resolve a
 				// partial name from data (no FLAG_ADVARNAME). A boolean, so

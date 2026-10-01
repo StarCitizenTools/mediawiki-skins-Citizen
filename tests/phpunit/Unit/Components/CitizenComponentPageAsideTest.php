@@ -24,7 +24,8 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		int $order,
 		bool $hasContent,
 		array $data = [],
-		string $placement = CitizenAsidePanel::PLACEMENT_FLOW
+		string $placement = CitizenAsidePanel::PLACEMENT_FLOW,
+		?string $module = null
 	): CitizenAsidePanel&MockObject {
 		$mock = $this->createMock( CitizenAsidePanel::class );
 		$mock->method( 'getId' )->willReturn( $id );
@@ -33,6 +34,7 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$mock->method( 'getOrder' )->willReturn( $order );
 		$mock->method( 'hasContent' )->willReturn( $hasContent );
 		$mock->method( 'getPlacement' )->willReturn( $placement );
+		$mock->method( 'getModule' )->willReturn( $module );
 		$mock->method( 'getTemplateData' )->willReturn( $hasContent ? $data : [] );
 		return $mock;
 	}
@@ -135,5 +137,57 @@ class CitizenComponentPageAsideTest extends MediaWikiUnitTestCase {
 		$this->assertSame( 'from-panel', $panel['body']['panel-id'] );
 		$this->assertFalse( $panel['body']['is-lastmod'] );
 		$this->assertArrayNotHasKey( 'href', $panel );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testModuleIsCarriedWithAFlagTheTemplateCanGateOn(): void {
+		$component = new CitizenComponentPageAside( [
+			$this->panel( 'lastmod', 10, true, [ 'href' => 'mock-url' ] ),
+			$this->panel( 'mygadget-notes', 30, true, [], CitizenAsidePanel::PLACEMENT_FLOW, 'ext.gadget.Notes' ),
+		] );
+
+		[ $lastmod, $notes ] = $component->getTemplateData()['array-flow-panels'];
+
+		$this->assertFalse( $lastmod['has-panel-module'] );
+		$this->assertSame( '', $lastmod['panel-module'] );
+		$this->assertTrue( $notes['has-panel-module'] );
+		$this->assertSame( 'ext.gadget.Notes', $notes['panel-module'] );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testTheFirstOfPanelsSharingAnIdWins(): void {
+		// The id becomes the root's element id, so only one panel can carry it.
+		// The built-ins are passed first, so a declared panel cannot shadow them.
+		$component = new CitizenComponentPageAside( [
+			$this->panel( 'lastmod', 10, true, [ 'href' => 'mock-url' ] ),
+			$this->panel( 'lastmod', 5, true, [], CitizenAsidePanel::PLACEMENT_STICKY, 'ext.gadget.Imposter' ),
+		] );
+
+		$data = $component->getTemplateData();
+
+		$this->assertCount( 1, $data['array-flow-panels'] );
+		$this->assertSame( 10, $data['array-flow-panels'][0]['panel-order'] );
+		$this->assertSame( [], $data['array-sticky-panels'] );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testAnEmptyPanelStillOwnsItsId(): void {
+		// Otherwise a later panel would carry `is-toc` and render through the
+		// outline's partial on a page without headings.
+		$component = new CitizenComponentPageAside( [
+			$this->panel( 'toc', 20, false, [], CitizenAsidePanel::PLACEMENT_STICKY ),
+			$this->panel( 'toc', 30, true, [], CitizenAsidePanel::PLACEMENT_STICKY, 'ext.gadget.Imposter' ),
+		] );
+
+		$data = $component->getTemplateData();
+
+		$this->assertSame( [], $data['array-sticky-panels'] );
+		$this->assertFalse( $data['has-sticky-panels'] );
 	}
 }

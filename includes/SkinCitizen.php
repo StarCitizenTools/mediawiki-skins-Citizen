@@ -13,6 +13,7 @@ use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Permissions\PermissionManager;
+use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelDeclared;
 use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelLastModified;
 use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
@@ -233,6 +234,11 @@ class SkinCitizen extends SkinMustache {
 			$parentData['data-portlets-sidebar']
 		);
 
+		// Scope matches the .page-Main_Page.action-view main-page styles.
+		// skin.mustache renders the page header after the content on the main
+		// page so its bottom placement holds from the first streamed paint.
+		$isMainPageView = $title->isMainPage() && $this->getActionName() === 'view';
+
 		// Held in a variable because two decisions need it: the aside renders it
 		// as a panel, and the scroll spy is queued only when it has sections.
 		$tocPanel = new CitizenAsidePanelTableOfContents(
@@ -269,6 +275,7 @@ class SkinCitizen extends SkinMustache {
 				$title,
 				$parentData['html-title-heading']
 			),
+			// Built-ins first: the container keeps the first panel with an id.
 			'data-page-aside' => new CitizenComponentPageAside( [
 				new CitizenAsidePanelLastModified(
 					$localizer,
@@ -276,6 +283,8 @@ class SkinCitizen extends SkinMustache {
 					$parentData['data-last-modified']
 				),
 				$tocPanel,
+				// The main page never renders the aside, so it skips the read.
+				...( $isMainPageView ? [] : $this->getDeclaredAsidePanels() ),
 			] ),
 			'data-page-tools' => new CitizenComponentPageTools(
 				$config,
@@ -338,10 +347,6 @@ class SkinCitizen extends SkinMustache {
 		// notifications dropdown in Header.mustache.
 		$parentData['data-notifications'] = $this->notificationData;
 
-		// Scope matches the .page-Main_Page.action-view main-page styles.
-		// skin.mustache renders the page header after the content on the main
-		// page so its bottom placement holds from the first streamed paint.
-		$isMainPageView = $title->isMainPage() && $this->getActionName() === 'view';
 		$parentData['is-mainpage'] = $isMainPageView;
 
 		// Core has no message for the associated-pages menu, so SkinComponentMenu
@@ -436,44 +441,76 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * Per-preference defaults from MediaWiki:Citizen-preferences.json.
 	 *
-	 * Read through MessageCache: this runs on every page view, and
-	 * MessageCache serves NS_MEDIAWIKI pages from its individual-page
-	 * cache (APCu → WAN → DB), so the steady-state cost is a
+	 * @return array<string, string> feature name => default value
+	 */
+	private function getOnWikiDefaults(): array {
+		$data = $this->readOnWikiJsonPerView( PreferencesConfigProvider::PAGE_NAME );
+		return $data === null ? [] : PreferencesConfigProvider::extractDefaults( $data );
+	}
+
+	/**
+	 * Panels the wiki declares in MediaWiki:Citizen-page-aside.json.
+	 *
+	 * A declared panel counts as having content when its module is loaded.
+	 * Gadgets queues a gadget's module in BeforePageDisplay, after checking
+	 * every condition the gadget sets, and core runs that hook before the
+	 * skin renders — so by now the list is final. The filter also drops
+	 * modules this page disallows by origin (site scripts on restricted
+	 * special pages, safemode) and modules ResourceLoader does not know.
+	 *
+	 * @return CitizenAsidePanelDeclared[]
+	 */
+	private function getDeclaredAsidePanels(): array {
+		$data = $this->readOnWikiJsonPerView( CitizenAsidePanelDeclared::PAGE_NAME );
+		if ( $data === null ) {
+			return [];
+		}
+		return CitizenAsidePanelDeclared::fromConfig(
+			$data,
+			$this->getOutput()->getModules( true ),
+			$this->getContext()
+		);
+	}
+
+	/**
+	 * A JSON page under the MediaWiki namespace, for a read on every page view.
+	 *
+	 * Read through MessageCache, which serves NS_MEDIAWIKI pages from its
+	 * individual-page cache (APCu → WAN → DB), so the steady-state cost is a
 	 * local-server-cache (APCu) lookup — measured ~44µs per request, and
 	 * ~1ms on a wiki with no local server cache configured, where every
 	 * view falls through to the WAN cache. Web edits invalidate promptly;
 	 * an edit made from the CLI reaches php-fpm workers on the next local
-	 * server cache cycle (or a restart). The service is resolved
-	 * from the container and the class is never named because it cannot
-	 * be type-hinted portably: MW 1.43 has a global MessageCache class,
-	 * later versions namespace it.
+	 * server cache cycle (or a restart). Never OnWikiJsonReader here: it
+	 * reads the latest revision from the database every time. The service
+	 * is resolved from the container and the class is never named because
+	 * it cannot be type-hinted portably: MW 1.43 has a global MessageCache
+	 * class, later versions namespace it.
 	 *
-	 * @return array<string, string> feature name => default value
+	 * @param string $pageName Title text under the MediaWiki namespace
+	 * @return ?array Null when the page is missing, empty or not a JSON object
 	 */
-	private function getOnWikiDefaults(): array {
+	private function readOnWikiJsonPerView( string $pageName ): ?array {
 		$services = MediaWikiServices::getInstance();
 		$messageCache = $services->getMessageCache();
 		// A disabled cache means the wiki is not serving MediaWiki-namespace
 		// content at all ($wgUseDatabaseMessages off, or a load failure), so
-		// there are no on-wiki defaults to honour. Asking anyway would also
-		// trip a deprecation inside core: the individual-page cache key is
-		// built from the main cache's hash, which a disabled cache never has.
+		// there is no on-wiki page to honour. Asking anyway would also trip a
+		// deprecation inside core: the individual-page cache key is built from
+		// the main cache's hash, which a disabled cache never has.
 		if ( $messageCache->isDisabled() ) {
-			return [];
+			return null;
 		}
 
 		$text = $messageCache->getMsgFromNamespace(
-			PreferencesConfigProvider::PAGE_NAME,
+			$pageName,
 			$services->getContentLanguage()->getCode()
 		);
 		if ( !is_string( $text ) || $text === '' ) {
-			return [];
+			return null;
 		}
 		$data = json_decode( $text, true );
-		if ( !is_array( $data ) ) {
-			return [];
-		}
-		return PreferencesConfigProvider::extractDefaults( $data );
+		return is_array( $data ) ? $data : null;
 	}
 
 	/**
