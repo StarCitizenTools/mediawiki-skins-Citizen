@@ -7,8 +7,10 @@ namespace MediaWiki\Skins\Citizen\Tests\Integration\Templates;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Html\TemplateParser;
 use MediaWiki\Skins\Citizen\Components\CitizenAsidePanel;
+use MediaWiki\Skins\Citizen\Components\CitizenAsidePanelDeclared;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageAside;
 use MediaWikiIntegrationTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -293,5 +295,60 @@ class PageAsideRenderTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( 'nav', $root->nodeName );
 		$this->assertSame( 'citizen-toc', $root->getAttribute( 'id' ) );
 		$this->assertCount( 0, $xpath->query( '//*[@id="citizen-page-aside-toc"]' ) );
+	}
+
+	/**
+	 * @return CitizenAsidePanel[]
+	 */
+	private function declaredPanels( array $panels ): array {
+		return CitizenAsidePanelDeclared::fromConfig(
+			[ 'panels' => $panels ],
+			[ 'ext.gadget.Notes' ],
+			RequestContext::getMain()
+		);
+	}
+
+	public function testDeclaredPanelRendersAnEmptyFrameNamingItsModule(): void {
+		$xpath = $this->render( array_merge(
+			[ $this->lastmodPanel(), $this->tocPanel() ],
+			$this->declaredPanels( [
+				'mygadget-notes' => [
+					'module' => 'ext.gadget.Notes',
+					'label' => '<b>Notes</b>',
+					'placement' => 'sticky',
+					'order' => 30,
+				],
+			] )
+		) );
+
+		$sticky = $this->elementChildren(
+			$this->single( $xpath, '//aside/div[@class="citizen-page-aside__sticky"]' )
+		);
+		$this->assertSame( [ 'citizen-toc', 'citizen-page-aside-mygadget-notes' ], array_map(
+			static fn ( DOMElement $element ): string => $element->getAttribute( 'id' ),
+			$sticky
+		) );
+		$root = $sticky[1];
+		$this->assertSame(
+			'citizen-page-aside__panel citizen-page-aside__panel--mygadget-notes',
+			$root->getAttribute( 'class' )
+		);
+		$this->assertSame( '30', $root->getAttribute( 'data-order' ) );
+		// The client registry drops the frame when this module fails to load.
+		$this->assertSame( 'ext.gadget.Notes', $root->getAttribute( 'data-module' ) );
+
+		[ $heading, $body ] = $this->elementChildren( $root );
+		$this->assertSame( 'citizen-page-aside-mygadget-notes-heading', $heading->getAttribute( 'id' ) );
+		$this->assertSame( '<b>Notes</b>', $heading->textContent );
+		$this->assertSame( [], $this->elementChildren( $heading ) );
+		$this->assertSame( 'citizen-page-aside__body', $body->getAttribute( 'class' ) );
+		// Not even whitespace, so `:empty` holds until the script fills it.
+		$this->assertSame( 0, $body->childNodes->length );
+	}
+
+	public function testServerFilledPanelsNameNoModule(): void {
+		$xpath = $this->render( [ $this->lastmodPanel(), $this->tocPanel() ] );
+
+		$this->assertCount( 0, $xpath->query( '//*[@data-module]' ) );
 	}
 }

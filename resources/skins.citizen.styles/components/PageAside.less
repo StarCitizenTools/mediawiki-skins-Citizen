@@ -13,15 +13,23 @@
 		// growing the grid row. But a size-contained box contributes no height
 		// of its own, so the row is sized by the article alone and paint
 		// containment clips any rail taller than it. A heading-less article has
-		// no outline, is shorter than its own rail, and would be clipped — so
-		// the size half only applies where the outline is. Not wherever there
-		// is a sticky block: a script can create one on a page with no outline.
+		// no outline, can be shorter than its own rail, and would be clipped —
+		// so the size half only applies where the outline is. Not wherever
+		// there is a sticky block: a declared or registered sticky panel opens
+		// one on a page with no outline.
 		// Not `strict`: pairing `layout` with `size` makes this a reflow root
 		// in Firefox, which strands the sticky ToC at its static position
 		// mid-scroll (#1175). Do not add `layout` back.
 		&:has( .citizen-toc ) {
 			contain: size paint style;
 		}
+	}
+
+	// A declared panel whose script fails is removed, which can leave the
+	// column with no panel. Hiding it drops the empty named landmark; the grid
+	// track stays, so the article does not move.
+	&:not( :has( .citizen-page-aside__panel ) ) {
+		display: none;
 	}
 
 	// Sticky panels ride along in one block. The outline inside it is the
@@ -87,6 +95,16 @@
 	// uncovered is the underline the mixin adds while a link is pressed.
 	& a&__link:not( [ role='button' ] ):active {
 		text-decoration: none;
+	}
+}
+
+// A declared frame waits for its script to claim and fill it. Without
+// JavaScript nothing will, and it would stay a heading over an empty body;
+// a column holding nothing else would be an empty named landmark.
+.client-nojs {
+	.citizen-page-aside__panel[ data-module ],
+	.citizen-page-aside:not( :has( .citizen-page-aside__panel:not( [ data-module ] ) ) ) {
+		display: none;
 	}
 }
 

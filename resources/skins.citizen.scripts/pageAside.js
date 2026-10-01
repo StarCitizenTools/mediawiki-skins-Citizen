@@ -8,6 +8,11 @@
  * have a panel of their own, so anywhere else `register()` returns null —
  * silently for a valid definition, with a warning for a malformed one, so a
  * mistake shows up on whatever page its author tests on.
+ *
+ * A panel the wiki declared on-wiki arrives as a server-rendered frame naming
+ * the module that fills it. The registration with its id claims the frame
+ * rather than building one, and a frame whose module fails to load before it
+ * is claimed is removed, so a missing or broken script leaves no empty panel.
  */
 
 const ASIDE_SELECTOR = '.citizen-page-aside';
@@ -17,6 +22,8 @@ const DEFAULT_ORDER = 100;
 const STICKY_CLASS = 'citizen-page-aside__sticky';
 const PLACEMENTS = [ 'flow', 'sticky' ];
 const WARN_PREFIX = 'citizen.pageAside.register: ';
+// On a declared frame until a registration claims it.
+const DECLARED_ATTRIBUTE = 'data-module';
 
 /**
  * @typedef {Object} PanelDefinition
@@ -80,7 +87,8 @@ function createPageAside( { document, mw } ) {
 
 	/**
 	 * @param {PanelDefinition} definition
-	 * @return {HTMLElement|null} The new panel's body, or null when nothing was added
+	 * @return {HTMLElement|null} The panel's body — a new one, or the declared frame's
+	 *  for its id — or null when there is none to fill
 	 */
 	function register( definition ) {
 		if ( !definition || typeof definition !== 'object' || Array.isArray( definition ) ) {
@@ -104,6 +112,15 @@ function createPageAside( { document, mw } ) {
 		const aside = document.querySelector( ASIDE_SELECTOR );
 		if ( !aside ) {
 			return null;
+		}
+		// The server already placed and labelled a declared frame, so the
+		// definition's label, placement and order give way to the declaration.
+		const declared = document.getElementById( ID_PREFIX + id );
+		const declaredBody = declared && declared.hasAttribute( DECLARED_ATTRIBUTE ) &&
+			declared.querySelector( ':scope > .citizen-page-aside__body' );
+		if ( declared && declaredBody ) {
+			declared.removeAttribute( DECLARED_ATTRIBUTE );
+			return /** @type {HTMLElement} */ ( declaredBody );
 		}
 		// A taken id shows on the root (`citizen-page-aside-{id}`) of every panel
 		// but Contents, whose root is `citizen-toc` and which carries it only on
@@ -134,7 +151,24 @@ function createPageAside( { document, mw } ) {
 		return body;
 	}
 
+	/**
+	 * A frame still unclaimed when its module fails will never be filled:
+	 * the script threw, or the page is cached HTML naming a module that has
+	 * since gone. A module that loads and never registers keeps its frame,
+	 * which shows its author the mismatch.
+	 */
+	function dropFramesOfFailedModules() {
+		document.querySelectorAll( ASIDE_SELECTOR + ' .citizen-page-aside__panel[' + DECLARED_ATTRIBUTE + ']' ).forEach( ( panel ) => {
+			mw.loader.using( panel.getAttribute( DECLARED_ATTRIBUTE ) ).catch( () => {
+				if ( panel.hasAttribute( DECLARED_ATTRIBUTE ) ) {
+					panel.remove();
+				}
+			} );
+		} );
+	}
+
 	function init() {
+		dropFramesOfFailedModules();
 		mw.hook( 'citizen.pageAside.register' ).fire( { register } );
 	}
 

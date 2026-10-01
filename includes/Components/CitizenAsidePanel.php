@@ -34,7 +34,7 @@ interface CitizenAsidePanel {
 	/** Heading when open; the control's accessible name when collapsed. */
 	public function getLabel(): string;
 
-	/** Codex icon name. */
+	/** Codex icon name, or an empty string for none. */
 	public function getIcon(): string;
 
 	/** Position within its placement zone, ascending. */
@@ -44,6 +44,12 @@ interface CitizenAsidePanel {
 	public function hasContent(): bool;
 
 	public function getPlacement(): string;
+
+	/**
+	 * The ResourceLoader module that fills the body on the client, or null
+	 * when the server renders the body itself.
+	 */
+	public function getModule(): ?string;
 
 	/**
 	 * Template data for the panel's own partial. The container nests it under

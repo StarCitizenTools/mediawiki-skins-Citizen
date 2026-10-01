@@ -43,6 +43,10 @@ class CitizenAsidePanelLastModified implements CitizenAsidePanel {
 		return self::PLACEMENT_FLOW;
 	}
 
+	public function getModule(): ?string {
+		return null;
+	}
+
 	public function getTemplateData(): array {
 		if ( !$this->hasContent() ) {
 			return [];

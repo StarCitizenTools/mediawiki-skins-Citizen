@@ -4,13 +4,17 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
+use MediaWiki\MainConfigNames;
 use MediaWiki\Request\FauxRequest;
+use MediaWiki\ResourceLoader\Module;
 use MediaWiki\Skins\Citizen\CompatSlices;
 use MediaWiki\Skins\Citizen\ResourceLoader\CompatSkinModule;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 use RequestContext;
+use Wikimedia\Parsoid\Core\SectionMetadata;
+use Wikimedia\Parsoid\Core\TOCData;
 use Wikimedia\TestingAccessWrapper;
 
 /**
@@ -326,6 +330,37 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * Gives the page an outline, so the sticky Contents panel has content.
+	 */
+	private function addOutline( SkinCitizen $skin ): void {
+		$skin->getOutput()->setTOCData( new TOCData( new SectionMetadata(
+			tocLevel: 1,
+			hLevel: 2,
+			line: 'History',
+			number: '1',
+			index: '1',
+			anchor: 'History',
+			linkAnchor: 'History'
+		) ) );
+	}
+
+	/**
+	 * Writes the declaration page. The test runner turns database messages off,
+	 * which disables the MessageCache read the skin uses; production has them on.
+	 */
+	private function declarePanels( array $panels ): void {
+		$this->overrideConfigValue( MainConfigNames::UseDatabaseMessages, true );
+		$this->editPage( 'MediaWiki:Citizen-page-aside.json', json_encode( [ 'panels' => $panels ] ) );
+	}
+
+	/**
+	 * @return string[] Ids of the panels in the aside's sticky zone
+	 */
+	private function stickyPanelIds( array $data ): array {
+		return array_column( $data['data-page-aside']['array-sticky-panels'], 'panel-id' );
+	}
+
+	/**
 	 * @return string[] The classes getTemplateData() added to the body, which
 	 *   OutputPage only merges with the rest when it builds the head element.
 	 */
@@ -375,5 +410,73 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$data = $skin->getTemplateData();
 
 		$this->assertTrue( $data['aside-enabled'] );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testADeclaredStickyPanelOpensTheAsideWhereItsModuleLoads(): void {
+		$this->declarePanels( [
+			'mygadget-notes' => [ 'module' => 'site', 'label' => 'Notes', 'placement' => 'sticky' ],
+		] );
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+		$skin->getOutput()->addModules( 'site' );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertTrue( $data['aside-enabled'] );
+		$this->assertSame( [ 'mygadget-notes' ], $this->stickyPanelIds( $data ) );
+		// The module fills the panel; the outline's script has nothing to do here.
+		$this->assertNotContains( 'skins.citizen.toc', $skin->getOutput()->getModules() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testADeclaredPanelIsAbsentWhereItsModuleDoesNotLoad(): void {
+		$this->declarePanels( [
+			'mygadget-notes' => [ 'module' => 'site', 'label' => 'Notes', 'placement' => 'sticky' ],
+		] );
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+		$this->addOutline( $skin );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertSame( [ 'toc' ], $this->stickyPanelIds( $data ) );
+	}
+
+	/**
+	 * Restricted special pages and safemode keep site scripts off the page after
+	 * Gadgets has queued them, so a frame there would never be filled.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testADeclaredPanelIsAbsentWhereThePageDisallowsItsModule(): void {
+		$this->declarePanels( [
+			'mygadget-notes' => [ 'module' => 'site', 'label' => 'Notes', 'placement' => 'sticky' ],
+		] );
+		$skin = $this->createSkinForRequest( Title::newFromText( 'PageAsideGateTest' ) );
+		$out = $skin->getOutput();
+		$out->addModules( 'site' );
+		$out->reduceAllowedModules( Module::TYPE_SCRIPTS, Module::ORIGIN_CORE_INDIVIDUAL );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertSame( [], $this->stickyPanelIds( $data ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::getTemplateData
+	 */
+	public function testTheMainPageViewDoesNotReadDeclarations(): void {
+		$this->declarePanels( [
+			'mygadget-notes' => [ 'module' => 'site', 'label' => 'Notes', 'placement' => 'sticky' ],
+		] );
+		$skin = $this->createSkinForRequest( Title::newMainPage() );
+		$skin->getOutput()->addModules( 'site' );
+
+		$data = $skin->getTemplateData();
+
+		$this->assertSame( [], $this->stickyPanelIds( $data ) );
 	}
 }

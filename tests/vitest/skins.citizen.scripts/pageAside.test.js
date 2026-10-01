@@ -26,6 +26,20 @@ const ASIDE = `
 	</div>
 </aside>`;
 
+// A panel the wiki declared on-wiki: the server renders its frame, with the
+// module that fills it, and leaves the body for that module's script.
+const DECLARED = `
+		<div id="citizen-page-aside-mygadget-notes" class="citizen-page-aside__panel citizen-page-aside__panel--mygadget-notes" data-order="30" data-module="ext.gadget.Notes">
+			<div id="citizen-page-aside-mygadget-notes-heading" class="citizen-page-aside__heading">Notes</div>
+			<div class="citizen-page-aside__body"></div>
+		</div>`;
+
+const DECLARED_ASIDE = `
+<aside class="citizen-page-aside" aria-label="Side column">${ LASTMOD }
+	<div class="citizen-page-aside__sticky">${ TOC }${ DECLARED }
+	</div>
+</aside>`;
+
 // A page whose only panel scrolls with it, so no sticky block is rendered.
 const STICKY_LESS_ASIDE = `
 <aside class="citizen-page-aside" aria-label="Side column">${ LASTMOD }
@@ -53,10 +67,18 @@ function initWith( html ) {
 
 const panelIds = () => Array.from( document.querySelector( '.citizen-page-aside' ).children ).map( ( el ) => el.id );
 
+const declaredFrame = () => document.getElementById( 'citizen-page-aside-mygadget-notes' );
+
+/** Lets settled promises run their handlers. */
+const flush = () => new Promise( ( resolve ) => {
+	setTimeout( resolve, 0 );
+} );
+
 describe( 'createPageAside', () => {
 	beforeEach( () => {
 		mw.hook( HOOK )._reset();
 		mw.log.warn.mockClear();
+		mw.loader.using.mockClear();
 	} );
 
 	afterEach( () => {
@@ -255,5 +277,94 @@ describe( 'createPageAside', () => {
 		} );
 
 		expect( typeof received.register ).toBe( 'function' );
+	} );
+	describe( 'declared panels', () => {
+		it( 'hands the declared frame to the matching registration', () => {
+			const register = initWith( DECLARED_ASIDE );
+			const frame = declaredFrame();
+
+			const body = register( { id: 'mygadget-notes', label: 'Notes' } );
+
+			expect( body ).toBe( frame.querySelector( '.citizen-page-aside__body' ) );
+			expect( frame.hasAttribute( 'data-module' ) ).toBe( false );
+			expect( document.querySelectorAll( '.citizen-page-aside__panel--mygadget-notes' ).length ).toBe( 1 );
+			expect( mw.log.warn ).not.toHaveBeenCalled();
+		} );
+
+		it( 'keeps the declared label, placement and order', () => {
+			const register = initWith( DECLARED_ASIDE );
+
+			register( { id: 'mygadget-notes', label: 'Other', placement: 'flow', order: 5 } );
+
+			const frame = declaredFrame();
+			expect( frame.parentElement.className ).toBe( 'citizen-page-aside__sticky' );
+			expect( frame.previousElementSibling.id ).toBe( 'citizen-toc' );
+			expect( frame.dataset.order ).toBe( '30' );
+			expect( frame.querySelector( '.citizen-page-aside__heading' ).textContent ).toBe( 'Notes' );
+		} );
+
+		it( 'refuses a second registration once the frame is claimed', () => {
+			const register = initWith( DECLARED_ASIDE );
+			register( { id: 'mygadget-notes', label: 'Notes' } );
+
+			const again = register( { id: 'mygadget-notes', label: 'Notes' } );
+
+			expect( again ).toBeNull();
+			expect( mw.log.warn ).toHaveBeenCalledTimes( 1 );
+			expect( mw.log.warn.mock.calls[ 0 ][ 0 ] ).toContain( '"mygadget-notes"' );
+		} );
+
+		it( 'validates the definition before claiming the frame', () => {
+			const register = initWith( DECLARED_ASIDE );
+
+			const body = register( { id: 'mygadget-notes' } );
+
+			expect( body ).toBeNull();
+			expect( mw.log.warn ).toHaveBeenCalledTimes( 1 );
+			expect( declaredFrame().dataset.module ).toBe( 'ext.gadget.Notes' );
+		} );
+
+		it( 'waits on the module of each declared frame and nothing else', () => {
+			// The first body is Last modified's: content inside a panel is not a frame.
+			initWith( DECLARED_ASIDE.replace(
+				'<div class="citizen-page-aside__body"></div>',
+				'<div class="citizen-page-aside__body"><span data-module="ext.gadget.Other"></span></div>'
+			) );
+
+			expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+			expect( mw.loader.using ).toHaveBeenCalledWith( 'ext.gadget.Notes' );
+		} );
+
+		it( 'drops an unclaimed frame when its module fails to load', async () => {
+			mw.loader.using.mockReturnValueOnce( Promise.reject( new Error( 'Unknown module: ext.gadget.Notes' ) ) );
+			initWith( DECLARED_ASIDE );
+
+			await flush();
+
+			expect( declaredFrame() ).toBeNull();
+			expect( document.getElementById( 'citizen-toc' ) ).not.toBeNull();
+		} );
+
+		it( 'keeps a frame its script claimed before failing', async () => {
+			let fail;
+			mw.loader.using.mockReturnValueOnce( new Promise( ( _resolve, reject ) => {
+				fail = reject;
+			} ) );
+			const register = initWith( DECLARED_ASIDE );
+			register( { id: 'mygadget-notes', label: 'Notes' } );
+
+			fail( new Error( 'script error' ) );
+			await flush();
+
+			expect( declaredFrame() ).not.toBeNull();
+		} );
+
+		it( 'keeps an unclaimed frame whose module loads', async () => {
+			initWith( DECLARED_ASIDE );
+
+			await flush();
+
+			expect( declaredFrame().dataset.module ).toBe( 'ext.gadget.Notes' );
+		} );
 	} );
 } );
