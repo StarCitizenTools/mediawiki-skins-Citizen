@@ -13,6 +13,8 @@
 
 #mw-upload-form {
 	fieldset {
+		// Fieldsets grow to their content by default, so a long license name would widen the form past the page.
+		min-width: 0;
 		border-radius: var( --border-radius-medium );
 
 		/* Source field */
@@ -20,7 +22,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			gap: var( --space-lg );
-			padding: var( --space-md );
+			padding-bottom: var( --space-sm );
 			margin: var( --space-xl ) 0;
 			color: var( --color-subtle );
 		}
@@ -48,7 +50,8 @@
 		}
 
 		&:has( input[ name='wpSourceType' ] ) {
-			margin-top: calc( -1 * var( --space-md ) );
+			// Cancels the fieldset's top padding so the tabs sit right under the legend.
+			margin-top: calc( -1 * var( --space-xs ) );
 
 			> tbody {
 				display: flex;
@@ -142,6 +145,51 @@
 			+ tr:has( > .htmlform-tip ) {
 				display: none;
 			}
+		}
+	}
+
+	// A table cannot narrow past its widest field, so each label stacks above its field instead.
+	#mw-htmlform-description {
+		&,
+		tbody,
+		tr,
+		td {
+			display: block;
+		}
+
+		// The warning box keeps the padding its own class gives it.
+		td:not( .mw-destfile-warning ) {
+			padding: 0;
+		}
+
+		// Unlabelled rows such as the edit tools and the license preview belong to the field above,
+		// unlike the name warning that core appends after them.
+		tr:has( > .mw-label, > .mw-destfile-warning ):not( :first-child ) {
+			margin-top: var( --space-md );
+		}
+
+		.mw-label {
+			margin-bottom: var( --space-xxs );
+		}
+
+		// HTMLForm gives every text field a `size`, which would otherwise set its width.
+		input[ size ] {
+			width: 100%;
+		}
+
+		// An inline textarea leaves a line's descender gap below it.
+		textarea {
+			display: block;
+		}
+
+		select {
+			max-width: 100%;
+		}
+
+		// Images in a table are left uncapped, but this table no longer widens to fit them, as with the taken file shown in a name warning.
+		img {
+			max-width: 100%;
+			height: auto;
 		}
 	}
 
