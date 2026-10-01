@@ -171,6 +171,16 @@ describe( 'createRecentItems', () => {
 			expect( stored().map( ( i ) => i.label ) ).toEqual( [ 'sun', 'moon' ] );
 		} );
 
+		it( 'keeps one entry for a special page opened under two of its names', () => {
+			const byAlias = { id: 'page-Special:ImageList', type: 'page', label: 'Special:ImageList', url: '/wiki/Special:ImageList' };
+			const byName = { id: 'page-Special:ListFiles', type: 'page', label: 'Special:ListFiles', url: '/wiki/Special:ListFiles' };
+			service.saveRecentItem( byAlias );
+
+			service.saveRecentItem( byName );
+
+			expect( stored() ).toEqual( [ byName ] );
+		} );
+
 	} );
 
 	describe( 'getRecentItems', () => {

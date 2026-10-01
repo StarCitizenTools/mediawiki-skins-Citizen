@@ -20,11 +20,18 @@ function newFromText( text ) {
 		undefined;
 	const main = namespace ? normalized.slice( colon + 1 ) : normalized;
 	const title = main.charAt( 0 ).toUpperCase() + main.slice( 1 );
+	const prefixedText = namespace ? `${ namespace[ 1 ] }:${ title }` : title;
 	return {
 		getNamespaceId: () => ( namespace ? namespace[ 0 ] : 0 ),
 		getMain: () => title.replace( / /g, '_' ),
-		getPrefixedText: () => ( namespace ? `${ namespace[ 1 ] }:${ title }` : title )
+		getPrefixedText: () => prefixedText,
+		getPrefixedDb: () => prefixedText.replace( / /g, '_' )
 	};
 }
 
-module.exports = { newFromText };
+function makeTitle( namespaceId, text ) {
+	const namespace = Object.values( NAMESPACES ).find( ( [ id ] ) => id === namespaceId );
+	return newFromText( namespace ? `${ namespace[ 1 ] }:${ text }` : text );
+}
+
+module.exports = { newFromText, makeTitle };

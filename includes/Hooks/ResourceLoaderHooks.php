@@ -79,12 +79,16 @@ class ResourceLoaderHooks {
 	}
 
 	/**
-	 * Lists every registered special page for the command palette's action mode.
+	 * Lists every registered special page with every name it answers to, for
+	 * the command palette's action mode and for telling when two links open
+	 * the same special page.
 	 *
-	 * Each entry is the canonical name, or a [ canonical name, label ] pair when
-	 * the first content-language alias differs from it. Names come from the
-	 * special page registry rather than the siteinfo alias table, which omits
-	 * pages that declare no aliases.
+	 * Each entry is the canonical name when the page has no other, or else
+	 * [ canonical name, local name, ...other aliases ]. The local name is the
+	 * one the wiki redirects every other name to. Names come from the special
+	 * page registry rather than the siteinfo alias table, which omits pages
+	 * that declare no aliases. An alias another page has claimed opens that
+	 * page, so it is not listed as a name of this one.
 	 *
 	 * This runs on every startup module build, so it must not construct special
 	 * pages (getPage(), isListed(), getDescription()).
@@ -98,13 +102,17 @@ class ResourceLoaderHooks {
 		Config $config
 	): array {
 		$services = MediaWikiServices::getInstance();
+		$factory = $services->getSpecialPageFactory();
 		$aliases = $services->getContentLanguage()->getSpecialPageAliases();
 		$pages = [];
-		foreach ( $services->getSpecialPageFactory()->getNames() as $name ) {
+		foreach ( $factory->getNames() as $name ) {
 			// array_keys() turns a numeric page name into an int
 			$name = (string)$name;
-			$label = $aliases[$name][0] ?? $name;
-			$pages[] = $label === $name ? $name : [ $name, $label ];
+			$names = array_values( array_filter(
+				$aliases[$name] ?? [],
+				static fn ( string $alias ): bool => (string)$factory->resolveAlias( $alias )[0] === $name
+			) );
+			$pages[] = $names === [] || $names === [ $name ] ? $name : [ $name, ...$names ];
 		}
 		return $pages;
 	}

@@ -1,4 +1,5 @@
 const { cdxIconArticleSearch, cdxIconEdit, cdxIconSearch } = require( '../icons.json' );
+const destinationKey = require( './destinationKey.js' );
 
 /**
  * Creates the query actions: rows that act on the typed query as a whole
@@ -75,9 +76,10 @@ function createAppendQueryActions() {
 	/**
 	 * The result that is the page the query names, if there is one.
 	 *
-	 * Results are compared by link: a result reached through a redirect links
-	 * to the redirect, so this finds the page whether the query names it
-	 * directly or through one of its redirects.
+	 * Results are compared by destination: a result reached through a redirect
+	 * links to the redirect, and a special page links under its local name
+	 * whichever of its names matched, so this finds the page whether the query
+	 * names it directly, through one of its redirects, or by another name.
 	 *
 	 * @param {string} query The current search query.
 	 * @param {Array} results Rows shown below the lead.
@@ -88,8 +90,8 @@ function createAppendQueryActions() {
 		if ( !title ) {
 			return undefined;
 		}
-		const url = mw.util.getUrl( title.getPrefixedText() );
-		return results.find( ( item ) => item.url === url );
+		const named = destinationKey( { id: '', url: mw.util.getUrl( title.getPrefixedText() ) } );
+		return results.find( ( item ) => item.url && destinationKey( item ) === named );
 	}
 
 	/**

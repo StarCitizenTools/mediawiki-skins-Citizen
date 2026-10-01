@@ -6,8 +6,9 @@ const { defineMode } = require( '../services/defineMode.js' );
  * Creates the action command handler.
  *
  * @param {Document} documentRef The document object for DOM queries.
- * @param {Array<string|[string, string]>} specialPages Every registered special
- *  page, as its canonical name or a [ canonical name, label ] pair.
+ * @param {Array<string|[string, string, ...string[]]>} specialPages Every
+ *  registered special page, as its canonical name or as [ canonical name,
+ *  local name, ...other aliases ].
  * @return {Object} The command handler.
  */
 function createActionCommand( documentRef, specialPages ) {
@@ -20,12 +21,13 @@ function createActionCommand( documentRef, specialPages ) {
 		}
 
 		const items = specialPages.map( ( page ) => {
-			const [ realName, alias = realName ] = typeof page === 'string' ? [ page ] : page;
+			const [ realName, localName = realName ] = typeof page === 'string' ? [ page ] : page;
 			return {
 				id: 'special-' + realName.toLowerCase(),
 				type: 'special-page',
-				label: alias.replace( /_/g, ' ' ),
-				url: mw.util.getUrl( 'Special:' + realName ),
+				label: localName.replace( /_/g, ' ' ),
+				// The wiki redirects every other name of the page to this one.
+				url: mw.util.getUrl( 'Special:' + localName ),
 				thumbnailIcon: cdxIconSpecialPages,
 				value: '/action:' + realName,
 				highlightQuery: true

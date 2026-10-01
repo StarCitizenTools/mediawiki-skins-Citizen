@@ -3,6 +3,8 @@
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
+const mwTitle = require( '../../mocks/mwTitle.js' );
+
 const createRestSearchClient = require( '../../../../resources/skins.citizen.commandPalette/services/searchClient.js' );
 
 describe( 'createRestSearchClient', () => {
@@ -10,6 +12,7 @@ describe( 'createRestSearchClient', () => {
 
 	beforeEach( () => {
 		vi.restoreAllMocks();
+		mw.Title = mwTitle;
 		client = createRestSearchClient( '/w' );
 	} );
 
@@ -248,6 +251,73 @@ describe( 'createRestSearchClient', () => {
 			const result = await client.fetchByQuery( 'one meal', 10 );
 
 			expect( result.results[ 0 ].url ).toBe( "/wiki/'One Meal' Nutrition Bar (Grilled Steak)" );
+		} );
+
+		describe( 'a special page matched by another of its names', () => {
+			const special = ( title ) => ( {
+				id: 0,
+				key: title.replace( / /g, '_' ),
+				title,
+				matched_title: null,
+				thumbnail: null
+			} );
+
+			it( 'is shown under its local name, as a redirect is', async () => {
+				stubFetch( makeResponse( [ special( 'Special:ImageList' ) ] ) );
+
+				const result = await client.fetchByQuery( 'Special:ImageList', 10 );
+				const item = result.results[ 0 ];
+
+				expect( item.id ).toBe( 'citizen-command-palette-item-page-Special:ListFiles' );
+				expect( item.label ).toBe( 'Special:ListFiles' );
+				expect( item.metadata ).toEqual( [
+					expect.objectContaining( { label: 'Special:ImageList' } )
+				] );
+			} );
+
+			it( 'links straight to the page, not through the name that matched', async () => {
+				stubFetch( makeResponse( [ special( 'Special:ImageList' ) ] ) );
+
+				const result = await client.fetchByQuery( 'Special:ImageList', 10 );
+
+				expect( result.results[ 0 ].url ).toBe( '/wiki/Special:ListFiles' );
+			} );
+
+			it( 'is one result however many of its names matched', async () => {
+				stubFetch( makeResponse( [
+					special( 'Special:FileList' ),
+					special( 'Special:Version' ),
+					special( 'Special:ImageList' )
+				] ) );
+
+				const result = await client.fetchByQuery( 'Special:', 10 );
+
+				expect( result.results.map( ( item ) => item.label ) )
+					.toEqual( [ 'Special:ListFiles', 'Special:Версия' ] );
+				expect( result.results[ 0 ].metadata[ 0 ].label ).toBe( 'Special:FileList' );
+			} );
+
+			it( 'shows no matched name that differs only in case', async () => {
+				stubFetch( makeResponse( [ special( 'Special:Listfiles' ) ] ) );
+
+				const result = await client.fetchByQuery( 'Special:Listfiles', 10 );
+
+				expect( result.results[ 0 ].label ).toBe( 'Special:ListFiles' );
+				expect( result.results[ 0 ].metadata ).toBeUndefined();
+			} );
+
+			it( 'is left as it is when it is already under its local name', async () => {
+				stubFetch( makeResponse( [ special( 'Special:ListFiles' ) ] ) );
+
+				const result = await client.fetchByQuery( 'Special:ListFiles', 10 );
+
+				expect( result.results[ 0 ] ).toMatchObject( {
+					id: 'citizen-command-palette-item-page-Special:ListFiles',
+					label: 'Special:ListFiles',
+					url: '/wiki/Special:ListFiles',
+					metadata: undefined
+				} );
+			} );
 		} );
 
 		it( 'includes an edit action linking to the edit form', async () => {

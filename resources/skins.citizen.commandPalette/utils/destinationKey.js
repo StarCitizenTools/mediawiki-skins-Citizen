@@ -1,3 +1,5 @@
+const resolveSpecialPage = require( './resolveSpecialPage.js' );
+
 /**
  * The page a link opens, as a normalised title, or null when the link opens
  * something other than a page view: a search, an edit, a diff.
@@ -30,17 +32,24 @@ function pageOf( link ) {
 	}
 
 	let title = mw.Title.newFromText( text );
-	if ( title && title.getNamespaceId() === -1 && title.getMain() === 'Search' ) {
+	let special = title && resolveSpecialPage( title );
+	if ( special && special.name === 'Search' ) {
 		title = mw.Title.newFromText( params.get( 'search' ) || '' );
 		params.delete( 'search' );
+		special = title && resolveSpecialPage( title );
 	}
-	return title && !params.toString() ? title.getPrefixedText() : null;
+	if ( !title || params.toString() ) {
+		return null;
+	}
+	// Every name of a special page opens it under its local name.
+	return ( special ? special.title : title ).getPrefixedText();
 }
 
 /**
  * What an item opens. One page reached from different modes, or through
- * different aliases of its namespace, has one key; anything that is not a
- * page is keyed by its link, and an item without a link by its id.
+ * different aliases of its namespace, or a special page by any of its names,
+ * has one key; anything that is not a page is keyed by its link, and an item
+ * without a link by its id.
  *
  * @param {{id: string|number, url?: string}} item
  * @return {string}

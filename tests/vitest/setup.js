@@ -82,6 +82,9 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 		if ( request === './icons.json' || request === '../icons.json' ) {
 			return path.resolve( __dirname, 'mocks/commandPaletteIcons.js' );
 		}
+		if ( request === './specialPages.json' || request === '../specialPages.json' ) {
+			return path.resolve( __dirname, 'mocks/commandPaletteSpecialPages.js' );
+		}
 		// Stub .vue imports from non-Vue JS files (e.g. init.js).
 		// Vue SFCs go through Vite's plugin pipeline and don't hit this path.
 		if ( request === './App.vue' || request === './components/App.vue' ) {
