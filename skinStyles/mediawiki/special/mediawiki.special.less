@@ -127,6 +127,12 @@ span.mw-version-ext-vcs-version {
 	background-color: var( --background-color-warning-subtle );
 	border: var( --border-width-base ) solid var( --border-color-warning );
 	border-radius: var( --border-radius-medium );
+
+	// Only the parser output caps image widths, and the taken file's thumbnail sits outside it.
+	img {
+		max-width: 100%;
+		height: auto;
+	}
 }
 
 .skin-theme-clientpref-night {
