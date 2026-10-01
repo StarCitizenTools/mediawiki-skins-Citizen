@@ -5,7 +5,7 @@
  * builds the same chrome the server renders for its own panels — root,
  * heading and body as direct children in that order — and returns the body
  * for the caller to fill. The aside is server-rendered only on pages that
- * have a panel of their own, so anywhere else `register()` returns null —
+ * have a sticky panel, so anywhere else `register()` returns null —
  * silently for a valid definition, with a warning for a malformed one, so a
  * mistake shows up on whatever page its author tests on.
  *

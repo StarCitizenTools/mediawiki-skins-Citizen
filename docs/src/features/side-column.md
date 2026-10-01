@@ -5,9 +5,9 @@ description: The column beside the article that holds Last modified, the table o
 
 # Side column
 
-Citizen renders a column beside the article (`citizen-page-aside` in markup) on every page that has a last-modified timestamp, headings or a [declared](#declaring-a-panel) panel, except the main page. It holds the **Last modified** panel when the page has a timestamp and the **Contents** panel when it has headings, so some special pages, such as Special:Version, show Contents alone. Below the desktop breakpoint only the Contents control is shown; every other panel is desktop-only.
+Citizen renders a column beside the article (`citizen-page-aside` in markup) on every page that has a sticky panel, except the main page. Sticky panels are **Contents**, when the page has headings, and any panel the wiki [declares](#declaring-a-panel) as sticky. Below the desktop breakpoint only the Contents control is shown; every other panel is desktop-only.
 
-The column has two zones. Flow panels, such as Last modified, scroll with the page; sticky panels, such as Contents, ride together in one sticky block, where the outline shrinks to make room for the other panels in it.
+The column has two zones. Flow panels, such as **Last modified**, scroll with the page; sticky panels, such as Contents, ride together in one sticky block, where the outline shrinks to make room for the other panels in it. Flow panels join the column wherever it is rendered but never open it on their own, because a column of flow panels alone would be blank below the first screen. So a page with headings shows Last modified above Contents, and a page without headings has no column unless a declared sticky panel opens it.
 
 Wikis and extensions can add their own panels from JavaScript. Citizen builds the panel's frame; you fill its body. [Declare the panel](#declaring-a-panel) as well to have its frame in place from the first paint, on every page that loads your script's module.
 
@@ -37,7 +37,7 @@ mw.hook( 'citizen.pageAside.register' ).add( function ( data ) {
 
 Keep sticky panels short. The outline gives up height to the panels beside it, so a tall sticky panel shrinks Contents and can push its own bottom past the viewport. A sticky panel with an `order` below `20` sits above Contents.
 
-On any page, `register()` returns `null` and logs a warning through `mw.log.warn` when the definition is not an object, `id` or `label` is missing or invalid, `placement` is neither `'flow'` nor `'sticky'`, `order` is not a finite number, or a panel with that id already exists, other than a [declared](#declaring-a-panel) frame waiting to be claimed. On pages where the side column is not rendered — the main page, and pages with no panel of their own — a valid definition returns `null` without a warning. Check the return value before using it.
+On any page, `register()` returns `null` and logs a warning through `mw.log.warn` when the definition is not an object, `id` or `label` is missing or invalid, `placement` is neither `'flow'` nor `'sticky'`, `order` is not a finite number, or a panel with that id already exists, other than a [declared](#declaring-a-panel) frame waiting to be claimed. On pages where the side column is not rendered — the main page, and pages with no sticky panel — a valid definition returns `null` without a warning. Check the return value before using it.
 
 ### Timing
 
@@ -92,10 +92,10 @@ Each key under `panels` is a panel id, with the same rules as the `id` passed to
 | :--- | :--- | :--- |
 | `module` | string | Required. The ResourceLoader module whose script fills the panel. |
 | `labelMsg` / `label` | string | One is required. An i18n message key, or literal text, for the panel's heading. Prefer `labelMsg` on a multilingual wiki; it wins when both are set. |
-| `placement` | string | Optional, `"flow"` (default) or `"sticky"`, as for `register()`. |
+| `placement` | string | Optional, `"flow"` (default) or `"sticky"`, as for `register()`. Only a sticky panel opens the column on its own. |
 | `order` | integer | Optional, default `100`. Sorts the panel within its zone, against the same values as `register()`'s `order`. |
 
-A declared panel's frame renders on every page that loads its module, except the main page, and opens the column there. The module must be one the page loads itself, as it does for an enabled gadget; a module that another script loads later does not count. Where the module is not loaded, nothing renders, so a gadget's own settings decide where its panel appears. An entry with an invalid id or field is ignored, and the rest of the page still applies.
+A declared panel's frame renders on pages that load its module and have the column — which a declared sticky panel opens by itself everywhere but the main page. The module must be one the page loads itself, as it does for an enabled gadget; a module that another script loads later does not count. Where the module is not loaded, nothing renders, so a gadget's own settings decide where its panel appears. An entry with an invalid id or field is ignored, and the rest of the page still applies.
 
 Your script fills the frame with the same [`register()`](#javascript-api) call it would make without a declaration. With a declared id, `register()` returns the declared frame's body instead of building a panel. The declaration's label, placement and order stand; the ones in the definition apply only on a wiki that does not declare the panel, where the same code builds the panel itself. Register the id once: a second call is refused as a duplicate.
 
@@ -128,7 +128,7 @@ Every panel, built-in or registered, has the same shape:
 
 A declared frame also carries `data-module`, naming its module, until a registration claims it.
 
-Flow panels are direct children of the column. Sticky panels sit inside one `div.citizen-page-aside__sticky` after the flow panels; the server renders that block only when the page has a sticky panel, Contents or a declared one, and registering a sticky panel creates the block when the page has none. A page with both built-in panels looks like this:
+Flow panels are direct children of the column. Sticky panels sit inside one `div.citizen-page-aside__sticky` after the flow panels; the server renders that block whenever it renders the column, and registering a sticky panel creates the block on older cached pages that have none. A page with both built-in panels looks like this:
 
 ```html
 <aside class="citizen-page-aside" aria-label="Side column">
