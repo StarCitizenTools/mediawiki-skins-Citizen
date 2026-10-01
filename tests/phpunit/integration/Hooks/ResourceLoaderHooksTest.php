@@ -74,6 +74,22 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * Every name listed for one page, canonical name first. Alias lists grow
+	 * between MediaWiki releases, so tests check names rather than whole lists.
+	 *
+	 * @param string $name Canonical name of the page
+	 * @return string[]
+	 */
+	private function getCommandPaletteSpecialPageNames( string $name ): array {
+		$entries = array_values( array_filter(
+			array_map( static fn ( $entry ): array => (array)$entry, $this->getCommandPaletteSpecialPages() ),
+			static fn ( array $names ): bool => $names[0] === $name
+		) );
+		$this->assertCount( 1, $entries, "One entry for $name" );
+		return $entries[0];
+	}
+
+	/**
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
 	 */
 	public function testCommandPaletteSpecialPagesIncludesPagesWithoutAliases(): void {
@@ -96,6 +112,49 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertContains( [ 'Recentchanges', 'RecentChanges' ], $pages );
 		$this->assertContains( 'Watchlist', $pages );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
+	 */
+	public function testCommandPaletteSpecialPagesListsEveryAlias(): void {
+		$this->overrideConfigValue( MainConfigNames::LanguageCode, 'en' );
+
+		$names = $this->getCommandPaletteSpecialPageNames( 'Listfiles' );
+
+		$this->assertSame( 'ListFiles', $names[1] );
+		$this->assertContains( 'FileList', $names );
+		$this->assertContains( 'ImageList', $names );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
+	 */
+	public function testCommandPaletteSpecialPagesLeadsWithTheLocalName(): void {
+		$this->overrideConfigValue( MainConfigNames::LanguageCode, 'ru' );
+
+		$names = $this->getCommandPaletteSpecialPageNames( 'Version' );
+
+		$this->assertSame( 'Версия', $names[1] );
+		$this->assertContains( 'Version', array_slice( $names, 1 ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
+	 */
+	public function testCommandPaletteSpecialPagesLeavesOutAnAliasAnotherPageClaimed(): void {
+		// A canonical name always opens its own page, so ImageList no longer
+		// opens Listfiles once a page by that name exists.
+		$this->overrideConfigValues( [
+			MainConfigNames::LanguageCode => 'en',
+			MainConfigNames::SpecialPages => [ 'ImageList' => SpecialBlankpage::class ],
+		] );
+
+		$names = $this->getCommandPaletteSpecialPageNames( 'Listfiles' );
+
+		$this->assertContains( 'FileList', $names );
+		$this->assertNotContains( 'ImageList', $names );
+		$this->assertSame( [ 'ImageList' ], $this->getCommandPaletteSpecialPageNames( 'ImageList' ) );
 	}
 
 }

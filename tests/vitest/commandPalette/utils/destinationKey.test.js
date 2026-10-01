@@ -45,6 +45,32 @@ describe( 'destinationKey', () => {
 		expect( keyOf( '/wiki/Benutzerin:Foo' ) ).toBe( keyOf( '/wiki/User:Foo' ) );
 	} );
 
+	it( 'treats every name of a special page as one page, under its local name', () => {
+		const keys = [
+			'/wiki/Special:ImageList',
+			'/wiki/Special:Listfiles',
+			'/wiki/Special:ListFiles',
+			'/wiki/Special:filelist',
+			'/w/index.php?title=Special:FileList'
+		].map( keyOf );
+
+		expect( new Set( keys ) ).toEqual( new Set( [ 'page:Special:ListFiles' ] ) );
+	} );
+
+	it( 'treats the English name of a localised special page as that page', () => {
+		expect( keyOf( '/wiki/Special:Version' ) ).toBe( 'page:Special:Версия' );
+		expect( keyOf( '/wiki/Special:%D0%92%D0%B5%D1%80%D1%81%D0%B8%D1%8F' ) ).toBe( 'page:Special:Версия' );
+	} );
+
+	it( 'keeps the subpage of a special page', () => {
+		expect( keyOf( '/wiki/Special:Contribs/Foo' ) ).toBe( 'page:Special:Contributions/Foo' );
+		expect( keyOf( '/wiki/Special:Contribs/Bar' ) ).not.toBe( keyOf( '/wiki/Special:Contribs/Foo' ) );
+	} );
+
+	it( 'keeps the title of a special page the wiki does not have', () => {
+		expect( keyOf( '/wiki/Special:Nonexistent' ) ).toBe( 'page:Special:Nonexistent' );
+	} );
+
 	it( 'reads a script-style article path', () => {
 		withPaths( '/index.php/$1', '/index.php' );
 
@@ -54,6 +80,11 @@ describe( 'destinationKey', () => {
 
 	it( 'counts Special:Search without fulltext as the page its query names', () => {
 		expect( keyOf( '/w/index.php?title=Special:Search&search=akita' ) ).toBe( 'page:Akita' );
+	} );
+
+	it( 'counts a search for any name of a special page as that page', () => {
+		expect( keyOf( '/w/index.php?title=Special:Search&search=Special:ImageList' ) )
+			.toBe( 'page:Special:ListFiles' );
 	} );
 
 	it( 'keys anything that is not a page view by its link', () => {

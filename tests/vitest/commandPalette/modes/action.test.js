@@ -57,6 +57,14 @@ describe( 'action mode', () => {
 			expect( results[ 0 ].label ).toBe( 'Recent changes' );
 		} );
 
+		it( 'should link a page by its local name, which its other names redirect to', async () => {
+			mode = createActionCommand( documentRef, [ [ 'Listfiles', 'ListFiles', 'ImageList' ] ] );
+
+			const results = await mode.getResults( '' );
+
+			expect( results[ 0 ].url ).toBe( '/wiki/Special:ListFiles' );
+		} );
+
 		it( 'should sort special pages by label', async () => {
 			mode = createActionCommand( documentRef, [
 				'Watchlist',
@@ -78,7 +86,7 @@ describe( 'action mode', () => {
 				id: 'special-recentchanges',
 				type: 'special-page',
 				label: 'RecentChanges',
-				url: '/wiki/Special:Recentchanges',
+				url: '/wiki/Special:RecentChanges',
 				value: '/action:Recentchanges',
 				highlightQuery: true
 			} );

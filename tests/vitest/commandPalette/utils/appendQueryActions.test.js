@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 /* global globalThis */
 
 const mw = require( '../../mocks/mw.js' );
@@ -160,6 +161,21 @@ describe( 'createAppendQueryActions', () => {
 
 				expect( lead[ 0 ].id ).toBe( 'us' );
 				expect( lead[ 0 ].label ).toBe( 'United States' );
+			} );
+
+			it( 'recognises a special page the query names by another of its names', () => {
+				mw.config.get = vi.fn( ( key ) => ( {
+					wgArticlePath: '/wiki/$1',
+					wgScript: '/w/index.php'
+				} )[ key ] ?? null );
+				const { queryActions } = createAppendQueryActions();
+				const results = [ pageResult( 'lf', 'Special:ListFiles' ) ];
+
+				const { lead } = queryActions(
+					'Special:ImageList', { leads: true, results }
+				);
+
+				expect( lead[ 0 ].id ).toBe( 'lf' );
 			} );
 
 			it( 'keeps the plain go row when no result is that page', () => {

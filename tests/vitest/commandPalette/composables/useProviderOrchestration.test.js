@@ -697,6 +697,21 @@ describe( 'useProviderOrchestration', () => {
 			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
 		} );
 
+		it( 'leaves out the special page you are on, under whichever of its names', async () => {
+			useWikiPaths( { wgPageName: 'Special:Версия' } );
+			window.history.replaceState( null, '', '/wiki/Special:%D0%92%D0%B5%D1%80%D1%81%D0%B8%D1%8F' );
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'r1', url: '/wiki/Special:Version', source: 'recent' },
+					{ id: 'r2', url: '/wiki/Special:ImageList', source: 'recent' }
+				] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
+		} );
+
 		it( 'keeps a page under Recent while you view its history', async () => {
 			useWikiPaths( { wgPageName: 'Akita' } );
 			window.history.replaceState( null, '', '/w/index.php?title=Akita&action=history' );

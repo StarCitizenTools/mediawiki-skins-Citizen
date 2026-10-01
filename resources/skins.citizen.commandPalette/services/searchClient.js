@@ -8,6 +8,7 @@
  */
 
 const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
+const resolveSpecialPage = require( '../utils/resolveSpecialPage.js' );
 
 /**
  * @typedef {Object} RestResponse
@@ -126,39 +127,52 @@ function createRestSearchClient( scriptPath ) {
 	 * @return {import('../types.js').CommandPaletteSearchResponse}
 	 */
 	function adaptApiResponse( query, response, showDescription ) {
-		return {
-			query,
-			results: response.pages.map( ( page ) => {
-				const thumbnail = page.thumbnail;
-				// Bound to a local so the null check narrows for the metadata
-				// label below; `showRedirect` alone is just a boolean.
-				const matchedTitle = page.matched_title;
-				const showRedirect = !!matchedTitle &&
-					isRedirectUseful( page.title, matchedTitle );
-				return {
-					id: `citizen-command-palette-item-page-${ page.key }`,
-					type: 'page',
-					label: page.title,
-					description: showDescription ? page.description : undefined,
-					url: mw.util.getUrl( matchedTitle ?? page.title ),
-					thumbnail: thumbnail ? {
-						url: thumbnail.url,
-						width: thumbnail.width ?? undefined,
-						height: thumbnail.height ?? undefined
-					} : undefined,
-					thumbnailIcon: cdxIconArticle,
-					metadata: showRedirect && matchedTitle ? [
-						{
-							icon: cdxIconArticleRedirect,
-							label: matchedTitle,
-							highlightQuery: true
-						}
-					] : undefined,
-					actions: buildActions( page ),
-					highlightQuery: true
-				};
-			} )
-		};
+		const results = [];
+		const ids = new Set();
+		for ( const page of response.pages ) {
+			// A special page comes back under whichever of its names matched
+			// the query, not the local name the wiki opens it under. It is
+			// shown under the local name, matched through the other as a
+			// redirect is, so two of its names matching make one result.
+			const parsed = mw.Title.newFromText( page.title );
+			const special = parsed && resolveSpecialPage( parsed );
+			const title = special ? special.title.getPrefixedText() : page.title;
+			const id = `citizen-command-palette-item-page-${ special ? special.title.getPrefixedDb() : page.key }`;
+			if ( ids.has( id ) ) {
+				continue;
+			}
+			ids.add( id );
+
+			const thumbnail = page.thumbnail;
+			// Bound to a local so the null check narrows for the metadata
+			// label below; `showRedirect` alone is just a boolean.
+			const matchedTitle = page.matched_title ?? ( title !== page.title ? page.title : null );
+			const showRedirect = !!matchedTitle &&
+				isRedirectUseful( title, matchedTitle );
+			results.push( {
+				id,
+				type: 'page',
+				label: title,
+				description: showDescription ? page.description : undefined,
+				url: mw.util.getUrl( page.matched_title ?? title ),
+				thumbnail: thumbnail ? {
+					url: thumbnail.url,
+					width: thumbnail.width ?? undefined,
+					height: thumbnail.height ?? undefined
+				} : undefined,
+				thumbnailIcon: cdxIconArticle,
+				metadata: showRedirect && matchedTitle ? [
+					{
+						icon: cdxIconArticleRedirect,
+						label: matchedTitle,
+						highlightQuery: true
+					}
+				] : undefined,
+				actions: buildActions( page ),
+				highlightQuery: true
+			} );
+		}
+		return { query, results };
 	}
 
 	/**
