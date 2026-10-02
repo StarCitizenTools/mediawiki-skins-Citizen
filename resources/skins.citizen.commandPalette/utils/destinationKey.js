@@ -1,3 +1,4 @@
+const parseWikiLink = require( './parseWikiLink.js' );
 const resolveSpecialPage = require( './resolveSpecialPage.js' );
 
 /**
@@ -11,28 +12,14 @@ const resolveSpecialPage = require( './resolveSpecialPage.js' );
  * @return {string|null}
  */
 function pageOf( link ) {
-	const params = new URLSearchParams( link.search );
-	let text = params.get( 'title' );
-	params.delete( 'title' );
-	if ( text !== null ) {
-		if ( link.pathname !== mw.config.get( 'wgScript' ) ) {
-			return null;
-		}
-	} else {
-		const [ before, after = '' ] = String( mw.config.get( 'wgArticlePath' ) ).split( '$1' );
-		const path = link.pathname;
-		if ( !path.startsWith( before ) || !path.endsWith( after ) ) {
-			return null;
-		}
-		try {
-			text = decodeURIComponent( path.slice( before.length, path.length - after.length ) );
-		} catch ( e ) {
-			return null;
-		}
+	const parsed = parseWikiLink( link );
+	if ( !parsed ) {
+		return null;
 	}
-
-	let title = mw.Title.newFromText( text );
-	let special = title && resolveSpecialPage( title );
+	const { params } = parsed;
+	/** @type {mw.Title|null} */
+	let title = parsed.title;
+	let special = resolveSpecialPage( title );
 	if ( special && special.name === 'Search' ) {
 		title = mw.Title.newFromText( params.get( 'search' ) || '' );
 		params.delete( 'search' );
@@ -64,7 +51,7 @@ function destinationKey( item ) {
 	} catch ( e ) {
 		return `url:${ item.url }`;
 	}
-	const page = link.origin === window.location.origin ? pageOf( link ) : null;
+	const page = pageOf( link );
 	return page === null ? `url:${ link.href }` : `page:${ page }`;
 }
 
