@@ -1,5 +1,5 @@
 const createProvider = require( './createProvider.js' );
-const { cdxIconArticle } = require( '../icons.json' );
+const { cdxIconArticle, cdxIconEdit } = require( '../icons.json' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
 
 /**
@@ -54,7 +54,12 @@ function createRelatedArticlesProvider( loader ) {
 							url: mw.util.getUrl( page.title ),
 							thumbnail: page.thumbnail ? { url: page.thumbnail.source } : null,
 							thumbnailIcon: cdxIconArticle,
-							actions: [],
+							actions: page.pageid ? [ {
+								id: 'edit',
+								label: mw.msg( 'action-edit' ),
+								icon: cdxIconEdit,
+								url: mw.util.getUrl( page.title, { action: 'edit' } )
+							} ] : [],
 							source: 'related'
 						} ) );
 
