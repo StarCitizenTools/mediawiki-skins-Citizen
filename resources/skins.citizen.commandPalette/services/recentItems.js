@@ -1,65 +1,44 @@
 const { cdxIconTrash } = require( '../icons.json' );
 const destinationKey = require( '../utils/destinationKey.js' );
-const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
+const { isPlaceLink, entryFromLink, rowFromEntry, rankOf } = require( '../utils/recentEntry.js' );
+
+const RECENT_KEY = 'skin-citizen-command-palette-recent';
+// Earlier versions stored whole rows here. Read once, converted, then removed.
+const LEGACY_KEY = 'skin-citizen-command-palette-recent-items';
+const FORMAT_VERSION = 1;
 // Exceeds RECENT_ITEMS_SHOWN (useProviderOrchestration.js) by the most the
 // empty palette leaves out of Recent: the view you are on, the redirect
 // that led to it, and each page Related lists. Leaving those out then
 // never shortens the list.
 const MAX_RECENT_ITEMS = 13;
 
-// How a row was activated, not what the row is. Remembering one makes the
-// saved row replay that activation for good: `isMouseClick` tells the router
-// the browser already followed the row's <a>, so a row still carrying it
-// navigates nowhere on a later keyboard Enter.
-const ACTIVATION_FLAGS = [ 'isMouseClick', 'modifierClick', 'newTab' ];
-
 /**
- * Strip the activation flags from an item.
- *
- * Applied on write so nothing new is stored, and on read so entries an
- * earlier version already saved stop misbehaving without a cleared history.
- *
- * @param {Object} item
- * @return {Object}
+ * @param {any} value
+ * @return {boolean}
  */
-function withoutActivationFlags( item ) {
-	const stored = Object.assign( {}, item );
-	for ( const flag of ACTIVATION_FLAGS ) {
-		delete stored[ flag ];
-	}
-	return stored;
+function isEntry( value ) {
+	return !!value &&
+		typeof value.kind === 'string' &&
+		typeof value.key === 'string' &&
+		typeof value.label === 'string' &&
+		typeof value.url === 'string' &&
+		isPlaceLink( value.url );
 }
 
 /**
- * How much an entry says about what it opens. A row acting on the typed
- * query (go, full-text search, edit) says least; a mode's own entry (a
- * user, a file, a special page) says more than a plain page result.
+ * Keeps one entry per place, at the position of its newest save, showing
+ * the entry that names the place most directly.
  *
- * @param {Object} entry
- * @return {number}
- */
-function specificityOf( entry ) {
-	if ( entry.type === 'action' ) {
-		return 0;
-	}
-	return entry.type === 'page' ? 1 : 2;
-}
-
-/**
- * Keeps one entry per destination, at the place of its newest save, showing
- * its most specific version and the newest of equally specific ones.
- *
- * @param {Object[]} entries Newest first.
- * @return {Object[]}
+ * @param {import('../utils/recentEntry.js').RecentEntry[]} entries Newest first.
+ * @return {import('../utils/recentEntry.js').RecentEntry[]}
  */
 function collapse( entries ) {
 	const kept = new Map();
 	for ( const entry of entries ) {
-		const key = destinationKey( entry );
-		const current = kept.get( key );
+		const current = kept.get( entry.key );
 		// Setting an existing key keeps its place in the Map's order.
-		if ( !current || specificityOf( entry ) > specificityOf( current ) ) {
-			kept.set( key, entry );
+		if ( !current || rankOf( entry ) > rankOf( current ) ) {
+			kept.set( entry.key, entry );
 		}
 	}
 	return Array.from( kept.values() );
@@ -70,57 +49,81 @@ function collapse( entries ) {
  */
 function createRecentItems() {
 	/**
-	 * Saves an item to recent history
-	 *
-	 * @param {Object} item - The item to save
+	 * @param {import('../utils/recentEntry.js').RecentEntry[]} entries
+	 * @return {boolean} Whether the entries were stored.
 	 */
-	function saveRecentItem( item ) {
-		const recentItems = mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
-		mw.storage.setObject(
-			RECENT_ITEMS_KEY,
-			collapse( [ withoutActivationFlags( item ), ...recentItems ] )
-				.slice( 0, MAX_RECENT_ITEMS )
-		);
+	function write( entries ) {
+		return mw.storage.setObject( RECENT_KEY, { version: FORMAT_VERSION, entries } );
 	}
 
 	/**
-	 * Gets recent items from history
+	 * The stored entries, newest first, converting an earlier history once.
 	 *
-	 * @return {Array<import('../types.js').CommandPaletteItem>} Recent items in the format expected by the command palette
+	 * @return {import('../utils/recentEntry.js').RecentEntry[]}
+	 */
+	function load() {
+		const stored = mw.storage.getObject( RECENT_KEY );
+		if ( stored && stored.version === FORMAT_VERSION && Array.isArray( stored.entries ) ) {
+			return stored.entries.filter( isEntry );
+		}
+		const legacy = mw.storage.getObject( LEGACY_KEY );
+		if ( !Array.isArray( legacy ) ) {
+			return [];
+		}
+		const entries = collapse(
+			legacy
+				.map( ( row ) => row && entryFromLink( row.url, row, 0 ) )
+				.filter( isEntry )
+		).slice( 0, MAX_RECENT_ITEMS );
+		// The earlier history goes only once its conversion is stored, so a
+		// full or blocked storage converts it again next time instead of
+		// losing it.
+		if ( write( entries ) ) {
+			mw.storage.remove( LEGACY_KEY );
+		}
+		return entries;
+	}
+
+	/**
+	 * Remembers the place a row led to.
+	 *
+	 * @param {import('../types.js').CommandPaletteItem} item The row that was opened.
+	 * @param {string} [url] The link actually opened; the row's own link if omitted.
+	 */
+	function saveRecentItem( item, url ) {
+		const entry = entryFromLink( url || item.url, item, Date.now() );
+		if ( !entry ) {
+			return;
+		}
+		write( collapse( [ entry, ...load() ] ).slice( 0, MAX_RECENT_ITEMS ) );
+	}
+
+	/**
+	 * @return {Array<import('../types.js').CommandPaletteItem>} Rows for the remembered places.
 	 */
 	function getRecentItems() {
-		const items = mw.storage.getObject( RECENT_ITEMS_KEY ) ?? [];
 		const dismissAction = {
 			id: 'dismiss',
 			label: mw.msg( 'citizen-command-palette-dismiss' ),
 			icon: cdxIconTrash
 		};
-
-		// An earlier version kept one entry per row rather than per destination.
-		return collapse( items ).map( ( item ) => {
-			const actions = Array.isArray( item.actions ) ? [ ...item.actions ] : [];
-			if ( !actions.some( ( action ) => action.id === 'dismiss' ) ) {
-				actions.push( dismissAction );
-			}
-
-			return {
-				...withoutActivationFlags( item ),
-				actions
-			};
+		return load().map( ( entry ) => {
+			const row = rowFromEntry( entry );
+			return { ...row, actions: [ ...( row.actions || [] ), dismissAction ] };
 		} );
 	}
 
 	/**
-	 * Removes every entry for what the given item opens.
+	 * Forgets the place a row shows.
 	 *
-	 * @param {Object} item - The item to remove
+	 * @param {Object} item The row to forget.
 	 */
 	function removeRecentItem( item ) {
-		const recentItems = mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
 		const key = destinationKey( item );
-		const remaining = recentItems.filter( ( entry ) => destinationKey( entry ) !== key );
-		if ( remaining.length !== recentItems.length ) {
-			mw.storage.setObject( RECENT_ITEMS_KEY, remaining );
+		const entries = load();
+		const remaining = entries.filter( ( entry ) => entry.key !== key );
+		if ( remaining.length !== entries.length ) {
+			write( remaining );
 		}
 	}
 
@@ -128,7 +131,8 @@ function createRecentItems() {
 	 * Clears all search history
 	 */
 	function clearHistory() {
-		mw.storage.remove( RECENT_ITEMS_KEY );
+		mw.storage.remove( RECENT_KEY );
+		mw.storage.remove( LEGACY_KEY );
 	}
 
 	return {

@@ -1032,8 +1032,125 @@ describe( 'useProviderOrchestration', () => {
 
 			expect( action ).toEqual( { action: 'navigate', payload: 'go' } );
 			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
-				{ id: 'p1', label: 'Page', source: 'search', url: '/wiki/Page' }
+				{ id: 'p1', label: 'Page', source: 'search', url: '/wiki/Page' },
+				'/wiki/Page'
 			);
+		} );
+
+		it( 'saves the link a row actually opened, not the row\'s own link', async () => {
+			const revisionProvider = {
+				...searchProvider,
+				getResults: () => ( {
+					items: [ { id: 'r1', label: 'Page', source: 'search', url: '/w/index.php?title=Page&oldid=1' } ]
+				} ),
+				onResultSelect: () => ( {
+					action: 'navigate',
+					payload: '/w/index.php?title=Page&diff=prev&oldid=1'
+				} )
+			};
+			const recentItemsService = { saveRecentItem: vi.fn() };
+			const orch = useProviderOrchestration(
+				[ commandProvider, revisionProvider ], mockDecorator, { recentItemsService }
+			);
+			orch.updateQuery( 'Page' );
+			await vi.runAllTimersAsync();
+			const row = orch.flatItems.value.find( ( item ) => item.id === 'r1' );
+
+			await orch.handleSelection( row );
+
+			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
+				row,
+				'/w/index.php?title=Page&diff=prev&oldid=1'
+			);
+		} );
+
+		describe( 'a row that keeps more than it renders', () => {
+			const revisionRow = { id: 'r1', label: 'Page', source: 'search', url: '/w/index.php?title=Page&oldid=1', revid: 1 };
+			const clickedCopy = { id: 'r1', label: 'Page', url: '/w/index.php?title=Page&oldid=1', source: 'search', isMouseClick: true };
+
+			async function setup() {
+				const revisionProvider = {
+					...searchProvider,
+					getResults: () => ( { items: [ { ...revisionRow } ] } ),
+					onResultSelect: ( item ) => ( {
+						action: 'navigate',
+						payload: '/w/index.php?title=Page&diff=prev&oldid=' + item.revid
+					} )
+				};
+				const recentItemsService = { saveRecentItem: vi.fn() };
+				const orch = useProviderOrchestration(
+					[ commandProvider, revisionProvider ], mockDecorator, { recentItemsService }
+				);
+				orch.updateQuery( 'Page' );
+				await vi.runAllTimersAsync();
+				return { orch, recentItemsService };
+			}
+
+			it( 'gives a mouse-clicked row\'s handler the full row it was built from', async () => {
+				const { orch, recentItemsService } = await setup();
+
+				const action = await orch.handleSelection( { ...clickedCopy } );
+
+				expect( action.payload ).toBe( '/w/index.php?title=Page&diff=prev&oldid=1' );
+				expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
+					{ ...revisionRow, isMouseClick: true },
+					'/w/index.php?title=Page&diff=prev&oldid=1'
+				);
+			} );
+
+			it( 'saves the same link when a row is activated twice', async () => {
+				const { orch, recentItemsService } = await setup();
+				const row = orch.flatItems.value.find( ( item ) => item.id === 'r1' );
+
+				await orch.handleSelection( row );
+				await orch.handleSelection( { ...clickedCopy } );
+
+				const savedLinks = recentItemsService.saveRecentItem.mock.calls.map( ( call ) => call[ 1 ] );
+				expect( savedLinks ).toEqual( [
+					'/w/index.php?title=Page&diff=prev&oldid=1',
+					'/w/index.php?title=Page&diff=prev&oldid=1'
+				] );
+			} );
+		} );
+
+		describe( 'rows that share an id', () => {
+			const first = { id: 'menuitem-edit', label: 'Edit', source: 'search', url: '/a', marker: 1 };
+			const second = { id: 'menuitem-edit', label: 'Edit', source: 'search', url: '/b', marker: 2 };
+
+			async function setup() {
+				const sharedIdProvider = {
+					...searchProvider,
+					getResults: () => ( { items: [ { ...first }, { ...second } ] } ),
+					onResultSelect: vi.fn( ( item ) => ( { action: 'navigate', payload: item.url } ) )
+				};
+				const orch = useProviderOrchestration(
+					[ commandProvider, sharedIdProvider ], mockDecorator, {}
+				);
+				orch.updateQuery( 'Edit' );
+				await vi.runAllTimersAsync();
+				return { orch, onResultSelect: sharedIdProvider.onResultSelect };
+			}
+
+			it( 'opens the row that was activated, not the first with its id', async () => {
+				const { orch, onResultSelect } = await setup();
+				const row = orch.flatItems.value.find( ( item ) => item.marker === 2 );
+
+				const action = await orch.handleSelection( row );
+
+				expect( action.payload ).toBe( '/b' );
+				expect( onResultSelect ).toHaveBeenCalledWith( row );
+			} );
+
+			it( 'matches a clicked copy by its link as well as its id', async () => {
+				const { orch, onResultSelect } = await setup();
+
+				const action = await orch.handleSelection(
+					{ id: 'menuitem-edit', label: 'Edit', source: 'search', url: '/b', isMouseClick: true }
+				);
+
+				expect( action.payload ).toBe( '/b' );
+				expect( onResultSelect ).toHaveBeenCalledWith( { ...second, isMouseClick: true } );
+			} );
 		} );
 
 		it( 'leaves a trigger-prefixed query its own results in the lead', async () => {
