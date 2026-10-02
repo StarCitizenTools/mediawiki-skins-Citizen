@@ -570,16 +570,50 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		if ( actionResult.action === 'navigate' && result.type !== 'command' ) {
 			if ( deps.recentItemsService ) {
 				// A lead row standing in for a result carries that result's id
-				// but not its link. Recent keeps the result itself, so the saved
-				// entry links to the page and not through Special:Search.
+				// with the go link. Recent keeps the result's own link, so the
+				// saved place is the page and not a trip through Special:Search.
+				// Any other row is remembered by the link its handler returned,
+				// which a mode may choose differently from the row's own link.
 				const standsFor = content.value.items.find(
-					( item ) => item.id === result.id
+					( item ) => item.id === result.id && item.url !== result.url
 				);
-				deps.recentItemsService.saveRecentItem( standsFor || result );
+				deps.recentItemsService.saveRecentItem(
+					standsFor || result,
+					standsFor ? standsFor.url : actionResult.payload
+				);
 			}
 		}
 
 		return actionResult;
+	}
+
+	/**
+	 * The displayed row a selection came from, carrying the selection's
+	 * activation flags.
+	 *
+	 * A copy is matched on its link as well as its id: rows from some modes
+	 * share an id, and rows that also share a link open the same place.
+	 *
+	 * @param {Object} result The selected item.
+	 * @return {Object} The full row, or the selection itself when it is not displayed.
+	 */
+	function resolveSelection( result ) {
+		if ( flatItems.value.includes( result ) ) {
+			return result;
+		}
+		const found = flatItems.value.find(
+			( item ) => String( item.id ) === String( result.id ) && item.url === result.url
+		);
+		if ( !found ) {
+			return result;
+		}
+		const row = { ...found };
+		for ( const flag of [ 'isMouseClick', 'modifierClick', 'newTab' ] ) {
+			if ( result[ flag ] !== undefined ) {
+				row[ flag ] = result[ flag ];
+			}
+		}
+		return row;
 	}
 
 	/**
@@ -593,13 +627,18 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 			return { action: 'none' };
 		}
 
+		// A mouse click emits only the row component's props, so without this
+		// a handler would miss fields its mode keeps on the row, such as a
+		// revision id.
+		const item = resolveSelection( result );
+
 		// If in a mode, delegate to the mode's onResultSelect
 		if ( activeMode.value &&
 			typeof activeMode.value.onResultSelect === 'function' ) {
 			try {
 				const actionResult =
-					await activeMode.value.onResultSelect( result );
-				return processAction( actionResult, result );
+					await activeMode.value.onResultSelect( item );
+				return processAction( actionResult, item );
 			} catch ( error ) {
 				mw.log.error(
 					'[commandPalette] Mode selection handler failed:', error
@@ -609,9 +648,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		}
 
 		const sourceMatch = ( /^([^:]+)(?::.*)?$/ ).exec(
-			result.source ?? ''
+			item.source ?? ''
 		);
-		const providerId = sourceMatch ? sourceMatch[ 1 ] : result.source;
+		const providerId = sourceMatch ? sourceMatch[ 1 ] : item.source;
 		const sourceProvider = providers.find(
 			( p ) => p.id === providerId
 		);
@@ -619,8 +658,8 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		if ( sourceProvider && typeof sourceProvider.onResultSelect === 'function' ) {
 			try {
 				const actionResult =
-					await sourceProvider.onResultSelect( result );
-				return processAction( actionResult, result );
+					await sourceProvider.onResultSelect( item );
+				return processAction( actionResult, item );
 			} catch ( error ) {
 				mw.log.error(
 					'[commandPalette] Selection handler failed:', error
@@ -630,9 +669,9 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		}
 
 		// Fallback
-		const fallback = result.url ?
-			{ action: 'navigate', payload: result.url } : { action: 'none' };
-		return processAction( fallback, result );
+		const fallback = item.url ?
+			{ action: 'navigate', payload: item.url } : { action: 'none' };
+		return processAction( fallback, item );
 	}
 
 	/**

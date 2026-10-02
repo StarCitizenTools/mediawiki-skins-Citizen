@@ -8,10 +8,11 @@ const mwTitle = require( '../../mocks/mwTitle.js' );
 
 const createRecentItems = require( '../../../../resources/skins.citizen.commandPalette/services/recentItems.js' );
 
-const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
+const RECENT_KEY = 'skin-citizen-command-palette-recent';
+const LEGACY_KEY = 'skin-citizen-command-palette-recent-items';
 
-function stored() {
-	return mw.storage.getObject( RECENT_ITEMS_KEY );
+function page( title ) {
+	return { id: `p-${ title }`, type: 'page', label: title, url: `/wiki/${ title }`, source: 'search' };
 }
 
 describe( 'createRecentItems', () => {
@@ -33,6 +34,7 @@ describe( 'createRecentItems', () => {
 		} );
 		mw.storage.setObject = vi.fn( ( key, val ) => {
 			storage[ key ] = JSON.parse( JSON.stringify( val ) );
+			return true;
 		} );
 		mw.storage.remove = vi.fn( ( key ) => {
 			delete storage[ key ];
@@ -42,240 +44,249 @@ describe( 'createRecentItems', () => {
 	} );
 
 	describe( 'saveRecentItem', () => {
-		it( 'saves an item to storage', () => {
-			const item = { id: 'item-1', label: 'Test Page' };
-
-			service.saveRecentItem( item );
-
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 1 );
-			expect( stored[ 0 ] ).toEqual( item );
-		} );
-
-		it( 'moves duplicate items to the front', () => {
-			const itemA = { id: 'item-a', label: 'Page A' };
-			const itemB = { id: 'item-b', label: 'Page B' };
-			const itemC = { id: 'item-c', label: 'Page C' };
-
-			service.saveRecentItem( itemA );
-			service.saveRecentItem( itemB );
-			service.saveRecentItem( itemC );
-			service.saveRecentItem( itemA );
-
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 3 );
-			expect( stored[ 0 ].id ).toBe( 'item-a' );
-			expect( stored[ 1 ].id ).toBe( 'item-c' );
-			expect( stored[ 2 ].id ).toBe( 'item-b' );
-		} );
-
-		it( 'does not remember how the item was activated', () => {
-			// A row saved from a Ctrl+click would otherwise replay that
-			// activation for good -- opening a new tab, or navigating
-			// nowhere at all, on every later plain Enter.
-			const item = {
-				id: 'item-1',
-				label: 'Test Page',
-				isMouseClick: true,
-				modifierClick: true,
-				newTab: true
+		it( 'stores where the row led, not the row', () => {
+			const row = {
+				...page( 'Main_Page' ),
+				description: 'About the wiki',
+				thumbnail: { url: 'thumb.jpg' },
+				actions: [ { id: 'edit' } ],
+				isMouseClick: true
 			};
 
-			service.saveRecentItem( item );
+			service.saveRecentItem( row, row.url );
 
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored[ 0 ] ).toEqual( { id: 'item-1', label: 'Test Page' } );
+			expect( storage[ RECENT_KEY ] ).toEqual( {
+				version: 1,
+				entries: [ {
+					kind: 'page',
+					key: 'page:Main Page',
+					label: 'Main_Page',
+					url: '/wiki/Main_Page',
+					savedAt: expect.any( Number )
+				} ]
+			} );
 		} );
 
-		it( 'enforces maximum of 13 items', () => {
-			for ( let i = 1; i <= 15; i++ ) {
-				service.saveRecentItem( { id: `item-${ i }`, label: `Page ${ i }` } );
+		it( 'stores the link the reader opened when it differs from the row link', () => {
+			const row = { id: 'r1', type: 'revision', label: '5m · Alice', url: '/w/index.php?title=Main_Page&oldid=5' };
+
+			service.saveRecentItem( row, '/w/index.php?title=Main_Page&diff=prev&oldid=5' );
+
+			expect( storage[ RECENT_KEY ].entries[ 0 ] ).toMatchObject( {
+				kind: 'revision',
+				label: 'Main Page',
+				url: '/w/index.php?title=Main_Page&diff=prev&oldid=5'
+			} );
+		} );
+
+		it( 'falls back to the row link when none is given', () => {
+			service.saveRecentItem( page( 'Foo' ) );
+
+			expect( storage[ RECENT_KEY ].entries[ 0 ].url ).toBe( '/wiki/Foo' );
+		} );
+
+		it( 'remembers nothing for a row without a real link', () => {
+			service.saveRecentItem( { id: 'x', type: 'menu-item', label: 'Purge', url: '#' }, '#' );
+
+			expect( storage[ RECENT_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'moves a place opened again to the front', () => {
+			service.saveRecentItem( page( 'A' ) );
+			service.saveRecentItem( page( 'B' ) );
+
+			service.saveRecentItem( page( 'A' ) );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => e.label ) ).toEqual( [ 'A', 'B' ] );
+		} );
+
+		it( 'keeps the page over a go that named it, at the newest position', () => {
+			service.saveRecentItem( page( 'Other' ) );
+			service.saveRecentItem( page( 'Main_Page' ) );
+
+			service.saveRecentItem(
+				{ id: 'go', type: 'action', label: 'Main_Page', url: '/wiki/Special:Search?search=Main_Page' }
+			);
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => [ e.kind, e.label ] ) ).toEqual( [
+				[ 'page', 'Main_Page' ],
+				[ 'page', 'Other' ]
+			] );
+		} );
+
+		it( 'replaces a go with the page once the page is opened', () => {
+			service.saveRecentItem(
+				{ id: 'go', type: 'action', label: 'Main_Page', url: '/wiki/Special:Search?search=Main_Page' }
+			);
+
+			service.saveRecentItem( page( 'Main_Page' ) );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => e.kind ) ).toEqual( [ 'page' ] );
+		} );
+
+		it( 'keeps at most 13 places', () => {
+			for ( let i = 0; i < 15; i++ ) {
+				service.saveRecentItem( page( `P${ i }` ) );
 			}
 
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 13 );
-			expect( stored[ 0 ].id ).toBe( 'item-15' );
-			expect( stored[ 12 ].id ).toBe( 'item-3' );
-		} );
-	} );
-
-	describe( 'one entry per destination', () => {
-		const searchResult = {
-			id: 'citizen-command-palette-item-page-User:Alistair3149',
-			type: 'page',
-			label: 'User:Alistair3149',
-			url: '/wiki/User:Alistair3149'
-		};
-		const userResult = {
-			id: 'citizen-command-palette-item-user-7',
-			type: 'user',
-			label: 'Alistair3149',
-			url: '/wiki/User:Alistair3149'
-		};
-		const other = { id: 'other', type: 'page', label: 'Other', url: '/wiki/Other' };
-
-		it( 'keeps a mode\'s own entry over a page result for the same page', () => {
-			service.saveRecentItem( searchResult );
-
-			service.saveRecentItem( userResult );
-
-			expect( stored() ).toEqual( [ userResult ] );
+			expect( storage[ RECENT_KEY ].entries ).toHaveLength( 13 );
+			expect( storage[ RECENT_KEY ].entries[ 0 ].label ).toBe( 'P14' );
 		} );
 
-		it( 'keeps the mode\'s entry, moved to the top, when the page result is opened later', () => {
-			service.saveRecentItem( userResult );
-			service.saveRecentItem( other );
-
-			service.saveRecentItem( searchResult );
-
-			expect( stored() ).toEqual( [ userResult, other ] );
-		} );
-
-		it( 'shows the newest of two entries that are equally specific', () => {
-			const categoryMember = { ...searchResult, id: 'citizen-command-palette-item-categorymember-User:Alistair3149' };
-			service.saveRecentItem( searchResult );
-
-			service.saveRecentItem( categoryMember );
-
-			expect( stored() ).toEqual( [ categoryMember ] );
-		} );
-
-		it( 'counts a go row as the page its query names', () => {
-			const go = {
-				id: 'citizen-command-palette-item-go-akita',
-				type: 'action',
-				label: 'akita',
-				url: '/w/index.php?title=Special:Search&search=akita'
+		it( 'drops stored entries it cannot read', () => {
+			storage[ RECENT_KEY ] = {
+				version: 1,
+				entries: [
+					{ kind: 'page', key: 'page:A', label: 'A', url: '/wiki/A', savedAt: 1 },
+					'junk',
+					{ kind: 'page' }
+				]
 			};
-			const page = { id: 'page-Akita', type: 'page', label: 'Akita', url: '/wiki/Akita' };
-			service.saveRecentItem( page );
-			service.saveRecentItem( other );
 
-			service.saveRecentItem( go );
+			service.saveRecentItem( page( 'B' ) );
 
-			expect( stored() ).toEqual( [ page, other ] );
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => e.label ) ).toEqual( [ 'B', 'A' ] );
 		} );
-
-		it( 'keeps each full-text search as its own entry', () => {
-			const fulltext = ( query ) => ( {
-				id: `citizen-command-palette-item-fulltext-search-${ query }`,
-				type: 'action',
-				label: query,
-				url: `/w/index.php?title=Special:Search&search=${ query }&fulltext=1`
-			} );
-			service.saveRecentItem( fulltext( 'sun' ) );
-			service.saveRecentItem( fulltext( 'moon' ) );
-
-			service.saveRecentItem( fulltext( 'sun' ) );
-
-			expect( stored().map( ( i ) => i.label ) ).toEqual( [ 'sun', 'moon' ] );
-		} );
-
-		it( 'keeps one entry for a special page opened under two of its names', () => {
-			const byAlias = { id: 'page-Special:ImageList', type: 'page', label: 'Special:ImageList', url: '/wiki/Special:ImageList' };
-			const byName = { id: 'page-Special:ListFiles', type: 'page', label: 'Special:ListFiles', url: '/wiki/Special:ListFiles' };
-			service.saveRecentItem( byAlias );
-
-			service.saveRecentItem( byName );
-
-			expect( stored() ).toEqual( [ byName ] );
-		} );
-
 	} );
 
 	describe( 'getRecentItems', () => {
-		it( 'returns empty array when no items saved', () => {
-			const result = service.getRecentItems();
-
-			expect( result ).toEqual( [] );
+		it( 'returns nothing when nothing is stored', () => {
+			expect( service.getRecentItems() ).toEqual( [] );
 		} );
 
-		it( 'adds dismiss action to each item', () => {
-			service.saveRecentItem( { id: 'item-1', label: 'Page 1' } );
-			service.saveRecentItem( { id: 'item-2', label: 'Page 2' } );
+		it( 'shows each place as a row built now, with a dismiss button', () => {
+			service.saveRecentItem( page( 'Main_Page' ) );
 
-			const result = service.getRecentItems();
+			const rows = service.getRecentItems();
 
-			expect( result ).toHaveLength( 2 );
-			for ( const item of result ) {
-				const dismissAction = item.actions.find( ( a ) => a.id === 'dismiss' );
-				expect( dismissAction ).toBeDefined();
-				expect( dismissAction.label ).toBe( 'citizen-command-palette-dismiss' );
-			}
+			expect( rows ).toHaveLength( 1 );
+			expect( rows[ 0 ] ).toMatchObject( { type: 'page', label: 'Main_Page', url: '/wiki/Main_Page' } );
+			expect( rows[ 0 ].actions.map( ( a ) => a.id ) ).toEqual( [ 'edit', 'dismiss' ] );
 		} );
 
-		it( 'drops activation flags left behind by an earlier version', () => {
-			mw.storage.setObject( 'skin-citizen-command-palette-recent-items', [
-				{ id: 'item-1', label: 'Page 1', isMouseClick: true, modifierClick: false }
+		it( 'leaves out a stored entry whose link is not a page', () => {
+			storage[ RECENT_KEY ] = {
+				version: 1,
+				entries: [
+					{ kind: 'link', key: 'url:script', label: 'Script', url: 'javascript:alert(1)', savedAt: 2 },
+					{ kind: 'page', key: 'page:B', label: 'B', url: '/wiki/B', savedAt: 1 }
+				]
+			};
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'B' ] );
+		} );
+
+		it( 'shows nothing, without failing, when storage is unavailable', () => {
+			mw.storage.getObject = vi.fn( () => false );
+
+			expect( service.getRecentItems() ).toEqual( [] );
+		} );
+	} );
+
+	describe( 'converting an earlier history', () => {
+		it( 'converts the rows an earlier version stored, once', () => {
+			storage[ LEGACY_KEY ] = [
+				{ id: 'p', type: 'page', label: 'Main Page', description: 'About', url: '/wiki/Main_Page', actions: [ { id: 'edit' } ] },
+				{ id: 'go', type: 'action', label: 'zzqx', description: 'Go to the page…', url: '/wiki/Special:Search?search=zzqx', source: 'queryAction:go' },
+				{ id: 'm', type: 'menu-item', label: 'History', url: '/w/index.php?title=Help:Contents&action=history' },
+				{ id: 'r', type: 'revision', label: '5m · Alice', url: '/w/index.php?title=Main_Page&oldid=5' },
+				{ id: 'n', label: 'No link' }
+			];
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => [ r.type, r.label ] ) ).toEqual( [
+				[ 'page', 'Main Page' ],
+				[ 'go', 'zzqx' ],
+				[ 'link', 'History' ],
+				[ 'revision', 'Main Page' ]
 			] );
-
-			const result = service.getRecentItems();
-
-			expect( result[ 0 ].isMouseClick ).toBeUndefined();
-			expect( result[ 0 ].modifierClick ).toBeUndefined();
+			expect( storage[ RECENT_KEY ].entries ).toHaveLength( 4 );
+			expect( storage[ LEGACY_KEY ] ).toBeUndefined();
 		} );
 
-		it( 'keeps one entry per page from a history an earlier version saved', () => {
-			mw.storage.setObject( RECENT_ITEMS_KEY, [
-				{ id: 'page', type: 'page', label: 'User:Foo', url: '/wiki/User:Foo' },
-				{ id: 'user', type: 'user', label: 'Foo', url: '/wiki/User:Foo' },
-				{ id: 'bar', type: 'page', label: 'Bar', url: '/wiki/Bar' }
+		it( 'keeps one entry per page, at its newest position, within the limit', () => {
+			const others = Array.from( { length: 14 }, ( _, i ) => page( `P${ i }` ) );
+			storage[ LEGACY_KEY ] = [
+				others[ 0 ],
+				page( 'Dup' ),
+				others[ 1 ],
+				others[ 2 ],
+				page( 'Dup' ),
+				...others.slice( 3 )
+			];
+
+			service.getRecentItems();
+
+			const labels = storage[ RECENT_KEY ].entries.map( ( e ) => e.label );
+			expect( labels ).toHaveLength( 13 );
+			expect( labels ).toEqual( [
+				'P0', 'Dup', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11'
 			] );
-
-			const result = service.getRecentItems();
-
-			expect( result.map( ( i ) => i.id ) ).toEqual( [ 'user', 'bar' ] );
 		} );
 
-		it( 'does not duplicate dismiss action if already present', () => {
-			const existingDismiss = { id: 'dismiss', label: 'Already there', icon: 'some-icon' };
-			service.saveRecentItem( { id: 'item-1', label: 'Page 1', actions: [ existingDismiss ] } );
+		it( 'prefers the current format when both are stored', () => {
+			storage[ RECENT_KEY ] = {
+				version: 1,
+				entries: [ { kind: 'page', key: 'page:A', label: 'A', url: '/wiki/A', savedAt: 1 } ]
+			};
+			storage[ LEGACY_KEY ] = [ page( 'B' ) ];
 
-			const result = service.getRecentItems();
+			const rows = service.getRecentItems();
 
-			const dismissActions = result[ 0 ].actions.filter( ( a ) => a.id === 'dismiss' );
-			expect( dismissActions ).toHaveLength( 1 );
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'A' ] );
+		} );
+
+		it( 'converts a history with nothing usable into an empty one', () => {
+			storage[ LEGACY_KEY ] = [ { id: 'n', label: 'No link' } ];
+
+			expect( service.getRecentItems() ).toEqual( [] );
+			expect( storage[ RECENT_KEY ] ).toEqual( { version: 1, entries: [] } );
+			expect( storage[ LEGACY_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'keeps the earlier history when the converted one cannot be stored', () => {
+			storage[ LEGACY_KEY ] = [ page( 'A' ) ];
+			mw.storage.setObject = vi.fn( () => false );
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'A' ] );
+			expect( storage[ LEGACY_KEY ] ).toEqual( [ page( 'A' ) ] );
 		} );
 	} );
 
 	describe( 'removeRecentItem', () => {
-		it( 'removes a specific item by id', () => {
-			service.saveRecentItem( { id: 'item-1', label: 'Page 1' } );
-			service.saveRecentItem( { id: 'item-2', label: 'Page 2' } );
-			service.saveRecentItem( { id: 'item-3', label: 'Page 3' } );
+		it( 'removes the place the dismissed row shows', () => {
+			service.saveRecentItem( page( 'A' ) );
+			service.saveRecentItem( page( 'B' ) );
+			const [ rowB ] = service.getRecentItems();
 
-			service.removeRecentItem( { id: 'item-2' } );
+			service.removeRecentItem( rowB );
 
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toHaveLength( 2 );
-			expect( stored.find( ( i ) => i.id === 'item-2' ) ).toBeUndefined();
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => e.label ) ).toEqual( [ 'A' ] );
 		} );
-	} );
 
-	describe( 'removeRecentItem — by destination', () => {
-		it( 'removes every entry for the dismissed page, however it was saved', () => {
-			mw.storage.setObject( RECENT_ITEMS_KEY, [
-				{ id: 'page', type: 'page', label: 'User:Foo', url: '/wiki/User:Foo' },
-				{ id: 'user', type: 'user', label: 'Foo', url: '/wiki/User:Foo' }
-			] );
-			const [ shown ] = service.getRecentItems();
+		it( 'writes nothing when no place matches', () => {
+			service.saveRecentItem( page( 'A' ) );
+			mw.storage.setObject.mockClear();
 
-			service.removeRecentItem( shown );
+			service.removeRecentItem( page( 'Unrelated' ) );
 
-			expect( stored() ).toEqual( [] );
+			expect( mw.storage.setObject ).not.toHaveBeenCalled();
 		} );
 	} );
 
 	describe( 'clearHistory', () => {
-		it( 'removes all items', () => {
-			service.saveRecentItem( { id: 'item-1', label: 'Page 1' } );
-			service.saveRecentItem( { id: 'item-2', label: 'Page 2' } );
+		it( 'removes the history in either format', () => {
+			storage[ RECENT_KEY ] = { version: 1, entries: [] };
+			storage[ LEGACY_KEY ] = [];
 
 			service.clearHistory();
 
-			expect( mw.storage.remove ).toHaveBeenCalledWith( 'skin-citizen-command-palette-recent-items' );
-			const stored = mw.storage.getObject( 'skin-citizen-command-palette-recent-items' );
-			expect( stored ).toBeNull();
+			expect( storage ).toEqual( {} );
 		} );
 	} );
 } );
