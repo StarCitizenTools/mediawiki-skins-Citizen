@@ -7,7 +7,8 @@
  * @module searchClient
  */
 
-const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
+const { cdxIconArticle, cdxIconArticleRedirect } = require( '../icons.json' );
+const { buildPageActions } = require( '../utils/providerActions.js' );
 const resolveSpecialPage = require( '../utils/resolveSpecialPage.js' );
 
 /**
@@ -90,33 +91,6 @@ function isRedirectUseful( title, matchedTitle ) {
  */
 function createRestSearchClient( scriptPath ) {
 	const searchApiUrl = scriptPath + '/rest.php';
-	const editMessage = mw.msg( 'action-edit' );
-
-	/**
-	 * The actions offered on a result row.
-	 *
-	 * The REST handler reports a page id of 0 for any title that cannot be a
-	 * real page — a virtual namespace such as `Special:` or `Media:`, or an
-	 * interwiki target. Such a title holds no wikitext, so `action=edit` is
-	 * ignored and merely renders the page.
-	 *
-	 * @param {RestResult} page
-	 * @return {import('../types.js').CommandPaletteItemAction[]}
-	 */
-	function buildActions( page ) {
-		if ( !page.id ) {
-			return [];
-		}
-
-		return [
-			{
-				id: 'edit',
-				label: editMessage,
-				icon: cdxIconEdit,
-				url: mw.util.getUrl( page.title, { action: 'edit' } )
-			}
-		];
-	}
 
 	/**
 	 * Adapt the REST API response to CommandPaletteSearchResponse format.
@@ -168,7 +142,7 @@ function createRestSearchClient( scriptPath ) {
 						highlightQuery: true
 					}
 				] : undefined,
-				actions: buildActions( page ),
+				actions: buildPageActions( page ),
 				highlightQuery: true
 			} );
 		}
