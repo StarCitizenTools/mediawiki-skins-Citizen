@@ -9,21 +9,9 @@ description: Extensions and gadgets that integrate well with Citizen
 
 Citizen works out of the box, but these extensions unlock additional features when installed.
 
-### [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages)
+### [Bucket](https://www.mediawiki.org/wiki/Extension:Bucket)
 
-Bundled with MediaWiki. Adds thumbnails to command palette results.
-
-### [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts)
-
-Bundled with MediaWiki. Adds descriptions to command palette results.
-
-```php [LocalSettings.php]
-$wgExtractsExtendRestSearch = true;
-```
-
-### [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription)
-
-Displays a short description under the page title and in command palette results. Takes priority over TextExtracts when set.
+Adds a Bucket mode to the command palette. Type `/bucket:` to browse the wiki's buckets, drill into their fields and values to filter matching pages, and copy the query as Lua. Works automatically when installed. See [Command palette](../features/command-palette.md#buckets) for details.
 
 ### [MobileFrontend](https://www.mediawiki.org/wiki/Extension:MobileFrontend)
 
@@ -37,6 +25,10 @@ If your wiki uses a different default skin but you want Citizen on mobile, Mobil
 $wgDefaultMobileSkin = 'citizen';
 ```
 
+### [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages)
+
+Bundled with MediaWiki. Adds thumbnails to command palette results.
+
 ### [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles)
 
 Shows related pages in the command palette when no query is entered. To also show them at the bottom of pages:
@@ -49,9 +41,21 @@ $wgRelatedArticlesFooterAllowedSkins[] = 'citizen';
 
 Adds an Ask query mode to the command palette. Type `/smw:` to build structured queries with autocomplete for properties, categories, and values. Works automatically when installed.
 
+### [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription)
+
+Displays a short description under the page title and in command palette results. Takes priority over TextExtracts when set.
+
 ### [TemplateStylesExtender](https://www.mediawiki.org/wiki/Extension:TemplateStylesExtender)
 
 Only needed if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles). Enables CSS variables in TemplateStyles, including Citizen's design tokens.
+
+### [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts)
+
+Bundled with MediaWiki. Adds descriptions to command palette results.
+
+```php [LocalSettings.php]
+$wgExtractsExtendRestSearch = true;
+```
 
 ### [UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener)
 
