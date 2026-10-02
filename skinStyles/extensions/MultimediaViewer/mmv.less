@@ -30,15 +30,20 @@
 		}
 	}
 
+	// MMV sizes the image to the viewport minus this element's outer height,
+	// but clips it 86px above the viewport bottom, so the collapsed bar must
+	// measure 86px. The metadata row overlaps MMV's 30px padding-bottom
+	// through the negative margin.
 	&-above-fold {
 		display: flex;
 		gap: var( --space-md );
 		align-items: center;
 		height: auto;
-		padding-bottom: 0;
+		min-height: 86px;
+		margin-bottom: -30px;
 		transition-timing-function: var( --transition-timing-function-ease );
 		transition-duration: var( --transition-duration-medium );
-		transition-property: margin, padding, border;
+		transition-property: min-height, margin, padding, border;
 	}
 
 	&-progress {
@@ -258,6 +263,7 @@
 .mw-mmv-untruncated {
 	.mw-mmv {
 		&-above-fold {
+			min-height: 56px; // MMV's own value, which its panel scroll position reads
 			padding-bottom: var( --space-xs );
 			margin-bottom: var( --space-md );
 			border-bottom: 1px solid var( --border-color-base );
