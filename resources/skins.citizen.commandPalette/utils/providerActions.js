@@ -1,6 +1,21 @@
 const { cdxIconEdit } = require( '../icons.json' );
 
 /**
+ * The edit action for a page.
+ *
+ * @param {string} title Prefixed page title.
+ * @return {import('../types.js').CommandPaletteItemAction}
+ */
+function editAction( title ) {
+	return {
+		id: 'edit',
+		label: mw.msg( 'action-edit' ),
+		icon: cdxIconEdit,
+		url: mw.util.getUrl( title, { action: 'edit' } )
+	};
+}
+
+/**
  * The actions offered on a page row.
  *
  * A page id of 0 (or none) means the title cannot be a real page — a
@@ -14,18 +29,7 @@ const { cdxIconEdit } = require( '../icons.json' );
  * @return {import('../types.js').CommandPaletteItemAction[]}
  */
 function buildPageActions( page ) {
-	if ( !page.id ) {
-		return [];
-	}
-
-	return [
-		{
-			id: 'edit',
-			label: mw.msg( 'action-edit' ),
-			icon: cdxIconEdit,
-			url: mw.util.getUrl( page.title, { action: 'edit' } )
-		}
-	];
+	return page.id ? [ editAction( page.title ) ] : [];
 }
 
 /**
@@ -47,5 +51,6 @@ function getNavigationAction( item ) {
 
 module.exports = {
 	getNavigationAction,
-	buildPageActions
+	buildPageActions,
+	editAction
 };
