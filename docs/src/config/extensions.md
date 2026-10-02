@@ -10,6 +10,10 @@ outline: [2, 3]
 
 Citizen works out of the box, but these extensions unlock additional features when installed.
 
+### [Bucket](https://www.mediawiki.org/wiki/Extension:Bucket)
+
+Adds a Bucket mode to the command palette. Type `/bucket:` to browse the wiki's buckets, drill into their fields and values to filter matching pages, and copy the query as Lua. Works automatically when installed. See [Command palette](../features/command-palette.md#buckets) for details.
+
 ### [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages)
 
 Bundled with MediaWiki. Adds thumbnails to command palette results.
