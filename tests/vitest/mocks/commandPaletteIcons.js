@@ -8,12 +8,14 @@ module.exports = {
 	cdxIconArticleNotFound: 'cdxIconArticleNotFound',
 	cdxIconArticlesSearch: 'cdxIconArticlesSearch',
 	cdxIconArticles: 'cdxIconArticles',
+	cdxIconAttachment: 'cdxIconAttachment',
 	cdxIconCode: 'cdxIconCode',
 	cdxIconCopy: 'cdxIconCopy',
 	cdxIconDatabase: 'cdxIconDatabase',
 	cdxIconEdit: 'cdxIconEdit',
 	cdxIconFunnel: 'cdxIconFunnel',
 	cdxIconHistory: 'cdxIconHistory',
+	cdxIconImage: 'cdxIconImage',
 	cdxIconImageGallery: 'cdxIconImageGallery',
 	cdxIconListBullet: 'cdxIconListBullet',
 	cdxIconPlay: 'cdxIconPlay',
@@ -25,5 +27,6 @@ module.exports = {
 	cdxIconUserAvatar: 'cdxIconUserAvatar',
 	cdxIconUserContributions: 'cdxIconUserContributions',
 	cdxIconUserTalk: 'cdxIconUserTalk',
+	cdxIconVolumeUp: 'cdxIconVolumeUp',
 	cdxIconWikitext: 'cdxIconWikitext'
 };
