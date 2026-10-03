@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.24.0...v3.25.0) (2026-10-03)
+
+
+### Features
+
+* **commandPalette:** ✨ make Recent remember places instead of rows ([8e33ec1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e33ec12a7d3610570f8295046a4fc22172f3aeb))
+* **commandPalette:** ✨ show the page a go landed on in Recent ([a96c641](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a96c6410e8483c03578c0c3ea478ae672a27e1a2))
+* **commandPalette:** ✨ show who edited and when, user buttons and file thumbnails in Recent ([8c7248c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c7248c84c8b7a7bfb3ab186dfa605e3ec5c97be))
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 add edit button to related articles ([6d35e8a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6d35e8a5ccd69010f4142edcb9658cfc017f17d3))
+* **commandPalette:** 🐛 never overwrite a newer Recent history ([7de4e78](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7de4e785e93a95202d2be6e647cdc01c09786dfc))
+* **commandPalette:** 🐛 remember rows opened with a middle click in Recent ([c1ed3cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c1ed3cc1bb102b6b832d50ec1cb5856cb83eb412))
+* **MultimediaViewer:** 🐛 stop the media viewer cutting off the bottom of images ([060001f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/060001ff7bb4aa30783fafc7d1a7a837028f5cf6)), closes [#1230](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1230)
+
+
+### Performance Improvements
+
+* **commandPalette:** ⚡️ build only the Recent rows the palette shows ([ac32db9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ac32db9e2ce8127c4a280d86629dc05a7bbfdfc9))
+* **commandPalette:** ⚡️ check where a go landed once the page is idle ([1b52e31](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b52e31cb5d2466817a71b2ec4e152940b40a701))
+
 ## [3.24.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.23.0...v3.24.0) (2026-10-01)
 
 
