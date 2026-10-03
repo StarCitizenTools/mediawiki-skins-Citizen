@@ -19,10 +19,23 @@ const GO_LANDING_KEY = 'skin-citizen-command-palette-go-landing';
  * @param {Object} deps
  * @param {Object} deps.mw
  * @param {Performance} deps.performance
+ * @param {number} [deps.pageStart] When this page's scripts started, as
+ *   `Date.now()` gave it, the clock a note's `savedAt` comes from.
  */
-function recordGoLanding( { mw, performance } ) {
+function recordGoLanding( { mw, performance, pageStart } ) {
 	const note = mw.storage.session.getObject( GO_NOTE_KEY );
 	if ( !note ) {
+		return;
+	}
+	// This check runs once the page is idle, so a note saved after the page's
+	// scripts started is for a go made from this page, and is left for the
+	// page that go opens. `Date.now()` is coarse, so a note the page before
+	// saved just before this one started can carry the same time; it counts.
+	if (
+		typeof note.savedAt === 'number' &&
+		typeof pageStart === 'number' &&
+		note.savedAt > pageStart
+	) {
 		return;
 	}
 	mw.storage.session.remove( GO_NOTE_KEY );

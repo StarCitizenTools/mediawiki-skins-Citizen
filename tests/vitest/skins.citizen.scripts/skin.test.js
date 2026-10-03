@@ -7,7 +7,8 @@
  * Requiring skin.js runs main() immediately (jsdom reports readyState
  * 'complete'), so each test re-requires it with fresh modules and asserts
  * WHEN boot work happens: geometry-reading setup must wait for the frame
- * queue, and the performance-mode probe must wait for the idle callback.
+ * queue, and the performance-mode probe and the go-landing check must wait
+ * for the idle callback.
  */
 
 describe( 'skin.js boot path', () => {
@@ -77,6 +78,7 @@ describe( 'skin.js boot path', () => {
 		[ 've.activationStart', 've.deactivationComplete', 'wikipage.tableOfContents', 'wikipage.content' ]
 			.forEach( ( name ) => mw.hook( name )._reset() );
 		vi.unstubAllGlobals();
+		vi.restoreAllMocks();
 		vi.clearAllMocks();
 		document.body.innerHTML = '';
 	} );
@@ -101,6 +103,34 @@ describe( 'skin.js boot path', () => {
 		const calls = performanceModeCalls();
 		expect( calls ).toHaveLength( 1 );
 		expect( calls[ 0 ][ 1 ] ).toContain( 'citizen-feature-performance-mode-clientpref-1' );
+	} );
+
+	it( 'should check where a go landed only once the page is idle', () => {
+		bootSkin();
+
+		expect( mw.storage.session.getObject ).not.toHaveBeenCalled();
+
+		idleCallbacks.forEach( ( cb ) => cb() );
+
+		expect( mw.storage.session.getObject ).toHaveBeenCalledWith(
+			'skin-citizen-command-palette-go-note'
+		);
+	} );
+
+	it( 'should judge a go note by when the page started, not by when the check runs', () => {
+		// Saved after the page started, by a go made from this page
+		mw.storage.session.getObject.mockReturnValueOnce(
+			{ key: 'page:Main page', query: 'main page', savedAt: 3000, expires: 63000 }
+		);
+		const now = vi.spyOn( Date, 'now' ).mockReturnValue( 1000 );
+		bootSkin();
+		now.mockReturnValue( 5000 );
+
+		idleCallbacks.forEach( ( cb ) => cb() );
+
+		// The note is left for the page that go opens
+		expect( mw.storage.session.getObject ).toHaveBeenCalled();
+		expect( mw.storage.session.remove ).not.toHaveBeenCalled();
 	} );
 
 	it( 'should not read computed styles synchronously at boot', () => {

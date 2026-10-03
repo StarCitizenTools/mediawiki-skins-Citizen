@@ -81,12 +81,20 @@ function main( window ) {
 		deferUntilFrame = require( './deferUntilFrame.js' ),
 		{ createPageTools } = require( './pageTools.js' ),
 		{ createPreferences } = require( './preferences.js' ),
-		{ recordGoLanding } = require( './goLanding.js' ),
 		{ createCommandPalette } = require( './commandPalette.js' );
 
+	// Taken before the palette can save a go note, so the landing check below
+	// can tell a note this page saved from one the page before it saved.
+	const pageStart = Date.now();
 	const commandPalette = createCommandPalette( { document, mw } );
 	commandPalette.init();
-	recordGoLanding( { mw, performance: window.performance } );
+	// Only the palette reads where a go landed, and only once it is opened,
+	// so the check need not run during startup. The timeout keeps it well
+	// inside the go note's lifetime on a page that is never idle.
+	mw.requestIdleCallback( () => {
+		const { recordGoLanding } = require( './goLanding.js' );
+		recordGoLanding( { mw, performance: window.performance, pageStart } );
+	}, { timeout: 3000 } );
 
 	search.init( { window, document, triggerOpen: commandPalette.triggerOpen } );
 	createNotifications( { document, mw } ).init();
