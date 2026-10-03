@@ -23,7 +23,7 @@ const { editAction } = require( './providerActions.js' );
  *   row's link, so a change to `destinationKey`'s rules or to the wiki's paths
  *   leaves older entries undismissable.
  * @property {string} label
- * @property {string} url The link the reader actually opened.
+ * @property {string} url The link the row's handler returned.
  * @property {number} savedAt
  * @property {string} [context] For a link that acts on a wiki page, that page.
  */
@@ -84,17 +84,21 @@ function placeOf( link ) {
 	const { title, params } = parsed;
 	const name = title.getPrefixedText();
 	const special = resolveSpecialPage( title );
-	if ( special && special.name === 'Search' && params.get( 'search' ) ) {
-		const query = String( params.get( 'search' ) );
-		// Special:Search treats the parameter's presence, whatever its value,
-		// as a request for full-text results.
-		const fulltext = params.has( 'fulltext' );
-		params.delete( 'search' );
-		params.delete( 'fulltext' );
-		if ( !params.toString() ) {
-			return { kind: fulltext ? 'search' : 'go', name: query };
+	if ( special && special.name === 'Search' ) {
+		const query = params.get( 'search' );
+		if ( query ) {
+			// Special:Search treats the parameter's presence, whatever its
+			// value, as a request for full-text results.
+			const fulltext = params.has( 'fulltext' );
+			params.delete( 'search' );
+			params.delete( 'fulltext' );
+			if ( !params.toString() ) {
+				return { kind: fulltext ? 'search' : 'go', name: query };
+			}
+			return { kind: 'link', context: name };
 		}
-		return { kind: 'link', context: name };
+		// An empty query opens the search page itself.
+		params.delete( 'search' );
 	}
 	if ( !params.toString() ) {
 		if ( title.getNamespaceId() === -1 ) {
@@ -113,6 +117,8 @@ function placeOf( link ) {
 			params.delete( 'veaction' );
 		}
 		params.delete( 'section' );
+		// A red link's edit link adds redlink=1, which opens the same editor.
+		params.delete( 'redlink' );
 		if ( !params.toString() ) {
 			return { kind: 'edit', name };
 		}
@@ -130,7 +136,7 @@ function placeOf( link ) {
  * The entry for a place a reader opened, or null when it is not a place
  * Recent can take them back to.
  *
- * @param {string|undefined} url The link the reader actually opened.
+ * @param {string|undefined} url The link the row's handler returned.
  * @param {{label?: string, url?: string}} row The row they opened it from.
  * @param {number} savedAt
  * @return {RecentEntry|null}

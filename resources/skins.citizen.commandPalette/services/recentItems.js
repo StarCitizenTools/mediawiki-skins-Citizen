@@ -45,14 +45,30 @@ function collapse( entries ) {
 }
 
 /**
+ * Whether a stored history comes from a newer version, whose format this
+ * one cannot read and must leave as it is.
+ *
+ * @param {any} stored
+ * @return {boolean}
+ */
+function isNewerFormat( stored ) {
+	return !!stored && typeof stored.version === 'number' && stored.version > FORMAT_VERSION;
+}
+
+/**
  * @return {Object} Recent items service
  */
 function createRecentItems() {
+	let legacyChecked = false;
+
 	/**
 	 * @param {import('../utils/recentEntry.js').RecentEntry[]} entries
 	 * @return {boolean} Whether the entries were stored.
 	 */
 	function write( entries ) {
+		if ( isNewerFormat( mw.storage.getObject( RECENT_KEY ) ) ) {
+			return false;
+		}
 		return mw.storage.setObject( RECENT_KEY, { version: FORMAT_VERSION, entries } );
 	}
 
@@ -63,7 +79,16 @@ function createRecentItems() {
 	 */
 	function load() {
 		const stored = mw.storage.getObject( RECENT_KEY );
+		if ( isNewerFormat( stored ) ) {
+			return [];
+		}
 		if ( stored && stored.version === FORMAT_VERSION && Array.isArray( stored.entries ) ) {
+			if ( !legacyChecked ) {
+				legacyChecked = true;
+				// An older version still open in another tab, or one run again
+				// after a downgrade, can write the earlier history back.
+				mw.storage.remove( LEGACY_KEY );
+			}
 			return stored.entries.filter( isEntry );
 		}
 		const legacy = mw.storage.getObject( LEGACY_KEY );
@@ -88,7 +113,7 @@ function createRecentItems() {
 	 * Remembers the place a row led to.
 	 *
 	 * @param {import('../types.js').CommandPaletteItem} item The row that was opened.
-	 * @param {string} [url] The link actually opened; the row's own link if omitted.
+	 * @param {string} [url] The link the row's handler returned; the row's own link if omitted.
 	 */
 	function saveRecentItem( item, url ) {
 		const entry = entryFromLink( url || item.url, item, Date.now() );

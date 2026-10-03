@@ -237,6 +237,7 @@ describe( 'createRecentItems', () => {
 			const rows = service.getRecentItems();
 
 			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'A' ] );
+			expect( storage[ LEGACY_KEY ] ).toBeUndefined();
 		} );
 
 		it( 'converts a history with nothing usable into an empty one', () => {
@@ -287,6 +288,20 @@ describe( 'createRecentItems', () => {
 			service.clearHistory();
 
 			expect( storage ).toEqual( {} );
+		} );
+	} );
+
+	describe( 'a history from a newer version', () => {
+		it( 'reads as empty and is never overwritten', () => {
+			const newer = { version: 2, entries: [ { anything: true } ] };
+			storage[ RECENT_KEY ] = JSON.parse( JSON.stringify( newer ) );
+			storage[ LEGACY_KEY ] = [ page( 'B' ) ];
+
+			service.saveRecentItem( page( 'A' ) );
+			const rows = service.getRecentItems();
+
+			expect( rows ).toEqual( [] );
+			expect( storage[ RECENT_KEY ] ).toEqual( newer );
 		} );
 	} );
 } );
