@@ -14,11 +14,11 @@ function createRecentItemsProvider( recentItemsService ) {
 		},
 
 		/**
-		 * @param {string} query
+		 * @param {string} _query Always empty: canProvide accepts only that.
 		 * @param {Object} [options] The service's getRecentItems options.
 		 * @return {{items: Array<Object>}}
 		 */
-		getResults( query, options ) {
+		getResults( _query, options ) {
 			const items = recentItemsService.getRecentItems( options );
 			return {
 				items: Array.isArray( items ) ?

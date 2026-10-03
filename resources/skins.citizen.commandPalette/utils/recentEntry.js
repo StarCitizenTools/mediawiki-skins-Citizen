@@ -229,6 +229,61 @@ function entryFromMode( url, remembered, modeId, savedAt ) {
 }
 
 /**
+ * A map's value for a kind. A stored kind is only checked to be a string, so
+ * it may name a property every object inherits; only the map's own keys count.
+ *
+ * @template T
+ * @param {Record<string, T>} map
+ * @param {string} kind
+ * @return {T|undefined}
+ */
+function forKind( map, kind ) {
+	return Object.prototype.hasOwnProperty.call( map, kind ) ? map[ kind ] : undefined;
+}
+
+/**
+ * What each kind of entry adds to its row, beyond the kind's icon and
+ * description.
+ *
+ * @type {Object<string, function( RecentEntry ): Partial<import('../types.js').CommandPaletteItem>>}
+ */
+const ROW_DETAILS = {
+	page( entry ) {
+		const link = toUrl( entry.url );
+		const parsed = link && parseWikiLink( link );
+		return parsed && parsed.title.getNamespaceId() >= 0 ?
+			{ actions: [ editAction( parsed.title.getPrefixedText() ) ] } :
+			{};
+	},
+	link( entry ) {
+		return entry.context ? { description: entry.context } : {};
+	},
+	user( entry ) {
+		return { actions: userActions( entry.label ) };
+	},
+	revision( entry ) {
+		if ( !entry.data ) {
+			return {};
+		}
+		const { author, timestamp, summary } = entry.data;
+		const parts = [ author, timestamp && formatTimestamp( timestamp ), summary ].filter( Boolean );
+		return parts.length ? { description: parts.join( ' · ' ) } : {};
+	},
+	file( entry ) {
+		const data = entry.data || {};
+		/** @type {Partial<import('../types.js').CommandPaletteItem>} */
+		const details = { thumbnailIcon: iconForMediatype( data.mediatype || 'UNKNOWN' ) };
+		// Only the thumbnail the mode showed. Special:Redirect could make one,
+		// but at a request per row on every draw, and it answers with the whole
+		// file when the wiki cannot scale it.
+		if ( typeof data.thumbnail === 'string' && isPlaceLink( data.thumbnail ) ) {
+			details.thumbnail = { url: data.thumbnail };
+		}
+		return details;
+	}
+};
+
+/**
  * The palette row that shows an entry, built in the current language.
  *
  * @param {RecentEntry} entry
@@ -241,40 +296,17 @@ function rowFromEntry( entry ) {
 		type: entry.kind,
 		label: entry.label,
 		url: entry.url,
-		thumbnailIcon: ICONS[ entry.kind ] || cdxIconPlay,
+		thumbnailIcon: forKind( ICONS, entry.kind ) || cdxIconPlay,
 		actions: []
 	};
-	const descriptionKey = DESCRIPTIONS[ entry.kind ];
+	const descriptionKey = forKind( DESCRIPTIONS, entry.kind );
 	if ( descriptionKey ) {
 		// eslint-disable-next-line mediawiki/msg-doc -- the keys are the literals in DESCRIPTIONS
 		row.description = mw.msg( descriptionKey );
-	} else if ( entry.kind === 'link' && entry.context ) {
-		row.description = entry.context;
 	}
-	if ( entry.kind === 'page' ) {
-		const link = toUrl( entry.url );
-		const parsed = link && parseWikiLink( link );
-		if ( parsed && parsed.title.getNamespaceId() >= 0 ) {
-			row.actions = [ editAction( parsed.title.getPrefixedText() ) ];
-		}
-	}
-	if ( entry.kind === 'user' ) {
-		row.actions = userActions( entry.label );
-	} else if ( entry.kind === 'revision' && entry.data ) {
-		const { author, timestamp, summary } = entry.data;
-		const parts = [ author, timestamp && formatTimestamp( timestamp ), summary ].filter( Boolean );
-		if ( parts.length ) {
-			row.description = parts.join( ' · ' );
-		}
-	} else if ( entry.kind === 'file' ) {
-		const data = entry.data || {};
-		row.thumbnailIcon = iconForMediatype( data.mediatype || 'UNKNOWN' );
-		// Only the thumbnail the mode showed. Special:Redirect could make one,
-		// but at a request per row on every draw, and it answers with the whole
-		// file when the wiki cannot scale it.
-		if ( typeof data.thumbnail === 'string' && isPlaceLink( data.thumbnail ) ) {
-			row.thumbnail = { url: data.thumbnail };
-		}
+	const details = forKind( ROW_DETAILS, entry.kind );
+	if ( details ) {
+		Object.assign( row, details( entry ) );
 	}
 	return row;
 }
