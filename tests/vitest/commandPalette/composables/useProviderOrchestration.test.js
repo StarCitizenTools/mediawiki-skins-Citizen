@@ -292,6 +292,51 @@ describe( 'useProviderOrchestration', () => {
 			expect( mode.onResultSelect ).toHaveBeenCalled();
 			expect( mockSyncProvider.onResultSelect ).not.toHaveBeenCalled();
 		} );
+
+		it( 'hands Recent the mode a row was opened in', async () => {
+			const recentItemsService = { saveRecentItem: vi.fn() };
+			const modeOrch = useProviderOrchestration( mockProviders, mockDecorator, { recentItemsService } );
+			const mode = {
+				id: 'history',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				onResultSelect: () => ( { action: 'navigate', payload: '/w/index.php?title=P&diff=prev&oldid=1' } ),
+				remember: vi.fn()
+			};
+			modeOrch.enterMode( mode );
+			const row = { id: 'r1', label: 'x', url: '/w/index.php?title=P&oldid=1' };
+
+			await modeOrch.handleSelection( row );
+
+			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
+				row, '/w/index.php?title=P&diff=prev&oldid=1', mode
+			);
+		} );
+
+		it( 'hands Recent the mode a row was opened in, though another is entered while it opens', async () => {
+			const recentItemsService = { saveRecentItem: vi.fn() };
+			const modeOrch = useProviderOrchestration( mockProviders, mockDecorator, { recentItemsService } );
+			let finishSelect;
+			const history = {
+				id: 'history',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				onResultSelect: () => new Promise( ( resolve ) => {
+					finishSelect = resolve;
+				} ),
+				remember: vi.fn()
+			};
+			const user = { id: 'user', getResults: vi.fn().mockResolvedValue( [] ), remember: vi.fn() };
+			modeOrch.enterMode( history );
+			const row = { id: 'r1', label: 'x', url: '/w/index.php?title=P&oldid=1' };
+
+			const selection = modeOrch.handleSelection( row );
+			modeOrch.enterMode( user );
+			finishSelect( { action: 'navigate', payload: '/w/index.php?title=P&diff=prev&oldid=1' } );
+			await selection;
+
+			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
+				row, '/w/index.php?title=P&diff=prev&oldid=1', history
+			);
+		} );
 	} );
 
 	describe( 'stateConfig', () => {
@@ -1033,7 +1078,8 @@ describe( 'useProviderOrchestration', () => {
 			expect( action ).toEqual( { action: 'navigate', payload: 'go' } );
 			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
 				{ id: 'p1', label: 'Page', source: 'search', url: '/wiki/Page' },
-				'/wiki/Page'
+				'/wiki/Page',
+				null
 			);
 		} );
 
@@ -1060,7 +1106,8 @@ describe( 'useProviderOrchestration', () => {
 
 			expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
 				row,
-				'/w/index.php?title=Page&diff=prev&oldid=1'
+				'/w/index.php?title=Page&diff=prev&oldid=1',
+				null
 			);
 		} );
 
@@ -1094,7 +1141,8 @@ describe( 'useProviderOrchestration', () => {
 				expect( action.payload ).toBe( '/w/index.php?title=Page&diff=prev&oldid=1' );
 				expect( recentItemsService.saveRecentItem ).toHaveBeenCalledWith(
 					{ ...revisionRow, isMouseClick: true },
-					'/w/index.php?title=Page&diff=prev&oldid=1'
+					'/w/index.php?title=Page&diff=prev&oldid=1',
+					null
 				);
 			} );
 

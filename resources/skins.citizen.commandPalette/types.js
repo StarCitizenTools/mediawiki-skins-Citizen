@@ -148,7 +148,17 @@
  * @property {( query: string, signal?: AbortSignal, tokens?: CommandPaletteToken[], modeContext?: Object[] ) => Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state). The signal is honoured by mw.Api on MediaWiki 1.44+ and ignored on 1.43.
  * @property {( item: CommandPaletteItem, signal?: AbortSignal ) => Promise<Object>} [getItemDetail] Lazy detail-pane data for the highlighted item, resolving to `{ description, pairs }` — each field is merged into the item's `detail` when present. Use when the data is too heavy to compute for every item upfront. Same signal caveat as `getResults`.
  * @property {( item: CommandPaletteItem ) => (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
+ * @property {( item: CommandPaletteItem ) => (RecentRemembered|null|undefined)} [remember] Internal for now, not part of the documented mode API: how Recent remembers a row this mode opened. Return null to leave the row out of Recent, or nothing to let Recent read the place from the row's link.
  * @property {( modeContext: Object[] ) => string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
+ */
+
+/**
+ * What a mode tells Recent about a row it opened. Internal for now.
+ *
+ * @typedef {Object} RecentRemembered
+ * @property {'user'|'revision'|'file'} kind
+ * @property {string} label
+ * @property {Object<string, string>} [data] Values that do not go stale: a revision's author, timestamp and summary, a file's media type.
  */
 
 /**

@@ -1,6 +1,6 @@
 const { cdxIconTrash } = require( '../icons.json' );
 const destinationKey = require( '../utils/destinationKey.js' );
-const { isPlaceLink, entryFromLink, rowFromEntry, rankOf } = require( '../utils/recentEntry.js' );
+const { isPlaceLink, entryFromLink, entryFromMode, rowFromEntry, rankOf } = require( '../utils/recentEntry.js' );
 
 const RECENT_KEY = 'skin-citizen-command-palette-recent';
 // Earlier versions stored whole rows here. Read once, converted, then removed.
@@ -22,6 +22,8 @@ function isEntry( value ) {
 		typeof value.key === 'string' &&
 		typeof value.label === 'string' &&
 		typeof value.url === 'string' &&
+		( value.mode === undefined || typeof value.mode === 'string' ) &&
+		( value.data === undefined || ( !!value.data && typeof value.data === 'object' ) ) &&
 		isPlaceLink( value.url );
 }
 
@@ -114,9 +116,27 @@ function createRecentItems() {
 	 *
 	 * @param {import('../types.js').CommandPaletteItem} item The row that was opened.
 	 * @param {string} [url] The link the row's handler returned; the row's own link if omitted.
+	 * @param {import('../types.js').PaletteMode|null} [mode] The mode the row was opened in.
 	 */
-	function saveRecentItem( item, url ) {
-		const entry = entryFromLink( url || item.url, item, Date.now() );
+	function saveRecentItem( item, url, mode ) {
+		const link = url || item.url;
+		const savedAt = Date.now();
+		let entry = null;
+		if ( mode && typeof mode.remember === 'function' ) {
+			let remembered;
+			try {
+				remembered = mode.remember( item );
+			} catch ( e ) {
+				mw.log.error( '[commandPalette] A mode failed to describe a Recent entry:', e );
+			}
+			if ( remembered === null ) {
+				return;
+			}
+			if ( remembered ) {
+				entry = entryFromMode( link, remembered, mode.id, savedAt );
+			}
+		}
+		entry = entry || entryFromLink( link, item, savedAt );
 		if ( !entry ) {
 			return;
 		}

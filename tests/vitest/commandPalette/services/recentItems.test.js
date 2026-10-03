@@ -178,6 +178,34 @@ describe( 'createRecentItems', () => {
 			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'B' ] );
 		} );
 
+		it( 'leaves out a stored entry whose mode is not text', () => {
+			storage[ RECENT_KEY ] = {
+				version: 1,
+				entries: [
+					{ kind: 'page', key: 'page:A', label: 'A', url: '/wiki/A', savedAt: 2, mode: 5 },
+					{ kind: 'page', key: 'page:B', label: 'B', url: '/wiki/B', savedAt: 1, mode: 'search' }
+				]
+			};
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'B' ] );
+		} );
+
+		it( 'leaves out a stored entry whose data is not an object', () => {
+			storage[ RECENT_KEY ] = {
+				version: 1,
+				entries: [
+					{ kind: 'page', key: 'page:A', label: 'A', url: '/wiki/A', savedAt: 2, data: 'x' },
+					{ kind: 'page', key: 'page:B', label: 'B', url: '/wiki/B', savedAt: 1, data: { note: 'kept' } }
+				]
+			};
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'B' ] );
+		} );
+
 		it( 'shows nothing, without failing, when storage is unavailable', () => {
 			mw.storage.getObject = vi.fn( () => false );
 
@@ -302,6 +330,61 @@ describe( 'createRecentItems', () => {
 
 			expect( rows ).toEqual( [] );
 			expect( storage[ RECENT_KEY ] ).toEqual( newer );
+		} );
+	} );
+
+	describe( 'a row its mode describes', () => {
+		const opened = '/w/index.php?title=Main_Page&diff=prev&oldid=5';
+		const revisionRow = { id: 'r5', type: 'revision', label: '5m · Alice', url: '/w/index.php?title=Main_Page&oldid=5', user: 'Alice', timestamp: '2026-10-01T00:00:00Z' };
+		const historyMode = {
+			id: 'history',
+			remember: ( item ) => ( { kind: 'revision', label: 'Main Page', data: { author: item.user, timestamp: item.timestamp, summary: 'Fix typo' } } )
+		};
+
+		it( 'stores what the mode chose, with the mode', () => {
+			service.saveRecentItem( revisionRow, opened, historyMode );
+
+			expect( storage[ RECENT_KEY ].entries[ 0 ] ).toMatchObject( {
+				kind: 'revision',
+				label: 'Main Page',
+				url: opened,
+				mode: 'history',
+				data: { author: 'Alice', timestamp: '2026-10-01T00:00:00Z', summary: 'Fix typo' }
+			} );
+		} );
+
+		it( 'keeps the mode\'s entry when the place is reopened from Recent', () => {
+			service.saveRecentItem( revisionRow, opened, historyMode );
+			const [ recentRow ] = service.getRecentItems();
+
+			service.saveRecentItem( recentRow, recentRow.url );
+
+			expect( storage[ RECENT_KEY ].entries ).toHaveLength( 1 );
+			expect( storage[ RECENT_KEY ].entries[ 0 ] ).toMatchObject( { mode: 'history', data: { author: 'Alice' } } );
+		} );
+
+		it( 'leaves out a row its mode declines', () => {
+			service.saveRecentItem( revisionRow, opened, { id: 'x', remember: () => null } );
+
+			expect( storage[ RECENT_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'reads the place from the link when the mode says nothing or fails', () => {
+			mw.log.error.mockClear();
+
+			service.saveRecentItem( revisionRow, opened, { id: 'x', remember: () => undefined } );
+			service.saveRecentItem( page( 'B' ), '/wiki/B', {
+				id: 'y',
+				remember: () => {
+					throw new Error( 'boom' );
+				}
+			} );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => [ e.kind, e.mode ] ) ).toEqual( [
+				[ 'page', undefined ],
+				[ 'revision', undefined ]
+			] );
+			expect( mw.log.error ).toHaveBeenCalled();
 		} );
 	} );
 } );

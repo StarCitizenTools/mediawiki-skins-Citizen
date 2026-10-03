@@ -39,6 +39,7 @@ const MODE_FIELDS = COMMON_FIELDS.concat( [
 	'tokenPattern',
 	'getResults',
 	'getItemDetail',
+	'remember',
 	'headerLabel',
 	'debounceMs'
 ] );
@@ -155,6 +156,13 @@ function applyOptionalFieldChecks( config ) {
 			`[commandPalette] mode "${ out.id }" \`getItemDetail\` must be a function. Dropping the field.`
 		);
 		delete out.getItemDetail;
+	}
+
+	if ( out.remember !== undefined && typeof out.remember !== 'function' ) {
+		mw.log.warn(
+			`[commandPalette] mode "${ out.id }" \`remember\` must be a function. Dropping the field.`
+		);
+		delete out.remember;
 	}
 
 	if (
