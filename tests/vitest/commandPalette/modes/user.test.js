@@ -58,6 +58,14 @@ describe( 'user mode', () => {
 		} );
 	} );
 
+	describe( 'remember', () => {
+		it( 'remembers a user by name', () => {
+			const remembered = mode.remember( { label: 'Alice', url: '/wiki/User:Alice' } );
+
+			expect( remembered ).toEqual( { kind: 'user', label: 'Alice' } );
+		} );
+	} );
+
 	describe( 'getResults', () => {
 		it( 'should return empty array for empty query', async () => {
 			const results = await mode.getResults( '' );

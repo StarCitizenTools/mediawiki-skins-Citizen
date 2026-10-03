@@ -167,11 +167,14 @@ function adaptRevisionItem( rev, parentRev, title, tagDisplayNames ) {
 		url: mw.util.getUrl( title, { oldid: rev.revid } ),
 		previewable: true,
 		highlightQuery: true,
-		// Internal — used by onResultSelect. Not part of the public
-		// CommandPaletteItem shape; consumers should ignore these.
+		// Internal — used by onResultSelect and remember. Not part of the
+		// public CommandPaletteItem shape; consumers should ignore these.
 		revid: rev.revid,
 		parentid: rev.parentid,
-		value: title
+		value: title,
+		user: rev.user,
+		timestamp: rev.timestamp,
+		summary: text.trim()
 	};
 }
 
@@ -323,7 +326,14 @@ function createHistoryMode( ApiConstructor ) {
 			description: 'citizen-command-palette-mode-history-description-help'
 		},
 		getResults,
-		onResultSelect
+		onResultSelect,
+		remember( item ) {
+			return {
+				kind: 'revision',
+				label: String( item.value || mw.config.get( 'wgPageName' ) ).replace( /_/g, ' ' ),
+				data: { author: item.user, timestamp: item.timestamp, summary: item.summary }
+			};
+		}
 	} );
 }
 

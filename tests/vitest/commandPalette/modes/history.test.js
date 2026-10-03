@@ -524,6 +524,42 @@ describe( 'history mode', () => {
 		} );
 	} );
 
+	describe( 'remember', () => {
+		it( 'keeps the author, timestamp and summary on each row', async () => {
+			mockGet.mockResolvedValue( makeApiData( SAMPLE_REVISIONS ) );
+
+			const items = await mode.getResults( '' );
+
+			expect( items[ 0 ] ).toMatchObject( { user: 'Alice', timestamp: '2026-05-01T10:00:00Z', summary: 'Fix typo' } );
+			expect( items[ 2 ].summary ).toBe( '' );
+		} );
+
+		it( 'keeps the summary without its section prefix', async () => {
+			const revisions = [
+				{ revid: 1, parentid: 0, timestamp: '2026-04-10T10:00:00Z', user: 'X', comment: '/* Getting started */ tweak the intro ', size: 100, minor: false },
+				{ revid: 2, parentid: 1, timestamp: '2026-04-11T10:00:00Z', user: 'X', comment: '/* Notes */', size: 100, minor: false }
+			];
+			mockGet.mockResolvedValue( makeApiData( revisions ) );
+
+			const items = await mode.getResults( '' );
+
+			expect( items[ 0 ].summary ).toBe( 'tweak the intro' );
+			expect( items[ 1 ].summary ).toBe( '' );
+		} );
+
+		it( 'remembers a revision by its page, author, time and summary', () => {
+			const row = { value: 'Test_Page', user: 'Alice', timestamp: '2026-05-01T10:00:00Z', summary: 'Fix typo' };
+
+			const remembered = mode.remember( row );
+
+			expect( remembered ).toEqual( {
+				kind: 'revision',
+				label: 'Test Page',
+				data: { author: 'Alice', timestamp: '2026-05-01T10:00:00Z', summary: 'Fix typo' }
+			} );
+		} );
+	} );
+
 	describe( 'getResults — error and abort handling', () => {
 		it( 'returns [] and logs when API call fails', async () => {
 			mockGet.mockRejectedValue( new Error( 'network blew up' ) );

@@ -321,22 +321,36 @@ describe( 'recentEntry', () => {
 			expect( row ).not.toHaveProperty( 'description' );
 		} );
 
-		it( 'shows a picture file with a thumbnail of it', () => {
-			const entry = { kind: 'file', key: 'page:File:Boat.jpg', label: 'Boat.jpg', url: '/wiki/File:Boat.jpg', savedAt: 1, mode: 'file', data: { mediatype: 'BITMAP' } };
+		function file( label, data ) {
+			return { kind: 'file', key: `page:File:${ label }`, label, url: `/wiki/File:${ label }`, savedAt: 1, mode: 'file', data };
+		}
+
+		it( 'shows a file with the thumbnail its mode showed', () => {
+			const entry = file( 'Boat.jpg', { mediatype: 'BITMAP', thumbnail: '/images/thumb/b/b0/Boat.jpg/160px-Boat.jpg' } );
 
 			const row = rowFromEntry( entry );
 
-			expect( row.thumbnail ).toEqual( { url: '/wiki/Special:Redirect/file/Boat.jpg?width=160' } );
+			expect( row.thumbnail ).toEqual( { url: '/images/thumb/b/b0/Boat.jpg/160px-Boat.jpg' } );
 			expect( row.thumbnailIcon ).toBe( icons.cdxIconImage );
 		} );
 
-		it( 'shows any other file with its media icon only', () => {
-			const entry = { kind: 'file', key: 'page:File:Song.ogg', label: 'Song.ogg', url: '/wiki/File:Song.ogg', savedAt: 1, mode: 'file', data: { mediatype: 'AUDIO' } };
+		it( 'shows a file its mode showed no thumbnail for with its media icon only', () => {
+			const picture = rowFromEntry( file( 'Boat.jpg', { mediatype: 'BITMAP' } ) );
+			const song = rowFromEntry( file( 'Song.ogg', { mediatype: 'AUDIO' } ) );
 
-			const row = rowFromEntry( entry );
+			expect( picture ).not.toHaveProperty( 'thumbnail' );
+			expect( picture.thumbnailIcon ).toBe( icons.cdxIconImage );
+			expect( song ).not.toHaveProperty( 'thumbnail' );
+			expect( song.thumbnailIcon ).toBe( icons.cdxIconVolumeUp );
+		} );
 
-			expect( row ).not.toHaveProperty( 'thumbnail' );
-			expect( row.thumbnailIcon ).toBe( icons.cdxIconVolumeUp );
+		it( 'shows no thumbnail from a link that is not a web address', () => {
+			const script = rowFromEntry( file( 'Boat.jpg', { mediatype: 'BITMAP', thumbnail: 'javascript:alert(1)' } ) );
+			const fragment = rowFromEntry( file( 'Boat.jpg', { mediatype: 'BITMAP', thumbnail: '#x' } ) );
+
+			expect( script ).not.toHaveProperty( 'thumbnail' );
+			expect( fragment ).not.toHaveProperty( 'thumbnail' );
+			expect( script.thumbnailIcon ).toBe( icons.cdxIconImage );
 		} );
 	} );
 

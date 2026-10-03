@@ -116,6 +116,9 @@ function createUserCommand( ApiConstructor ) {
 		getResults: getUserResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );
+		},
+		remember( item ) {
+			return { kind: 'user', label: item.label };
 		}
 	} );
 }
