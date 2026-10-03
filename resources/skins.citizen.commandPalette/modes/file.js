@@ -545,7 +545,15 @@ function createFileMode( ApiConstructor ) {
 		},
 		getResults,
 		getItemDetail,
-		onResultSelect
+		onResultSelect,
+		remember( item ) {
+			/** @type {Object<string, string>} */
+			const data = { mediatype: item.mediatype };
+			if ( item.thumbnail ) {
+				data.thumbnail = item.thumbnail.url;
+			}
+			return { kind: 'file', label: item.label, data };
+		}
 	} );
 }
 

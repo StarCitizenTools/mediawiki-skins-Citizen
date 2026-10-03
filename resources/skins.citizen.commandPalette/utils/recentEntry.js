@@ -14,7 +14,7 @@ const resolveSpecialPage = require( './resolveSpecialPage.js' );
 const { editAction } = require( './providerActions.js' );
 const formatTimestamp = require( './formatTimestamp.js' );
 const userActions = require( './userActions.js' );
-const { computeThumbWidth, iconForMediatype } = require( './fileMedia.js' );
+const { iconForMediatype } = require( './fileMedia.js' );
 
 /**
  * A place Recent remembers. Only what names the place is kept; how it looks
@@ -267,14 +267,13 @@ function rowFromEntry( entry ) {
 			row.description = parts.join( ' · ' );
 		}
 	} else if ( entry.kind === 'file' ) {
-		const mediatype = ( entry.data && entry.data.mediatype ) || 'UNKNOWN';
-		row.thumbnailIcon = iconForMediatype( mediatype );
-		// Only pictures have a thumbnail; asking Special:Redirect for one of
-		// any other file returns the file itself.
-		if ( mediatype === 'BITMAP' || mediatype === 'DRAWING' ) {
-			row.thumbnail = {
-				url: mw.util.getUrl( 'Special:Redirect/file/' + entry.label, { width: computeThumbWidth() } )
-			};
+		const data = entry.data || {};
+		row.thumbnailIcon = iconForMediatype( data.mediatype || 'UNKNOWN' );
+		// Only the thumbnail the mode showed. Special:Redirect could make one,
+		// but at a request per row on every draw, and it answers with the whole
+		// file when the wiki cannot scale it.
+		if ( typeof data.thumbnail === 'string' && isPlaceLink( data.thumbnail ) ) {
+			row.thumbnail = { url: data.thumbnail };
 		}
 	}
 	return row;

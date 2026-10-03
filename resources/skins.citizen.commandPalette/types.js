@@ -158,7 +158,7 @@
  * @typedef {Object} RecentRemembered
  * @property {'user'|'revision'|'file'} kind
  * @property {string} label
- * @property {Object<string, string>} [data] Values that do not go stale: a revision's author, timestamp and summary, a file's media type.
+ * @property {Object<string, string>} [data] What Recent draws the row with, so it need not ask the wiki again: a revision's author, timestamp and summary, a file's media type and the link to the thumbnail the row showed.
  */
 
 /**

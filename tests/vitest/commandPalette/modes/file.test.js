@@ -651,6 +651,38 @@ describe( 'file mode', () => {
 		} );
 	} );
 
+	describe( 'remember', () => {
+		it( 'remembers a file by name and media type', () => {
+			const remembered = mode.remember( { label: 'Boat.jpg', mediatype: 'BITMAP', url: '/wiki/File:Boat.jpg' } );
+
+			expect( remembered ).toEqual( { kind: 'file', label: 'Boat.jpg', data: { mediatype: 'BITMAP' } } );
+		} );
+
+		it( 'remembers the thumbnail the row showed', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+			const rows = await mode.getResults( 'thing', undefined );
+			const picture = rows.find( ( r ) => r.label === 'Diagram.png' );
+
+			const remembered = mode.remember( picture );
+
+			expect( remembered ).toEqual( {
+				kind: 'file',
+				label: 'Diagram.png',
+				data: { mediatype: 'BITMAP', thumbnail: '/thumb/diagram.png' }
+			} );
+		} );
+
+		it( 'remembers no thumbnail for a row that showed none', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+			const rows = await mode.getResults( 'thing', undefined );
+			const audio = rows.find( ( r ) => r.label === 'Lecture.mp3' );
+
+			const remembered = mode.remember( audio );
+
+			expect( remembered ).toEqual( { kind: 'file', label: 'Lecture.mp3', data: { mediatype: 'AUDIO' } } );
+		} );
+	} );
+
 	describe( 'getResults — error and abort handling', () => {
 		it( 'returns [] and logs when API call fails', async () => {
 			mockGet.mockRejectedValue( new Error( 'network blew up' ) );
