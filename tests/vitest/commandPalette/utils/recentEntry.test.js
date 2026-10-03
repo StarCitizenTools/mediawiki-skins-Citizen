@@ -105,6 +105,18 @@ describe( 'recentEntry', () => {
 			expect( entry ).toMatchObject( { kind: 'edit', label: 'Main Page' } );
 		} );
 
+		it( 'counts a red link\'s edit link as an edit', () => {
+			const entry = entryFromLink( '/w/index.php?title=New_Page&action=edit&redlink=1', {}, 1 );
+
+			expect( entry ).toMatchObject( { kind: 'edit', label: 'New Page' } );
+		} );
+
+		it( 'reads an empty search as the search page itself', () => {
+			const entry = entryFromLink( '/w/index.php?title=Special:Search&search=', {}, 1 );
+
+			expect( entry ).toMatchObject( { kind: 'special', label: 'Special:Search' } );
+		} );
+
 		it( 'names the page a visual or source editor link opens', () => {
 			const row = { label: 'Edit source', url: '/w/index.php?title=Help:Contents&veaction=editsource' };
 
@@ -232,8 +244,9 @@ describe( 'recentEntry', () => {
 
 	describe( 'rankOf', () => {
 		it( 'ranks a go below everything that names its place outright', () => {
-			expect( rankOf( { kind: 'go' } ) ).toBeLessThan( rankOf( { kind: 'page' } ) );
-			expect( rankOf( { kind: 'page' } ) ).toBe( rankOf( { kind: 'link' } ) );
+			expect( rankOf( { kind: 'go' } ) ).toBe( 0 );
+			expect( rankOf( { kind: 'page' } ) ).toBe( 1 );
+			expect( rankOf( { kind: 'link' } ) ).toBe( 1 );
 		} );
 	} );
 } );
