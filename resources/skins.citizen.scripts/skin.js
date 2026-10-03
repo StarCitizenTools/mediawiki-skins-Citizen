@@ -81,10 +81,12 @@ function main( window ) {
 		deferUntilFrame = require( './deferUntilFrame.js' ),
 		{ createPageTools } = require( './pageTools.js' ),
 		{ createPreferences } = require( './preferences.js' ),
+		{ recordGoLanding } = require( './goLanding.js' ),
 		{ createCommandPalette } = require( './commandPalette.js' );
 
 	const commandPalette = createCommandPalette( { document, mw } );
 	commandPalette.init();
+	recordGoLanding( { mw, performance: window.performance } );
 
 	search.init( { window, document, triggerOpen: commandPalette.triggerOpen } );
 	createNotifications( { document, mw } ).init();

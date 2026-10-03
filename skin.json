@@ -203,6 +203,7 @@
 				"resources/skins.citizen.scripts/contentEnhancements.js",
 				"resources/skins.citizen.scripts/deferUntilFrame.js",
 				"resources/skins.citizen.scripts/dropdown.js",
+				"resources/skins.citizen.scripts/goLanding.js",
 				"resources/skins.citizen.scripts/notifications.js",
 				"resources/skins.citizen.scripts/intentPrefetch.js",
 				"resources/skins.citizen.scripts/keyboardLayout.js",
@@ -523,7 +524,8 @@
 					"name": "resources/skins.citizen.commandPalette/specialPages.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteSpecialPages"
 				},
-				"resources/skins.citizen.scripts/keyboardLayout.js"
+				"resources/skins.citizen.scripts/keyboardLayout.js",
+				"resources/skins.citizen.scripts/goLanding.js"
 			],
 			"messages": [
 				"action-edit",

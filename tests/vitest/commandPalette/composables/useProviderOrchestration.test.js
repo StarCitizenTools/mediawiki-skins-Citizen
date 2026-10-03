@@ -757,6 +757,24 @@ describe( 'useProviderOrchestration', () => {
 			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
 		} );
 
+		it( 'leaves out the search a go ran while you are on its results', async () => {
+			useWikiPaths( { wgPageName: 'Special:Search', wgCanonicalSpecialPageName: 'Search' } );
+			window.history.replaceState( null, '', '/wiki/Special:Search?search=zzqx+yy' );
+			vi.spyOn( mw.util, 'getParamValue' ).mockImplementation(
+				( name ) => new URL( window.location.href ).searchParams.get( name )
+			);
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider: { getResults: () => ( { items: [
+					{ id: 'r1', url: mw.util.getUrl( 'Special:Search', { search: 'zzqx yy', fulltext: 1 } ), source: 'recent' },
+					{ id: 'r2', url: '/wiki/Special:Search?search=other&fulltext=1', source: 'recent' }
+				] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r2' ] );
+		} );
+
 		it( 'keeps a page under Recent while you view its history', async () => {
 			useWikiPaths( { wgPageName: 'Akita' } );
 			window.history.replaceState( null, '', '/w/index.php?title=Akita&action=history' );

@@ -11,12 +11,21 @@ const mw = {
 	},
 	storage: {
 		get: vi.fn( () => null ),
-		set: vi.fn()
+		set: vi.fn(),
+		getObject: vi.fn( () => null ),
+		setObject: vi.fn( () => true ),
+		remove: vi.fn(),
+		session: {
+			getObject: vi.fn( () => null ),
+			setObject: vi.fn( () => true ),
+			remove: vi.fn()
+		}
 	},
 	util: {
 		throttle: vi.fn( ( fn ) => fn ),
 		debounce: vi.fn( ( fn ) => fn ),
 		getTargetFromFragment: vi.fn( () => null ),
+		getParamValue: vi.fn( () => null ),
 		getUrl: vi.fn( ( title, params ) => {
 			let url = '/wiki/' + ( title || '' );
 			if ( params && typeof params === 'object' ) {

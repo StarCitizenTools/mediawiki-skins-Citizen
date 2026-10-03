@@ -10,6 +10,8 @@ const createRecentItems = require( '../../../../resources/skins.citizen.commandP
 
 const RECENT_KEY = 'skin-citizen-command-palette-recent';
 const LEGACY_KEY = 'skin-citizen-command-palette-recent-items';
+const GO_NOTE_KEY = 'skin-citizen-command-palette-go-note';
+const GO_LANDING_KEY = 'skin-citizen-command-palette-go-landing';
 
 function page( title ) {
 	return { id: `p-${ title }`, type: 'page', label: title, url: `/wiki/${ title }`, source: 'search' };
@@ -18,6 +20,7 @@ function page( title ) {
 describe( 'createRecentItems', () => {
 	let service;
 	let storage;
+	let session;
 
 	beforeEach( () => {
 		vi.restoreAllMocks();
@@ -38,6 +41,19 @@ describe( 'createRecentItems', () => {
 		} );
 		mw.storage.remove = vi.fn( ( key ) => {
 			delete storage[ key ];
+		} );
+
+		session = {};
+		mw.storage.session.getObject = vi.fn( ( key ) => {
+			const val = session[ key ];
+			return val ? JSON.parse( JSON.stringify( val ) ) : null;
+		} );
+		mw.storage.session.setObject = vi.fn( ( key, val ) => {
+			session[ key ] = JSON.parse( JSON.stringify( val ) );
+			return true;
+		} );
+		mw.storage.session.remove = vi.fn( ( key ) => {
+			delete session[ key ];
 		} );
 
 		service = createRecentItems();
@@ -385,6 +401,121 @@ describe( 'createRecentItems', () => {
 				[ 'revision', undefined ]
 			] );
 			expect( mw.log.error ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'where a go landed', () => {
+		const goRow = { id: 'go', type: 'action', label: 'main page', url: '/wiki/Special:Search?search=main+page', source: 'queryAction:go' };
+
+		it( 'leaves a note naming the go', () => {
+			vi.spyOn( Date, 'now' ).mockReturnValue( 1000 );
+
+			service.saveRecentItem( goRow );
+
+			expect( session[ GO_NOTE_KEY ] ).toEqual( { key: 'page:Main page', query: 'main page', expires: 61000 } );
+			expect( storage[ GO_NOTE_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'leaves no note for anything but a go', () => {
+			service.saveRecentItem( page( 'A' ) );
+
+			expect( session[ GO_NOTE_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'keeps a go to a special page as typed, leaving no note', () => {
+			const specialGo = { id: 'go', type: 'action', label: 'Special:Random', url: '/wiki/Special:Search?search=Special%3ARandom', source: 'queryAction:go' };
+
+			service.saveRecentItem( specialGo );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => [ e.kind, e.label ] ) ).toEqual( [ [ 'go', 'Special:Random' ] ] );
+			expect( session[ GO_NOTE_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'keeps a go opened in a new tab as typed, leaving no note', () => {
+			service.saveRecentItem( { ...goRow, newTab: true } );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => [ e.kind, e.label ] ) ).toEqual( [ [ 'go', 'main page' ] ] );
+			expect( session[ GO_NOTE_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'keeps a go opened with a modifier click as typed, leaving no note', () => {
+			service.saveRecentItem( { ...goRow, modifierClick: true } );
+
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => [ e.kind, e.label ] ) ).toEqual( [ [ 'go', 'main page' ] ] );
+			expect( session[ GO_NOTE_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'shows the page a go landed on in its place', () => {
+			service.saveRecentItem( page( 'Other' ) );
+			service.saveRecentItem( goRow );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Main page', url: '/wiki/Main_Page', label: 'Main Page' };
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => [ r.type, r.label ] ) ).toEqual( [ [ 'page', 'Main Page' ], [ 'page', 'Other' ] ] );
+			expect( storage[ RECENT_KEY ].entries[ 0 ].url ).toBe( '/wiki/Main_Page' );
+			expect( storage[ GO_LANDING_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'merges the landing with an entry already there for that page', () => {
+			service.saveRecentItem( page( 'Main_Page' ) );
+			service.saveRecentItem( page( 'Other' ) );
+			service.saveRecentItem( goRow );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Main page', url: '/wiki/Main_Page', label: 'Main Page' };
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'Main Page', 'Other' ] );
+		} );
+
+		it( 'shows a go that searched as that search', () => {
+			service.saveRecentItem( goRow );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Main page', searched: true };
+
+			const [ row ] = service.getRecentItems();
+
+			expect( row ).toMatchObject( { type: 'search', label: 'main page' } );
+			expect( row.url ).toBe( '/wiki/Special:Search?search=main+page&fulltext=1' );
+		} );
+
+		it( 'drops a landing whose go is gone', () => {
+			service.saveRecentItem( page( 'A' ) );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Nothing', url: '/wiki/Nothing', label: 'Nothing' };
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual( [ 'A' ] );
+			expect( storage[ GO_LANDING_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'drops a landing whose link is not text, keeping the go', () => {
+			service.saveRecentItem( goRow );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Main page', url: 5, label: 'Main Page' };
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => [ r.type, r.label ] ) ).toEqual( [ [ 'go', 'main page' ] ] );
+			expect( storage[ GO_LANDING_KEY ] ).toBeUndefined();
+		} );
+
+		it( 'drops a landing whose label is not text, keeping the go', () => {
+			service.saveRecentItem( goRow );
+			storage[ GO_LANDING_KEY ] = { key: 'page:Main page', url: '/wiki/Main_Page', label: { x: 1 } };
+
+			const rows = service.getRecentItems();
+
+			expect( rows.map( ( r ) => [ r.type, r.label ] ) ).toEqual( [ [ 'go', 'main page' ] ] );
+			expect( storage[ RECENT_KEY ].entries.map( ( e ) => e.kind ) ).toEqual( [ 'go' ] );
+		} );
+
+		it( 'leaves no note when the go could not be remembered', () => {
+			const newer = { version: 2, entries: [] };
+			storage[ RECENT_KEY ] = JSON.parse( JSON.stringify( newer ) );
+
+			service.saveRecentItem( goRow );
+
+			expect( session[ GO_NOTE_KEY ] ).toBeUndefined();
+			expect( storage[ RECENT_KEY ] ).toEqual( newer );
 		} );
 	} );
 } );

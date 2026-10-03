@@ -18,6 +18,7 @@
 		"resources/skins.citizen.commandPalette/**/*.js",
 		"resources/skins.citizen.commandPalette.bucket/**/*.js",
 		"resources/skins.citizen.scripts/keyboardLayout.js",
+		"resources/skins.citizen.scripts/goLanding.js",
 		"resources/skins.citizen.scripts/pageTools.js",
 		"resources/skins.citizen.scripts/pageAside.js",
 		"resources/types/**/*.d.ts"
