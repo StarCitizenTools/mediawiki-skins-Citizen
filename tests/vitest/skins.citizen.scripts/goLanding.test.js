@@ -17,7 +17,10 @@ function store( map ) {
 	};
 }
 
-function setup( { note, config = {}, search = null, redirectCount = 0 } = {} ) {
+// The page's scripts started two seconds ago.
+function setup( {
+	note, config = {}, search = null, redirectCount = 0, pageStart = Date.now() - 2000
+} = {} ) {
 	const session = note === undefined ? {} : { [ NOTE_KEY ]: note };
 	const local = {};
 	const mw = {
@@ -29,7 +32,7 @@ function setup( { note, config = {}, search = null, redirectCount = 0 } = {} ) {
 		}
 	};
 	const performance = { getEntriesByType: vi.fn( () => [ { redirectCount } ] ) };
-	return { session, local, mw, performance };
+	return { session, local, mw, performance, pageStart };
 }
 
 function freshNote() {
@@ -126,6 +129,59 @@ describe( 'recordGoLanding', () => {
 
 		expect( session ).toEqual( {} );
 		expect( local ).toEqual( {} );
+	} );
+
+	it( 'leaves a note saved since the page started for the page its go opens', () => {
+		const pageStart = Date.now() - 2000;
+		const note = { ...freshNote(), savedAt: pageStart + 1500 };
+		const { session, local, mw, performance } = setup( {
+			note,
+			config: { wgPageName: 'Main_Page', wgCanonicalSpecialPageName: false },
+			redirectCount: 1,
+			pageStart
+		} );
+
+		recordGoLanding( { mw, performance, pageStart } );
+
+		expect( session ).toEqual( { [ NOTE_KEY ]: note } );
+		expect( local ).toEqual( {} );
+		expect( mw.storage.setObject ).not.toHaveBeenCalled();
+	} );
+
+	it( 'records a go whose note was saved before the page started', () => {
+		const pageStart = Date.now() - 2000;
+		const { session, local, mw, performance } = setup( {
+			note: { ...freshNote(), savedAt: pageStart - 300 },
+			config: { wgPageName: 'Main_Page', wgCanonicalSpecialPageName: false },
+			redirectCount: 1,
+			pageStart
+		} );
+
+		recordGoLanding( { mw, performance, pageStart } );
+
+		expect( session ).toEqual( {} );
+		expect( local ).toEqual( {
+			[ LANDING_KEY ]: { key: 'page:Main page', url: '/wiki/Main_Page', label: 'Main Page' }
+		} );
+	} );
+
+	it( 'records a go whose note shows the same time the page started', () => {
+		// Date.now() is coarse, so a note the page before saved just before
+		// this one started can carry the same time.
+		const pageStart = Date.now() - 2000;
+		const { session, local, mw, performance } = setup( {
+			note: { ...freshNote(), savedAt: pageStart },
+			config: { wgPageName: 'Main_Page', wgCanonicalSpecialPageName: false },
+			redirectCount: 1,
+			pageStart
+		} );
+
+		recordGoLanding( { mw, performance, pageStart } );
+
+		expect( session ).toEqual( {} );
+		expect( local ).toEqual( {
+			[ LANDING_KEY ]: { key: 'page:Main page', url: '/wiki/Main_Page', label: 'Main Page' }
+		} );
 	} );
 
 	it( 'ignores an expired or malformed note', () => {

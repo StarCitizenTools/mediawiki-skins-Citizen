@@ -200,7 +200,8 @@ function createRecentItems() {
 			mw.storage.session.setObject( GO_NOTE_KEY, {
 				key: entry.key,
 				query: entry.label,
-				expires: Date.now() + GO_NOTE_LIFETIME_MS
+				savedAt,
+				expires: savedAt + GO_NOTE_LIFETIME_MS
 			} );
 		}
 	}

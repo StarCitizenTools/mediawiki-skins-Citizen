@@ -441,7 +441,9 @@ describe( 'createRecentItems', () => {
 
 			service.saveRecentItem( goRow );
 
-			expect( session[ GO_NOTE_KEY ] ).toEqual( { key: 'page:Main page', query: 'main page', expires: 61000 } );
+			expect( session[ GO_NOTE_KEY ] ).toEqual(
+				{ key: 'page:Main page', query: 'main page', savedAt: 1000, expires: 61000 }
+			);
 			expect( storage[ GO_NOTE_KEY ] ).toBeUndefined();
 		} );
 
