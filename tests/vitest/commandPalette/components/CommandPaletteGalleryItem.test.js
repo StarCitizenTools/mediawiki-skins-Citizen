@@ -147,6 +147,35 @@ describe( 'CommandPaletteGalleryItem', () => {
 
 			expect( wrapper.emitted( 'select' )[ 0 ][ 0 ].modifierClick ).toBe( false );
 		} );
+
+		it( 'selects the tile on a middle click, as a modifier click', async () => {
+			const wrapper = mountTile();
+
+			wrapper.element.dispatchEvent( new MouseEvent( 'auxclick', { button: 1 } ) );
+			await wrapper.vm.$nextTick();
+
+			const emitted = wrapper.emitted( 'select' );
+			expect( emitted ).toHaveLength( 1 );
+			expect( emitted[ 0 ][ 0 ] ).toMatchObject( { id: 'test-1', isMouseClick: true, modifierClick: true } );
+		} );
+
+		it( 'ignores a right click', async () => {
+			const wrapper = mountTile();
+
+			wrapper.element.dispatchEvent( new MouseEvent( 'auxclick', { button: 2 } ) );
+			await wrapper.vm.$nextTick();
+
+			expect( wrapper.emitted( 'select' ) ).toBeUndefined();
+		} );
+
+		it( 'ignores a middle click on a tile without a link', async () => {
+			const wrapper = mountTile( { url: '' } );
+
+			wrapper.element.dispatchEvent( new MouseEvent( 'auxclick', { button: 1 } ) );
+			await wrapper.vm.$nextTick();
+
+			expect( wrapper.emitted( 'select' ) ).toBeUndefined();
+		} );
 	} );
 
 	describe( 'mousedown handling', () => {

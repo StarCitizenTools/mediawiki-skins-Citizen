@@ -14,6 +14,7 @@
 		:data-type="type"
 		@mousedown.prevent="onMouseDown"
 		@click="onClick"
+		@auxclick="onAuxClick"
 	>
 		<!--
 			CommandPaletteImage handles src + lazy-loaded <img>, the
@@ -144,6 +145,15 @@ module.exports = exports = defineComponent( {
 			);
 		};
 
+		// A middle click arrives as `auxclick`, never as `click`, and the
+		// browser opens the link in a new tab itself. It is the same
+		// activation as a Ctrl+click, so the tile is selected the same way.
+		const onAuxClick = ( event ) => {
+			if ( event.button === 1 && props.url ) {
+				onClick( event );
+			}
+		};
+
 		const rootClasses = computed( () => ( {
 			'citizen-command-palette-gallery-item--active': props.active && props.highlighted,
 			'citizen-command-palette-gallery-item--highlighted': props.highlighted
@@ -153,6 +163,7 @@ module.exports = exports = defineComponent( {
 			rootRef,
 			onMouseDown,
 			onClick,
+			onAuxClick,
 			rootClasses
 		};
 	}
