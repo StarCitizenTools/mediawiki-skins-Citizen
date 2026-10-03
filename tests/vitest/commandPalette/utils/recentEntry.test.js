@@ -240,6 +240,24 @@ describe( 'recentEntry', () => {
 			expect( row.actions[ 0 ].url ).toBe( '/wiki/Benutzer:Alice?action=edit' );
 		} );
 
+		it.each( [ '__proto__', 'constructor', 'toString', 'valueOf' ] )(
+			'draws a stored kind named like an inherited property (%s) as a plain row',
+			( kind ) => {
+				const entry = { kind, key: 'url:x', label: 'X', url: '/wiki/X', savedAt: 1 };
+
+				const row = rowFromEntry( entry );
+
+				expect( row ).toEqual( {
+					id: 'citizen-command-palette-recent-url%3Ax',
+					type: kind,
+					label: 'X',
+					url: '/wiki/X',
+					thumbnailIcon: icons.cdxIconPlay,
+					actions: []
+				} );
+			}
+		);
+
 		it( 'gives no edit button to a page that holds no wikitext', () => {
 			const entry = { kind: 'special', key: 'page:Special:ListFiles', label: 'Special:ListFiles', url: '/wiki/Special:ListFiles', savedAt: 1 };
 

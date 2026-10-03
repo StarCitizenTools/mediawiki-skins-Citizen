@@ -61,7 +61,10 @@ function recordGoLanding( { mw, performance, pageStart } ) {
 	const navigation = typeof performance.getEntriesByType === 'function' ?
 		/** @type {PerformanceNavigationTiming|undefined} */ ( performance.getEntriesByType( 'navigation' )[ 0 ] ) :
 		undefined;
-	if ( !navigation || !( navigation.redirectCount > 0 ) ) {
+	// Read as a positive test so a browser without redirectCount counts as
+	// not redirected.
+	const redirected = !!navigation && navigation.redirectCount > 0;
+	if ( !redirected ) {
 		return;
 	}
 	const pageName = String( mw.config.get( 'wgPageName' ) );
