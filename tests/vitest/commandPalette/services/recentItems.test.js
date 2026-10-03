@@ -7,6 +7,7 @@ globalThis.mw = mw;
 const mwTitle = require( '../../mocks/mwTitle.js' );
 
 const createRecentItems = require( '../../../../resources/skins.citizen.commandPalette/services/recentItems.js' );
+const destinationKey = require( '../../../../resources/skins.citizen.commandPalette/utils/destinationKey.js' );
 
 const RECENT_KEY = 'skin-citizen-command-palette-recent';
 const LEGACY_KEY = 'skin-citizen-command-palette-recent-items';
@@ -226,6 +227,34 @@ describe( 'createRecentItems', () => {
 			mw.storage.getObject = vi.fn( () => false );
 
 			expect( service.getRecentItems() ).toEqual( [] );
+		} );
+
+		it( 'builds rows only up to the limit, passing over the places left out', () => {
+			const userMode = { id: 'user', remember: ( item ) => ( { kind: 'user', label: item.label } ) };
+			const user = ( name ) => ( { id: `u-${ name }`, type: 'user', label: name, url: `/wiki/User:${ name }` } );
+			// Saved oldest first, so they are stored newest first in this order.
+			const newestFirst = [
+				page( 'P0' ), page( 'P1' ), page( 'Gone1' ), user( 'Inside' ), page( 'P4' ),
+				user( 'Gone2' ), page( 'P6' ), page( 'P7' ), page( 'P8' ), page( 'P9' ),
+				user( 'Past' ), page( 'P11' ), page( 'P12' )
+			];
+			[ ...newestFirst ].reverse().forEach( ( row ) => {
+				service.saveRecentItem( row, row.url, row.type === 'user' ? userMode : null );
+			} );
+			mw.util.getUrl.mockClear();
+
+			const rows = service.getRecentItems( {
+				leftOut: new Set( [ destinationKey( page( 'Gone1' ) ), destinationKey( user( 'Gone2' ) ) ] ),
+				limit: 8
+			} );
+
+			expect( rows.map( ( r ) => r.label ) ).toEqual(
+				[ 'P0', 'P1', 'Inside', 'P4', 'P6', 'P7', 'P8', 'P9' ]
+			);
+			// A user row links to the user's talk page as it is built.
+			expect( mw.util.getUrl ).toHaveBeenCalledWith( 'User_talk:Inside' );
+			expect( mw.util.getUrl ).not.toHaveBeenCalledWith( 'User_talk:Gone2' );
+			expect( mw.util.getUrl ).not.toHaveBeenCalledWith( 'User_talk:Past' );
 		} );
 	} );
 

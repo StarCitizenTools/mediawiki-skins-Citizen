@@ -206,18 +206,35 @@ function createRecentItems() {
 	}
 
 	/**
-	 * @return {Array<import('../types.js').CommandPaletteItem>} Rows for the remembered places.
+	 * Rows for the remembered places, newest first. Only the rows returned
+	 * are built.
+	 *
+	 * @param {Object} [options]
+	 * @param {Set<string>} [options.leftOut] Places to leave out, by the key
+	 *   `destinationKey` gives the row that shows each.
+	 * @param {number} [options.limit] The most rows to return.
+	 * @return {Array<import('../types.js').CommandPaletteItem>}
 	 */
-	function getRecentItems() {
+	function getRecentItems( { leftOut = new Set(), limit = Infinity } = {} ) {
 		const dismissAction = {
 			id: 'dismiss',
 			label: mw.msg( 'citizen-command-palette-dismiss' ),
 			icon: cdxIconTrash
 		};
-		return load().map( ( entry ) => {
+		const rows = [];
+		for ( const entry of load() ) {
+			if ( rows.length >= limit ) {
+				break;
+			}
+			// An entry's key is the destination key of its link, as the row
+			// built from it keys, unless the key's rules changed after saving.
+			if ( leftOut.has( entry.key ) ) {
+				continue;
+			}
 			const row = rowFromEntry( entry );
-			return { ...row, actions: [ ...( row.actions || [] ), dismissAction ] };
-		} );
+			rows.push( { ...row, actions: [ ...( row.actions || [] ), dismissAction ] } );
+		}
+		return rows;
 	}
 
 	/**

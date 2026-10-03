@@ -13,6 +13,9 @@ const useProviderOrchestration = require(
 const { DEFAULT_DEBOUNCE_MS } = require(
 	'../../../../resources/skins.citizen.commandPalette/providers/createProvider.js'
 );
+const destinationKey = require(
+	'../../../../resources/skins.citizen.commandPalette/utils/destinationKey.js'
+);
 
 describe( 'useProviderOrchestration', () => {
 	let mockSyncProvider;
@@ -808,6 +811,69 @@ describe( 'useProviderOrchestration', () => {
 			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual(
 				[ 'a1', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10' ]
 			);
+		} );
+
+		it( 'asks Recent for only the entries it shows, leaving out the page you are on', () => {
+			useWikiPaths( { wgPageName: 'Elsewhere' } );
+			window.history.replaceState( null, '', '/wiki/Elsewhere' );
+			const recentItemsProvider = { getResults: vi.fn( () => ( { items: [] } ) ) };
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider,
+				relatedArticlesProvider: { getResults: () => new Promise( () => {} ) }
+			} );
+
+			orch.clearSearch();
+
+			expect( recentItemsProvider.getResults ).toHaveBeenCalledWith( '', {
+				leftOut: new Set( [ destinationKey( { id: '', url: '/wiki/Elsewhere' } ) ] ),
+				limit: 8
+			} );
+		} );
+
+		it( 'refills Recent to eight entries once Related takes some', async () => {
+			useWikiPaths( { wgPageName: 'Elsewhere' } );
+			window.history.replaceState( null, '', '/wiki/Elsewhere' );
+			const stored = Array.from( { length: 10 }, ( _, i ) => (
+				{ id: `r${ i + 1 }`, url: `/wiki/P${ i + 1 }`, source: 'recent' }
+			) );
+			// Answers as the service does: it passes over the places left out
+			// and returns no more rows than asked for.
+			const recentItemsProvider = {
+				getResults: ( query, { leftOut = new Set(), limit = Infinity } = {} ) => ( {
+					items: stored.filter( ( row ) => !leftOut.has( destinationKey( row ) ) ).slice( 0, limit )
+				} )
+			};
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider,
+				relatedArticlesProvider: {
+					getResults: () => Promise.resolve( { items: [
+						{ id: 'a1', url: '/wiki/P2', source: 'related' },
+						{ id: 'a2', url: '/wiki/P5', source: 'related' }
+					] } )
+				}
+			} );
+
+			await orch.clearSearch();
+
+			const recent = orch.displayedItems.value.find(
+				( s ) => s.heading === 'citizen-command-palette-heading-recent'
+			);
+			expect( recent.items.map( ( i ) => i.id ) ).toEqual(
+				[ 'r1', 'r3', 'r4', 'r6', 'r7', 'r8', 'r9', 'r10' ]
+			);
+		} );
+
+		it( 'reads Recent once when Related lists nothing', async () => {
+			const recentItemsProvider = { getResults: vi.fn( () => ( { items: recentItems } ) ) };
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				recentItemsProvider,
+				relatedArticlesProvider: { getResults: () => Promise.resolve( { items: [] } ) }
+			} );
+
+			await orch.clearSearch();
+
+			expect( recentItemsProvider.getResults ).toHaveBeenCalledTimes( 1 );
+			expect( orch.flatItems.value.map( ( i ) => i.id ) ).toEqual( [ 'r1' ] );
 		} );
 
 		it( 'declares related above recents before related has resolved', async () => {
