@@ -5,13 +5,13 @@ const MS_PER_DAY = 24 * MS_PER_HOUR;
 /**
  * Format a revision timestamp for human scanning.
  *
- * Recent edits get a compact relative form — "now", "5m", "3h", "2d" —
- * inspired by how Git, Slack, and Twitter render commit/message ages.
- * The "ago" suffix is omitted because the surrounding context (a
- * revision list) makes the past tense implicit, and language-neutral
- * abbreviations stay short across locales. Older edits get a compact
- * absolute date ("Apr 28") via Intl.DateTimeFormat, which localizes
- * for free.
+ * Recent edits get a compact relative form — "now", "5m", "3h", "2d".
+ * It has no "ago": every caller shows it beside other details of a
+ * revision, where a time can only be in the past, and language-neutral
+ * abbreviations stay short across locales. A caller that shows it where
+ * the past tense is not implied needs a different form. Older edits get
+ * a compact absolute date ("Apr 28") via Intl.DateTimeFormat, which
+ * localizes for free.
  *
  * @param {string} timestamp ISO 8601 string from the API
  * @return {string}

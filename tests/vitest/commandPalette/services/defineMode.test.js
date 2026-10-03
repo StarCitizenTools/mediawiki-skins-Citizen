@@ -170,6 +170,22 @@ describe( 'defineMode', () => {
 			expect( result.getItemDetail ).toBe( fn );
 		} );
 
+		it( 'warns and drops remember when not a function', () => {
+			const result = defineMode( Object.assign( {}, VALID_MODE, { remember: 'oops' } ) );
+
+			expect( result.remember ).toBeUndefined();
+			expect( mw.log.warn ).toHaveBeenCalled();
+		} );
+
+		it( 'preserves a valid remember as-is', () => {
+			const fn = () => null;
+
+			const result = defineMode( Object.assign( {}, VALID_MODE, { remember: fn } ) );
+
+			expect( result.remember ).toBe( fn );
+			expect( mw.log.warn ).not.toHaveBeenCalled();
+		} );
+
 		it( 'warns and drops tokenPattern when not an object/array', () => {
 			const result = defineMode( Object.assign( {}, VALID_MODE, { tokenPattern: 'oops' } ) );
 

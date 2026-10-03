@@ -6,7 +6,7 @@ globalThis.mw = mw;
 const mwTitle = require( '../../mocks/mwTitle.js' );
 const icons = require( '../../mocks/commandPaletteIcons.js' );
 
-const { isPlaceLink, entryFromLink, rowFromEntry, rankOf } = require( '../../../../resources/skins.citizen.commandPalette/utils/recentEntry.js' );
+const { isPlaceLink, entryFromLink, entryFromMode, rowFromEntry, rankOf } = require( '../../../../resources/skins.citizen.commandPalette/utils/recentEntry.js' );
 
 describe( 'recentEntry', () => {
 	beforeEach( () => {
@@ -182,6 +182,39 @@ describe( 'recentEntry', () => {
 		} );
 	} );
 
+	describe( 'entryFromMode', () => {
+		it( 'keeps what the mode chose, with the link and the mode', () => {
+			const entry = entryFromMode( '/wiki/User:Alice', { kind: 'user', label: 'Alice' }, 'user', 7 );
+
+			expect( entry ).toEqual( {
+				kind: 'user',
+				key: 'page:Benutzer:Alice',
+				label: 'Alice',
+				url: '/wiki/User:Alice',
+				savedAt: 7,
+				mode: 'user'
+			} );
+		} );
+
+		it( 'keeps only string data', () => {
+			const remembered = { kind: 'file', label: 'Boat.jpg', data: { mediatype: 'BITMAP', size: 12, extra: null } };
+
+			const entry = entryFromMode( '/wiki/File:Boat.jpg', remembered, 'file', 1 );
+
+			expect( entry.data ).toEqual( { mediatype: 'BITMAP' } );
+		} );
+
+		it( 'refuses a kind Recent cannot draw for a mode', () => {
+			expect( entryFromMode( '/wiki/A', { kind: 'go', label: 'A' }, 'x', 1 ) ).toBeNull();
+			expect( entryFromMode( '/wiki/A', { kind: 'page', label: 'A' }, 'x', 1 ) ).toBeNull();
+		} );
+
+		it( 'refuses an empty label or a link that is not a place', () => {
+			expect( entryFromMode( '/wiki/A', { kind: 'user', label: '' }, 'user', 1 ) ).toBeNull();
+			expect( entryFromMode( '#', { kind: 'user', label: 'A' }, 'user', 1 ) ).toBeNull();
+		} );
+	} );
+
 	describe( 'rowFromEntry', () => {
 		it( 'shows a page with the page icon and its edit button', () => {
 			const entry = { kind: 'page', key: 'page:Main Page', label: 'Main Page', url: '/wiki/Main_Page', savedAt: 1 };
@@ -240,6 +273,71 @@ describe( 'recentEntry', () => {
 			expect( row.description ).toBe( 'Help:Contents' );
 			expect( row.thumbnailIcon ).toBe( icons.cdxIconPlay );
 		} );
+
+		it( 'shows a user with the user icon and talk and contributions buttons', () => {
+			const entry = { kind: 'user', key: 'page:Benutzer:Alice', label: 'Alice', url: '/wiki/User:Alice', savedAt: 1, mode: 'user' };
+
+			const row = rowFromEntry( entry );
+
+			expect( row.thumbnailIcon ).toBe( icons.cdxIconUserAvatar );
+			expect( row.actions.map( ( a ) => [ a.id, a.url ] ) ).toEqual( [
+				[ 'talk', '/wiki/User_talk:Alice' ],
+				[ 'contributions', '/wiki/Special:Contributions/Alice' ]
+			] );
+		} );
+
+		describe( 'a revision a mode remembered', () => {
+			beforeEach( () => {
+				vi.useFakeTimers();
+				vi.setSystemTime( new Date( '2026-10-02T12:00:00Z' ) );
+			} );
+
+			afterEach( () => {
+				vi.useRealTimers();
+			} );
+
+			function revision( data ) {
+				return { kind: 'revision', key: 'url:r', label: 'Main Page', url: '/w/index.php?title=Main_Page&diff=prev&oldid=5', savedAt: 1, mode: 'history', data };
+			}
+
+			it( 'is described by its author, age and summary', () => {
+				const row = rowFromEntry( revision( { author: 'Alice', timestamp: '2026-09-29T12:00:00Z', summary: 'Fix typo' } ) );
+
+				expect( row.description ).toBe( 'Alice · 3d · Fix typo' );
+			} );
+
+			it( 'skips the parts it does not have', () => {
+				const row = rowFromEntry( revision( { author: 'Alice', timestamp: '2026-10-02T11:55:00Z', summary: '' } ) );
+
+				expect( row.description ).toBe( 'Alice · 5m' );
+			} );
+		} );
+
+		it( 'gives a revision read from its link no description', () => {
+			const entry = { kind: 'revision', key: 'url:r', label: 'Main Page', url: '/w/index.php?title=Main_Page&oldid=5', savedAt: 1 };
+
+			const row = rowFromEntry( entry );
+
+			expect( row ).not.toHaveProperty( 'description' );
+		} );
+
+		it( 'shows a picture file with a thumbnail of it', () => {
+			const entry = { kind: 'file', key: 'page:File:Boat.jpg', label: 'Boat.jpg', url: '/wiki/File:Boat.jpg', savedAt: 1, mode: 'file', data: { mediatype: 'BITMAP' } };
+
+			const row = rowFromEntry( entry );
+
+			expect( row.thumbnail ).toEqual( { url: '/wiki/Special:Redirect/file/Boat.jpg?width=160' } );
+			expect( row.thumbnailIcon ).toBe( icons.cdxIconImage );
+		} );
+
+		it( 'shows any other file with its media icon only', () => {
+			const entry = { kind: 'file', key: 'page:File:Song.ogg', label: 'Song.ogg', url: '/wiki/File:Song.ogg', savedAt: 1, mode: 'file', data: { mediatype: 'AUDIO' } };
+
+			const row = rowFromEntry( entry );
+
+			expect( row ).not.toHaveProperty( 'thumbnail' );
+			expect( row.thumbnailIcon ).toBe( icons.cdxIconVolumeUp );
+		} );
 	} );
 
 	describe( 'rankOf', () => {
@@ -247,6 +345,7 @@ describe( 'recentEntry', () => {
 			expect( rankOf( { kind: 'go' } ) ).toBe( 0 );
 			expect( rankOf( { kind: 'page' } ) ).toBe( 1 );
 			expect( rankOf( { kind: 'link' } ) ).toBe( 1 );
+			expect( rankOf( { kind: 'revision', mode: 'history' } ) ).toBe( 2 );
 		} );
 	} );
 } );

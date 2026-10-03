@@ -560,9 +560,10 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	 *
 	 * @param {Object} actionResult The action from the provider.
 	 * @param {Object} result The original selected item.
+	 * @param {import('../types.js').PaletteMode|null} mode The mode the item was selected in.
 	 * @return {Object} The processed action result.
 	 */
-	function processAction( actionResult, result ) {
+	function processAction( actionResult, result, mode ) {
 		if ( !actionResult ) {
 			return { action: 'none' };
 		}
@@ -579,7 +580,8 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 				);
 				deps.recentItemsService.saveRecentItem(
 					standsFor || result,
-					standsFor ? standsFor.url : actionResult.payload
+					standsFor ? standsFor.url : actionResult.payload,
+					standsFor ? null : mode
 				);
 			}
 		}
@@ -631,14 +633,16 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		// a handler would miss fields its mode keeps on the row, such as a
 		// revision id.
 		const item = resolveSelection( result );
+		// Read before any handler runs: the reader can switch modes while a
+		// handler is still working, and Recent must ask the mode the row was
+		// opened in.
+		const mode = activeMode.value;
 
 		// If in a mode, delegate to the mode's onResultSelect
-		if ( activeMode.value &&
-			typeof activeMode.value.onResultSelect === 'function' ) {
+		if ( mode && typeof mode.onResultSelect === 'function' ) {
 			try {
-				const actionResult =
-					await activeMode.value.onResultSelect( item );
-				return processAction( actionResult, item );
+				const actionResult = await mode.onResultSelect( item );
+				return processAction( actionResult, item, mode );
 			} catch ( error ) {
 				mw.log.error(
 					'[commandPalette] Mode selection handler failed:', error
@@ -659,7 +663,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 			try {
 				const actionResult =
 					await sourceProvider.onResultSelect( item );
-				return processAction( actionResult, item );
+				return processAction( actionResult, item, mode );
 			} catch ( error ) {
 				mw.log.error(
 					'[commandPalette] Selection handler failed:', error
@@ -671,7 +675,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		// Fallback
 		const fallback = item.url ?
 			{ action: 'navigate', payload: item.url } : { action: 'none' };
-		return processAction( fallback, item );
+		return processAction( fallback, item, mode );
 	}
 
 	/**
