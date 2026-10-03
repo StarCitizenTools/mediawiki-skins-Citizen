@@ -13,8 +13,13 @@ function createRecentItemsProvider( recentItemsService ) {
 			return !query;
 		},
 
-		getResults() {
-			const items = recentItemsService.getRecentItems();
+		/**
+		 * @param {string} query
+		 * @param {Object} [options] The service's getRecentItems options.
+		 * @return {{items: Array<Object>}}
+		 */
+		getResults( query, options ) {
+			const items = recentItemsService.getRecentItems( options );
 			return {
 				items: Array.isArray( items ) ?
 					items.map( ( item ) => ( { ...item, source: 'recent' } ) ) : []

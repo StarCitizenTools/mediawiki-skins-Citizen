@@ -2,6 +2,13 @@ const MS_PER_MIN = 60 * 1000;
 const MS_PER_HOUR = 60 * MS_PER_MIN;
 const MS_PER_DAY = 24 * MS_PER_HOUR;
 
+// Built on first use and kept: a formatter costs far more to build than to
+// use, and the first one a page builds loads the locale's date data.
+/** @type {Intl.DateTimeFormat|null} */
+let sameYearFormat = null;
+/** @type {Intl.DateTimeFormat|null} */
+let otherYearFormat = null;
+
 /**
  * Format a revision timestamp for human scanning.
  *
@@ -33,10 +40,19 @@ function formatTimestamp( timestamp ) {
 		return Math.floor( diffMs / MS_PER_DAY ) + 'd';
 	}
 
-	const sameYear = then.getFullYear() === new Date().getFullYear();
-	return then.toLocaleDateString( undefined, sameYear ?
-		{ month: 'short', day: 'numeric' } :
-		{ year: 'numeric', month: 'short', day: 'numeric' } );
+	// A formatter throws on an invalid date; this gives "Invalid Date", as
+	// toLocaleDateString does, so the row is still drawn.
+	if ( Number.isNaN( then.getTime() ) ) {
+		return String( then );
+	}
+	if ( then.getFullYear() === new Date().getFullYear() ) {
+		sameYearFormat = sameYearFormat ||
+			new Intl.DateTimeFormat( undefined, { month: 'short', day: 'numeric' } );
+		return sameYearFormat.format( then );
+	}
+	otherYearFormat = otherYearFormat ||
+		new Intl.DateTimeFormat( undefined, { year: 'numeric', month: 'short', day: 'numeric' } );
+	return otherYearFormat.format( then );
 }
 
 module.exports = formatTimestamp;

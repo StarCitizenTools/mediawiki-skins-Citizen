@@ -72,6 +72,20 @@ function currentViewKeys() {
 }
 
 /**
+ * What Recent leaves out: what its row would only reload, and any page
+ * Related already lists, however each of them links to it.
+ *
+ * @param {Array<Object>} relatedItems The rows Related lists.
+ * @return {Set<string>} Destination keys.
+ */
+function recentLeftOut( relatedItems ) {
+	return new Set( [
+		...currentViewKeys(),
+		...relatedItems.filter( ( item ) => item.url ).map( destinationKey )
+	] );
+}
+
+/**
  * Composable that orchestrates provider selection, dispatching, debouncing,
  * abort coordination, and result assembly.
  *
@@ -163,12 +177,10 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		}
 
 		if ( isPresultsSurface.value ) {
-			// Recent leaves out what its row would only reload, and any page
-			// Related already lists, however each of them links to it.
-			const leftOut = new Set( [
-				...currentViewKeys(),
-				...related.value.items.filter( ( item ) => item.url ).map( destinationKey )
-			] );
+			// Recent is asked to leave these out already, but its rows are
+			// first fetched before Related settles, and an entry saved under
+			// an older key escapes that check.
+			const leftOut = recentLeftOut( related.value.items );
 			return [
 				section(
 					'citizen-command-palette-heading-related', related.value.items
@@ -325,6 +337,27 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 	}
 
 	/**
+	 * Recent's rows for the presults surface, only as many as it shows.
+	 *
+	 * @param {Array<Object>} relatedItems The rows Related lists.
+	 * @return {Array<Object>|null} The rows, or null when Recent failed.
+	 */
+	function fetchRecents( relatedItems ) {
+		if ( !deps.recentItemsProvider ) {
+			return [];
+		}
+		try {
+			return normalizeProviderResult( deps.recentItemsProvider.getResults( '', {
+				leftOut: recentLeftOut( relatedItems ),
+				limit: RECENT_ITEMS_SHOWN
+			} ) );
+		} catch ( e ) {
+			mw.log.error( '[commandPalette] Failed to get recent items:', e );
+			return null;
+		}
+	}
+
+	/**
 	 * Clears the search and populates presults.
 	 *
 	 * Related outranks recents because navigation intent is higher. That
@@ -340,17 +373,7 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		resetDetailState();
 		resetContent();
 
-		let recentItems = [];
-		if ( deps.recentItemsProvider ) {
-			try {
-				recentItems = normalizeProviderResult(
-					deps.recentItemsProvider.getResults( '' )
-				);
-			} catch ( e ) {
-				mw.log.error( '[commandPalette] Failed to get recent items:', e );
-			}
-		}
-		recents.value = recentItems;
+		recents.value = fetchRecents( [] ) || [];
 		related.value = { items: [], settled: !deps.relatedArticlesProvider };
 
 		if ( !deps.relatedArticlesProvider ) {
@@ -371,6 +394,11 @@ function useProviderOrchestration( providers, resultDecorator, deps = {} ) {
 		// between a slow related fetch and a surface that has moved on.
 		if ( surfaceKey.value !== dispatchSurface ) {
 			return;
+		}
+		// Recent refills the rows Related took, landing with Related in the
+		// same tick so the list is drawn once.
+		if ( relatedItems.some( ( item ) => item.url ) ) {
+			recents.value = fetchRecents( relatedItems ) || recents.value;
 		}
 		related.value = { items: relatedItems, settled: true };
 	}
