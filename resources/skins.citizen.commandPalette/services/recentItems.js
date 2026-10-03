@@ -1,6 +1,9 @@
 const { cdxIconTrash } = require( '../icons.json' );
 const destinationKey = require( '../utils/destinationKey.js' );
 const { isPlaceLink, entryFromLink, entryFromMode, rowFromEntry, rankOf } = require( '../utils/recentEntry.js' );
+// goLanding.js is listed in both this module's and
+// skins.citizen.scripts' packageFiles — keep the two in sync
+const { GO_NOTE_KEY, GO_LANDING_KEY } = require( '../../skins.citizen.scripts/goLanding.js' );
 
 const RECENT_KEY = 'skin-citizen-command-palette-recent';
 // Earlier versions stored whole rows here. Read once, converted, then removed.
@@ -11,6 +14,11 @@ const FORMAT_VERSION = 1;
 // that led to it, and each page Related lists. Leaving those out then
 // never shortens the list.
 const MAX_RECENT_ITEMS = 13;
+// A go entry names only the typed query. Saving one leaves a note, the page
+// that loads next records where the go went (skins.citizen.scripts/goLanding.js,
+// which owns the protocol's keys), and the next read swaps the go for that
+// place.
+const GO_NOTE_LIFETIME_MS = 60 * 1000;
 
 /**
  * @param {any} value
@@ -75,6 +83,43 @@ function createRecentItems() {
 	}
 
 	/**
+	 * The entries with a recorded go landing applied: the go is replaced in
+	 * place by the page it landed on, or by the search it ran.
+	 *
+	 * @param {import('../utils/recentEntry.js').RecentEntry[]} entries
+	 * @return {import('../utils/recentEntry.js').RecentEntry[]}
+	 */
+	function applyGoLanding( entries ) {
+		const landing = mw.storage.getObject( GO_LANDING_KEY );
+		if ( !landing ) {
+			return entries;
+		}
+		mw.storage.remove( GO_LANDING_KEY );
+		if (
+			typeof landing.key !== 'string' ||
+			( landing.searched !== true &&
+				( typeof landing.url !== 'string' || typeof landing.label !== 'string' ) )
+		) {
+			return entries;
+		}
+		const go = entries.find( ( entry ) => entry.kind === 'go' && entry.key === landing.key );
+		if ( !go ) {
+			return entries;
+		}
+		const place = landing.searched === true ?
+			entryFromLink(
+				mw.util.getUrl( 'Special:Search', { search: go.label, fulltext: 1 } ), {}, go.savedAt
+			) :
+			entryFromLink( landing.url, { label: landing.label, url: landing.url }, go.savedAt );
+		if ( !place ) {
+			return entries;
+		}
+		const updated = collapse( entries.map( ( entry ) => ( entry === go ? place : entry ) ) );
+		write( updated );
+		return updated;
+	}
+
+	/**
 	 * The stored entries, newest first, converting an earlier history once.
 	 *
 	 * @return {import('../utils/recentEntry.js').RecentEntry[]}
@@ -91,7 +136,7 @@ function createRecentItems() {
 				// after a downgrade, can write the earlier history back.
 				mw.storage.remove( LEGACY_KEY );
 			}
-			return stored.entries.filter( isEntry );
+			return applyGoLanding( stored.entries.filter( isEntry ) );
 		}
 		const legacy = mw.storage.getObject( LEGACY_KEY );
 		if ( !Array.isArray( legacy ) ) {
@@ -108,7 +153,7 @@ function createRecentItems() {
 		if ( write( entries ) ) {
 			mw.storage.remove( LEGACY_KEY );
 		}
-		return entries;
+		return applyGoLanding( entries );
 	}
 
 	/**
@@ -140,7 +185,24 @@ function createRecentItems() {
 		if ( !entry ) {
 			return;
 		}
-		write( collapse( [ entry, ...load() ] ).slice( 0, MAX_RECENT_ITEMS ) );
+		const stored = write( collapse( [ entry, ...load() ] ).slice( 0, MAX_RECENT_ITEMS ) );
+		// Special:Search sends a go that names a special page straight to it,
+		// and some special pages redirect again, to a random article or to a
+		// page instead of its diff. The page that loads next is then not the
+		// one the reader asked for, so such a go stays as typed.
+		const goTitle = entry.kind === 'go' ? mw.Title.newFromText( entry.label ) : null;
+		const namesSpecialPage = !!goTitle && goTitle.getNamespaceId() === -1;
+		// The note is kept in this tab's session storage, which a tab opened
+		// from this one can inherit. A go opened anywhere else leaves none,
+		// so that neither tab takes its next page for where the go went.
+		const opensHere = !item.modifierClick && !item.newTab;
+		if ( stored && entry.kind === 'go' && !namesSpecialPage && opensHere ) {
+			mw.storage.session.setObject( GO_NOTE_KEY, {
+				key: entry.key,
+				query: entry.label,
+				expires: Date.now() + GO_NOTE_LIFETIME_MS
+			} );
+		}
 	}
 
 	/**

@@ -44,8 +44,9 @@ function normalizeProviderResult( result ) {
 }
 
 /**
- * What opening a row would only reload: the view you are on and, when a
- * redirect led here, the redirect, whose own link opens this view again.
+ * What opening a row would only reload: the view you are on; when a
+ * redirect led here, the redirect, whose own link opens this view again;
+ * and on search results, the full-text search for the same query.
  *
  * @return {string[]} Destination keys.
  */
@@ -54,6 +55,18 @@ function currentViewKeys() {
 	const redirectedFrom = mw.config.get( 'wgRedirectedFrom' );
 	if ( redirectedFrom ) {
 		keys.push( destinationKey( { id: '', url: mw.util.getUrl( redirectedFrom ) } ) );
+	}
+	// A go that found no page shows these results at its own link, which
+	// keys as the page it named, while Recent remembers it as the full-text
+	// search it ran.
+	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'Search' ) {
+		const search = mw.util.getParamValue( 'search' );
+		if ( typeof search === 'string' && search !== '' ) {
+			keys.push( destinationKey( {
+				id: '',
+				url: mw.util.getUrl( 'Special:Search', { search, fulltext: 1 } )
+			} ) );
+		}
 	}
 	return keys;
 }
