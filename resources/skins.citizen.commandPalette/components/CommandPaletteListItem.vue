@@ -26,6 +26,7 @@ Partially based on the MenuItem component from Codex.
 			:compact="compact"
 			:previewable="previewable"
 			@click="onClick"
+			@auxclick="onAuxClick"
 		></command-palette-list-item-content>
 		<command-palette-list-item-actions
 			ref="actionsRef"
@@ -173,6 +174,15 @@ module.exports = exports = defineComponent( {
 			);
 		};
 
+		// A middle click arrives as `auxclick`, never as `click`, and the
+		// browser opens the link in a new tab itself. It is the same
+		// activation as a Ctrl+click, so the row is selected the same way.
+		const onAuxClick = ( event ) => {
+			if ( event.button === 1 && props.url ) {
+				onClick( event );
+			}
+		};
+
 		// --- Action Handling ---
 		const onAction = ( actionPayload ) => {
 			// Simply forward the event from the actions sub-component
@@ -199,6 +209,7 @@ module.exports = exports = defineComponent( {
 			// Event Handlers
 			onMouseDown,
 			onClick,
+			onAuxClick,
 			onAction,
 			// Computed
 			rootClasses
