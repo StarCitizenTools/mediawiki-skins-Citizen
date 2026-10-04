@@ -10,6 +10,26 @@ let sameYearFormat = null;
 let otherYearFormat = null;
 
 /**
+ * Build a date formatter in the interface language rather than the
+ * browser's, so the palette matches the rest of the page when the two
+ * differ.
+ *
+ * @param {Intl.DateTimeFormatOptions} options
+ * @return {Intl.DateTimeFormat}
+ */
+function createDateFormat( options ) {
+	const locale = mw.config.get( 'wgUserLanguage' ) || undefined;
+	try {
+		return new Intl.DateTimeFormat( locale, options );
+	} catch ( e ) {
+		// A structurally invalid BCP 47 tag (e.g. the x-xss testing
+		// pseudo-language) makes the constructor throw. Fall back to the
+		// browser locale rather than breaking the row's render.
+		return new Intl.DateTimeFormat( undefined, options );
+	}
+}
+
+/**
  * Format a revision timestamp for human scanning.
  *
  * Recent edits get a compact relative form — "now", "5m", "3h", "2d".
@@ -17,8 +37,8 @@ let otherYearFormat = null;
  * revision, where a time can only be in the past, and language-neutral
  * abbreviations stay short across locales. A caller that shows it where
  * the past tense is not implied needs a different form. Older edits get
- * a compact absolute date ("Apr 28") via Intl.DateTimeFormat, which
- * localizes for free.
+ * a compact absolute date ("Apr 28") via Intl.DateTimeFormat, in the
+ * interface language.
  *
  * @param {string} timestamp ISO 8601 string from the API
  * @return {string}
@@ -47,11 +67,11 @@ function formatTimestamp( timestamp ) {
 	}
 	if ( then.getFullYear() === new Date().getFullYear() ) {
 		sameYearFormat = sameYearFormat ||
-			new Intl.DateTimeFormat( undefined, { month: 'short', day: 'numeric' } );
+			createDateFormat( { month: 'short', day: 'numeric' } );
 		return sameYearFormat.format( then );
 	}
 	otherYearFormat = otherYearFormat ||
-		new Intl.DateTimeFormat( undefined, { year: 'numeric', month: 'short', day: 'numeric' } );
+		createDateFormat( { year: 'numeric', month: 'short', day: 'numeric' } );
 	return otherYearFormat.format( then );
 }
 

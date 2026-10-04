@@ -1,3 +1,6 @@
+const mw = require( '../../mocks/mw.js' );
+globalThis.mw = mw;
+
 const formatTimestamp = require( '../../../../resources/skins.citizen.commandPalette/utils/formatTimestamp.js' );
 
 describe( 'formatTimestamp', () => {
