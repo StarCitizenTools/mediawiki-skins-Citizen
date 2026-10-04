@@ -19,6 +19,7 @@
 const { cdxIconImageGallery } = require( '../icons.json' );
 const config = require( '../config.json' );
 const isAbortError = require( '../utils/isAbortError.js' );
+const formatTimestamp = require( '../utils/formatTimestamp.js' );
 const { computeThumbWidth, iconForMediatype } = require( '../utils/fileMedia.js' );
 const { defineMode } = require( '../services/defineMode.js' );
 
@@ -28,10 +29,6 @@ const RESULT_LIMIT = 50;
 const KB = 1024;
 const MB = KB * 1024;
 const GB = MB * 1024;
-
-const MS_PER_MIN = 60 * 1000;
-const MS_PER_HOUR = 60 * MS_PER_MIN;
-const MS_PER_DAY = 24 * MS_PER_HOUR;
 
 // Brand-cased MIME subtypes that look wrong in plain uppercase (WEBM, WEBP).
 // Anything not listed falls through to .toUpperCase() in friendlyType().
@@ -117,38 +114,6 @@ function formatDimensionsAndSize( info ) {
 }
 
 /**
- * Format an upload timestamp as a relative duration ("now", "5m",
- * "3h", "2d") for recent uploads, falling back to a localized short
- * date for older ones. Mirrors the history mode's formatting so the
- * palette stays visually consistent.
- *
- * @param {string} timestamp ISO 8601 string from imageinfo.timestamp
- * @return {string}
- */
-function formatUploadAge( timestamp ) {
-	const then = new Date( timestamp );
-	const diffMs = Date.now() - then.getTime();
-
-	if ( diffMs >= 0 && diffMs < 7 * MS_PER_DAY ) {
-		if ( diffMs < MS_PER_MIN ) {
-			return 'now';
-		}
-		if ( diffMs < MS_PER_HOUR ) {
-			return Math.floor( diffMs / MS_PER_MIN ) + 'm';
-		}
-		if ( diffMs < MS_PER_DAY ) {
-			return Math.floor( diffMs / MS_PER_HOUR ) + 'h';
-		}
-		return Math.floor( diffMs / MS_PER_DAY ) + 'd';
-	}
-
-	const sameYear = then.getFullYear() === new Date().getFullYear();
-	return then.toLocaleDateString( undefined, sameYear ?
-		{ month: 'short', day: 'numeric' } :
-		{ year: 'numeric', month: 'short', day: 'numeric' } );
-}
-
-/**
  * Pull the license short-name out of the extmetadata bag. The field is
  * a localized string under `LicenseShortName.value`. Returns an empty
  * string when absent so the detail panel can drop the row.
@@ -204,7 +169,7 @@ function buildDetailPairs( info ) {
 		pairs.push( {
 			key: 'uploaded',
 			label: mw.message( 'citizen-command-palette-mode-file-detail-uploaded' ).text(),
-			value: formatUploadAge( info.timestamp ) + ' · ' + info.user
+			value: formatTimestamp( info.timestamp ) + ' · ' + info.user
 		} );
 	}
 
