@@ -18,7 +18,6 @@
  * @return {AbortableFetch}
  */
 function fetchJson( resource, init ) {
-	// eslint-disable-next-line compat/compat -- MW 1.43+ targets modern browsers
 	const controller = new AbortController();
 
 	const getJson = fetch( resource, Object.assign( {}, init, {
