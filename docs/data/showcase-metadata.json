@@ -1,98 +1,98 @@
 {
 	"https://www.qiuwenbaike.cn": {
-		"articles": 1184361,
+		"articles": 1184712,
 		"lang": "zh",
-		"generator": "MediaWiki 1.43.9",
+		"generator": "MediaWiki 1.43.10",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://coasterpedia.net": {
-		"articles": 25968,
+		"articles": 26324,
 		"lang": "en",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://capoeirawiki.org": {
-		"articles": 508,
+		"articles": 515,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://starcitizen.tools": {
-		"articles": 13806,
+		"articles": 13996,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://dustloop.com": {
-		"articles": 5665,
+		"articles": 5668,
 		"lang": "en",
 		"generator": "MediaWiki 1.45.4",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://dragdown.wiki": {
-		"articles": 2322,
+		"articles": 2330,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.avakot.org": {
-		"articles": 1238,
+		"articles": 1293,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://stellasora.miraheze.org": {
-		"articles": 1006,
+		"articles": 1254,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://doorsgame.wiki": {
-		"articles": 492,
+		"articles": 523,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://obby.wiki": {
-		"articles": 568,
+		"articles": 665,
 		"lang": "en",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://utg.miraheze.org": {
-		"articles": 1005,
+		"articles": 1006,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://wordles.miraheze.org": {
 		"articles": 816,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://sorrywereclosed.wiki": {
@@ -100,23 +100,23 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://sr.conecorp.cc": {
 		"articles": 44,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://industrialist.miraheze.org": {
-		"articles": 690,
+		"articles": 691,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.prismparty.net": {
@@ -124,15 +124,15 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.39.8",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://outlaster.miraheze.org": {
 		"articles": 98,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://dsp-wiki.com": {
@@ -140,7 +140,7 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.43.9",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://pzwiki.net": {
@@ -148,23 +148,23 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.43.9",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
-		"consecutiveFailures": 3
+		"checkedAt": "2026-10-08T14:13:32.754Z",
+		"consecutiveFailures": 4
 	},
 	"https://battlecats.miraheze.org": {
-		"articles": 8801,
+		"articles": 8836,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.sekaipedia.org": {
-		"articles": 17084,
+		"articles": 17221,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.gamebrew.org": {
@@ -172,20 +172,20 @@
 		"lang": "en-gb",
 		"generator": "MediaWiki 1.43.9",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.thefinals.wiki": {
-		"articles": 651,
+		"articles": 657,
 		"lang": "en",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://tolkiengateway.net": {
-		"checkedAt": "2026-09-29T18:47:27.061Z",
-		"consecutiveFailures": 0,
+		"checkedAt": "2026-10-08T14:13:32.754Z",
+		"consecutiveFailures": 1,
 		"articles": 13639,
 		"lang": "en",
 		"generator": "MediaWiki 1.41.1",
@@ -196,55 +196,71 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.45.1",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://voca.wiki": {
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0,
-		"articles": 13951,
+		"articles": 14025,
 		"lang": "zh",
 		"generator": "MediaWiki 1.45.4",
 		"defaultSkin": "citizen"
 	},
 	"https://otomad.wiki": {
-		"articles": 961,
+		"articles": 962,
 		"lang": "zh",
 		"generator": "MediaWiki 1.43.8",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://xyy.miraheze.org": {
-		"articles": 3253,
+		"articles": 3254,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.backroomszh.org": {
-		"articles": 610,
+		"articles": 619,
 		"lang": "zh",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://lophocmatngu.wiki": {
 		"articles": 185,
 		"lang": "vi",
+		"generator": "MediaWiki 1.46.2",
+		"defaultSkin": "citizen",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
+		"consecutiveFailures": 0
+	},
+	"https://utaite.wiki": {
+		"articles": 3634,
+		"lang": "en",
+		"generator": "MediaWiki 1.46.2",
+		"defaultSkin": "citizen",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
+		"consecutiveFailures": 0
+	},
+	"https://changpop.wiki": {
+		"articles": 948,
+		"lang": "ko",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://theapplewiki.com": {
-		"articles": 6674,
+		"articles": 6679,
 		"lang": "en",
 		"generator": "MediaWiki 1.46.0",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.fosscell.org": {
@@ -252,19 +268,19 @@
 		"lang": "en",
 		"generator": "MediaWiki 1.45.3",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://mintwiki.org": {
 		"articles": 119,
 		"lang": "en",
-		"generator": "MediaWiki 1.46.0",
+		"generator": "MediaWiki 1.46.2",
 		"defaultSkin": "citizen",
-		"checkedAt": "2026-09-29T18:47:27.061Z",
+		"checkedAt": "2026-10-08T14:13:32.754Z",
 		"consecutiveFailures": 0
 	},
 	"https://chaotic-ground.github.io/wikven/citizen/index.html": {
-		"checkedAt": "2026-09-29T18:47:27.061Z",
-		"consecutiveFailures": 6
+		"checkedAt": "2026-10-08T14:13:32.754Z",
+		"consecutiveFailures": 7
 	}
 }
