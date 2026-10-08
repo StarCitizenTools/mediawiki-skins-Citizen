@@ -1,5 +1,5 @@
-// scrollWidth and offsetWidth are rounded to whole pixels while scrollLeft
-// is fractional, so at the very end the sum can fall up to 1px short
+// The scroll offset and both widths are each rounded from fractional values,
+// so at the very end their sum can fall up to 1px short of scrollWidth
 const SCROLL_END_TOLERANCE = 1;
 
 /**

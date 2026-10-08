@@ -72,6 +72,18 @@ describe( 'createOverflowState', () => {
 			expect( wrapper.classList.add ).not.toHaveBeenCalledWith( 'citizen-overflow--right' );
 		} );
 
+		it( 'should treat a 1px rounding shortfall at the end as scrolled to end', () => {
+			element.scrollWidth = 501;
+			content.scrollLeft = 200;
+			content.offsetWidth = 300;
+
+			const state = create();
+			state.updateState();
+
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--left' );
+			expect( wrapper.classList.add ).not.toHaveBeenCalledWith( 'citizen-overflow--right' );
+		} );
+
 		it( 'should remove overflow classes when element fits within content', () => {
 			element.scrollWidth = 300;
 			content.scrollLeft = 0;
