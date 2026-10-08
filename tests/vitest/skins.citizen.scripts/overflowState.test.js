@@ -17,7 +17,8 @@ describe( 'createOverflowState', () => {
 			}
 		};
 		win = {
-			requestAnimationFrame: vi.fn( ( cb ) => cb() )
+			requestAnimationFrame: vi.fn( ( cb ) => cb() ),
+			getComputedStyle: vi.fn( () => ( { direction: 'ltr' } ) )
 		};
 	} );
 
@@ -82,6 +83,45 @@ describe( 'createOverflowState', () => {
 
 			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--left' );
 			expect( wrapper.classList.add ).not.toHaveBeenCalledWith( 'citizen-overflow--right' );
+		} );
+
+		it( 'should detect only left overflow at the start of RTL content', () => {
+			win.getComputedStyle.mockReturnValue( { direction: 'rtl' } );
+			element.scrollWidth = 500;
+			content.scrollLeft = 0;
+			content.offsetWidth = 300;
+
+			const state = create();
+			state.updateState();
+
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--left' );
+			expect( wrapper.classList.add ).not.toHaveBeenCalledWith( 'citizen-overflow--right' );
+		} );
+
+		it( 'should detect both overflows midway through RTL content', () => {
+			win.getComputedStyle.mockReturnValue( { direction: 'rtl' } );
+			element.scrollWidth = 500;
+			content.scrollLeft = -100;
+			content.offsetWidth = 300;
+
+			const state = create();
+			state.updateState();
+
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--left' );
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--right' );
+		} );
+
+		it( 'should detect only right overflow at the end of RTL content, within the 1px tolerance', () => {
+			win.getComputedStyle.mockReturnValue( { direction: 'rtl' } );
+			element.scrollWidth = 501;
+			content.scrollLeft = -200;
+			content.offsetWidth = 300;
+
+			const state = create();
+			state.updateState();
+
+			expect( wrapper.classList.add ).toHaveBeenCalledWith( 'citizen-overflow--right' );
+			expect( wrapper.classList.add ).not.toHaveBeenCalledWith( 'citizen-overflow--left' );
 		} );
 
 		it( 'should remove overflow classes when element fits within content', () => {

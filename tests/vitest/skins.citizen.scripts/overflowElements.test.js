@@ -472,7 +472,7 @@ describe( 'overflowElements', () => {
 			expect( navAddSpy ).toHaveBeenCalledWith( 'click', expect.any( Function ) );
 		} );
 
-		it( 'should clamp scrollLeft between 0 and max using rAF', () => {
+		it( 'should not clamp the scroll target at 0, so RTL content can scroll left', () => {
 			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const rAF = vi.fn( ( cb ) => cb() );
 			const win = createMockWindow( {
@@ -506,35 +506,16 @@ describe( 'overflowElements', () => {
 			Object.defineProperty( contentEl, 'offsetWidth', { value: 400, configurable: true } );
 			Object.defineProperty( wrapperEl, 'offsetWidth', { value: 400, configurable: true } );
 
-			// Find the right nav button and simulate click
-			const rightButton = navEl.querySelector( '.citizen-overflow-navButton-right' );
 			const leftButton = navEl.querySelector( '.citizen-overflow-navButton-left' );
-
-			// Set scrollLeft to 0, click right — offset = 400/2 = 200
+			// RTL content starts at scrollLeft 0 and scrolls left into negative values
 			contentEl.scrollLeft = 0;
-			rAF.mockClear();
-
-			rightButton.dispatchEvent( new Event( 'click', { bubbles: true } ) );
-
-			expect( rAF ).toHaveBeenCalled();
-			// scrollLeft = min(max(0 + 200, 0), 600) = 200
-			expect( contentEl.scrollLeft ).toBe( 200 );
-
-			// Now scroll past the max: scrollLeft=500, offset=200 => 700, clamped to 600
-			contentEl.scrollLeft = 500;
-			rAF.mockClear();
-
-			rightButton.dispatchEvent( new Event( 'click', { bubbles: true } ) );
-
-			expect( contentEl.scrollLeft ).toBe( 600 );
-
-			// Now scroll left past 0: scrollLeft=100, offset=-200 => -100, clamped to 0
-			contentEl.scrollLeft = 100;
 			rAF.mockClear();
 
 			leftButton.dispatchEvent( new Event( 'click', { bubbles: true } ) );
 
-			expect( contentEl.scrollLeft ).toBe( 0 );
+			expect( rAF ).toHaveBeenCalled();
+			// offset = 400 / 2
+			expect( contentEl.scrollLeft ).toBe( -200 );
 		} );
 
 		it( 'should not measure or observe resize until the element intersects', () => {

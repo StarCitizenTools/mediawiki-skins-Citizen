@@ -39,11 +39,12 @@ class OverflowElement {
 	 * @param {number} offset
 	 */
 	scrollContent( offset ) {
-		const delta = this.content.scrollWidth - this.content.offsetWidth;
 		const scrollLeft = Math.floor( this.content.scrollLeft ) + offset;
 
+		// The browser clamps scrollLeft to the scroll range, which runs
+		// negative in RTL content
 		this.window.requestAnimationFrame( () => {
-			this.content.scrollLeft = Math.min( Math.max( scrollLeft, 0 ), delta );
+			this.content.scrollLeft = scrollLeft;
 		} );
 	}
 
