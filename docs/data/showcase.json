@@ -29,6 +29,8 @@
   { "name": "Pleasant Goat Wiki", "url": "https://xyy.miraheze.org", "tags": ["media"] },
   { "name": "后室中文数据库", "url": "https://wiki.backroomszh.org", "tags": ["media"] },
   { "name": "Wiki Lớp Học Mật Ngữ", "url": "https://lophocmatngu.wiki", "tags": ["media"] },
+  { "name": "Utaite Wiki", "url": "https://utaite.wiki", "tags": ["media"] },
+  { "name": "창팝위키", "url": "https://changpop.wiki", "tags": ["media"] },
   { "name": "The Apple Wiki", "url": "https://theapplewiki.com", "tags": ["technology"] },
   { "name": "NITC Wiki", "url": "https://wiki.fosscell.org", "tags": ["technology"] },
   { "name": "The Linux Mint Community Wiki", "url": "https://mintwiki.org", "tags": ["technology"] },
