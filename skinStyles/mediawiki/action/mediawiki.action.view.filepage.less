@@ -13,18 +13,12 @@
 
 #filetoc {
 	display: flex;
-	flex-wrap: wrap;
 	padding: 0;
 	margin: 0;
 	font-weight: var( --font-weight-medium );
 	white-space: nowrap;
 	background-color: transparent; // sticky header will handle background
 	border: 0;
-	.mixin-citizen-sticky-header;
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		right: ~'calc( var( --space-xl ) * -1 )'; // Fix #797
-	}
 
 	li {
 		padding-right: 0;
@@ -44,6 +38,30 @@
 		&:active {
 			background-color: var( --background-color-button-quiet--active );
 		}
+	}
+}
+
+// Not wrapped yet (before init / no JS): scroll on its own instead of
+// letting the items stick out of the box
+:not( .citizen-overflow-content ) > #filetoc {
+	overflow: auto hidden;
+}
+
+// Wrapped: the box must cover all items, or overflowElements pauses itself
+// once the box scrolls out of view and the nav buttons stop working
+.citizen-overflow-content > #filetoc {
+	width: max-content;
+	min-width: 100%;
+}
+
+// The outermost element of the bar is the sticky one: #filetoc itself until
+// overflowElements wraps it, then the wrapper
+:not( .citizen-overflow-content ) > #filetoc,
+.citizen-overflow-wrapper:has( > .citizen-overflow-content > #filetoc ) {
+	.mixin-citizen-sticky-header;
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		right: ~'calc( var( --space-xl ) * -1 )'; // Fix #797
 	}
 }
 

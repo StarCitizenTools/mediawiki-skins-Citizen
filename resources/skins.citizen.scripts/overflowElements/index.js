@@ -216,7 +216,7 @@ function init( {
 	}
 
 	const overflowElements = bodyContent.querySelectorAll(
-		'.citizen-overflow, .wikitable:not( .wikitable .wikitable )'
+		'.citizen-overflow, .wikitable:not( .wikitable .wikitable ), #filetoc'
 	);
 	if ( !overflowElements.length ) {
 		return;
