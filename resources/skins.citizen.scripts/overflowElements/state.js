@@ -1,3 +1,7 @@
+// The scroll offset and both widths are each rounded from fractional values,
+// so at the very end their sum can fall up to 1px short of scrollWidth
+const SCROLL_END_TOLERANCE = 1;
+
 /**
  * Manages overflow state detection and class toggling for an overflow element.
  * Tracks element dimensions and scroll position, toggling left/right overflow
@@ -55,7 +59,7 @@ function createOverflowState( { window, element, content, wrapper } ) {
 		} else {
 			isLeftOverflowing = contentScrollLeft > 0;
 			isRightOverflowing =
-				contentScrollLeft + contentWidth < elementWidth;
+				contentScrollLeft + contentWidth < elementWidth - SCROLL_END_TOLERANCE;
 		}
 
 		window.requestAnimationFrame( () => {
