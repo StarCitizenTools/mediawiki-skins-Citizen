@@ -24,13 +24,19 @@ export function shotKey(bytes) {
 /**
  * MediaWiki's CookieWarning extension; confirmed live on doorsgame.wiki. Kept
  * with the generic consent selectors so one list covers every wiki.
+ *
+ * Mailchimp's pop-up signup form (confirmed live on en.battlestarwiki.org) is
+ * matched on the PopupSignupForm_<n> container its loader creates, which holds
+ * the dialog, the backdrop and the banner. Its own mc-* classes are too short a
+ * prefix to match on without catching a wiki's own markup.
  */
 const BANNER_CSS = `
 	.mw-cookiewarning-container,
 	#cookiewarning,
 	[id*="cookie-banner"],
 	[class*="cookie-consent"],
-	[aria-label*="cookie" i] { display: none !important; }
+	[aria-label*="cookie" i],
+	[id^="PopupSignupForm_"] { display: none !important; }
 `;
 
 const NAVIGATION_TIMEOUT_MS = 45_000;
