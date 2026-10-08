@@ -166,6 +166,11 @@
 		display: flex;
 		justify-content: space-between;
 		pointer-events: none;
+		// The buttons and the overflow classes name physical sides, so the
+		// buttons must not swap places in RTL content. Content direction is
+		// independent of the interface direction, so this must not flip.
+		/* @noflip */
+		direction: ltr;
 	}
 
 	&-navButton {

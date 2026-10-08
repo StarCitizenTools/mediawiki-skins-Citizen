@@ -57,9 +57,15 @@ function createOverflowState( { window, element, content, wrapper } ) {
 			isLeftOverflowing = false;
 			isRightOverflowing = false;
 		} else {
-			isLeftOverflowing = contentScrollLeft > 0;
-			isRightOverflowing =
-				contentScrollLeft + contentWidth < elementWidth - SCROLL_END_TOLERANCE;
+			// scrollLeft is 0 at the start edge in both directions, but RTL
+			// content starts on the right and scrolls into negative values
+			const scrolled = Math.abs( contentScrollLeft );
+			const isStartOverflowing = scrolled > 0;
+			const isEndOverflowing =
+				scrolled + contentWidth < elementWidth - SCROLL_END_TOLERANCE;
+			const isRtl = window.getComputedStyle( content ).direction === 'rtl';
+			isLeftOverflowing = isRtl ? isEndOverflowing : isStartOverflowing;
+			isRightOverflowing = isRtl ? isStartOverflowing : isEndOverflowing;
 		}
 
 		window.requestAnimationFrame( () => {
