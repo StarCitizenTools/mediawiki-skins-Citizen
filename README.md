@@ -17,9 +17,9 @@
 </h3>
 
 <p align="center">
-  <a href="https://starcitizen.tools">🚀 Live demo</a> |
-  <a href="https://mwcitizen.skin/community/showcase/">✨ Showcase</a> |
-  <a href="https://mwcitizen.skin">📚 Documentation</a>
+  <a href="https://starcitizen.tools">🚀&nbsp;Live&nbsp;demo</a>&nbsp;|
+  <a href="https://mwcitizen.skin/community/showcase/">✨&nbsp;Showcase</a>&nbsp;|
+  <a href="https://mwcitizen.skin">📚&nbsp;Documentation</a>
 </p>
 
 ## Notable features
