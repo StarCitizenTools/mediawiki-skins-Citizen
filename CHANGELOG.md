@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.24.0...v3.25.0) (2026-10-09)
+
+
+### Features
+
+* **commandPalette:** ✨ make Recent remember places instead of rows ([8e33ec1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e33ec12a7d3610570f8295046a4fc22172f3aeb))
+* **commandPalette:** ✨ show the page a go landed on in Recent ([a96c641](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a96c6410e8483c03578c0c3ea478ae672a27e1a2))
+* **commandPalette:** ✨ show who edited and when, user buttons and file thumbnails in Recent ([8c7248c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c7248c84c8b7a7bfb3ab186dfa605e3ec5c97be))
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 add edit button to related articles ([6d35e8a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6d35e8a5ccd69010f4142edcb9658cfc017f17d3))
+* **commandPalette:** 🐛 format history and Recent dates in the interface language ([282da37](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/282da37586f541df8a831446d7001fd4199dcbbe))
+* **commandPalette:** 🐛 never overwrite a newer Recent history ([7de4e78](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7de4e785e93a95202d2be6e647cdc01c09786dfc))
+* **commandPalette:** 🐛 remember rows opened with a middle click in Recent ([c1ed3cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c1ed3cc1bb102b6b832d50ec1cb5856cb83eb412))
+* **commandPalette:** 🐛 show file upload dates in the interface language ([e9d0bab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e9d0bab23c385f08b82c98d7eb51ff7d504f55ae))
+* **file:** 🐛 make #filetoc scrollable on narrow viewports ([3ca98f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3ca98f90d2486e55079e6e4ac5de28d2da96898e))
+* **MultimediaViewer:** 🐛 stop the media viewer cutting off the bottom of images ([060001f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/060001ff7bb4aa30783fafc7d1a7a837028f5cf6)), closes [#1230](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1230)
+* **overflow:** 🐛 show scroll hints on the correct side in right-to-left content ([0f10540](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0f10540e5c1809c92810980a91c694f8102aaf55))
+* **overflow:** 🐛 tolerate subpixel rounding when detecting scroll end ([#2028](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/2028)) ([b464004](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b4640041e4c33dcf18540a81af0a11517745f595))
+
+
+### Performance Improvements
+
+* **commandPalette:** ⚡️ build only the Recent rows the palette shows ([ac32db9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ac32db9e2ce8127c4a280d86629dc05a7bbfdfc9))
+* **commandPalette:** ⚡️ check where a go landed once the page is idle ([1b52e31](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b52e31cb5d2466817a71b2ec4e152940b40a701))
+
+
+### Miscellaneous Chores
+
+* **showcase:** 🔧 hide Mailchimp's signup pop-up in screenshots ([7fabfdb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7fabfdba06cda4b15199da1bc0282a1ef6b88112))
+* **showcase:** 🔧 refresh the screenshots ([f4e0d89](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f4e0d8906eaaaed3936bfdd49ab312dc282301b1))
+
 ## [3.24.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.23.0...v3.24.0) (2026-10-01)
 
 
