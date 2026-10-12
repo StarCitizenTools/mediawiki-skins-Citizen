@@ -69,6 +69,13 @@
 	a {
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
+
+		// Visited and unvisited links must look the same. The base link rules for
+		// :visited:hover and :visited:active out-specify the color set above.
+		&:visited:hover,
+		&:visited:active {
+			color: var( --color-emphasized );
+		}
 	}
 
 	ul {
