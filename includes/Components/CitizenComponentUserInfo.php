@@ -42,7 +42,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		}
 
 		return [
-			'value' => number_format( $edits, 0 ),
+			'value' => $this->lang->formatNum( $edits ),
 			'label' => $this->localizer->msg( 'citizen-user-info-edits-label' )->text()
 		];
 	}
