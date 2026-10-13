@@ -1,0 +1,25 @@
+// TODO: Convert to use core css-icon mixin
+// https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/codex/mixins/css-icon.less
+.citizen-ui-icon {
+	display: block;
+	width: var( --size-icon );
+	min-width: var( --size-icon );
+	height: var( --size-icon );
+	min-height: var( --size-icon );
+	contain: strict;
+
+	&::before {
+		display: block;
+		width: 100%;
+		height: 100%;
+		content: '';
+		background-color: currentcolor;
+		background-image: none !important; // In case if there are other OOUI icon modules
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+}
