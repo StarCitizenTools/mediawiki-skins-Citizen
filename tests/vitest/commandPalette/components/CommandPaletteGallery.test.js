@@ -6,10 +6,10 @@ const { setCodexStubs } = require( '../../mocks/codex.js' );
 globalThis.mw = mw;
 
 setCodexStubs( {
-	CdxThumbnail: {
-		name: 'CdxThumbnail',
-		template: '<div class="cdx-thumbnail-stub"></div>',
-		props: [ 'thumbnail', 'placeholderIcon' ]
+	CdxIcon: {
+		name: 'CdxIcon',
+		template: '<span class="cdx-icon-stub"></span>',
+		props: [ 'icon' ]
 	}
 } );
 
