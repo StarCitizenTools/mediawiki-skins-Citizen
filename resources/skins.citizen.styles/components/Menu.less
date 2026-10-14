@@ -98,9 +98,13 @@
 }
 
 .mw-portlet {
-	// Hide selected item
+	// Hide selected item. The link is hidden from the tab order and from
+	// assistive technology too: it only points back at the page already
+	// open, and a focusable link nobody can see leaves a tab stop with no
+	// visible focus (WCAG 2.4.7).
 	.selected {
 		.mixin-citizen-screen-reader-only;
+		visibility: hidden;
 	}
 
 	// Hide empty menu
@@ -116,6 +120,7 @@
 	&:has( .mw-revision ) {
 		#ca-view {
 			position: relative;
+			visibility: visible;
 			width: auto;
 			height: auto;
 			overflow: initial;
