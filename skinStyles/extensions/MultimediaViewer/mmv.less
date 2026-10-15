@@ -214,6 +214,12 @@
 	}
 }
 
+// These buttons always sit on MMV's black overlay, so their focus ring needs the dark-mode color
+.mw-mmv-button {
+	--color-progressive: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // color-progressive in dark mode
+	--border-color-progressive--focus: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // border-color-progressive--focus in dark mode
+}
+
 .mw-mmv-post-image:not( .mw-mmv-untruncated ) {
 	// The collapsed bar always sits on MMV's black overlay, so links need the dark-mode colors
 	--color-link: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // color-link in dark mode
