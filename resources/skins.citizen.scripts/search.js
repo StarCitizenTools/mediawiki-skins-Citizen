@@ -85,8 +85,17 @@ function bindOpenOnSlash( window, triggerOpen ) {
  */
 function bindSearchTrigger( document, triggerOpen ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
-		trigger.addEventListener( 'click', () => {
+		const handleOpen = () => {
 			triggerOpen( trigger.dataset.citizenSearchPrefill || null );
+		};
+
+		trigger.addEventListener( 'click', handleOpen );
+
+		trigger.addEventListener( 'keydown', ( /** @type {KeyboardEvent} */ event ) => {
+			if ( event.code === 'Enter' || event.code === 'Space' ) {
+				event.preventDefault();
+				handleOpen();
+			}
 		} );
 	} );
 }
