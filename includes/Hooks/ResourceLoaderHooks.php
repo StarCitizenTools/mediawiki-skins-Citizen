@@ -74,6 +74,14 @@ class ResourceLoaderHooks {
 			// the palette mode reads them from.
 			'bucketNamespaceId' => defined( 'NS_BUCKET' ) ? NS_BUCKET : null,
 			'isSemanticMediaWikiEnabled' => $extensionRegistry->isLoaded( 'SemanticMediaWiki' ),
+			// RelatedArticles resolves false to $wgContentNamespaces on registration,
+			// so this is always a list when the extension is loaded.
+			'relatedArticlesAllowedNamespaces' => $extensionRegistry->isLoaded( 'RelatedArticles' ) ?
+				array_values( array_map(
+					'intval',
+					(array)$config->get( 'RelatedArticlesFooterAllowedNamespaces' )
+				) ) :
+				[],
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
 	}
