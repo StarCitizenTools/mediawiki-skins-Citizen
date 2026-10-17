@@ -1,6 +1,25 @@
 const createProvider = require( './createProvider.js' );
 const { cdxIconArticle } = require( '../icons.json' );
 const { getNavigationAction, buildPageActions } = require( '../utils/providerActions.js' );
+const config = require( '../config.json' );
+
+/**
+ * Whether this is a page view RelatedArticles covers: a plain view of a page
+ * in its allowed namespaces. Its search runs in the namespace of the current
+ * page, so anywhere else it returns other kinds of pages.
+ *
+ * @return {boolean}
+ */
+function isRelatedArticlesPage() {
+	const isRevisionView = mw.util.getParamValue( 'type' ) === 'revision' ||
+		mw.util.getParamValue( 'diff' ) !== null ||
+		mw.util.getParamValue( 'oldid' ) !== null;
+
+	return config.relatedArticlesAllowedNamespaces.includes( mw.config.get( 'wgNamespaceNumber' ) ) &&
+		mw.config.get( 'wgAction' ) === 'view' &&
+		!mw.config.get( 'wgIsMainPage' ) &&
+		!isRevisionView;
+}
 
 /**
  * Creates a related articles provider.
@@ -19,6 +38,10 @@ function createRelatedArticlesProvider( loader ) {
 		},
 
 		async getResults() {
+			if ( !isRelatedArticlesPage() ) {
+				return { items: [] };
+			}
+
 			const currentArticleId = mw.config.get( 'wgArticleId' );
 
 			if ( cachedResults !== null && cachedArticleId === currentArticleId ) {

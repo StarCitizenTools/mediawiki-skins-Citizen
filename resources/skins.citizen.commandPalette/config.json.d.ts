@@ -5,6 +5,7 @@ declare const config: {
 	isBucketEnabled: boolean;
 	bucketNamespaceId: number | null;
 	isSemanticMediaWikiEnabled: boolean;
+	relatedArticlesAllowedNamespaces: number[];
 	wgSearchSuggestCacheExpiry: number;
 };
 
