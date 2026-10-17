@@ -4,5 +4,6 @@ module.exports = {
 	isBucketEnabled: false,
 	bucketNamespaceId: 9592,
 	isSemanticMediaWikiEnabled: false,
+	relatedArticlesAllowedNamespaces: [ 0 ],
 	wgSearchSuggestCacheExpiry: 1200
 };
