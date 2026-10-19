@@ -211,6 +211,18 @@
 		background-color: var( --color-surface-1 );
 		border: var( --border-base );
 		border-radius: var( --border-radius-base );
+
+		// MMV assumes a fixed 450px dialog, so its flex rows squeeze the
+		// buttons once the dialog is narrowed.
+		// TODO: Remove once the minimum supported MMV guards these rows itself.
+		.cdx-button {
+			flex-shrink: 0;
+		}
+
+		.cdx-text-input,
+		.cdx-select {
+			min-width: 0;
+		}
 	}
 }
 
