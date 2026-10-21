@@ -43,6 +43,7 @@
 		border-bottom-left-radius: 0;
 
 		&.citizen-toc-top {
+			visibility: hidden;
 			height: 0;
 			min-height: 0;
 			padding: 0;
@@ -50,7 +51,7 @@
 			opacity: 0;
 			transition-timing-function: var( --transition-timing-function-ease-out );
 			transition-duration: var( --transition-duration-medium );
-			transition-property: opacity, padding;
+			transition-property: opacity, padding, visibility;
 		}
 	}
 
@@ -200,6 +201,7 @@
 // up, because below tablet that bar does not exist and the row still should.
 .citizen-below-page-title {
 	.citizen-toc .citizen-toc-top.citizen-toc-link {
+		visibility: visible;
 		height: auto;
 		min-height: 2rem;
 		padding-block: var( --space-xxs );
