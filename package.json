@@ -23,7 +23,7 @@
 		"prepare": "lefthook install"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^21.2.3",
+		"@commitlint/cli": "^21.2.4",
 		"@commitlint/config-conventional": "^21.2.0",
 		"@vitejs/plugin-vue": "^6.0.10",
 		"@vitest/coverage-v8": "^5.0.5",
