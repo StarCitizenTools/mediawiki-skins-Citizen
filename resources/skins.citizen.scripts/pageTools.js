@@ -181,6 +181,11 @@ class PageTools {
 		// Read the whole list before moving any of it: children is live.
 		const spare = Array.from( list.children )
 			.filter( ( item ) => !item.matches( KEEP_SELECTOR ) );
+		// The selected view is hidden by CSS, so a card section holding nothing
+		// else would be a heading with no visible items under it.
+		if ( spare.every( ( item ) => item.classList.contains( 'selected' ) ) ) {
+			return;
+		}
 		spare.forEach( ( item ) => this.adopt( item ) );
 	}
 
@@ -243,7 +248,11 @@ class PageTools {
 			}
 			records.forEach( ( record ) => {
 				record.addedNodes.forEach( ( node ) => {
-					if ( node.nodeType === 1 && !node.matches( KEEP_SELECTOR ) ) {
+					if (
+						node.nodeType === 1 &&
+						!node.matches( KEEP_SELECTOR ) &&
+						( this.shell || !node.classList.contains( 'selected' ) )
+					) {
 						this.adopt( /** @type {Element} */ ( node ) );
 					}
 				} );
