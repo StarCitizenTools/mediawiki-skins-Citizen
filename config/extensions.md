@@ -90,6 +90,7 @@ Citizen provides custom styles for many popular extensions via [skinStyles](http
 * [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo)
 * [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree)
 * [CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice)
+* [CheckUser](https://www.mediawiki.org/wiki/Extension:CheckUser)
 * [Cite](https://www.mediawiki.org/wiki/Extension:Cite)
 * [CiteThisPage](https://www.mediawiki.org/wiki/Extension:CiteThisPage)
 * [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges)
