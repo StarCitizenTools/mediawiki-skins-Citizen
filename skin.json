@@ -864,6 +864,7 @@
 			"+ext.cargo.drilldown": "skinStyles/extensions/Cargo/ext.cargo.drilldown.less",
 			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
 			"+ext.centralNotice.display": "skinStyles/extensions/CentralNotice/ext.centralNotice.display.less",
+			"+ext.checkUser.styles": "skinStyles/extensions/CheckUser/ext.checkUser.styles.less",
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
 			"+ext.citeThisPage": "skinStyles/extensions/CiteThisPage/ext.citeThisPage.less",
 			"+ext.cleanchanges.uls": "skinStyles/extensions/CleanChanges/ext.cleanchanges.uls.less",
