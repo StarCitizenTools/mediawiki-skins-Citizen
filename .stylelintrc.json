@@ -32,6 +32,7 @@
 					"overscroll-behavior": [ "contain" ],
 					"text-spacing-trim": [ "normal" ],
 					"text-wrap": [ "pretty" ],
+					"transition-behavior": [],
 					"user-select": [ "none" ]
 				}
 			}
