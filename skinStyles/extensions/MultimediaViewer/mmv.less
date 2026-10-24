@@ -226,7 +226,26 @@
 	}
 }
 
+// These buttons always sit on MMV's black overlay, so their focus ring needs the dark-mode color
+.mw-mmv-button {
+	--color-progressive: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // color-progressive in dark mode
+	--border-color-progressive--focus: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // border-color-progressive--focus in dark mode
+}
+
 .mw-mmv-post-image:not( .mw-mmv-untruncated ) {
+	// The collapsed bar always sits on MMV's black overlay, so links need the dark-mode colors
+	--color-link: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // color-link in dark mode
+	--color-link--hover: ~'hsl( var( --color-progressive-hsl__h ), 82%, 80% )'; // color-link--hover in dark mode
+	--color-link--active: ~'hsl( var( --color-progressive-hsl__h ), 84%, 86% )'; // color-link--active in dark mode
+	--color-visited--hover: var( --color-link--hover );
+	--color-visited--active: var( --color-link--active );
+	--color-destructive: hsl( 349, 88%, 72% ); // color-destructive in dark mode
+	--color-destructive--hover: hsl( 351, 82%, 81% ); // color-destructive--hover in dark mode
+	--color-destructive--active: hsl( 353, 74%, 88% ); // color-destructive--active in dark mode
+	--color-destructive--visited: var( --color-destructive );
+	--color-destructive--visited--hover: var( --color-destructive--hover );
+	--color-destructive--visited--active: var( --color-destructive--active );
+	--outline-color-progressive--focus: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )'; // outline-color-progressive--focus in dark mode
 	color: ~'hsl( var( --color-progressive-hsl__h ), 45%, 80% )'; // color-base in dark mode
 	background-color: transparent;
 	border-color: transparent;
