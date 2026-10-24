@@ -92,6 +92,11 @@ function bindSearchTrigger( document, triggerOpen ) {
 		trigger.addEventListener( 'click', handleOpen );
 
 		trigger.addEventListener( 'keydown', ( /** @type {KeyboardEvent} */ event ) => {
+			// Keydown bubbles up from a focused descendant, such as a link or a
+			// form field, which needs Enter and Space for itself.
+			if ( event.target !== trigger ) {
+				return;
+			}
 			if ( event.code === 'Enter' || event.code === 'Space' ) {
 				event.preventDefault();
 				handleOpen();
