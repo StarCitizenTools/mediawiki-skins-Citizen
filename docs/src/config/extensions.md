@@ -124,6 +124,7 @@ Citizen provides custom styles for many popular extensions via [skinStyles](http
 - [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats)
 - [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip)
 - [SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam)
+- [Spoilers](https://www.mediawiki.org/wiki/Extension:Spoilers)
 - [StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation)
 - [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight)
 - [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber)
