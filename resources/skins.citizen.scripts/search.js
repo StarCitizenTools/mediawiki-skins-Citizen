@@ -97,7 +97,8 @@ function bindSearchTrigger( document, triggerOpen ) {
 			if ( event.target !== trigger ) {
 				return;
 			}
-			if ( event.code === 'Enter' || event.code === 'Space' ) {
+			// `key`, not `code`: the numpad Enter key reports code 'NumpadEnter'.
+			if ( event.key === 'Enter' || event.key === ' ' ) {
 				event.preventDefault();
 				handleOpen();
 			}
