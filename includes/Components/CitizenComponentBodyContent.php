@@ -96,7 +96,6 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		while ( $currentNode ) {
 			$nextNode = $currentNode->nextSibling;
 
-			// @phan-suppress-next-line PhanTypeMismatchArgument DOMNode is a Parsoid DOM\Node alias
 			$level = $this->getSectionHeadingLevel( $currentNode );
 			if ( $level === null ) {
 				$currentBody->appendChild( $currentNode );
@@ -235,7 +234,6 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		$section->setAttribute( 'id', 'citizen-section-' . $sectionNumber );
 		$section->setAttribute( 'class', self::SECTION_CLASS );
 
-		// @phan-suppress-next-line PhanTypeMismatchReturnSuperType DOMElement is a Parsoid DOM\Element alias
 		return $section;
 	}
 
@@ -246,7 +244,6 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		$body = $doc->createElement( 'div' );
 		$body->setAttribute( 'class', self::SECTION_BODY_CLASS );
 
-		// @phan-suppress-next-line PhanTypeMismatchReturnSuperType DOMElement is a Parsoid DOM\Element alias
 		return $body;
 	}
 
