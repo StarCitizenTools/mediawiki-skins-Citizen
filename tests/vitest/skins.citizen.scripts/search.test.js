@@ -20,11 +20,13 @@ function macWindow() {
 }
 
 function dispatchKeydown( target, opts ) {
-	target.dispatchEvent( new KeyboardEvent( 'keydown', {
+	const event = new KeyboardEvent( 'keydown', {
 		bubbles: true,
 		cancelable: true,
 		...opts
-	} ) );
+	} );
+	target.dispatchEvent( event );
+	return event;
 }
 
 afterEach( () => {
@@ -309,6 +311,51 @@ describe( 'search', () => {
 			document.querySelector( '.hangar-searchbar i' ).click();
 
 			expect( triggerOpen ).toHaveBeenCalledWith( 'Ship:' );
+		} );
+
+		it.each( [
+			[ 'Enter', { key: 'Enter', code: 'Enter' } ],
+			[ 'numpad Enter', { key: 'Enter', code: 'NumpadEnter' } ],
+			[ 'Space', { key: ' ', code: 'Space' } ]
+		] )( 'opens with prefill text when %s is pressed on the trigger', ( _name, keys ) => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<div class="citizen-search-trigger" tabindex="0" data-citizen-search-prefill="hello">go</div>';
+			init( { window, document, triggerOpen } );
+
+			const event = dispatchKeydown( document.querySelector( '.citizen-search-trigger' ), keys );
+
+			expect( triggerOpen ).toHaveBeenCalledWith( 'hello' );
+			expect( event.defaultPrevented ).toBe( true );
+		} );
+
+		it( 'ignores other keys pressed on the trigger', () => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<div class="citizen-search-trigger" tabindex="0">go</div>';
+			init( { window, document, triggerOpen } );
+
+			const event = dispatchKeydown( document.querySelector( '.citizen-search-trigger' ), { key: 'Tab', code: 'Tab' } );
+
+			expect( triggerOpen ).not.toHaveBeenCalled();
+			expect( event.defaultPrevented ).toBe( false );
+		} );
+
+		it.each( [
+			[ 'Enter', { key: 'Enter', code: 'Enter' } ],
+			[ 'Space', { key: ' ', code: 'Space' } ]
+		] )( 'leaves %s to a field inside the trigger', ( _name, keys ) => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<div class="citizen-search-trigger">' +
+					'<input type="search">' +
+				'</div>';
+			init( { window, document, triggerOpen } );
+
+			const event = dispatchKeydown( document.querySelector( '.citizen-search-trigger input' ), keys );
+
+			expect( triggerOpen ).not.toHaveBeenCalled();
+			expect( event.defaultPrevented ).toBe( false );
 		} );
 	} );
 } );
