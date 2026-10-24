@@ -85,8 +85,23 @@ function bindOpenOnSlash( window, triggerOpen ) {
  */
 function bindSearchTrigger( document, triggerOpen ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
-		trigger.addEventListener( 'click', () => {
+		const handleOpen = () => {
 			triggerOpen( trigger.dataset.citizenSearchPrefill || null );
+		};
+
+		trigger.addEventListener( 'click', handleOpen );
+
+		trigger.addEventListener( 'keydown', ( /** @type {KeyboardEvent} */ event ) => {
+			// Keydown bubbles up from a focused descendant, such as a link or a
+			// form field, which needs Enter and Space for itself.
+			if ( event.target !== trigger ) {
+				return;
+			}
+			// `key`, not `code`: the numpad Enter key reports code 'NumpadEnter'.
+			if ( event.key === 'Enter' || event.key === ' ' ) {
+				event.preventDefault();
+				handleOpen();
+			}
 		} );
 	} );
 }
