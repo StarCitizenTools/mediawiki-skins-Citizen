@@ -19,3 +19,17 @@
 .mw-editfont-serif {
 	font-family: var( --font-family-serif );
 }
+
+.mw-editfont-monospace,
+.mw-editfont-sans-serif,
+.mw-editfont-serif {
+	font-size: var( --font-size-small );
+
+	&.oo-ui-textInputWidget {
+		font-size: inherit;
+
+		> .oo-ui-inputWidget-input {
+			font-size: var( --font-size-small );
+		}
+	}
+}
