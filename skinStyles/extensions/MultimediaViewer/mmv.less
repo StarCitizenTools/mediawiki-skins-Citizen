@@ -226,8 +226,44 @@
 	}
 }
 
+// These sit on MMV's black overlay in every theme
+.mw-mmv-button,
 .mw-mmv-post-image:not( .mw-mmv-untruncated ) {
-	color: ~'hsl( var( --color-progressive-hsl__h ), 45%, 80% )'; // color-base in dark mode
+	color-scheme: dark;
+}
+
+// citizen-v4-remove — legacy tokens resolve to plain values at :root, so
+// color-scheme cannot flip them. Pin dark values on these subtrees instead.
+:root:not( .citizen-v4 ) {
+	.mw-mmv-button,
+	.mw-mmv-post-image:not( .mw-mmv-untruncated ) {
+		--color-base: ~'hsl( var( --color-progressive-hsl__h ), 45%, 80% )';
+		--color-emphasized: ~'hsl( var( --color-progressive-hsl__h ), 80%, 95% )';
+		--color-subtle: ~'hsl( var( --color-progressive-hsl__h ), 35%, 65% )';
+		--color-progressive: ~'hsl( var( --color-progressive-hsl__h ), 70%, 71% )';
+		--color-link: var( --color-progressive );
+		--color-link--hover: ~'hsl( var( --color-progressive-hsl__h ), 82%, 80% )';
+		--color-link--active: ~'hsl( var( --color-progressive-hsl__h ), 84%, 86% )';
+		--color-visited: var( --color-link );
+		--color-visited--hover: var( --color-link--hover );
+		--color-visited--active: var( --color-link--active );
+		--color-destructive: hsl( 349, 88%, 72% );
+		--color-destructive--hover: hsl( 351, 82%, 81% );
+		--color-destructive--active: hsl( 353, 74%, 88% );
+		--color-destructive--visited: var( --color-destructive );
+		--color-destructive--visited--hover: var( --color-destructive--hover );
+		--color-destructive--visited--active: var( --color-destructive--active );
+		--outline-color-progressive--focus: var( --color-progressive );
+		--border-color-progressive--focus: var( --color-progressive );
+		--box-shadow-color-progressive--focus: var( --color-progressive );
+		--border-color-interactive: rgba( 255, 255, 255, 0.11 );
+		--background-color-button-quiet--hover: rgba( 255, 255, 255, 0.04 );
+		--background-color-button-quiet--active: rgba( 255, 255, 255, 0.08 );
+	}
+}
+
+.mw-mmv-post-image:not( .mw-mmv-untruncated ) {
+	color: var( --color-base );
 	background-color: transparent;
 	border-color: transparent;
 	-webkit-backdrop-filter: none;
@@ -241,7 +277,6 @@
 
 		&-title {
 			overflow: hidden;
-			color: ~'hsl( var( --color-progressive-hsl__h ), 80%, 95% )';
 		}
 
 		&-stripe-button.mw-mmv-description-page-button {
@@ -249,7 +284,7 @@
 
 			&.cdx-button.cdx-button--fake-button--enabled.cdx-button--weight-primary.cdx-button--action-progressive {
 				background-color: transparent;
-				border-color: rgba( 255, 255, 255, 0.11 ); // border-color-interactive in dark mode
+				border-color: var( --border-color-interactive );
 
 				&:hover {
 					background-color: var( --background-color-button-quiet--hover );
@@ -263,7 +298,7 @@
 
 		&-credit,
 		&-image-links {
-			color: ~'hsl( var( --color-progressive-hsl__h ), 35%, 65% )'; // color-subtle in dark mode
+			color: var( --color-subtle );
 		}
 
 		&-image-links li.mw-mmv-license-li {
