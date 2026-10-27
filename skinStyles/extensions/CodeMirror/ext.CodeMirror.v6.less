@@ -14,7 +14,8 @@
 	}
 
 	.cm-gutters {
-		font-size: inherit;
+		// Same size as .mw-editfont-*, which CodeMirror puts on .cm-content rather than an ancestor of the gutters
+		font-size: var( --font-size-small );
 		background-color: transparent;
 		border-right-color: transparent;
 	}
