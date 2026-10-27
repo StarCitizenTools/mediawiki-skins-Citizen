@@ -35,5 +35,12 @@
 			z-index: 0;
 			padding: 0;
 		}
+
+		// MW 1.43 - Remove when we drop 1.43
+		// CodeMirror 5 falls back to VE's default 1.5em padding for skins it does not list,
+		// but the VE document has none in Citizen, so the overlay would sit off the text
+		.CodeMirror {
+			padding: 0;
+		}
 	}
 }
