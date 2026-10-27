@@ -37,7 +37,7 @@
 		"jsdom": "^30.1.3",
 		"lefthook": "^2.2.2",
 		"less": "^4.9.1",
-		"markdownlint-cli": "^0.49.1",
+		"markdownlint-cli": "^0.50.0",
 		"mustache": "^4.2.0",
 		"stylelint": "17.16.0",
 		"stylelint-config-recess-order": "7.9.0",
