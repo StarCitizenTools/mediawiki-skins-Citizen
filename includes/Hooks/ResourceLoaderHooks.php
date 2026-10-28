@@ -74,16 +74,30 @@ class ResourceLoaderHooks {
 			// the palette mode reads them from.
 			'bucketNamespaceId' => defined( 'NS_BUCKET' ) ? NS_BUCKET : null,
 			'isSemanticMediaWikiEnabled' => $extensionRegistry->isLoaded( 'SemanticMediaWiki' ),
-			// RelatedArticles resolves false to $wgContentNamespaces on registration,
-			// so this is always a list when the extension is loaded.
 			'relatedArticlesAllowedNamespaces' => $extensionRegistry->isLoaded( 'RelatedArticles' ) ?
-				array_values( array_map(
-					'intval',
-					(array)$config->get( 'RelatedArticlesFooterAllowedNamespaces' )
-				) ) :
+				self::getRelatedArticlesAllowedNamespaces( $config ) :
 				[],
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
+	}
+
+	/**
+	 * Namespaces where RelatedArticles shows related pages. Its REL1_43 branch
+	 * has no setting for this and covers only the main namespace. Later
+	 * branches resolve a false setting to $wgContentNamespaces on registration,
+	 * so the setting is always a list.
+	 *
+	 * @param Config $config
+	 * @return int[]
+	 */
+	private static function getRelatedArticlesAllowedNamespaces( Config $config ): array {
+		if ( !$config->has( 'RelatedArticlesFooterAllowedNamespaces' ) ) {
+			return [ NS_MAIN ];
+		}
+		return array_values( array_map(
+			'intval',
+			(array)$config->get( 'RelatedArticlesFooterAllowedNamespaces' )
+		) );
 	}
 
 	/**

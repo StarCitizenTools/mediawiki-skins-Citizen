@@ -4,12 +4,14 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
+use MediaWiki\Config\HashConfig;
 use MediaWiki\MainConfigNames;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks;
 use MediaWiki\Specials\SpecialBlankpage;
 use MediaWikiIntegrationTestCase;
+use Wikimedia\TestingAccessWrapper;
 
 /**
  * @group Citizen
@@ -59,6 +61,32 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertArrayContains( [
 			'wgCitizenThemeDefault' => 'dark',
 		], $config );
+	}
+
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
+	 */
+	public function testRelatedArticlesAllowedNamespacesFollowsTheSetting(): void {
+		$config = new HashConfig( [ 'RelatedArticlesFooterAllowedNamespaces' => [ '0', 4 ] ] );
+
+		$namespaces = TestingAccessWrapper::newFromClass( ResourceLoaderHooks::class )
+			->getRelatedArticlesAllowedNamespaces( $config );
+
+		$this->assertSame( [ NS_MAIN, NS_PROJECT ], $namespaces );
+	}
+
+	/**
+	 * RelatedArticles REL1_43 does not declare the setting.
+	 *
+	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
+	 */
+	public function testRelatedArticlesAllowedNamespacesDefaultsToMainWithoutTheSetting(): void {
+		$config = new HashConfig( [] );
+
+		$namespaces = TestingAccessWrapper::newFromClass( ResourceLoaderHooks::class )
+			->getRelatedArticlesAllowedNamespaces( $config );
+
+		$this->assertSame( [ NS_MAIN ], $namespaces );
 	}
 
 	private function getCommandPaletteSpecialPages(): array {
