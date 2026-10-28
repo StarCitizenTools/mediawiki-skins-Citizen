@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.25.0...v3.25.1) (2026-10-28)
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 fix the command palette not loading with RelatedArticles on MW 1.43 ([8b60707](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8b607073766db021db87f8f32643536e296e8a7d))
+
 ## [3.25.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.24.0...v3.25.0) (2026-10-27)
 
 
