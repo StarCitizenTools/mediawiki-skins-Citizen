@@ -283,6 +283,24 @@ class TableOfContents {
 	}
 
 	/**
+	 * Whether the indicator sits in a subtree the browser is not rendering,
+	 * such as the closed card (`content-visibility: hidden`) or a
+	 * `display: none` ancestor. Geometry read there is not what the reader
+	 * will see once it is shown. `offsetParent` cannot tell, as it stays set
+	 * for content-visibility.
+	 *
+	 * @return {boolean}
+	 */
+	isCardSkipped() {
+		const bar = this.indicatorBar;
+		// Older browsers cannot tell, so assume it is rendered
+		if ( !bar || typeof bar.checkVisibility !== 'function' ) {
+			return false;
+		}
+		return !bar.checkVisibility();
+	}
+
+	/**
 	 * Measure everything the indicator bar update needs. Geometry reads
 	 * only — callers can batch this ahead of any write phase.
 	 *
@@ -295,6 +313,12 @@ class TableOfContents {
 		}
 		if ( this.activeIds.size === 0 ) {
 			return { hide: true };
+		}
+
+		// The closed card is size-contained, so rows are narrower and long
+		// headings wrap. Skip measuring; we measure again when it opens.
+		if ( this.isCardSkipped() ) {
+			return null;
 		}
 
 		const { first: firstLink, last: lastLink } = this.getActiveLinks();
@@ -353,6 +377,23 @@ class TableOfContents {
 	 */
 	updateIndicatorBar() {
 		this.applyIndicator( this.measureIndicator() );
+	}
+
+	/**
+	 * Update the indicator once the card is actually rendered. When it opens,
+	 * `content-visibility` changes through a discrete transition, so it still
+	 * reads as hidden for a frame or two after the `toggle` event.
+	 *
+	 * @param {number} [framesLeft] How many more frames to wait before giving up.
+	 */
+	updateIndicatorWhenRendered( framesLeft = 10 ) {
+		this.window.requestAnimationFrame( () => {
+			if ( this.isCardSkipped() && framesLeft > 0 ) {
+				this.updateIndicatorWhenRendered( framesLeft - 1 );
+				return;
+			}
+			this.updateIndicatorBar();
+		} );
 	}
 
 	/**
@@ -663,6 +704,17 @@ class TableOfContents {
 
 		// Initialize toggle buttons aria-expanded attribute.
 		this.initializeExpandedStatus();
+
+		// Active sections change while the card is closed (the scroll spy keeps
+		// running), and nothing is measured then. Catch up once it opens.
+		const details = this.props.container.querySelector( '.citizen-dropdown-details' );
+		if ( details ) {
+			details.addEventListener( 'toggle', () => {
+				if ( details.hasAttribute( 'open' ) ) {
+					this.updateIndicatorWhenRendered();
+				}
+			} );
+		}
 
 		// Bind event listeners.
 		this.bindSubsectionToggleListeners();
