@@ -157,6 +157,7 @@
 	"citizen-command-palette-help-section-description": "Description",
 	"citizen-command-palette-help-section-triggers": "Déclencheurs",
 	"citizen-command-palette-mode-action-placeholder": "Options de recherche",
+	"citizen-command-palette-mode-bucket-noresults-title": "Aucun résultat correspondant",
 	"citizen-command-palette-mode-category-breadcrumb-root": "Catégories",
 	"citizen-command-palette-mode-category-empty-title": "Aucune catégorie sur cette page",
 	"citizen-command-palette-mode-category-noresults-title": "Aucun résultat correspondant",

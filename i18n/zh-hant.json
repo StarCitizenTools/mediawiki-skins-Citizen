@@ -28,6 +28,7 @@
 	"citizen-preferences-load-error": "無法載入外觀設定。請檢查您的網路連線並重試。",
 	"citizen-preferences-load-retry": "重試",
 	"citizen-search-toggle": "打開/關閉搜尋",
+	"citizen-search-toggle-shortcut": "[/]",
 	"citizen-notifications-title": "通知",
 	"citizen-notifications-label": "通知",
 	"citizen-notifications-source-other": "其他wiki",
