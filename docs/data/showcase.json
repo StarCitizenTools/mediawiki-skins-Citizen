@@ -36,5 +36,6 @@
   { "name": "The Apple Wiki", "url": "https://theapplewiki.com", "tags": ["technology"] },
   { "name": "NITC Wiki", "url": "https://wiki.fosscell.org", "tags": ["technology"] },
   { "name": "The Linux Mint Community Wiki", "url": "https://mintwiki.org", "tags": ["technology"] },
-  { "name": "Wikven Static Site Generator", "url": "https://chaotic-ground.github.io/wikven/citizen/index.html", "tags": ["technology"], "expectUnreachable": true }
+  { "name": "Wikven Static Site Generator", "url": "https://chaotic-ground.github.io/wikven/citizen/index.html", "tags": ["technology"], "expectUnreachable": true },
+  { "name": "FOSS Wiki", "url": "https://foss.wiki", "tags": ["technology"] }
 ]
