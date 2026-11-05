@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.25.1...v3.25.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* **pageFooter:** 🐛 keep the "Last modified" label after saving with VisualEditor ([6fb746b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fb746bf0c4de2010cccf161fb49eff0b1f065f3))
+* **sections:** 🐛 stop the collapsed chevron showing a stray border in Firefox ([cbe76d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cbe76d9e327c65eb6daa6bb0919ce76f710e1b95))
+* **tableOfContents:** 🐛 keep the mobile contents indicator aligned with long headings ([6f35005](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f350051d98f1146a552a9e5c2d5769bdf4fcf4b))
+* **VisualEditor:** 🐛 hide the mobile contents button ([02ae05b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/02ae05b7eed51dd65eb9cbc66ad770955ee069ff))
+
+
+### Miscellaneous Chores
+
+* **stylelint:** 🔧 disable the new class prefix rule ([ee2dd0b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ee2dd0bef6ae48f1114b4461f3d8f3ca1c2a78be))
+
 ## [3.25.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.25.0...v3.25.1) (2026-10-28)
 
 
