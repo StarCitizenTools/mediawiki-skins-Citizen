@@ -241,6 +241,12 @@
 		transition: none;
 	}
 
+	// The page header is a stacking context (z-index 1) around the page actions,
+	// which keeps their dropdown backdrop below the ToC button (@z-index-sticky).
+	.citizen-page-header:has( .citizen-dropdown-details[ open ] ) {
+		z-index: @z-index-sticky + @z-index-stacking-1;
+	}
+
 	.citizen-page-languages .citizen-dropdown-summary::after {
 		background: var( --color-surface-1 ); // Blend with background
 	}
