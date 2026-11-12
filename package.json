@@ -39,7 +39,7 @@
 		"less": "^4.9.1",
 		"markdownlint-cli": "^0.50.0",
 		"mustache": "^4.2.0",
-		"stylelint": "17.16.0",
+		"stylelint": "18.0.0",
 		"stylelint-config-recess-order": "7.10.0",
 		"stylelint-config-wikimedia": "0.20.0",
 		"stylelint-order": "^8.1.3",
