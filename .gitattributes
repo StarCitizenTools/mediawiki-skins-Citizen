@@ -7,8 +7,7 @@
 .stylelintrc.json export-ignore
 
 # Scripts
-.eslintignore export-ignore
-.eslintrc.json export-ignore
+eslint.config.js export-ignore
 package.json export-ignore
 package-lock.json export-ignore
 

@@ -29,10 +29,10 @@
 		"@vitest/coverage-v8": "^5.1.0",
 		"@vue/test-utils": "^2.5.1",
 		"devmoji": "^2.3.0",
-		"eslint": "8.57.1",
-		"eslint-config-wikimedia": "0.32.6",
+		"eslint": "9.39.5",
+		"eslint-config-wikimedia": "0.33.1",
 		"eslint-plugin-compat": "^6.2.0",
-		"eslint-plugin-mediawiki": "0.8.4",
+		"globals": "^17.14.0",
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^31.0.0",
 		"lefthook": "^2.2.2",
@@ -48,9 +48,6 @@
 		"typescript": "5.9.3",
 		"vitest": "^5.1.0",
 		"vue": "3.4.27"
-	},
-	"overrides": {
-		"eslint-plugin-mediawiki": "0.8.4"
 	},
 	"version": "3.25.1"
 }

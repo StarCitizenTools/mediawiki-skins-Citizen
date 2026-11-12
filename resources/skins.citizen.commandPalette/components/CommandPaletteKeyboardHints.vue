@@ -30,13 +30,11 @@ module.exports = exports = defineComponent( {
 		}
 	},
 	setup( props ) {
-		/* eslint-disable mediawiki/msg-doc -- msgKeys are all documented; passed dynamically from useKeyboard */
 		const resolvedHints = computed( () => props.hints.map( ( hint ) => ( {
 			label: mw.message( hint.msgKey ).text(),
 			kbd: hint.kbd,
 			keys: hint.keys
 		} ) ) );
-		/* eslint-enable mediawiki/msg-doc */
 
 		return {
 			resolvedHints

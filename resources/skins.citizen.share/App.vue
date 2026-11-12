@@ -142,7 +142,6 @@ module.exports = exports = defineComponent( {
 	components: { CdxButton, CdxIcon, CdxTextInput },
 	setup() {
 		function i18n( key ) {
-			// eslint-disable-next-line mediawiki/msg-doc -- keys are fixed in template or passed explicitly
 			return mw.msg( key );
 		}
 
