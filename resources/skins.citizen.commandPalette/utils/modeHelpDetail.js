@@ -22,7 +22,6 @@ function modeHelpDetail( handler ) {
 		pairs.push( {
 			key: 'description',
 			label: mw.message( 'citizen-command-palette-help-section-description' ).text(),
-			// eslint-disable-next-line mediawiki/msg-doc -- the key is whichever help.description the handler declares
 			html: mw.message( descriptionKey ).parse()
 		} );
 	}

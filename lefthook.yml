@@ -6,7 +6,7 @@ pre-commit:
         parallel: true
         jobs:
           - name: js-lint
-            run: npx eslint {staged_files}
+            run: npx eslint --no-warn-ignored {staged_files}
             glob: "**/*.{js,vue}"
           - name: style-lint
             run: npx stylelint --allow-empty-input {staged_files}

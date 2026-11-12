@@ -57,7 +57,7 @@ jobs:
               - tsconfig.json
               - package.json
               - package-lock.json
-              - .eslintrc.json
+              - eslint.config.js
               - .github/workflows/ci.yml
             stylesheet:
               - resources/**/*.css

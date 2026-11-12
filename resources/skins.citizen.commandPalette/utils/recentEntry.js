@@ -301,7 +301,6 @@ function rowFromEntry( entry ) {
 	};
 	const descriptionKey = forKind( DESCRIPTIONS, entry.kind );
 	if ( descriptionKey ) {
-		// eslint-disable-next-line mediawiki/msg-doc -- the keys are the literals in DESCRIPTIONS
 		row.description = mw.msg( descriptionKey );
 	}
 	const details = forKind( ROW_DETAILS, entry.kind );
