@@ -26,19 +26,21 @@ Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run li
 
 Two idioms the checker cannot follow, both of which appear in this codebase: a parameter defaulted with `x = x || {}` in the body does not stay narrowed inside a closure, so use a default parameter; and a `typeof obj.method === 'function'` guard does not survive into a callback, so bind the method to a local first.
 
-**Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. Run `composer preflight` from within a MediaWiki installation to execute all PHP lints, style checks, Phan static analysis, and PHPUnit tests.
+**Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. Run `composer preflight` in the [dev environment](#dev-environment) to execute all PHP lints, style checks, Phan static analysis, and PHPUnit tests.
 
 **Always run the relevant checks before committing.** Read the full output — PHPCS warnings must be fixed, not just errors. The command exits 0 even with warnings, so do not treat exit code alone as a pass.
 
 ### Dev environment
 
-This project's standard dev environment is the MediaWiki Docker setup defined in the parent `mediawiki/` directory — see `../../DEVELOPERS.md` for setup instructions. The user may be using a different environment. Ask the user for their dev environment URL and how to run commands if not already known.
+PHP checks, PHPUnit and browser tests need a running MediaWiki that serves this checkout. Use the first that applies:
 
-To run composer commands in the standard Docker environment:
+1. An environment the user has named.
+2. A disposable one you start yourself with [mwenv](https://github.com/ProfessionalWiki/mwenv), which needs no MediaWiki installation.
+3. A MediaWiki installation that contains this checkout, such as MediaWiki-Docker, when the task needs its content or extensions.
 
-```sh
-docker compose exec mediawiki bash -c "cd /var/www/html/w/skins/Citizen && composer preflight"
-```
+Ask the user only if none of these can run, or the task needs something a fresh wiki lacks. Don't destroy an environment you didn't create: its database may hold the user's test content.
+
+Whichever you use, it needs what CI's PHP jobs get (`.github/workflows/ci.yml`): load each extension in `extra-extensions`, and require each package in `extra-composer-packages` into MediaWiki with Composer, without loading it.
 
 ### Browser testing
 
@@ -383,12 +385,13 @@ For every cache-breaking change, in the **same commit**:
 
 1. *Before* applying the breaking change (clean tree), freeze old HTML for
    every page type the change touches, and take reference screenshots. Write
-   the file into the MediaWiki checkout root, which is served under `/w/`, so
-   the frozen page keeps the wiki's **own origin**:
+   the file into this checkout, which the wiki serves under `/w/skins/Citizen/`,
+   so the frozen page keeps the wiki's **own origin**. `<wiki>` is the dev
+   environment's origin, such as `http://localhost:8080`:
 
    ```sh
-   curl -s 'http://localhost:8080/wiki/<Page>' > /path/to/mediawiki/frozen-old.html
-   # then open http://localhost:8080/w/frozen-old.html
+   curl -s '<wiki>/wiki/<Page>' > frozen-old.html
+   # then open <wiki>/w/skins/Citizen/frozen-old.html
    ```
 
    Do not serve it from a second origin (`file://`, `python3 -m http.server`)
@@ -405,8 +408,8 @@ For every cache-breaking change, in the **same commit**:
    `data-mw-citizen-html` value and discriminator classes down to that era —
    and run step 4 against each.
 2. Apply the breaking change + slice. Set `$wgCitizenCompat = true;` in the
-   dev `LocalSettings.php`.
-3. Open `http://localhost:8080/w/frozen-old.html`: old HTML + new assets +
+   dev environment's `LocalSettings.php`.
+3. Open `<wiki>/w/skins/Citizen/frozen-old.html`: old HTML + new assets +
    slice, exactly what a stale cached page experiences.
 4. Screenshot and compare against the reference: layout intact, text readable,
    chrome usable. Check the console for new errors *and* the network panel for
