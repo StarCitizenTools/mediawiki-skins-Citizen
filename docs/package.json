@@ -30,7 +30,7 @@
 		"less": "^4.9.1",
 		"markdown-it": "15.0.3",
 		"markdownlint-cli": "^0.50.0",
-		"oxfmt": "^0.77.0",
+		"oxfmt": "^0.78.0",
 		"oxlint": "^1.93.0",
 		"oxlint-tsgolint": "^7.0.2006",
 		"playwright": "^1.65.0",
