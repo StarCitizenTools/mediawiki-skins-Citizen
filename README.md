@@ -35,7 +35,7 @@
 
 ## Installation
 
-1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
+1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) and place the file(s) in a directory called `Citizen` in your `skins/` folder.
 2. Add the following code at the bottom of your LocalSettings.php:
 
    ```php
