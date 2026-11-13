@@ -13,6 +13,7 @@ const SSR_FRAME =
 	/^\s+at\s+.*(?:server-renderer|ssrRenderComponent|renderComponentVNode|_sfc_ssrRender)/;
 
 /** ANSI SGR sequences, stripped so coloured output still matches the patterns above. */
+// oxlint-disable-next-line no-control-regex
 const ANSI = /\u001B\[[0-9;]*m/g;
 
 /**

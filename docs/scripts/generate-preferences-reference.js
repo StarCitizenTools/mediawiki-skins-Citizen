@@ -7,7 +7,6 @@
 import { createRequire } from "node:module";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 
 const here = import.meta.filename;
 const repoRoot = resolve(import.meta.dirname, "../..");
