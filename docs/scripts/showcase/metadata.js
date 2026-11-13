@@ -2,22 +2,20 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { apiCandidates, findApiUrl, mergeRecord, parseSiteinfo, shouldAlert } from "./lib.js";
 
-const dataDir = resolve(import.meta.dirname, "../../data");
-const sourcesPath = resolve(dataDir, "showcase.json");
-const metadataPath = resolve(dataDir, "showcase-metadata.json");
-const alertsPath = resolve(import.meta.dirname, "../../showcase-alerts.json");
-
-/**
- * An honest bot User-Agent rather than a browser-shaped one. The hosts that
- * refuse this script answer a Chrome string with the same 403, so disguising
- * the client buys nothing and misstates who is calling.
- */
-const HEADERS = {
-	"User-Agent":
-		"CitizenShowcaseBot/1.0 (https://mwcitizen.skin; refreshes the Citizen skin showcase)",
-};
-
-const TIMEOUT_MS = 25_000;
+const dataDir = resolve(import.meta.dirname, "../../data"),
+	sourcesPath = resolve(dataDir, "showcase.json"),
+	metadataPath = resolve(dataDir, "showcase-metadata.json"),
+	alertsPath = resolve(import.meta.dirname, "../../showcase-alerts.json"),
+	/**
+	 * An honest bot User-Agent rather than a browser-shaped one. The hosts that
+	 * refuse this script answer a Chrome string with the same 403, so disguising
+	 * the client buys nothing and misstates who is calling.
+	 */
+	HEADERS = {
+		"User-Agent":
+			"CitizenShowcaseBot/1.0 (https://mwcitizen.skin; refreshes the Citizen skin showcase)",
+	},
+	TIMEOUT_MS = 25_000;
 
 async function get(url) {
 	const response = await fetch(url, {
@@ -39,8 +37,8 @@ async function get(url) {
  * response has to look like siteinfo before any of it is believed.
  */
 async function querySiteinfo(api) {
-	const query = `${api}?action=query&meta=siteinfo&siprop=general%7Cstatistics%7Cskins&format=json`;
-	const payload = await (await get(query)).json();
+	const query = `${api}?action=query&meta=siteinfo&siprop=general%7Cstatistics%7Cskins&format=json`,
+		payload = await (await get(query)).json();
 
 	if (!payload?.query?.general) {
 		throw new Error("answered without siteinfo");
@@ -84,12 +82,11 @@ async function fetchSiteinfo(url) {
 	throw new Error(failures.join("; "));
 }
 
-const sources = JSON.parse(readFileSync(sourcesPath, "utf8"));
-const previous = JSON.parse(readFileSync(metadataPath, "utf8"));
-const timestamp = new Date().toISOString();
-
-const next = {};
-const alerts = [];
+const sources = JSON.parse(readFileSync(sourcesPath, "utf8")),
+	previous = JSON.parse(readFileSync(metadataPath, "utf8")),
+	timestamp = new Date().toISOString(),
+	next = {},
+	alerts = [];
 
 /**
  * Sequential on purpose: 24 requests is nothing, and hammering two dozen

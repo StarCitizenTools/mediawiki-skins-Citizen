@@ -8,16 +8,16 @@ import { createRequire } from "node:module";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-const here = import.meta.filename;
-const repoRoot = resolve(import.meta.dirname, "../..");
-const moduleDir = resolve(repoRoot, "resources/skins.citizen.preferences");
-const outFile = resolve(repoRoot, "docs/generated/built-in-preferences.md");
+const here = import.meta.filename,
+	repoRoot = resolve(import.meta.dirname, "../.."),
+	moduleDir = resolve(repoRoot, "resources/skins.citizen.preferences"),
+	outFile = resolve(repoRoot, "docs/generated/built-in-preferences.md");
 
 /** Escapes a table cell; a stray pipe would shift every column after it. */
 function cell(text) {
 	return String(text)
 		.replaceAll(/\s*\r?\n\s*/g, " ")
-		.replaceAll(/\|/g, String.raw`\|`);
+		.replaceAll("|", String.raw`\|`);
 }
 
 /**
@@ -93,45 +93,42 @@ export function channelRows(stable, preview) {
  *   between channels, or a preference and its default going out of step.
  */
 export function buildReference(channels, messages, defaults) {
-	const missing = new Set();
-
-	const label = (item) => {
-		if (item.label) {
-			return item.label;
-		}
-		if (!item.labelMsg) {
-			return "—";
-		}
-		if (!(item.labelMsg in messages)) {
-			missing.add(item.labelMsg);
-			return item.labelMsg;
-		}
-		return messages[item.labelMsg];
-	};
-
-	const prefKeys = union(
-		Object.keys(channels.stable.preferences),
-		Object.keys(channels.preview.preferences),
-	);
-	const sectionKeys = union(
-		Object.keys(channels.stable.sections),
-		Object.keys(channels.preview.sections),
-	);
-
-	const sectionOf = (key) => {
-		const stable = channels.stable.preferences[key];
-		const preview = channels.preview.preferences[key];
-		if (stable && preview && stable.section !== preview.section) {
-			throw new Error(
-				`\`${key}\` is in section \`${stable.section}\` on the stable channel but ` +
-					`\`${preview.section}\` on the preview channel; the reference cannot show that.`,
-			);
-		}
-		return (stable ?? preview).section;
-	};
+	const missing = new Set(),
+		label = (item) => {
+			if (item.label) {
+				return item.label;
+			}
+			if (!item.labelMsg) {
+				return "—";
+			}
+			if (!(item.labelMsg in messages)) {
+				missing.add(item.labelMsg);
+				return item.labelMsg;
+			}
+			return messages[item.labelMsg];
+		},
+		prefKeys = union(
+			Object.keys(channels.stable.preferences),
+			Object.keys(channels.preview.preferences),
+		),
+		sectionKeys = union(
+			Object.keys(channels.stable.sections),
+			Object.keys(channels.preview.sections),
+		),
+		sectionOf = (key) => {
+			const stable = channels.stable.preferences[key],
+				preview = channels.preview.preferences[key];
+			if (stable && preview && stable.section !== preview.section) {
+				throw new Error(
+					`\`${key}\` is in section \`${stable.section}\` on the stable channel but ` +
+						`\`${preview.section}\` on the preview channel; the reference cannot show that.`,
+				);
+			}
+			return (stable ?? preview).section;
+		};
 
 	// A preference the server has no default for gets no clientpref class on
-	// the first paint, so the two lists have to stay in step.
+	// The first paint, so the two lists have to stay in step.
 	for (const key of prefKeys) {
 		if (!(key in defaults)) {
 			throw new Error(`\`${key}\` has no entry in SkinCitizen::DEFAULT_CLIENT_PREFS`);
@@ -157,16 +154,16 @@ export function buildReference(channels, messages, defaults) {
 		}
 
 		// A heading cannot carry two values, so a divergent one is spelled out.
-		const stableSection = channels.stable.sections[sectionKey];
-		const previewSection = channels.preview.sections[sectionKey];
-		const names = channelRows(
-			stableSection ? { name: label(stableSection) } : undefined,
-			previewSection ? { name: label(previewSection) } : undefined,
-		);
-		const heading =
-			names.length === 1
-				? names[0].fields.name
-				: `${names[0].fields.name} (${names[1].fields.name} on the preview channel)`;
+		const stableSection = channels.stable.sections[sectionKey],
+			previewSection = channels.preview.sections[sectionKey],
+			names = channelRows(
+				stableSection ? { name: label(stableSection) } : undefined,
+				previewSection ? { name: label(previewSection) } : undefined,
+			),
+			heading =
+				names.length === 1
+					? names[0].fields.name
+					: `${names[0].fields.name} (${names[1].fields.name} on the preview channel)`;
 
 		lines.push(
 			`### \`${sectionKey}\` — ${heading}`,
@@ -212,13 +209,12 @@ export function buildReference(channels, messages, defaults) {
 	);
 
 	for (const key of prefKeys) {
-		const stableOptions = channels.stable.preferences[key]?.options ?? [];
-		const previewOptions = channels.preview.preferences[key]?.options ?? [];
-
-		// Unlabelled options carry no vocabulary to look up.
-		const labelled = [...stableOptions, ...previewOptions].some(
-			(option) => option.labelMsg || option.label,
-		);
+		const stableOptions = channels.stable.preferences[key]?.options ?? [],
+			previewOptions = channels.preview.preferences[key]?.options ?? [],
+			// Unlabelled options carry no vocabulary to look up.
+			labelled = [...stableOptions, ...previewOptions].some(
+				(option) => option.labelMsg || option.label,
+			);
 		if (!labelled) {
 			continue;
 		}
@@ -263,15 +259,15 @@ export function buildReference(channels, messages, defaults) {
 export function writeReference() {
 	const require = createRequire(here);
 	const getDefaultConfig = require(resolve(moduleDir, "defaultConfig.js"));
-	const { normalizeConfig } = require(resolve(moduleDir, "configRegistry.js"));
-	const messages = JSON.parse(readFileSync(resolve(repoRoot, "i18n/en.json"), "utf8"));
-	const defaults = parseClientPrefDefaults(
-		readFileSync(resolve(repoRoot, "includes/SkinCitizen.php"), "utf8"),
-	);
-	const channels = {
-		stable: normalizeConfig(getDefaultConfig(false)),
-		preview: normalizeConfig(getDefaultConfig(true)),
-	};
+	const { normalizeConfig } = require(resolve(moduleDir, "configRegistry.js")),
+		messages = JSON.parse(readFileSync(resolve(repoRoot, "i18n/en.json"), "utf8")),
+		defaults = parseClientPrefDefaults(
+			readFileSync(resolve(repoRoot, "includes/SkinCitizen.php"), "utf8"),
+		),
+		channels = {
+			stable: normalizeConfig(getDefaultConfig(false)),
+			preview: normalizeConfig(getDefaultConfig(true)),
+		};
 
 	for (const [name, config] of Object.entries(channels)) {
 		if (Object.keys(config.preferences ?? {}).length === 0) {

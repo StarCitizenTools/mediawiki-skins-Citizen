@@ -88,8 +88,8 @@ export function apiCandidates(url) {
  * @param {object} response
  */
 export function parseSiteinfo(response) {
-	const query = response.query;
-	const defaultSkin = query.skins?.find((skin) => "default" in skin)?.code ?? null;
+	const query = response.query,
+		defaultSkin = query.skins?.find((skin) => "default" in skin)?.code ?? null;
 
 	return {
 		articles: query.statistics.articles,
@@ -152,8 +152,8 @@ function shotKeysIn(json) {
  * @returns {string[]}
  */
 export function supersededKeys(before, after) {
-	const previouslyHeld = shotKeysIn(before);
-	const held = shotKeysIn(after);
+	const previouslyHeld = shotKeysIn(before),
+		held = shotKeysIn(after);
 
 	/**
 	 * A manifest naming nothing where its predecessor named something is the one
