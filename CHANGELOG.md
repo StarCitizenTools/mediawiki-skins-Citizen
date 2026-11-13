@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.25.1...v3.25.2) (2026-11-13)
+
+
+### Bug Fixes
+
+* **pageFooter:** 🐛 keep the "Last modified" label after saving with VisualEditor ([6fb746b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fb746bf0c4de2010cccf161fb49eff0b1f065f3))
+* **pagetools:** 🐛 dim the mobile contents button behind page action dropdowns ([614ac33](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/614ac337ea16b892c69f97cb3e2658ca73d142b1))
+* **sections:** 🐛 stop the collapsed chevron showing a stray border in Firefox ([cbe76d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cbe76d9e327c65eb6daa6bb0919ce76f710e1b95))
+* **tableOfContents:** 🐛 keep the mobile contents indicator aligned with long headings ([6f35005](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f350051d98f1146a552a9e5c2d5769bdf4fcf4b))
+* **VisualEditor:** 🐛 hide the mobile contents button ([02ae05b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/02ae05b7eed51dd65eb9cbc66ad770955ee069ff))
+
+
+### Miscellaneous Chores
+
+* 🔧 let agents start their own dev environment with mwenv ([61552c6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/61552c697e2478d2afd70cf671846245cd90c54b))
+* **docs:** 🔧 📚️ fix lint errors raised by oxlint 1.93 ([b5b3e53](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b5b3e53a0dd32a04dd666e6388429ae8524db444))
+* **stylelint:** 🔧 disable the new class prefix rule ([ee2dd0b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ee2dd0bef6ae48f1114b4461f3d8f3ca1c2a78be))
+
 ## [3.25.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.25.0...v3.25.1) (2026-10-28)
 
 
