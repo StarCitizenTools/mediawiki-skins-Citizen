@@ -37,10 +37,9 @@ const BANNER_CSS = `
 	[class*="cookie-consent"],
 	[aria-label*="cookie" i],
 	[id^="PopupSignupForm_"] { display: none !important; }
-`;
-
-const NAVIGATION_TIMEOUT_MS = 45_000;
-const SETTLE_TIMEOUT_MS = 15_000;
+`,
+	NAVIGATION_TIMEOUT_MS = 45_000,
+	SETTLE_TIMEOUT_MS = 15_000;
 
 /**
  * An ordinary desktop Chrome User-Agent for the Chrome actually driving the run.
@@ -116,7 +115,7 @@ async function capture(page, url) {
 	});
 
 	/**
-	 * goto resolves for an error page as readily as for a wiki, so an unchecked
+	 * Goto resolves for an error page as readily as for a wiki, so an unchecked
 	 * capture content-addresses a 502 or a bot challenge and publishes it as that
 	 * wiki's screenshot. No shot is better than a wrong one.
 	 */
@@ -129,9 +128,7 @@ async function capture(page, url) {
 	 * analytics host that refuses connections keeps the network busy for as long
 	 * as anything is willing to wait, and the wiki behind it renders fine.
 	 */
-	await page
-		.waitForLoadState("networkidle", { timeout: SETTLE_TIMEOUT_MS })
-		.catch(() => undefined);
+	await page.waitForLoadState("networkidle", { timeout: SETTLE_TIMEOUT_MS }).catch(() => {});
 
 	await page.addStyleTag({ content: BANNER_CSS });
 	await page.evaluate(() => document.fonts.ready);
@@ -141,23 +138,21 @@ async function capture(page, url) {
 
 async function main() {
 	const { values } = parseArgs({
-		options: {
-			out: { type: "string", default: "" },
-			upload: { type: "boolean", default: false },
-		},
-	});
-
-	const dataDir = resolve(import.meta.dirname, "../../data");
-	/** Scratch. Gitignored; outlives the run's console output, which wrangler floods. */
-	const failuresPath = resolve(import.meta.dirname, "../../showcase-failures.json");
-	const sources = JSON.parse(readFileSync(resolve(dataDir, "showcase.json"), "utf8"));
-	const previous = JSON.parse(readFileSync(resolve(dataDir, "showcase-shots.json"), "utf8"));
-	const timestamp = new Date().toISOString();
-
-	const outDir = values.out ? resolve(process.cwd(), values.out) : null;
+			options: {
+				out: { type: "string", default: "" },
+				upload: { type: "boolean", default: false },
+			},
+		}),
+		dataDir = resolve(import.meta.dirname, "../../data"),
+		/** Scratch. Gitignored; outlives the run's console output, which wrangler floods. */
+		failuresPath = resolve(import.meta.dirname, "../../showcase-failures.json"),
+		sources = JSON.parse(readFileSync(resolve(dataDir, "showcase.json"), "utf8")),
+		previous = JSON.parse(readFileSync(resolve(dataDir, "showcase-shots.json"), "utf8")),
+		timestamp = new Date().toISOString(),
+		outDir = values.out ? resolve(process.cwd(), values.out) : null;
 
 	/**
-	 * wrangler puts a file, so there is nothing to send without one on disk.
+	 * Wrangler puts a file, so there is nothing to send without one on disk.
 	 * Refusing the combination outright beats capturing to nowhere and reporting
 	 * a clean run that published no object at all.
 	 */
@@ -170,26 +165,23 @@ async function main() {
 	}
 
 	// Identical bytes hash to an identical key, so re-uploading is wasted work.
-	const previousKeys = new Set(Object.values(previous).map((record) => record.shot));
-
-	/**
-	 * Seeded as a failure for every wiki and overwritten on success, so a run that
-	 * dies part-way still writes a record for all of them. A URL absent from the
-	 * manifest is a URL whose object the next gc run deletes.
-	 */
-	const next = Object.fromEntries(
-		sources.map((entry) => [entry.url, mergeRecord(previous[entry.url], null, timestamp)]),
-	);
-
-	const browser = await chromium.launch();
-
-	/**
-	 * A wiki that refuses keeps the screenshot it already had, so the manifest
-	 * diff of a run where every capture failed is nothing but timestamps. Without
-	 * this list the only evidence is a line in the run log, and the pull request
-	 * asks a human to check a preview that looks entirely correct.
-	 */
-	const failures = [];
+	const previousKeys = new Set(Object.values(previous).map((record) => record.shot)),
+		/**
+		 * Seeded as a failure for every wiki and overwritten on success, so a run that
+		 * dies part-way still writes a record for all of them. A URL absent from the
+		 * manifest is a URL whose object the next gc run deletes.
+		 */
+		next = Object.fromEntries(
+			sources.map((entry) => [entry.url, mergeRecord(previous[entry.url], null, timestamp)]),
+		),
+		browser = await chromium.launch(),
+		/**
+		 * A wiki that refuses keeps the screenshot it already had, so the manifest
+		 * diff of a run where every capture failed is nothing but timestamps. Without
+		 * this list the only evidence is a line in the run log, and the pull request
+		 * asks a human to check a preview that looks entirely correct.
+		 */
+		failures = [];
 	let captured = 0;
 
 	try {
@@ -204,8 +196,8 @@ async function main() {
 		});
 
 		for (const entry of sources) {
-			let page = null;
-			let shot = null;
+			let page = null,
+				shot = null;
 
 			try {
 				page = await context.newPage();
@@ -255,7 +247,7 @@ async function main() {
 		}
 	} finally {
 		/** A browser that crashed cannot be closed cleanly, and must not take the run's captures with it. */
-		await browser.close().catch(() => undefined);
+		await browser.close().catch(() => {});
 
 		const manifest = `${JSON.stringify(next, null, "\t")}\n`;
 

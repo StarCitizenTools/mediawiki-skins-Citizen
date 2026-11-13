@@ -13,8 +13,8 @@
 import { execFileSync } from "node:child_process";
 import { supersededKeys } from "./lib.js";
 
-const R2_BUCKET = process.env.R2_BUCKET ?? "mwcitizen-media";
-const MANIFEST = "docs/data/showcase-shots.json";
+const R2_BUCKET = process.env.R2_BUCKET ?? "mwcitizen-media",
+	MANIFEST = "docs/data/showcase-shots.json";
 
 /**
  * The manifest at a ref, or null when it cannot be read.
@@ -42,22 +42,20 @@ function manifestAt(ref) {
  * two refreshes merged before anyone ran this, say, where HEAD~1 would see only
  * the later one's deletions and leak the earlier one's objects.
  */
-const beforeRef = process.env.GC_BEFORE_SHA || "HEAD~1";
-
-/**
- * A ref that cannot be read — a mistyped override, a force-pushed-away commit,
- * the first run of all — means there is no predecessor to have dropped
- * anything, so nothing is deleted. The error direction on this side is always a
- * leaked object, never a deleted one still in use.
- */
-const before = manifestAt(beforeRef) ?? "{}";
-
-/**
- * The same failure at HEAD means the opposite, and is why it is fatal rather
- * than a fallback: an empty manifest here reads as "every object was dropped",
- * which would delete the entire bucket with no listing to rebuild it from.
- */
-const after = manifestAt("HEAD");
+const beforeRef = process.env.GC_BEFORE_SHA || "HEAD~1",
+	/**
+	 * A ref that cannot be read — a mistyped override, a force-pushed-away commit,
+	 * the first run of all — means there is no predecessor to have dropped
+	 * anything, so nothing is deleted. The error direction on this side is always a
+	 * leaked object, never a deleted one still in use.
+	 */
+	before = manifestAt(beforeRef) ?? "{}",
+	/**
+	 * The same failure at HEAD means the opposite, and is why it is fatal rather
+	 * than a fallback: an empty manifest here reads as "every object was dropped",
+	 * which would delete the entire bucket with no listing to rebuild it from.
+	 */
+	after = manifestAt("HEAD");
 
 if (after === null) {
 	throw new Error(`Cannot read ${MANIFEST} at HEAD; refusing to delete anything.`);
