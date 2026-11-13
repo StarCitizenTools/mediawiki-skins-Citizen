@@ -143,6 +143,7 @@ jobs:
       - name: Build
         working-directory: docs
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_URL: /${{ steps.tag.outputs.minor }}/
           DOCS_VERSION: ${{ steps.tag.outputs.minor }}
         run: npm run docs:build

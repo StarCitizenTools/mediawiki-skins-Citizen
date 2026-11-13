@@ -62,6 +62,7 @@ jobs:
       - name: Build
         working-directory: docs
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCS_VERSION: main
         run: npm run docs:build
 
