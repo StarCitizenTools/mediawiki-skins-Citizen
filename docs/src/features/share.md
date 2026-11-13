@@ -106,7 +106,7 @@ Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 | :--- | :--- | :--- |
 | `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. Characters outside `[a-zA-Z0-9_-]` are stripped from the id. |
 | `label` | string | The name your users see — read by screen readers and shown on hover. |
-| `url` | string | The link opened when the tile is clicked. Use `{{url}}` and `{{title}}` placeholders for the current page's URL and title. |
+| `url` | string | The link opened when the tile is clicked. Use <code v-pre>{{url}}</code> and <code v-pre>{{title}}</code> placeholders for the current page's URL and title. |
 | `color` | string | Background color of the tile. Match the service's brand color when possible. |
 | `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. `mailto:` links always open in the same tab and ignore this flag. |
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
