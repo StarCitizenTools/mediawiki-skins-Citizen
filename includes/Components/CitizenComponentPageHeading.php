@@ -157,7 +157,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 				'class' => 'citizen-user-regdate',
 				'datetime' => $regDateTs,
 			],
-			$this->lang->userDate( new MWTimestamp( $regDate ), $user )
+			$this->lang->userDate( new MWTimestamp( $regDate ), $this->out->getUser() )
 		);
 
 		$msgRegDate = $this->localizer->msg( 'citizen-tagline-user-regdate', $regDateHtml )->parse();
