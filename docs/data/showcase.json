@@ -33,6 +33,7 @@
   { "name": "Utaite Wiki", "url": "https://utaite.wiki", "tags": ["media"] },
   { "name": "창팝위키", "url": "https://changpop.wiki", "tags": ["media"] },
   { "name": "SCP基金会Miraheze中文", "url": "https://wiki.scpzh.org", "tags": ["media"] },
+  { "name": "Real-Time Fandub Wiki", "url": "https://realtimefandub.miraheze.org", "tags": ["media"] },
   { "name": "The Apple Wiki", "url": "https://theapplewiki.com", "tags": ["technology"] },
   { "name": "NITC Wiki", "url": "https://wiki.fosscell.org", "tags": ["technology"] },
   { "name": "The Linux Mint Community Wiki", "url": "https://mintwiki.org", "tags": ["technology"] },
