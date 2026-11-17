@@ -3,273 +3,280 @@
 		"shot": "shots/fb4f56c0c1438acb.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 0
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 1
 	},
 	"https://coasterpedia.net": {
 		"shot": "shots/b561416b8bf8ec50.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 0
-	},
-	"https://capoeirawiki.org": {
-		"shot": "shots/01654eb997f643bb.webp",
-		"shotW": 1440,
-		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 1
 	},
-	"https://starcitizen.tools": {
-		"shot": "shots/b195a0fe1d704362.webp",
+	"https://capoeirawiki.org": {
+		"shot": "shots/c32ec856c63d3b24.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
+	},
+	"https://starcitizen.tools": {
+		"shot": "shots/3090ec8628848b3a.webp",
+		"shotW": 1440,
+		"shotH": 900,
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://dustloop.com": {
-		"shot": "shots/1155f3c295fc7186.webp",
+		"shot": "shots/91112c583c9f191e.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://dragdown.wiki": {
-		"shot": "shots/7c3d1e851fdad8ec.webp",
+		"shot": "shots/48658cf40e85ff98.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://wiki.avakot.org": {
-		"shot": "shots/53c3c3ac0dd233d0.webp",
+		"shot": "shots/3f1786ee6850ad87.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://stellasora.miraheze.org": {
-		"shot": "shots/603607e7f7b5c7ba.webp",
+		"shot": "shots/98ed9c5717385b25.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://doorsgame.wiki": {
-		"shot": "shots/91296ec35a2079ff.webp",
+		"shot": "shots/2fde99349ea10701.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://obby.wiki": {
-		"shot": "shots/16c84f81a4dfdc23.webp",
+		"shot": "shots/eebfc97f286c1447.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://tagging.wiki": {
-		"shot": "shots/4bb740d74c3f65ec.webp",
+		"shot": "shots/113bab44cc8b5476.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://wordles.miraheze.org": {
-		"shot": "shots/669011f485802aa0.webp",
+		"shot": "shots/dc56b1738cc2e6cc.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://sorrywereclosed.wiki": {
-		"shot": "shots/c2230b2125745ff3.webp",
+		"shot": "shots/4cfcf6653d87ad47.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://sr.conecorp.cc": {
-		"shot": "shots/ba336fe00122863a.webp",
+		"shot": "shots/8751fae90a619ef5.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://industrialist.miraheze.org": {
-		"shot": "shots/8f87f37e065ac7cc.webp",
+		"shot": "shots/8662ce788494090f.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.prismparty.net": {
 		"shot": "shots/b026acc60f4dfc7c.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://outlaster.miraheze.org": {
-		"shot": "shots/100ab20e96a7f9a3.webp",
+		"shot": "shots/c80fa0aafef7fc61.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://dsp-wiki.com": {
 		"shot": "shots/62ab59ae4c243766.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://pzwiki.net": {
-		"shot": "shots/1d2ab9d6c98320fb.webp",
+		"shot": "shots/0afa152d4005406d.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://battlecats.miraheze.org": {
-		"shot": "shots/afb94002bf1721d8.webp",
+		"shot": "shots/ce2fd340ff1e6a7d.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.sekaipedia.org": {
-		"shot": "shots/26e48ab949321114.webp",
+		"shot": "shots/556704f3d91ed579.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://www.gamebrew.org": {
-		"shot": "shots/30635f7fa4aba85c.webp",
+		"shot": "shots/a4d5b81840cc3720.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://www.thefinals.wiki": {
-		"shot": "shots/6e133a00f8c31972.webp",
+		"shot": "shots/6496a9011ffed99b.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://en.scpslgame.com": {
 		"shot": "shots/cdf7a2972a898bd4.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 2
 	},
 	"https://tolkiengateway.net": {
-		"shot": "shots/ee520a43a8b9674f.webp",
+		"shot": "shots/4e60ec53c70ce9e0.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://en.battlestarwiki.org": {
-		"shot": "shots/491b836d81ff60e9.webp",
+		"shot": "shots/d8d5e13bd7b28ad5.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://voca.wiki": {
-		"shot": "shots/bebdf418541067ce.webp",
+		"shot": "shots/b5fcb2980861f0e1.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://otomad.wiki": {
-		"shot": "shots/890007528a578b5e.webp",
+		"shot": "shots/c5300e763cc4eb5a.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://xyy.miraheze.org": {
-		"shot": "shots/25cb929f4e0c58ac.webp",
+		"shot": "shots/ddf389bd8115f2e9.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://wiki.backroomszh.org": {
-		"shot": "shots/98345bc8f9cee176.webp",
+		"shot": "shots/22bf80882ab34543.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://lophocmatngu.wiki": {
-		"shot": "shots/088942283d08ebf8.webp",
+		"shot": "shots/6f2c9a6aa4e58413.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://utaite.wiki": {
-		"shot": "shots/01611d5ad59b0a84.webp",
+		"shot": "shots/a55e10d46e36b471.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://changpop.wiki": {
-		"shot": "shots/078cf8493508625f.webp",
+		"shot": "shots/28bd69c43ec9dd0f.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.scpzh.org": {
-		"shot": "shots/1112f6a572a12083.webp",
+		"shot": "shots/744a9890e274350f.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
+	},
+	"https://realtimefandub.miraheze.org": {
+		"shot": "shots/90d0c0cc07bfa869.webp",
+		"shotW": 1440,
+		"shotH": 900,
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://theapplewiki.com": {
-		"shot": "shots/6dc50190f978e517.webp",
+		"shot": "shots/24bdeb7fd71cbd18.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://wiki.fosscell.org": {
-		"shot": "shots/baf3844a8dc325fa.webp",
+		"shot": "shots/12253a37697a1989.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://mintwiki.org": {
-		"shot": "shots/1f6cd4df6cd93720.webp",
+		"shot": "shots/1f7cbadbcfd1a98b.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 1
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 0
 	},
 	"https://chaotic-ground.github.io/wikven/citizen/index.html": {
 		"shot": "shots/f2f78c5e84283fe8.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
+		"checkedAt": "2026-11-17T06:34:14.679Z",
 		"consecutiveFailures": 0
 	},
 	"https://foss.wiki": {
 		"shot": "shots/ca703948886536ec.webp",
 		"shotW": 1440,
 		"shotH": 900,
-		"checkedAt": "2026-11-05T14:52:32.422Z",
-		"consecutiveFailures": 0
+		"checkedAt": "2026-11-17T06:34:14.679Z",
+		"consecutiveFailures": 1
 	}
 }
