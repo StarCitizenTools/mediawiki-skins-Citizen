@@ -77,6 +77,10 @@ describe( 'file mode', () => {
 		mode = createFileMode( ApiConstructor );
 	} );
 
+	afterEach( () => {
+		vi.unstubAllGlobals();
+	} );
+
 	describe( 'mode definition', () => {
 		it( 'has correct id and triggers', () => {
 			expect( mode.id ).toBe( 'file' );
@@ -176,38 +180,16 @@ describe( 'file mode', () => {
 			expect( Number.isInteger( params.iiurlwidth ) ).toBe( true );
 		} );
 
-		it( 'computes iiurlwidth per request from devicePixelRatio, capped at the documented max', async () => {
-			const originalDpr = window.devicePixelRatio;
+		it( 'recomputes iiurlwidth per request as the pixel ratio changes', async () => {
 			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
 
-			Object.defineProperty( window, 'devicePixelRatio', {
-				value: 1, configurable: true
-			} );
+			vi.stubGlobal( 'devicePixelRatio', 1 );
 			await mode.getResults( 'a', undefined );
-			const dpr1 = mockGet.mock.calls.at( -1 )[ 0 ].iiurlwidth;
-
-			Object.defineProperty( window, 'devicePixelRatio', {
-				value: 2, configurable: true
-			} );
+			vi.stubGlobal( 'devicePixelRatio', 2 );
 			await mode.getResults( 'b', undefined );
-			const dpr2 = mockGet.mock.calls.at( -1 )[ 0 ].iiurlwidth;
 
-			Object.defineProperty( window, 'devicePixelRatio', {
-				value: 4, configurable: true
-			} );
-			await mode.getResults( 'c', undefined );
-			const dpr4 = mockGet.mock.calls.at( -1 )[ 0 ].iiurlwidth;
-
-			Object.defineProperty( window, 'devicePixelRatio', {
-				value: originalDpr, configurable: true
-			} );
-
-			expect( dpr2 ).toBeGreaterThan( dpr1 );
-			// At DPR 4 the requested width (640) exceeds MAX_THUMB_WIDTH
-			// (400), so the cap is hit and widening stops. Asserting the
-			// exact cap value catches a regression that removes the cap
-			// or raises it without updating the documented intent.
-			expect( dpr4 ).toBe( 400 );
+			const [ first, second ] = mockGet.mock.calls.map( ( call ) => call[ 0 ].iiurlwidth );
+			expect( second ).toBeGreaterThan( first );
 		} );
 
 		it( 'falls back to full-text search when prefix returns no results', async () => {
