@@ -17,14 +17,35 @@ describe( 'fileMedia', () => {
 		expect( iconForMediatype( 'UNKNOWN' ) ).toBe( icons.cdxIconAttachment );
 	} );
 
-	it( 'scales the thumbnail width with the pixel ratio, up to a cap', () => {
-		vi.stubGlobal( 'devicePixelRatio', 1 );
-		const one = computeThumbWidth();
-		vi.stubGlobal( 'devicePixelRatio', 2 );
-		const two = computeThumbWidth();
-		vi.stubGlobal( 'devicePixelRatio', 3 );
-		const three = computeThumbWidth();
+	describe( 'computeThumbWidth', () => {
+		function widthAt( dpr ) {
+			vi.stubGlobal( 'devicePixelRatio', dpr );
+			return computeThumbWidth();
+		}
 
-		expect( [ one, two, three ] ).toEqual( [ 160, 320, 400 ] );
+		it( 'requests the 1× width at or below a pixel ratio of 1', () => {
+			const widths = [ 0.5, 0.9, 1 ].map( widthAt );
+
+			expect( widths ).toEqual( [ 160, 160, 160 ] );
+		} );
+
+		it( 'treats a ratio a rounding error above 1 as 1×', () => {
+			// Reported for 80% zoom on a 125% scaled Windows display.
+			const width = widthAt( 1.0000000149011612 );
+
+			expect( width ).toBe( 160 );
+		} );
+
+		it( 'requests the 2× width for every pixel ratio above 1', () => {
+			const widths = [ 1.1, 1.25, 1.5, 1.75, 2, 2.25, 3, 4 ].map( widthAt );
+
+			expect( new Set( widths ) ).toEqual( new Set( [ 320 ] ) );
+		} );
+
+		it( 'treats a missing pixel ratio as 1×', () => {
+			const width = widthAt( undefined );
+
+			expect( width ).toBe( 160 );
+		} );
 	} );
 } );

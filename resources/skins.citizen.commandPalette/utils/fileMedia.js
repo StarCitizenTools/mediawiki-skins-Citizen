@@ -6,26 +6,21 @@ const {
 	cdxIconVolumeUp
 } = require( '../icons.json' );
 
-// Gallery tiles render in a `minmax(140px, 1fr)` grid; the average
-// rendered tile width is roughly BASE_TILE_WIDTH. The MW server resamples
-// to whatever `iiurlwidth` we request, so picking a width that matches
-// the user's DPR avoids over-fetching on 1× displays and prevents the
-// browser from upscaling on retina-class (2×, 3×) displays. Capped at
-// MAX_THUMB_WIDTH to avoid runaway values from unusual ratios. Computed
-// per request rather than at module load so a window dragged between a
-// 1× and a 2× display picks up the new ratio on the next list refresh.
+// Roughly the average width of a `minmax(140px, 1fr)` gallery tile. Each
+// distinct `iiurlwidth` is a new thumbnail per file, so the width snaps to
+// 1× or 2× rather than following the exact pixel ratio. The server already
+// rounds to $wgThumbnailSteps, so there is no client-side rounding.
 const BASE_TILE_WIDTH = 160;
-const MAX_THUMB_WIDTH = 400;
+
+// Zoom plus OS scaling can report 1.0000000149… on an effectively 1× screen.
+const RATIO_TOLERANCE = 0.01;
 
 /**
  * @return {number} Thumbnail width to request, in pixels.
  */
 function computeThumbWidth() {
 	const dpr = ( typeof window !== 'undefined' && window.devicePixelRatio ) || 1;
-	return Math.min(
-		MAX_THUMB_WIDTH,
-		Math.ceil( BASE_TILE_WIDTH * Math.max( 1, dpr ) )
-	);
+	return dpr > 1 + RATIO_TOLERANCE ? BASE_TILE_WIDTH * 2 : BASE_TILE_WIDTH;
 }
 
 /**
