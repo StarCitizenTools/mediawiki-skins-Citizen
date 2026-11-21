@@ -101,6 +101,12 @@
 			.citizen-sticky-header-page-info {
 				transform: translateX( calc( var( --size-icon ) + var( --space-xs ) ) );
 			}
+
+			// CSSJanus only mirrors translateX() given a plain quantity, never a
+			// calc(), so the offset is negated by hand for RTL
+			&:dir( rtl ) .citizen-sticky-header-page-info {
+				transform: translateX( calc( ( var( --size-icon ) + var( --space-xs ) ) * -1 ) );
+			}
 		}
 
 		.citizen-ui-icon {
