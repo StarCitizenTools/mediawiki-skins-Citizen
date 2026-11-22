@@ -255,13 +255,13 @@ module.exports = exports = defineComponent( {
 
 	&__icon {
 		flex-shrink: 0;
-		color: @color-placeholder;
 		transition-timing-function: var( --transition-timing-function-ease );
 		transition-duration: var( --transition-duration-base );
 		transition-property: opacity, transform;
 
 		&.cdx-icon {
 			width: 40px;
+			color: @color-placeholder;
 		}
 	}
 
