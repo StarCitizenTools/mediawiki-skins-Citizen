@@ -46,7 +46,7 @@
 		"stylelint-plugin-use-baseline": "^1.4.8",
 		"types-mediawiki": "2.1.0",
 		"typescript": "5.9.3",
-		"vitest": "^5.1.0",
+		"vitest": "^5.1.1",
 		"vue": "3.4.27"
 	},
 	"version": "3.25.1"
