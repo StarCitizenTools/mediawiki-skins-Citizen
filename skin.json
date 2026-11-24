@@ -265,6 +265,7 @@
 				"resources/skins.citizen.scripts/deferUntilFrame.js"
 			],
 			"dependencies": [
+				"mediawiki.api",
 				"mediawiki.util"
 			]
 		},
