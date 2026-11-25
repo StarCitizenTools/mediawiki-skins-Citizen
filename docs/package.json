@@ -32,7 +32,7 @@
 		"markdownlint-cli": "^0.50.1",
 		"oxfmt": "^0.79.0",
 		"oxlint": "^1.94.0",
-		"oxlint-tsgolint": "^7.0.2007",
+		"oxlint-tsgolint": "^7.0.2008",
 		"playwright": "^1.65.1",
 		"vitepress": "2.0.0-alpha.21",
 		"vitepress-plugin-group-icons": "^1.8.2",
