@@ -29,7 +29,7 @@
 		"jsdom": "^31.0.1",
 		"less": "^4.9.1",
 		"markdown-it": "15.0.3",
-		"markdownlint-cli": "^0.50.0",
+		"markdownlint-cli": "^0.50.1",
 		"oxfmt": "^0.79.0",
 		"oxlint": "^1.94.0",
 		"oxlint-tsgolint": "^7.0.2007",
