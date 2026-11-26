@@ -106,7 +106,6 @@
 	"citizen-command-palette-command-ns-description": "חיפוש דף המרחב שם מסוים",
 	"citizen-command-palette-command-ns-label": "מרחבי שם",
 	"citizen-command-palette-command-user-description": "חיפוש אחר משתמש",
-	"citizen-command-palette-mode-history-description-help": "עיון בגרסאות האחרונות של הדף הנוכחי. ניתן להקליד כדי לסנן לפי שם העורך או תקציר העריכה. יש ללחוץ על <kbd>↵</kbd> כדי לצפות בגרסה.",
 	"citizen-command-palette-mode-history-empty-title": "אין כאן היסטוריה",
 	"citizen-command-palette-mode-history-no-summary-text": "(ללא תקציר עריכה)",
 	"citizen-command-palette-mode-history-noresults-description": "כדאי לנסות שם עורך אחר או לערוך את מילת המפתח לסיכום העריכה",
