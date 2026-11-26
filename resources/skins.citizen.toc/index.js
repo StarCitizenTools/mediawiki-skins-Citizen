@@ -159,10 +159,30 @@ const setupTableOfContents = (
 	mw.hook( 've.activationStart' ).add( () => {
 		sectionObserver.pause();
 	} );
-	mw.hook( 'wikipage.tableOfContents' ).add( ( sections ) => {
-		tableOfContents.reloadTableOfContents( sections ).then( () => {
-			updateElements();
-		} );
+	mw.hook( 'wikipage.tableOfContents' ).add( async ( sections ) => {
+		// VisualEditor passes no sections below core's 4-heading threshold, but
+		// Citizen shows the ToC for any number of headings.
+		if ( !sections.length && bodyContent.querySelector( HEADLINE_SELECTOR ) ) {
+			const oldid = mw.config.get( 'wgCurRevisionId' );
+			try {
+				sections = ( await new mw.Api().get( {
+					action: 'parse',
+					oldid,
+					prop: 'sections',
+					formatversion: 2
+				} ) ).parse.sections;
+			} catch ( error ) {
+				// A failed refresh must not blank a populated ToC.
+				mw.log.warn( '[toc] Failed to fetch sections after save:', error );
+				return;
+			}
+			// A newer save has superseded this one
+			if ( oldid !== mw.config.get( 'wgCurRevisionId' ) ) {
+				return;
+			}
+		}
+		await tableOfContents.reloadTableOfContents( sections );
+		updateElements();
 	} );
 	mw.hook( 've.deactivationComplete' ).add( () => {
 		updateElements();
