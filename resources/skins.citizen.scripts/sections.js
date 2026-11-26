@@ -9,6 +9,9 @@ const TOGGLE_CLASSES =
 const INTERACTIVE_CLASS = 'citizen-sections-interactive';
 const COLLAPSED_SECTION_SELECTOR =
 	`section[data-mw-section-id].${ COLLAPSED_CLASS }, section.citizen-section.${ COLLAPSED_CLASS }`;
+// Links inside a heading (such as wiki links in the section title) must
+// navigate rather than toggle the section.
+const HEADING_LINK_SELECTOR = 'a[href]';
 
 /**
  * Content roots whose handlers are already attached.
@@ -206,6 +209,11 @@ function createSections( { document, bodyContent } ) {
 
 			const heading = target.closest( HEADING_SELECTOR );
 			if ( !heading ) {
+				return;
+			}
+
+			const link = target.closest( HEADING_LINK_SELECTOR );
+			if ( link && heading.contains( link ) ) {
 				return;
 			}
 
